@@ -20,6 +20,45 @@ const Features: React.FC = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
   const newsRef = useRef<HTMLDivElement>(null);
 
+  // Updated news items data with different content and links
+  const newsItems = [
+    {
+      id: 1,
+      title: "Racan AI Launches Revolutionary Style Matching Technology",
+      description: "Our latest AI breakthrough can now match your personality with perfect outfit combinations, creating a truly personalized fashion experience.",
+      image: "https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg?auto=compress&cs=tinysrgb&w=800",
+      link: "https://techcrunch.com/ai-fashion"
+    },
+    {
+      id: 2,
+      title: "A great Our story always starts with modern dresses",
+      description: "In the fast-paced world of fashion, it's easy to get lost in the trends. But at VINDOF, we believe in something different. We believe in timeless style, quality craftsmanship, and pieces that make you feel confident and beautiful.",
+      image: "https://vindof.com/cdn/shop/articles/vindof-casualwear-blog.jpg?v=1749550789&width=1000",
+      link: "https://vindof.com/blogs/news/a-great-our-story-always-starts-with-modern-dresses"
+    },
+    {
+      id: 3,
+      title: "Smart Wardrobe Integration: The Future is Here",
+      description: "Learn how Racan AI seamlessly connects with your existing wardrobe to create endless styling possibilities and reduce fashion waste.",
+      image: "https://cdn.shopify.com/s/files/1/0708/3340/6189/files/image_49_1.png?v=1736421252",
+      link: "https://www.vogue.com/article/smart-wardrobe-technology"
+    },
+    {
+      id: 4,
+      title: "User Success Stories: Style Transformations with Racan AI",
+      description: "Real users share their incredible style journeys and how Racan AI helped them discover their perfect fashion identity.",
+      image: "https://images.pexels.com/photos/7679471/pexels-photo-7679471.jpeg?auto=compress&cs=tinysrgb&w=800",
+      link: "https://blog.racanai.com/success-stories"
+    },
+    {
+      id: 5,
+      title: "Fashion Week 2025: Racan AI Predicts Next Season's Trends",
+      description: "Our AI algorithms analyze global fashion data to predict upcoming trends and help you stay ahead of the style curve.",
+      image: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&w=800",
+      link: "https://www.elle.com/fashion/trends/racan-ai-predictions"
+    }
+  ];
+
   // Check localStorage on component mount
   useEffect(() => {
     const savedPreferences = localStorage.getItem('cookiePreferences');
@@ -69,33 +108,6 @@ const Features: React.FC = () => {
       if (newsRef.current) observer.unobserve(newsRef.current);
     };
   }, []);
-
-  const newsItems = [
-    {
-      id: 1,
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      title: "Revolutionary AI Fashion Platform Launches to Transform Personal Styling",
-      description: "Racan AI introduces groundbreaking technology that personalizes fashion recommendations using advanced machine learning algorithms."
-    },
-    {
-      id: 2,
-      image: "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
-      title: "Sustainable Fashion Trends: How AI is Reducing Clothing Waste",
-      description: "Exploring how artificial intelligence is helping consumers make smarter fashion choices and reducing environmental impact."
-    },
-    {
-      id: 3,
-      image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      title: "The Future of Digital Fashion: Virtual Try-Ons and Smart Wardrobes",
-      description: "Discover how technology is reshaping the fashion industry with virtual fitting rooms and intelligent wardrobe management."
-    },
-    {
-      id: 4,
-      image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      title: "Racan AI Blog: Personalized Style Recommendations for Every Occasion",
-      description: "Learn how our AI analyzes your preferences, lifestyle, and body type to create perfect outfit combinations for any event."
-    }
-  ];
 
   const nextSlide = () => {
     const container = document.querySelector('.news-scroll-container');
@@ -352,7 +364,7 @@ const Features: React.FC = () => {
                 News & Blogs
               </h2>
               <p className="text-sm text-gray-600 max-w-lg font-normal transition-colors duration-300 hover:text-gray-800 slide-in-text" style={{ fontFamily: 'Azeret Mono, monospace' }}>
-                Redefining fashion discovery. AI-powered recommendations, social interaction, and trendsetting in one place
+                Stay updated with the latest from Racan AI. Discover new features, success stories, and fashion insights.
               </p>
             </div>
             <div className={`flex gap-2 justify-end transform transition-all duration-500 delay-200 ${
@@ -386,7 +398,12 @@ const Features: React.FC = () => {
                 <div key={item.id} className={`w-80 md:w-72 lg:w-80 flex-shrink-0 transform transition-all duration-700 news-card ${
                   newsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                 }`} style={{ transitionDelay: `${index * 150}ms` }}>
-                  <div className="border border-black border-opacity-[0.30] rounded-[2px] overflow-hidden bg-white hover:shadow-xl transition-all duration-500 h-full group hover:scale-[1.02] hover:-translate-y-2 news-card-hover">
+                  <a 
+                    href={item.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block border border-black border-opacity-[0.30] rounded-[2px] overflow-hidden bg-white hover:shadow-xl transition-all duration-500 h-full group hover:scale-[1.02] hover:-translate-y-2 news-card-hover"
+                  >
                     <div className="aspect-[4/3] overflow-hidden relative">
                       <img
                         src={item.image}
@@ -406,7 +423,7 @@ const Features: React.FC = () => {
                         {item.description}
                       </p>
                     </div>
-                  </div>
+                  </a>
                 </div>
               ))}
             </div>
@@ -414,6 +431,7 @@ const Features: React.FC = () => {
         </div>
       </div>
 
+      {/* Styles */}
       <style jsx>{`
         @keyframes fade-in-up {
           0% {
@@ -604,12 +622,6 @@ const Features: React.FC = () => {
           }
         }
       `}</style>
-
-      <div>
-        <div className="news">
-          
-        </div>
-      </div>
 
       {/* Cookie Popup */}
       {showCookiePopup && (
