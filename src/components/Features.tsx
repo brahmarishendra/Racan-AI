@@ -459,14 +459,7 @@ const Features: React.FC = () => {
           50% { border-radius: 20%; }
         }
 
-        @keyframes glitch {
-          0%, 100% { transform: translate(0); }
-          20% { transform: translate(-2px, 2px); }
-          40% { transform: translate(-2px, -2px); }
-          60% { transform: translate(2px, 2px); }
-          80% { transform: translate(2px, -2px); }
-        }
-
+     
         @keyframes wave {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-5px); }
