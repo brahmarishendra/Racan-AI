@@ -55,7 +55,7 @@ function Hero() {
         }
 
         .cube {
-          color: #ffffff;
+          color: #000000;
           transform-origin: 0.5px 0.5px 0.5px;
           transform-style: preserve-3d;
         }
