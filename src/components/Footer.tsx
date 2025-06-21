@@ -56,13 +56,15 @@ const Footer: React.FC = () => {
             <div className="flex items-center space-x-3 mb-3">
               <Mail size={18} className="text-gray-400" />
               <a href="mailto:info@racan.ai" className="text-gray-400 hover:text-white transition-colors duration-300">
-                info@racan.ai
+               <b> ssbkfdurga@17gmail.com </b>
               </a>
             </div>
             <p className="text-gray-400 text-sm">
-              123 Fashion Avenue<br />
-              New York, NY 10001<br />
-              United States
+            <b>
+              Racan, Vadodara <br />
+              Parul University<br />
+              India
+              </b>
             </p>
           </div>
         </div>
