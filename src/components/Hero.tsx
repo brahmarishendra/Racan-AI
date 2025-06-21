@@ -213,13 +213,13 @@ function Hero() {
         .cube4 .ball,
         .cube5 .ball,
         .cube7 .ball {
-          color: #84a59d;
+          color: #f26a8d;
         }
         .cube2 .ball,
         .cube3 .ball,
         .cube6 .ball,
         .cube8 .ball {
-          color: #f28482;
+          color: #FEE1C7;
         }
 
         .ball::before {
