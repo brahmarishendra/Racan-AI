@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
             <div className="flex items-center space-x-3 mb-3">
               <Mail size={18} className="text-gray-400" />
               <a href="mailto:info@racan.ai" className="text-gray-400 hover:text-white transition-colors duration-300">
-               <b> ssbkfdurga@17gmail.com </b>
+               <b> ssbkfdurga17@gmail.com </b>
               </a>
             </div>
             <p className="text-gray-400 text-sm">
