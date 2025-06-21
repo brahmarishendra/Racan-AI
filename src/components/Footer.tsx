@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
               Redefining fashion with AI-powered recommendations and personalized style assistance.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
+              <a href="https://www.instagram.com/racan.ai?utm_source=ig_web_button_share_sheet&igsh=MXR2czM5N2JoYnJlbg==" className="text-gray-400 hover:text-white transition-colors duration-300">
                 <Instagram size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
