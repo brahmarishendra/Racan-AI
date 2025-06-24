@@ -40,12 +40,6 @@ export const signUp = async (email: string, password: string, fullName?: string)
   }
 
   try {
-    // First, check if user already exists
-    const { data: existingUser } = await supabase.auth.signInWithPassword({
-      email,
-      password: 'dummy' // This will fail but tell us if user exists
-    })
-
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -266,7 +260,7 @@ export const signInWithGoogle = async () => {
   }
 }
 
-// Get user profile
+// Get user profile - with graceful handling if profiles table doesn't exist
 export const getUserProfile = async (userId: string) => {
   if (!isSupabaseConfigured()) {
     return { data: null, error: { message: 'Supabase is not configured.' } }
@@ -279,6 +273,12 @@ export const getUserProfile = async (userId: string) => {
       .eq('id', userId)
       .single()
     
+    // If profiles table doesn't exist, return null data without error
+    if (error && error.message.includes('relation "public.profiles" does not exist')) {
+      console.warn('Profiles table does not exist. User profiles are not available.')
+      return { data: null, error: null }
+    }
+    
     return { data, error }
   } catch (err: any) {
     console.error('GetUserProfile error:', err)
@@ -286,7 +286,7 @@ export const getUserProfile = async (userId: string) => {
   }
 }
 
-// Update user profile
+// Update user profile - with graceful handling if profiles table doesn't exist
 export const updateUserProfile = async (userId: string, updates: { full_name?: string; avatar_url?: string }) => {
   if (!isSupabaseConfigured()) {
     return { data: null, error: { message: 'Supabase is not configured.' } }
@@ -300,6 +300,12 @@ export const updateUserProfile = async (userId: string, updates: { full_name?: s
       .select()
       .single()
     
+    // If profiles table doesn't exist, return gracefully
+    if (error && error.message.includes('relation "public.profiles" does not exist')) {
+      console.warn('Profiles table does not exist. Profile updates are not available.')
+      return { data: null, error: { message: 'User profiles are not set up yet.' } }
+    }
+    
     return { data, error }
   } catch (err: any) {
     console.error('UpdateUserProfile error:', err)
@@ -307,7 +313,7 @@ export const updateUserProfile = async (userId: string, updates: { full_name?: s
   }
 }
 
-// Helper function to check if profiles table exists and create it if needed
+// Helper function to check if profiles table exists - now returns gracefully without throwing errors
 export const ensureProfilesTable = async () => {
   if (!isSupabaseConfigured()) {
     return { error: { message: 'Supabase is not configured.' } }
@@ -321,13 +327,13 @@ export const ensureProfilesTable = async () => {
       .limit(1)
     
     if (error && error.message.includes('relation "public.profiles" does not exist')) {
-      console.log('Profiles table does not exist. Please run the migration.')
-      return { error: { message: 'Database setup incomplete. Please contact support.' } }
+      console.warn('Profiles table does not exist. This is expected if the database migration has not been run yet.')
+      return { error: null, profilesTableExists: false }
     }
     
-    return { data, error: null }
+    return { data, error: null, profilesTableExists: true }
   } catch (err: any) {
     console.error('Error checking profiles table:', err)
-    return { error: { message: 'Database connection error.' } }
+    return { error: { message: 'Database connection error.' }, profilesTableExists: false }
   }
 }
