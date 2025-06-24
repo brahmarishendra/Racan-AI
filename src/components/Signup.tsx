@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
-import { signUp, signInWithGoogle, isSupabaseConfigured, ensureProfilesTable } from '../lib/supabase';
+import { signUp, signInWithGoogle, isSupabaseConfigured, isAuthenticated } from '../lib/supabase';
 
 function Signup() {
   const [step, setStep] = useState('email');
@@ -14,6 +14,23 @@ function Signup() {
     password: '',
   });
 
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user is already authenticated
+    const checkAuth = async () => {
+      const authenticated = await isAuthenticated();
+      if (authenticated) {
+        // Redirect to home if already logged in
+        window.location.replace('/');
+        return;
+      }
+      setIsPageLoading(false);
+    };
+
+    checkAuth();
+  }, []);
+
   // Check if Supabase is configured on component mount
   useEffect(() => {
     const checkSetup = async () => {
@@ -21,17 +38,12 @@ function Signup() {
         setError('Authentication service is not configured. Please contact support.');
         return;
       }
-      
-      // Check if database is properly set up
-      const { error: dbError } = await ensureProfilesTable();
-      if (dbError) {
-        console.warn('Database setup issue:', dbError.message);
-        // Don't show this error to user as it might be confusing
-      }
     };
     
-    checkSetup();
-  }, []);
+    if (!isPageLoading) {
+      checkSetup();
+    }
+  }, [isPageLoading]);
 
   // Clear messages after some time
   useEffect(() => {
@@ -133,7 +145,8 @@ function Signup() {
       setError(null);
       setSuccess(null);
     } else {
-      window.history.back();
+      // Navigate to home page instead of browser back
+      window.location.href = '/';
     }
   };
 
@@ -185,6 +198,73 @@ function Signup() {
     if (success) setSuccess(null);
   };
 
+  // Loading screen
+  if (isPageLoading) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          {/* Morphing Blob Animation */}
+          <div className="relative w-32 h-32 mx-auto">
+            {/* Main morphing blob */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-300 via-pink-300 to-blue-300 animate-pulse blur-sm opacity-90"></div>
+            <div 
+              className="absolute inset-2 rounded-full bg-gradient-to-br from-violet-400 via-fuchsia-400 to-cyan-300 animate-spin blur-md"
+              style={{
+                animation: 'morph 3s ease-in-out infinite, spin 8s linear infinite',
+                filter: 'blur(8px)',
+              }}
+            ></div>
+            <div 
+              className="absolute inset-4 rounded-full bg-gradient-to-tr from-pink-200 via-purple-200 to-cyan-200"
+              style={{
+                animation: 'morph2 4s ease-in-out infinite reverse',
+                filter: 'blur(4px)',
+              }}
+            ></div>
+            <div 
+              className="absolute inset-8 rounded-full bg-gradient-to-bl from-blue-100 via-purple-100 to-pink-100"
+              style={{
+                animation: 'morph3 2.5s ease-in-out infinite',
+                filter: 'blur(2px)',
+              }}
+            ></div>
+          </div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+        
+        {/* Custom CSS animations */}
+        <style jsx>{`
+          @keyframes morph {
+            0%, 100% {
+              border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            50% {
+              border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+          }
+          
+          @keyframes morph2 {
+            0%, 100% {
+              border-radius: 40% 60% 60% 40% / 70% 30% 60% 40%;
+            }
+            50% {
+              border-radius: 70% 30% 40% 60% / 40% 70% 30% 60%;
+            }
+          }
+          
+          @keyframes morph3 {
+            0%, 100% {
+              border-radius: 50% 50% 30% 70% / 30% 70% 70% 30%;
+            }
+            50% {
+              border-radius: 70% 30% 50% 50% / 60% 40% 40% 60%;
+            }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen w-full flex">
       {/* Left side - Sign up form */}
@@ -199,7 +279,7 @@ function Signup() {
               type="button"
             >
               <ArrowLeft className="w-5 h-5" />
-              Back
+              {step === 'password' || step === 'name' || step === 'verification' ? 'Back' : 'Home'}
             </button>
 
             <div className="flex items-center gap-2 mb-12">

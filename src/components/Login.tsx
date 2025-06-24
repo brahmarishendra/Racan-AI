@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
-import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured, ensureProfilesTable } from '../lib/supabase';
+import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured, isAuthenticated } from '../lib/supabase';
 
 function Login() {
   const [step, setStep] = useState('email');
@@ -17,12 +17,18 @@ function Login() {
   const [isPageLoading, setIsPageLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate page loading time
-    const timer = setTimeout(() => {
+    // Check if user is already authenticated
+    const checkAuth = async () => {
+      const authenticated = await isAuthenticated();
+      if (authenticated) {
+        // Redirect to home if already logged in
+        window.location.replace('/');
+        return;
+      }
       setIsPageLoading(false);
-    }, 2000);
+    };
 
-    return () => clearTimeout(timer);
+    checkAuth();
   }, []);
 
   // Check if Supabase is configured on component mount
@@ -32,17 +38,12 @@ function Login() {
         setError('Authentication service is not configured. Please contact support.');
         return;
       }
-      
-      // Check if database is properly set up
-      const { error: dbError } = await ensureProfilesTable();
-      if (dbError) {
-        console.warn('Database setup issue:', dbError.message);
-        // Don't show this error to user as it might be confusing
-      }
     };
     
-    checkSetup();
-  }, []);
+    if (!isPageLoading) {
+      checkSetup();
+    }
+  }, [isPageLoading]);
 
   // Clear messages after some time
   useEffect(() => {
@@ -128,7 +129,8 @@ function Login() {
       setError(null);
       setSuccess(null);
     } else {
-      window.history.back();
+      // Navigate to home page instead of browser back
+      window.location.href = '/';
     }
   };
 
@@ -308,7 +310,7 @@ function Login() {
               disabled={loading}
             >
               <ArrowLeft className="w-5 h-5" />
-              Back
+              {step === 'password' ? 'Back' : 'Home'}
             </button>
 
             <div className="flex items-center gap-2 mb-12">

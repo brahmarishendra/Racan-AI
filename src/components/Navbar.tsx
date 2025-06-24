@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogOut, User } from 'lucide-react';
+import { getCurrentSession, signOut, onAuthStateChange } from '../lib/supabase';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +26,31 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { session } = await getCurrentSession();
+        setUser(session?.user || null);
+      } catch (error) {
+        console.error('Error checking auth:', error);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   // Prevent body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
@@ -38,12 +66,28 @@ const Navbar = () => {
   }, [isMenuOpen]);
 
   const handleNavigation = (path: string) => {
-    // Replace with your navigation logic
-    console.log(`Navigate to: ${path}`);
-    // For React Router: navigate(path);
-    // For basic navigation: window.location.href = path;
-    window.location.href = path; // Actual navigation
+    window.location.href = path;
     setIsMenuOpen(false);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setUser(null);
+      setIsMenuOpen(false);
+      // Redirect to home page after logout
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const getUserDisplayName = () => {
+    if (!user) return '';
+    return user.user_metadata?.full_name || 
+           user.user_metadata?.name || 
+           user.email?.split('@')[0] || 
+           'User';
   };
 
   return (
@@ -57,7 +101,8 @@ const Navbar = () => {
           <img
             src="https://i.postimg.cc/rsYBTFzm/image-41.png"
             alt="Racan Logo"
-            className="w-24"
+            className="w-24 cursor-pointer"
+            onClick={() => handleNavigation('/')}
           />
 
           <nav className="hidden md:flex items-center space-x-8">
@@ -79,12 +124,31 @@ const Navbar = () => {
             >
               About us
             </a>
-            <button
-              onClick={() => handleNavigation('/login')}
-              className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
-            >
-              Try Racan
-            </button>
+            
+            {loading ? (
+              <div className="w-20 h-10 bg-gray-200 rounded-full animate-pulse"></div>
+            ) : user ? (
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2 text-gray-700">
+                  <User className="w-4 h-4" />
+                  <span className="text-sm font-medium">{getUserDisplayName()}</span>
+                </div>
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-2 bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition-all duration-300"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => handleNavigation('/login')}
+                className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
+              >
+                Try Racan
+              </button>
+            )}
           </nav>
 
           <button
@@ -112,6 +176,7 @@ const Navbar = () => {
             src="https://i.postimg.cc/rsYBTFzm/image-41.png"
             alt="Racan Logo"
             className="w-24"
+            onClick={() => handleNavigation('/')}
           />
           {/* Empty div to match the exact button dimensions and positioning */}
           <div className="p-2 w-10 h-10"></div>
@@ -144,12 +209,30 @@ const Navbar = () => {
             About us
           </a>
 
-          <button 
-            onClick={() => handleNavigation('/login')}
-            className="mt-8 bg-black text-white px-6 py-3 rounded-full hover:bg-[#d70153] transition-all duration-300"
-          >
-            Try Racan
-          </button>
+          {loading ? (
+            <div className="w-32 h-12 bg-gray-200 rounded-full animate-pulse"></div>
+          ) : user ? (
+            <div className="flex flex-col items-center space-y-4">
+              <div className="flex items-center space-x-2 text-gray-700">
+                <User className="w-5 h-5" />
+                <span className="text-lg font-medium">{getUserDisplayName()}</span>
+              </div>
+              <button
+                onClick={handleSignOut}
+                className="flex items-center space-x-2 bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition-all duration-300"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          ) : (
+            <button 
+              onClick={() => handleNavigation('/login')}
+              className="mt-8 bg-black text-white px-6 py-3 rounded-full hover:bg-[#d70153] transition-all duration-300"
+            >
+              Try Racan
+            </button>
+          )}
         </nav>
       </div> 
     </> 

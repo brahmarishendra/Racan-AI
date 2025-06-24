@@ -260,52 +260,66 @@ export const signInWithGoogle = async () => {
   }
 }
 
-// Get user profile - with graceful handling if profiles table doesn't exist
-export const getUserProfile = async (userId: string) => {
-  if (!isSupabaseConfigured()) {
-    return { data: null, error: { message: 'Supabase is not configured.' } }
-  }
+// Auth state listener
+export const onAuthStateChange = (callback: (event: string, session: any) => void) => {
+  return supabase.auth.onAuthStateChange(callback)
+}
 
+// Check if user is authenticated
+export const isAuthenticated = async () => {
   try {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single()
-    
-    // If profiles table doesn't exist, return null data without error
-    if (error && error.message.includes('relation "public.profiles" does not exist')) {
-      console.warn('Profiles table does not exist. User profiles are not available.')
-      return { data: null, error: null }
+    const { data: { session } } = await supabase.auth.getSession()
+    return !!session
+  } catch (error) {
+    console.error('Error checking auth state:', error)
+    return false
+  }
+}
+
+// Get current session
+export const getCurrentSession = async () => {
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession()
+    return { session, error }
+  } catch (err: any) {
+    console.error('GetSession error:', err)
+    return { session: null, error: { message: err.message || 'Failed to get session.' } }
+  }
+}
+
+// Simplified profile functions that don't depend on profiles table
+export const getUserProfile = async (userId: string) => {
+  // Since profiles table doesn't exist, return user data from auth
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser()
+    if (error || !user) {
+      return { data: null, error }
     }
     
-    return { data, error }
+    // Return user metadata as profile
+    return {
+      data: {
+        id: user.id,
+        email: user.email,
+        full_name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0],
+        avatar_url: user.user_metadata?.avatar_url,
+        created_at: user.created_at,
+        updated_at: user.updated_at
+      },
+      error: null
+    }
   } catch (err: any) {
     console.error('GetUserProfile error:', err)
     return { data: null, error: { message: err.message || 'Failed to fetch user profile.' } }
   }
 }
 
-// Update user profile - with graceful handling if profiles table doesn't exist
 export const updateUserProfile = async (userId: string, updates: { full_name?: string; avatar_url?: string }) => {
-  if (!isSupabaseConfigured()) {
-    return { data: null, error: { message: 'Supabase is not configured.' } }
-  }
-
+  // Update user metadata instead of profiles table
   try {
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', userId)
-      .select()
-      .single()
-    
-    // If profiles table doesn't exist, return gracefully
-    if (error && error.message.includes('relation "public.profiles" does not exist')) {
-      console.warn('Profiles table does not exist. Profile updates are not available.')
-      return { data: null, error: { message: 'User profiles are not set up yet.' } }
-    }
-    
+    const { data, error } = await supabase.auth.updateUser({
+      data: updates
+    })
     return { data, error }
   } catch (err: any) {
     console.error('UpdateUserProfile error:', err)
@@ -313,27 +327,8 @@ export const updateUserProfile = async (userId: string, updates: { full_name?: s
   }
 }
 
-// Helper function to check if profiles table exists - now returns gracefully without throwing errors
+// Helper function that doesn't require profiles table
 export const ensureProfilesTable = async () => {
-  if (!isSupabaseConfigured()) {
-    return { error: { message: 'Supabase is not configured.' } }
-  }
-
-  try {
-    // Try to query the profiles table to see if it exists
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('id')
-      .limit(1)
-    
-    if (error && error.message.includes('relation "public.profiles" does not exist')) {
-      console.warn('Profiles table does not exist. This is expected if the database migration has not been run yet.')
-      return { error: null, profilesTableExists: false }
-    }
-    
-    return { data, error: null, profilesTableExists: true }
-  } catch (err: any) {
-    console.error('Error checking profiles table:', err)
-    return { error: { message: 'Database connection error.' }, profilesTableExists: false }
-  }
+  // Since we're not using profiles table, just return success
+  return { error: null, profilesTableExists: false }
 }
