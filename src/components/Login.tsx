@@ -32,16 +32,45 @@ function Login() {
     }
   }, []);
 
+  // Clear messages after some time
+  useEffect(() => {
+    if (error || success) {
+      const timer = setTimeout(() => {
+        setError(null);
+        setSuccess(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error, success]);
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
     
     if (step === 'email') {
-      if (formData.email) {
-        setStep('password');
+      if (!formData.email) {
+        setError('Please enter your email address');
+        return;
       }
+      
+      if (!validateEmail(formData.email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+      
+      setStep('password');
     } else {
+      if (!formData.password) {
+        setError('Please enter your password');
+        return;
+      }
+      
       if (formData.password.length < 8) {
         setError('Password must be at least 8 characters long');
         return;
@@ -60,17 +89,18 @@ function Login() {
           } else if (error.message.includes('Supabase is not configured')) {
             setError('Authentication service is not available. Please try again later or contact support.');
           } else {
-            setError(error.message);
+            setError(error.message || 'An error occurred during sign in');
           }
-        } else {
+        } else if (data?.user) {
           setSuccess('Login successful! Redirecting...');
           
-          // Redirect to home page after successful login
+          // Use proper navigation instead of window.location.href
           setTimeout(() => {
-            window.location.href = '/';
+            window.location.replace('/');
           }, 1500);
         }
       } catch (err) {
+        console.error('Login error:', err);
         setError('An unexpected error occurred. Please try again.');
       } finally {
         setLoading(false);
@@ -81,6 +111,8 @@ function Login() {
   const handleGoBack = () => {
     if (step === 'password') {
       setStep('email');
+      setError(null);
+      setSuccess(null);
     } else {
       window.history.back();
     }
@@ -92,6 +124,11 @@ function Login() {
       return;
     }
 
+    if (!validateEmail(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
     setLoading(true);
     setError(null);
     
@@ -99,11 +136,12 @@ function Login() {
       const { error } = await resetPassword(formData.email);
       
       if (error) {
-        setError(error.message);
+        setError(error.message || 'Failed to send password reset email');
       } else {
         setSuccess('Password reset email sent! Check your inbox for instructions.');
       }
     } catch (err) {
+      console.error('Password reset error:', err);
       setError('Failed to send password reset email. Please try again.');
     } finally {
       setLoading(false);
@@ -121,16 +159,25 @@ function Login() {
         if (error.message.includes('Supabase is not configured')) {
           setError('Google sign-in will be available soon. Please use email login for now.');
         } else {
-          setError(error.message);
+          setError(error.message || 'Google sign-in failed');
         }
       } else {
         setSuccess('Redirecting to Google sign-in...');
+        // Note: For Google OAuth, the redirect happens automatically
+        // No need to manually redirect here
       }
     } catch (err) {
+      console.error('Google sign-in error:', err);
       setError('Google sign-in failed. Please try email login.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    // Clear errors when user starts typing
+    if (error) setError(null);
   };
 
   // Loading screen
@@ -164,6 +211,7 @@ function Login() {
               }}
             ></div>
           </div>
+          <p className="mt-4 text-gray-600">Loading...</p>
         </div>
         
         {/* Custom CSS animations */}
@@ -201,7 +249,7 @@ function Login() {
 
   return (
     <div className="min-h-screen w-full flex">
-      {/* Left side - Sign up form */}
+      {/* Left side - Sign in form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -216,7 +264,14 @@ function Login() {
             </button>
 
             <div className="flex items-center gap-2 mb-12">
-              <img src="https://i.postimg.cc/50B939gH/Logo.png" alt="Racan AI" className="w-8 h-8" />
+              <img 
+                src="https://i.postimg.cc/50B939gH/Logo.png" 
+                alt="Racan AI" 
+                className="w-8 h-8"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
               <span className="text-2xl font-semibold">Racan AI</span>
             </div>
             <h1 className="text-5xl font-serif mb-3">Welcome Back</h1>
@@ -241,16 +296,24 @@ function Login() {
             </div>
           )}
           
-          <div className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {step === 'email' ? (
               <>
                 <div className="flex items-center justify-center w-full">
                   <button 
+                    type="button"
                     onClick={handleGoogleSignIn}
                     disabled={loading}
                     className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" className="w-5 h-5" />
+                    <img 
+                      src="https://developers.google.com/identity/images/g-logo.png" 
+                      alt="Google" 
+                      className="w-5 h-5"
+                      onError={(e) => {
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCIDYuNTVDMjQgNC43MyAyMi45OSAzIDIxLjI3IDFIMS44NEMxNi45OSAxLjQ0IDE0Ljc2IDMuMjcgMTQuMTIgNi4wOUgxNy44NEMxNy44NCA2LjU1IDE3Ljg0IDYuNTUgMTcuODQgNi41NVoiIGZpbGw9IiMzNEE4NTMiLz4KPC9zdmc+';
+                      }}
+                    />
                     {loading ? 'Loading...' : 'Continue with Google'}
                   </button>
                 </div>
@@ -268,14 +331,13 @@ function Login() {
                     className="w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                     placeholder="Enter your personal or work email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                     disabled={loading}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  onClick={handleSubmit}
                   disabled={loading || !formData.email}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -288,7 +350,7 @@ function Login() {
                   <h2 className="text-xl font-semibold mb-2">
                     Enter your password
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 break-all">
                     Enter your password for {formData.email}
                   </p>
                 </div>
@@ -302,7 +364,7 @@ function Login() {
                       className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                       placeholder="Enter your password"
                       value={formData.password}
-                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      onChange={(e) => handleInputChange('password', e.target.value)}
                       disabled={loading}
                     />
                     <button
@@ -322,7 +384,6 @@ function Login() {
 
                 <button
                   type="submit"
-                  onClick={handleSubmit}
                   disabled={loading || formData.password.length < 8}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -339,15 +400,16 @@ function Login() {
                 </button>
               </div>
             )}
-          </div>
+          </form>
 
           {/* Create an account link at the bottom */}
           <div className="pt-4 border-t border-gray-200">
             <p className="text-center text-gray-600">
               Don't have an account?{' '}
               <button 
-                onClick={() => window.location.href = '/Signup'}
+                onClick={() => window.location.href = '/signup'}
                 className="text-black font-medium hover:underline"
+                disabled={loading}
               >
                 Sign up
               </button>
@@ -355,7 +417,10 @@ function Login() {
           </div>
 
           <div className="pt-4">
-            <button className="text-gray-600 hover:text-gray-800 flex items-center gap-2 mx-auto">
+            <button 
+              className="text-gray-600 hover:text-gray-800 flex items-center gap-2 mx-auto"
+              disabled={loading}
+            >
               Learn more
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M19 9l-7 7-7-7" />
@@ -373,6 +438,7 @@ function Login() {
               src="https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg" 
               alt="Fashion" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
@@ -380,6 +446,7 @@ function Login() {
               src="https://i.pinimg.com/736x/94/d2/5f/94d25f091a8fd11ab557d02d4ac03979.jpg" 
               alt="Fashion" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
@@ -387,6 +454,7 @@ function Login() {
               src="https://i.pinimg.com/736x/65/dc/8e/65dc8e24c28415fba29f1dff90c9d970.jpg" 
               alt="Fashion" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
@@ -394,6 +462,7 @@ function Login() {
               src="https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg" 
               alt="Fashion" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         </div>
