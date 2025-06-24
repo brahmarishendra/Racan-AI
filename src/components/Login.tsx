@@ -151,24 +151,57 @@ function Login() {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setError(null);
+    setSuccess(null);
     
     try {
       const { data, error } = await signInWithGoogle();
       
       if (error) {
-        if (error.message.includes('Supabase is not configured')) {
-          setError('Google sign-in will be available soon. Please use email login for now.');
+        console.error('Google OAuth Error Details:', error);
+        
+        // Enhanced error handling for OAuth issues
+        if (error.message.includes('invalid_client') || 
+            error.message.includes('OAuth client was not found') ||
+            error.message.includes('401') ||
+            error.message.includes('unauthorized_client')) {
+          setError('Google sign-in configuration needs to be updated. Please use email login while we fix this issue.');
+        } else if (error.message.includes('access_denied')) {
+          setError('Google sign-in was cancelled. Please try again or use email login.');
+        } else if (error.message.includes('popup_blocked')) {
+          setError('Pop-up blocked. Please allow pop-ups for this site and try again.');
+        } else if (error.message.includes('network')) {
+          setError('Network error. Please check your connection and try again.');
+        } else if (error.message.includes('Supabase is not configured')) {
+          setError('Google sign-in is being set up. Please use email login for now.');
         } else {
-          setError(error.message || 'Google sign-in failed');
+          // Generic fallback for other OAuth errors
+          setError('Google sign-in is temporarily unavailable. Please use email login instead.');
         }
-      } else {
-        setSuccess('Redirecting to Google sign-in...');
-        // Note: For Google OAuth, the redirect happens automatically
-        // No need to manually redirect here
+      } else if (data) {
+        setSuccess('Google sign-in successful! Redirecting...');
+        // The redirect will be handled automatically by Supabase
+        setTimeout(() => {
+          window.location.replace('/');
+        }, 1500);
       }
     } catch (err) {
-      console.error('Google sign-in error:', err);
-      setError('Google sign-in failed. Please try email login.');
+      console.error('Google sign-in unexpected error:', err);
+      
+      // Handle network errors and other exceptions
+      if (err instanceof Error) {
+        if (err.message.includes('invalid_client') || 
+            err.message.includes('401') ||
+            err.message.includes('OAuth client was not found')) {
+          setError('Google sign-in is temporarily unavailable due to a configuration issue. Our team is working on it.');
+        } else if (err.message.includes('Failed to fetch') || 
+                   err.message.includes('NetworkError')) {
+          setError('Connection error. Please check your internet and try again.');
+        } else {
+          setError('Google sign-in failed. Please try email login instead.');
+        }
+      } else {
+        setError('An unexpected error occurred with Google sign-in. Please use email login.');
+      }
     } finally {
       setLoading(false);
     }
@@ -178,6 +211,7 @@ function Login() {
     setFormData({ ...formData, [field]: value });
     // Clear errors when user starts typing
     if (error) setError(null);
+    if (success) setSuccess(null);
   };
 
   // Loading screen
@@ -282,9 +316,9 @@ function Login() {
           
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-              <p className="text-red-700 text-sm">{error}</p>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-2">
+              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+              <p className="text-red-700 text-sm leading-relaxed">{error}</p>
             </div>
           )}
 
@@ -311,10 +345,10 @@ function Login() {
                       alt="Google" 
                       className="w-5 h-5"
                       onError={(e) => {
-                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCIDYuNTVDMjQgNC43MyAyMi45OSAzIDIxLjI3IDFIMS44NEMxNi45OSAxLjQ0IDE0Ljc2IDMuMjcgMTQuMTIgNi4wOUgxNy44NEMxNy44NCA2LjU1IDE3Ljg0IDYuNTUgMTcuODQgNi41NVoiIGZpbGw9IiMzNEE4NTMiLz4KPC9zdmc+';
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Ljg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
                       }}
                     />
-                    {loading ? 'Loading...' : 'Continue with Google'}
+                    {loading ? 'Connecting...' : 'Continue with Google'}
                   </button>
                 </div>
 

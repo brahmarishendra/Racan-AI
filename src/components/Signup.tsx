@@ -3,11 +3,11 @@ import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, Check, AlertCircle } from 'lu
 import { signUp, signInWithGoogle, isSupabaseConfigured } from '../lib/supabase';
 
 function Signup() {
-  const [step, setStep] = useState<'email' | 'verification' | 'password'>('email');
+  const [step, setStep] = useState('email');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '', 
@@ -21,7 +21,7 @@ function Signup() {
     }
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
@@ -108,6 +108,7 @@ function Signup() {
               onClick={handleGoBack}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-8 transition-colors"
               disabled={loading}
+              type="button"
             >
               <ArrowLeft className="w-5 h-5" />
               Back
@@ -139,11 +140,12 @@ function Signup() {
             </div>
           )}
           
-          <div className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {step === 'email' ? (
               <>
                 <div className="flex items-center justify-center w-full">
                   <button 
+                    type="button"
                     onClick={handleGoogleSignUp}
                     disabled={loading}
                     className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -177,7 +179,7 @@ function Signup() {
                 </div>
 
                 <button
-                  onClick={handleSubmit}
+                  type="submit"
                   disabled={loading || !formData.email}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -243,7 +245,7 @@ function Signup() {
                 </div>
 
                 <button
-                  onClick={handleSubmit}
+                  type="submit"
                   disabled={loading || formData.password.length < 8}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -251,10 +253,13 @@ function Signup() {
                 </button>
               </div>
             )}
-          </div>
+          </form>
 
           <div className="pt-4">
-            <button className="text-gray-600 hover:text-gray-800 flex items-center gap-2 mx-auto">
+            <button 
+              type="button"
+              className="text-gray-600 hover:text-gray-800 flex items-center gap-2 mx-auto"
+            >
               Learn more
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M19 9l-7 7-7-7" />
@@ -267,6 +272,7 @@ function Signup() {
             <p className="text-gray-600">
               Already have an account?{' '}
               <button 
+                type="button"
                 onClick={() => window.location.href = '/Login'}
                 className="text-black font-medium hover:underline"
               >
