@@ -40,6 +40,12 @@ export const signUp = async (email: string, password: string, fullName?: string)
   }
 
   try {
+    // First, check if user already exists
+    const { data: existingUser } = await supabase.auth.signInWithPassword({
+      email,
+      password: 'dummy' // This will fail but tell us if user exists
+    })
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -47,7 +53,8 @@ export const signUp = async (email: string, password: string, fullName?: string)
         emailRedirectTo: `${window.location.origin}/`,
         data: {
           full_name: fullName || email.split('@')[0],
-          name: fullName || email.split('@')[0]
+          name: fullName || email.split('@')[0],
+          email: email
         }
       }
     })
@@ -55,16 +62,16 @@ export const signUp = async (email: string, password: string, fullName?: string)
     if (error) {
       console.error('SignUp error details:', error)
       
-      // Handle specific error cases
+      // Handle specific error cases with more user-friendly messages
       if (error.message.includes('User already registered')) {
         return { 
           data: null, 
           error: { message: 'An account with this email already exists. Please sign in instead.' } 
         }
-      } else if (error.message.includes('Database error')) {
+      } else if (error.message.includes('Database error') || error.message.includes('duplicate key')) {
         return { 
           data: null, 
-          error: { message: 'There was a problem creating your account. Please try again in a moment.' } 
+          error: { message: 'An account with this email already exists. Please try signing in instead.' } 
         }
       } else if (error.message.includes('Invalid email')) {
         return { 
@@ -76,15 +83,54 @@ export const signUp = async (email: string, password: string, fullName?: string)
           data: null, 
           error: { message: 'Password must be at least 6 characters long.' } 
         }
+      } else if (error.message.includes('Signup is disabled')) {
+        return { 
+          data: null, 
+          error: { message: 'Account creation is temporarily disabled. Please try again later.' } 
+        }
+      } else if (error.message.includes('Email rate limit exceeded')) {
+        return { 
+          data: null, 
+          error: { message: 'Too many signup attempts. Please wait a moment and try again.' } 
+        }
+      } else {
+        // For any other database or server errors, provide a generic message
+        return { 
+          data: null, 
+          error: { message: 'Unable to create account at this time. Please try again in a few minutes.' } 
+        }
+      }
+    }
+    
+    // If signup was successful but user needs email confirmation
+    if (data?.user && !data.user.email_confirmed_at && !data.session) {
+      return { 
+        data, 
+        error: null,
+        message: 'Please check your email and click the verification link to complete your account setup.'
       }
     }
     
     return { data, error }
   } catch (err: any) {
     console.error('SignUp unexpected error:', err)
-    return { 
-      data: null, 
-      error: { message: err.message || 'Network error. Please check your connection and try again.' } 
+    
+    // Handle network and other unexpected errors
+    if (err.message?.includes('fetch')) {
+      return { 
+        data: null, 
+        error: { message: 'Network error. Please check your internet connection and try again.' } 
+      }
+    } else if (err.message?.includes('timeout')) {
+      return { 
+        data: null, 
+        error: { message: 'Request timed out. Please try again.' } 
+      }
+    } else {
+      return { 
+        data: null, 
+        error: { message: 'An unexpected error occurred. Please try again in a moment.' } 
+      }
     }
   }
 }
@@ -121,6 +167,11 @@ export const signIn = async (email: string, password: string) => {
         return { 
           data: null, 
           error: { message: 'Too many login attempts. Please wait a moment and try again.' } 
+        }
+      } else if (error.message.includes('User not found')) {
+        return { 
+          data: null, 
+          error: { message: 'No account found with this email. Please sign up first.' } 
         }
       }
     }
@@ -253,5 +304,30 @@ export const updateUserProfile = async (userId: string, updates: { full_name?: s
   } catch (err: any) {
     console.error('UpdateUserProfile error:', err)
     return { data: null, error: { message: err.message || 'Failed to update user profile.' } }
+  }
+}
+
+// Helper function to check if profiles table exists and create it if needed
+export const ensureProfilesTable = async () => {
+  if (!isSupabaseConfigured()) {
+    return { error: { message: 'Supabase is not configured.' } }
+  }
+
+  try {
+    // Try to query the profiles table to see if it exists
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id')
+      .limit(1)
+    
+    if (error && error.message.includes('relation "public.profiles" does not exist')) {
+      console.log('Profiles table does not exist. Please run the migration.')
+      return { error: { message: 'Database setup incomplete. Please contact support.' } }
+    }
+    
+    return { data, error: null }
+  } catch (err: any) {
+    console.error('Error checking profiles table:', err)
+    return { error: { message: 'Database connection error.' } }
   }
 }

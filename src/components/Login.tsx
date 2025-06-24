@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
-import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured } from '../lib/supabase';
+import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured, ensureProfilesTable } from '../lib/supabase';
 
 function Login() {
   const [step, setStep] = useState('email');
@@ -27,9 +27,21 @@ function Login() {
 
   // Check if Supabase is configured on component mount
   useEffect(() => {
-    if (!isSupabaseConfigured()) {
-      setError('Authentication service is not configured. Please contact support.');
-    }
+    const checkSetup = async () => {
+      if (!isSupabaseConfigured()) {
+        setError('Authentication service is not configured. Please contact support.');
+        return;
+      }
+      
+      // Check if database is properly set up
+      const { error: dbError } = await ensureProfilesTable();
+      if (dbError) {
+        console.warn('Database setup issue:', dbError.message);
+        // Don't show this error to user as it might be confusing
+      }
+    };
+    
+    checkSetup();
   }, []);
 
   // Clear messages after some time
@@ -71,8 +83,8 @@ function Login() {
         return;
       }
       
-      if (formData.password.length < 8) {
-        setError('Password must be at least 8 characters long');
+      if (formData.password.length < 6) {
+        setError('Password must be at least 6 characters long');
         return;
       }
 
@@ -88,6 +100,8 @@ function Login() {
             setError('Please check your email and click the verification link before signing in.');
           } else if (error.message.includes('Supabase is not configured')) {
             setError('Authentication service is not available. Please try again later or contact support.');
+          } else if (error.message.includes('No account found')) {
+            setError('No account found with this email. Please sign up first.');
           } else {
             setError(error.message || 'An error occurred during sign in');
           }
@@ -394,7 +408,7 @@ function Login() {
                     <input
                       type={showPassword ? "text" : "password"}
                       required
-                      minLength={8}
+                      minLength={6}
                       className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                       placeholder="Enter your password"
                       value={formData.password}
@@ -412,13 +426,13 @@ function Login() {
                   </div>
                   
                   <div className="text-sm text-gray-500">
-                    Password must be at least 8 characters long
+                    Password must be at least 6 characters long
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading || formData.password.length < 8}
+                  disabled={loading || formData.password.length < 6}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Signing in...' : 'Sign in'}

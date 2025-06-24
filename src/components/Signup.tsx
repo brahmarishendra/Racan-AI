@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
-import { signUp, signInWithGoogle, isSupabaseConfigured } from '../lib/supabase';
+import { signUp, signInWithGoogle, isSupabaseConfigured, ensureProfilesTable } from '../lib/supabase';
 
 function Signup() {
   const [step, setStep] = useState('email');
@@ -16,9 +16,21 @@ function Signup() {
 
   // Check if Supabase is configured on component mount
   useEffect(() => {
-    if (!isSupabaseConfigured()) {
-      setError('Authentication service is not configured. Please contact support.');
-    }
+    const checkSetup = async () => {
+      if (!isSupabaseConfigured()) {
+        setError('Authentication service is not configured. Please contact support.');
+        return;
+      }
+      
+      // Check if database is properly set up
+      const { error: dbError } = await ensureProfilesTable();
+      if (dbError) {
+        console.warn('Database setup issue:', dbError.message);
+        // Don't show this error to user as it might be confusing
+      }
+    };
+    
+    checkSetup();
   }, []);
 
   // Clear messages after some time
@@ -81,18 +93,22 @@ function Signup() {
       
       try {
         // Pass the full name to the signUp function
-        const { data, error } = await signUp(formData.email, formData.password, formData.name.trim());
+        const result = await signUp(formData.email, formData.password, formData.name.trim());
         
-        if (error) {
-          setError(error.message || 'An error occurred during sign up');
-        } else if (data?.user) {
-          setSuccess('Account created successfully! Please check your email for verification.');
-          setStep('verification');
-          
-          // Auto redirect after successful signup
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 3000);
+        if (result.error) {
+          setError(result.error.message || 'An error occurred during sign up');
+        } else if (result.data?.user) {
+          // Check if user needs email confirmation
+          if (!result.data.user.email_confirmed_at && !result.data.session) {
+            setSuccess('Account created! Please check your email for verification.');
+            setStep('verification');
+          } else {
+            setSuccess('Account created successfully! Redirecting...');
+            // Auto redirect after successful signup
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 2000);
+          }
         }
       } catch (err) {
         console.error('Signup error:', err);
@@ -323,8 +339,14 @@ function Signup() {
                   <span className="text-sm">Account created successfully</span>
                 </div>
                 <p className="text-sm text-gray-500">
-                  Redirecting to home page in a few seconds...
+                  Click the link in your email to verify your account, then you can sign in.
                 </p>
+                <button
+                  onClick={() => window.location.href = '/login'}
+                  className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  Go to Sign In
+                </button>
               </div>
             ) : (
               <div className="space-y-6">
