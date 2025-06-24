@@ -6,8 +6,8 @@ function Signup() {
   const [step, setStep] = useState('email');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '', 
@@ -21,16 +21,57 @@ function Signup() {
     }
   }, []);
 
-  const handleSubmit = async (e) => {
+  // Clear messages after some time
+  useEffect(() => {
+    if (error || success) {
+      const timer = setTimeout(() => {
+        setError(null);
+        setSuccess(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error, success]);
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
     
     if (step === 'email') {
-      if (formData.email) {
-        setStep('password');
+      if (!formData.email) {
+        setError('Please enter your email address');
+        return;
       }
+      
+      if (!validateEmail(formData.email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+      
+      setStep('name');
+    } else if (step === 'name') {
+      if (!formData.name.trim()) {
+        setError('Please enter your name');
+        return;
+      }
+      
+      if (formData.name.trim().length < 2) {
+        setError('Name must be at least 2 characters long');
+        return;
+      }
+      
+      setStep('password');
     } else if (step === 'password') {
+      if (!formData.password) {
+        setError('Please enter a password');
+        return;
+      }
+      
       if (formData.password.length < 8) {
         setError('Password must be at least 8 characters long');
         return;
@@ -42,12 +83,14 @@ function Signup() {
         const { data, error } = await signUp(formData.email, formData.password);
         
         if (error) {
-          if (error.message.includes('Supabase is not configured')) {
+          if (error.message.includes('User already registered')) {
+            setError('An account with this email already exists. Please sign in instead.');
+          } else if (error.message.includes('Supabase is not configured')) {
             setError('Authentication service is not available. Please try again later or contact support.');
           } else {
-            setError(error.message);
+            setError(error.message || 'An error occurred during sign up');
           }
-        } else {
+        } else if (data?.user) {
           setSuccess('Account created successfully! Please check your email for verification.');
           setStep('verification');
           
@@ -57,6 +100,7 @@ function Signup() {
           }, 3000);
         }
       } catch (err) {
+        console.error('Signup error:', err);
         setError('An unexpected error occurred. Please try again.');
       } finally {
         setLoading(false);
@@ -66,9 +110,17 @@ function Signup() {
 
   const handleGoBack = () => {
     if (step === 'password') {
+      setStep('name');
+      setError(null);
+      setSuccess(null);
+    } else if (step === 'name') {
       setStep('email');
+      setError(null);
+      setSuccess(null);
     } else if (step === 'verification') {
       setStep('email');
+      setError(null);
+      setSuccess(null);
     } else {
       window.history.back();
     }
@@ -77,24 +129,49 @@ function Signup() {
   const handleGoogleSignUp = async () => {
     setLoading(true);
     setError(null);
+    setSuccess(null);
     
     try {
       const { data, error } = await signInWithGoogle();
       
       if (error) {
-        if (error.message.includes('Supabase is not configured')) {
-          setError('Google sign-up will be available soon. Please use email signup for now.');
+        console.error('Google OAuth Error Details:', error);
+        
+        if (error.message.includes('invalid_client') || 
+            error.message.includes('OAuth client was not found') ||
+            error.message.includes('401') ||
+            error.message.includes('unauthorized_client')) {
+          setError('Google sign-up configuration needs to be updated. Please use email signup while we fix this issue.');
+        } else if (error.message.includes('access_denied')) {
+          setError('Google sign-up was cancelled. Please try again or use email signup.');
+        } else if (error.message.includes('popup_blocked')) {
+          setError('Pop-up blocked. Please allow pop-ups for this site and try again.');
+        } else if (error.message.includes('network')) {
+          setError('Network error. Please check your connection and try again.');
+        } else if (error.message.includes('Supabase is not configured')) {
+          setError('Google sign-up is being set up. Please use email signup for now.');
         } else {
-          setError(error.message);
+          setError('Google sign-up is temporarily unavailable. Please use email signup instead.');
         }
-      } else {
-        setSuccess('Redirecting to Google sign-up...');
+      } else if (data) {
+        setSuccess('Google sign-up successful! Redirecting...');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
       }
     } catch (err) {
+      console.error('Google sign-up unexpected error:', err);
       setError('Google sign-up failed. Please try email signup.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    // Clear errors when user starts typing
+    if (error) setError(null);
+    if (success) setSuccess(null);
   };
 
   return (
@@ -115,7 +192,14 @@ function Signup() {
             </button>
 
             <div className="flex items-center gap-2 mb-12">
-              <img src="https://i.postimg.cc/50B939gH/Logo.png" alt="Racan AI" className="w-8 h-8" />
+              <img 
+                src="https://i.postimg.cc/50B939gH/Logo.png" 
+                alt="Racan AI" 
+                className="w-8 h-8"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
               <span className="text-2xl font-semibold">Racan AI</span>
             </div>
             <h1 className="text-5xl font-serif mb-3">Redefine Your Style</h1>
@@ -126,9 +210,9 @@ function Signup() {
           
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-              <p className="text-red-700 text-sm">{error}</p>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-2">
+              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+              <p className="text-red-700 text-sm leading-relaxed">{error}</p>
             </div>
           )}
 
@@ -150,12 +234,14 @@ function Signup() {
                     disabled={loading}
                     className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24">
-                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
+                    <img 
+                      src="https://developers.google.com/identity/images/g-logo.png" 
+                      alt="Google" 
+                      className="w-5 h-5"
+                      onError={(e) => {
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Ljg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
+                      }}
+                    />
                     {loading ? 'Loading...' : 'Continue with Google'}
                   </button>
                 </div>
@@ -173,7 +259,7 @@ function Signup() {
                     className="w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                     placeholder="Enter your personal or work email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                     disabled={loading}
                   />
                 </div>
@@ -186,6 +272,45 @@ function Signup() {
                   {loading ? 'Loading...' : 'Continue with email'}
                 </button>
               </>
+            ) : step === 'name' ? (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-xl font-semibold mb-2">
+                    What's your name?
+                  </h2>
+                  <p className="text-gray-600">
+                    Enter your full name for {formData.email}
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="text"
+                      required
+                      minLength={2}
+                      className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                      placeholder="Enter your full name"
+                      value={formData.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      disabled={loading}
+                    />
+                  </div>
+                  
+                  <div className="text-sm text-gray-500">
+                    Name must be at least 2 characters long
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading || formData.name.trim().length < 2}
+                  className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? 'Loading...' : 'Continue'}
+                </button>
+              </div>
             ) : step === 'verification' ? (
               <div className="text-center space-y-6">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
@@ -213,20 +338,21 @@ function Signup() {
                     Create your password
                   </h2>
                   <p className="text-gray-600">
-                    Enter a secure password for {formData.email}
+                    Enter a secure password for {formData.name}
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
                       type={showPassword ? "text" : "password"}
                       required
                       minLength={8}
-                      className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                       placeholder="Create a strong password"
                       value={formData.password}
-                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      onChange={(e) => handleInputChange('password', e.target.value)}
                       disabled={loading}
                     />
                     <button
@@ -273,8 +399,9 @@ function Signup() {
               Already have an account?{' '}
               <button 
                 type="button"
-                onClick={() => window.location.href = '/Login'}
+                onClick={() => window.location.href = '/login'}
                 className="text-black font-medium hover:underline"
+                disabled={loading}
               >
                 Sign in
               </button>
@@ -291,6 +418,7 @@ function Signup() {
               src="https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg" 
               alt="Fashion" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
@@ -298,6 +426,7 @@ function Signup() {
               src="https://i.pinimg.com/736x/94/d2/5f/94d25f091a8fd11ab557d02d4ac03979.jpg" 
               alt="Fashion" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
@@ -305,6 +434,7 @@ function Signup() {
               src="https://i.pinimg.com/736x/65/dc/8e/65dc8e24c28415fba29f1dff90c9d970.jpg" 
               alt="Fashion" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
@@ -312,6 +442,7 @@ function Signup() {
               src="https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg" 
               alt="Fashion" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         </div>

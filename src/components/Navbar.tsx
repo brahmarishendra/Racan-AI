@@ -37,7 +37,7 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
-  const handleNavigation = (path) => {
+  const handleNavigation = (path: string) => {
     // Replace with your navigation logic
     console.log(`Navigate to: ${path}`);
     // For React Router: navigate(path);
@@ -80,7 +80,7 @@ const Navbar = () => {
               About us
             </a>
             <button
-              onClick={() => handleNavigation('/Login')}
+              onClick={() => handleNavigation('/login')}
               className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
             >
               Try Racan
@@ -145,7 +145,7 @@ const Navbar = () => {
           </a>
 
           <button 
-            onClick={() => handleNavigation('/Login')}
+            onClick={() => handleNavigation('/login')}
             className="mt-8 bg-black text-white px-6 py-3 rounded-full hover:bg-[#d70153] transition-all duration-300"
           >
             Try Racan
