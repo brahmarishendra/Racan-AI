@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Lock, User, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
+import { signIn, resetPassword } from '../lib/supabase';
 
 function Login() {
   const [step, setStep] = useState('email');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '', 
@@ -16,20 +20,52 @@ function Login() {
     // Simulate page loading time
     const timer = setTimeout(() => {
       setIsPageLoading(false);
-    }, 2000); // Show loading for 2 seconds
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setSuccess(null);
+    
     if (step === 'email') {
       if (formData.email) {
         setStep('password');
       }
     } else {
-      console.log('Form submitted:', formData);
-      // Handle final signup
+      if (formData.password.length < 8) {
+        setError('Password must be at least 8 characters long');
+        return;
+      }
+
+      setLoading(true);
+      
+      try {
+        const { data, error } = await signIn(formData.email, formData.password);
+        
+        if (error) {
+          if (error.message.includes('Invalid login credentials')) {
+            setError('Invalid email or password. Please check your credentials and try again.');
+          } else if (error.message.includes('Email not confirmed')) {
+            setError('Please check your email and click the verification link before signing in.');
+          } else {
+            setError(error.message);
+          }
+        } else {
+          setSuccess('Login successful! Redirecting...');
+          
+          // Redirect to home page after successful login
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1500);
+        }
+      } catch (err) {
+        setError('An unexpected error occurred. Please try again.');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -41,8 +77,42 @@ function Login() {
     }
   };
 
-  const handleForgotPassword = () => {
-    console.log('Forgot password clicked for:', formData.email);
+  const handleForgotPassword = async () => {
+    if (!formData.email) {
+      setError('Please enter your email address first');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const { error } = await resetPassword(formData.email);
+      
+      if (error) {
+        setError(error.message);
+      } else {
+        setSuccess('Password reset email sent! Check your inbox for instructions.');
+      }
+    } catch (err) {
+      setError('Failed to send password reset email. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // Note: Google OAuth setup would require additional configuration in Supabase
+      setError('Google sign-in will be available soon. Please use email login for now.');
+    } catch (err) {
+      setError('Google sign-in failed. Please try email login.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Loading screen
@@ -121,6 +191,7 @@ function Login() {
             <button 
               onClick={handleGoBack}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-8 transition-colors"
+              disabled={loading}
             >
               <ArrowLeft className="w-5 h-5" />
               Back
@@ -130,19 +201,39 @@ function Login() {
               <img src="https://i.postimg.cc/50B939gH/Logo.png" alt="Racan AI" className="w-8 h-8" />
               <span className="text-2xl font-semibold">Racan AI</span>
             </div>
-            <h1 className="text-5xl font-serif mb-3">Redefine Your Style</h1>
+            <h1 className="text-5xl font-serif mb-3">Welcome Back</h1>
             <p className="text-gray-600 text-lg">
-              Experience the future of fashion with AI-powered recommendations that match your unique taste.
+              Sign in to continue your fashion journey with AI-powered recommendations.
             </p>
           </div>
+          
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+              <p className="text-red-700 text-sm">{error}</p>
+            </div>
+          )}
+
+          {/* Success Message */}
+          {success && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-2">
+              <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <p className="text-green-700 text-sm">{success}</p>
+            </div>
+          )}
           
           <div className="space-y-6">
             {step === 'email' ? (
               <>
                 <div className="flex items-center justify-center w-full">
-                  <button className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                  <button 
+                    onClick={handleGoogleSignIn}
+                    disabled={loading}
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
                     <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" className="w-5 h-5" />
-                    Continue with Google
+                    {loading ? 'Loading...' : 'Continue with Google'}
                   </button>
                 </div>
 
@@ -152,26 +243,26 @@ function Login() {
                   <div className="flex-1 border-t border-gray-300"></div>
                 </div>
 
-                <div onSubmit={handleSubmit}>
-                  <div className="space-y-4">
-                    <input
-                      type="email"
-                      required
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                      placeholder="Enter your personal or work email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors"
-                  >
-                    Continue with email
-                  </button>
+                <div className="space-y-4">
+                  <input
+                    type="email"
+                    required
+                    className="w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                    placeholder="Enter your personal or work email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    disabled={loading}
+                  />
                 </div>
+
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={loading || !formData.email}
+                  className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? 'Loading...' : 'Continue with email'}
+                </button>
               </>
             ) : (
               <div className="space-y-6">
@@ -180,56 +271,54 @@ function Login() {
                     Enter your password
                   </h2>
                   <p className="text-gray-600">
-                   secure password for your account
+                    Enter your password for {formData.email}
                   </p>
                 </div>
 
-                <div onSubmit={handleSubmit}>
-                  <div className="space-y-4">
-                    <div className="relative">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        required
-                        minLength={8}
-                        className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                        placeholder="your password"
-                        value={formData.password}
-                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                      >
-                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                      </button>
-                    </div>
-                    
-                    <div className="text-sm text-gray-500">
-                      Password must be at least 8 characters long
-                    </div>
+                <div className="space-y-4">
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      required
+                      minLength={8}
+                      className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                      placeholder="Enter your password"
+                      value={formData.password}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      disabled={loading}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      disabled={loading}
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
                   </div>
-
-                  <link rel="stylesheet" href="./Signup" />
-                  <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors"
-                    disabled={formData.password.length < 8}
-                  >
-                    Login 
-                  </button>
-
-                  <link/>
-
-                  <button
-                    type="button"
-                    onClick={handleForgotPassword}
-                    className="mt-4 w-full text-gray-600 hover:text-gray-800 transition-colors"
-                  >
-                    Forgot password?
-                  </button>
+                  
+                  <div className="text-sm text-gray-500">
+                    Password must be at least 8 characters long
+                  </div>
                 </div>
+
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={loading || formData.password.length < 8}
+                  className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? 'Signing in...' : 'Sign in'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  disabled={loading}
+                  className="mt-4 w-full text-gray-600 hover:text-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Forgot password?
+                </button>
               </div>
             )}
           </div>
@@ -237,12 +326,13 @@ function Login() {
           {/* Create an account link at the bottom */}
           <div className="pt-4 border-t border-gray-200">
             <p className="text-center text-gray-600">
-              Already have an account?{' '}
-              <link rel="stylesheet" href="/Signup" />
-              <button className="text-black font-medium hover:underline">
+              Don't have an account?{' '}
+              <button 
+                onClick={() => window.location.href = '/Signup'}
+                className="text-black font-medium hover:underline"
+              >
                 Sign up
               </button>
-              <link/>
             </p>
           </div>
 
