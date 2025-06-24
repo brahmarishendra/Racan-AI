@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
-import { signIn, resetPassword } from '../lib/supabase';
+import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured } from '../lib/supabase';
 
 function Login() {
   const [step, setStep] = useState('email');
@@ -23,6 +23,13 @@ function Login() {
     }, 2000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Check if Supabase is configured on component mount
+  useEffect(() => {
+    if (!isSupabaseConfigured()) {
+      setError('Authentication service is not configured. Please contact support.');
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,6 +57,8 @@ function Login() {
             setError('Invalid email or password. Please check your credentials and try again.');
           } else if (error.message.includes('Email not confirmed')) {
             setError('Please check your email and click the verification link before signing in.');
+          } else if (error.message.includes('Supabase is not configured')) {
+            setError('Authentication service is not available. Please try again later or contact support.');
           } else {
             setError(error.message);
           }
@@ -106,8 +115,17 @@ function Login() {
     setError(null);
     
     try {
-      // Note: Google OAuth setup would require additional configuration in Supabase
-      setError('Google sign-in will be available soon. Please use email login for now.');
+      const { data, error } = await signInWithGoogle();
+      
+      if (error) {
+        if (error.message.includes('Supabase is not configured')) {
+          setError('Google sign-in will be available soon. Please use email login for now.');
+        } else {
+          setError(error.message);
+        }
+      } else {
+        setSuccess('Redirecting to Google sign-in...');
+      }
     } catch (err) {
       setError('Google sign-in failed. Please try email login.');
     } finally {

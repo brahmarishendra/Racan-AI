@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
-import { signUp } from '../lib/supabase';
+import { signUp, signInWithGoogle, isSupabaseConfigured } from '../lib/supabase';
 
 function Signup() {
   const [step, setStep] = useState<'email' | 'verification' | 'password'>('email');
@@ -13,6 +13,13 @@ function Signup() {
     email: '', 
     password: '',
   });
+
+  // Check if Supabase is configured on component mount
+  useEffect(() => {
+    if (!isSupabaseConfigured()) {
+      setError('Authentication service is not configured. Please contact support.');
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +42,11 @@ function Signup() {
         const { data, error } = await signUp(formData.email, formData.password);
         
         if (error) {
-          setError(error.message);
+          if (error.message.includes('Supabase is not configured')) {
+            setError('Authentication service is not available. Please try again later or contact support.');
+          } else {
+            setError(error.message);
+          }
         } else {
           setSuccess('Account created successfully! Please check your email for verification.');
           setStep('verification');
@@ -68,8 +79,17 @@ function Signup() {
     setError(null);
     
     try {
-      // Note: Google OAuth setup would require additional configuration in Supabase
-      setError('Google sign-up will be available soon. Please use email signup for now.');
+      const { data, error } = await signInWithGoogle();
+      
+      if (error) {
+        if (error.message.includes('Supabase is not configured')) {
+          setError('Google sign-up will be available soon. Please use email signup for now.');
+        } else {
+          setError(error.message);
+        }
+      } else {
+        setSuccess('Redirecting to Google sign-up...');
+      }
     } catch (err) {
       setError('Google sign-up failed. Please try email signup.');
     } finally {
