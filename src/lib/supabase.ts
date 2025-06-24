@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Get environment variables with proper fallbacks
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+// Your actual Supabase credentials
+const supabaseUrl = 'https://cedrbmkbynekmvqxyyus.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZHJibWtieW5la212cXh5eXVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4NzYyOTUsImV4cCI6MjA2MzQ1MjI5NX0.Dnz2ikHRACKLrqd5KmDJaJ9TJQw801mL0g-Zvs68t74'
 
 // Validate environment variables
 if (!supabaseUrl || !supabaseAnonKey) {
@@ -11,8 +11,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 // Create Supabase client with error handling
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co', 
-  supabaseAnonKey || 'placeholder-key',
+  supabaseUrl, 
+  supabaseAnonKey,
   {
     auth: {
       autoRefreshToken: true,
