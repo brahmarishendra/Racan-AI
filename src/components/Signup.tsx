@@ -72,24 +72,19 @@ function Signup() {
         return;
       }
       
-      if (formData.password.length < 8) {
-        setError('Password must be at least 8 characters long');
+      if (formData.password.length < 6) {
+        setError('Password must be at least 6 characters long');
         return;
       }
 
       setLoading(true);
       
       try {
-        const { data, error } = await signUp(formData.email, formData.password);
+        // Pass the full name to the signUp function
+        const { data, error } = await signUp(formData.email, formData.password, formData.name.trim());
         
         if (error) {
-          if (error.message.includes('User already registered')) {
-            setError('An account with this email already exists. Please sign in instead.');
-          } else if (error.message.includes('Supabase is not configured')) {
-            setError('Authentication service is not available. Please try again later or contact support.');
-          } else {
-            setError(error.message || 'An error occurred during sign up');
-          }
+          setError(error.message || 'An error occurred during sign up');
         } else if (data?.user) {
           setSuccess('Account created successfully! Please check your email for verification.');
           setStep('verification');
@@ -348,7 +343,7 @@ function Signup() {
                     <input
                       type={showPassword ? "text" : "password"}
                       required
-                      minLength={8}
+                      minLength={6}
                       className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                       placeholder="Create a strong password"
                       value={formData.password}
@@ -366,13 +361,13 @@ function Signup() {
                   </div>
                   
                   <div className="text-sm text-gray-500">
-                    Password must be at least 8 characters long
+                    Password must be at least 6 characters long
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading || formData.password.length < 8}
+                  disabled={loading || formData.password.length < 6}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Creating account...' : 'Create account'}
