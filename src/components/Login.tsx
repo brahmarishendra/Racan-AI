@@ -95,24 +95,14 @@ function Login() {
         const { data, error } = await signIn(formData.email, formData.password);
         
         if (error) {
-          if (error.message.includes('Invalid login credentials')) {
-            setError('Invalid email or password. Please check your credentials and try again.');
-          } else if (error.message.includes('Email not confirmed')) {
-            setError('Please check your email and click the verification link before signing in.');
-          } else if (error.message.includes('Supabase is not configured')) {
-            setError('Authentication service is not available. Please try again later or contact support.');
-          } else if (error.message.includes('No account found')) {
-            setError('No account found with this email. Please sign up first.');
-          } else {
-            setError(error.message || 'An error occurred during sign in');
-          }
+          setError(error.message);
         } else if (data?.user) {
           setSuccess('Login successful! Redirecting...');
           
           // Use proper navigation instead of window.location.href
           setTimeout(() => {
             window.location.replace('/');
-          }, 1500);
+          }, 1000);
         }
       } catch (err) {
         console.error('Login error:', err);
@@ -129,7 +119,7 @@ function Login() {
       setError(null);
       setSuccess(null);
     } else {
-      // Navigate to home page instead of browser back
+      // Navigate to home page
       window.location.href = '/';
     }
   };
@@ -174,50 +164,17 @@ function Login() {
       
       if (error) {
         console.error('Google OAuth Error Details:', error);
-        
-        // Enhanced error handling for OAuth issues
-        if (error.message.includes('invalid_client') || 
-            error.message.includes('OAuth client was not found') ||
-            error.message.includes('401') ||
-            error.message.includes('unauthorized_client')) {
-          setError('Google sign-in configuration needs to be updated. Please use email login while we fix this issue.');
-        } else if (error.message.includes('access_denied')) {
-          setError('Google sign-in was cancelled. Please try again or use email login.');
-        } else if (error.message.includes('popup_blocked')) {
-          setError('Pop-up blocked. Please allow pop-ups for this site and try again.');
-        } else if (error.message.includes('network')) {
-          setError('Network error. Please check your connection and try again.');
-        } else if (error.message.includes('Supabase is not configured')) {
-          setError('Google sign-in is being set up. Please use email login for now.');
-        } else {
-          // Generic fallback for other OAuth errors
-          setError('Google sign-in is temporarily unavailable. Please use email login instead.');
-        }
+        setError('Google sign-in is temporarily unavailable. Please use email login instead.');
       } else if (data) {
         setSuccess('Google sign-in successful! Redirecting...');
         // The redirect will be handled automatically by Supabase
         setTimeout(() => {
           window.location.replace('/');
-        }, 1500);
+        }, 1000);
       }
     } catch (err) {
       console.error('Google sign-in unexpected error:', err);
-      
-      // Handle network errors and other exceptions
-      if (err instanceof Error) {
-        if (err.message.includes('invalid_client') || 
-            err.message.includes('401') ||
-            err.message.includes('OAuth client was not found')) {
-          setError('Google sign-in is temporarily unavailable due to a configuration issue. Our team is working on it.');
-        } else if (err.message.includes('Failed to fetch') || 
-                   err.message.includes('NetworkError')) {
-          setError('Connection error. Please check your internet and try again.');
-        } else {
-          setError('Google sign-in failed. Please try email login instead.');
-        }
-      } else {
-        setError('An unexpected error occurred with Google sign-in. Please use email login.');
-      }
+      setError('Google sign-in failed. Please try email login instead.');
     } finally {
       setLoading(false);
     }

@@ -108,7 +108,7 @@ function Signup() {
         const result = await signUp(formData.email, formData.password, formData.name.trim());
         
         if (result.error) {
-          setError(result.error.message || 'An error occurred during sign up');
+          setError(result.error.message);
         } else if (result.data?.user) {
           // Check if user needs email confirmation
           if (!result.data.user.email_confirmed_at && !result.data.session) {
@@ -119,7 +119,7 @@ function Signup() {
             // Auto redirect after successful signup
             setTimeout(() => {
               window.location.href = '/';
-            }, 2000);
+            }, 1000);
           }
         }
       } catch (err) {
@@ -145,7 +145,7 @@ function Signup() {
       setError(null);
       setSuccess(null);
     } else {
-      // Navigate to home page instead of browser back
+      // Navigate to home page
       window.location.href = '/';
     }
   };
@@ -160,28 +160,12 @@ function Signup() {
       
       if (error) {
         console.error('Google OAuth Error Details:', error);
-        
-        if (error.message.includes('invalid_client') || 
-            error.message.includes('OAuth client was not found') ||
-            error.message.includes('401') ||
-            error.message.includes('unauthorized_client')) {
-          setError('Google sign-up configuration needs to be updated. Please use email signup while we fix this issue.');
-        } else if (error.message.includes('access_denied')) {
-          setError('Google sign-up was cancelled. Please try again or use email signup.');
-        } else if (error.message.includes('popup_blocked')) {
-          setError('Pop-up blocked. Please allow pop-ups for this site and try again.');
-        } else if (error.message.includes('network')) {
-          setError('Network error. Please check your connection and try again.');
-        } else if (error.message.includes('Supabase is not configured')) {
-          setError('Google sign-up is being set up. Please use email signup for now.');
-        } else {
-          setError('Google sign-up is temporarily unavailable. Please use email signup instead.');
-        }
+        setError('Google sign-up is temporarily unavailable. Please use email signup instead.');
       } else if (data) {
         setSuccess('Google sign-up successful! Redirecting...');
         setTimeout(() => {
           window.location.href = '/';
-        }, 1500);
+        }, 1000);
       }
     } catch (err) {
       console.error('Google sign-up unexpected error:', err);

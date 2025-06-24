@@ -35,7 +35,7 @@ export const signUp = async (email: string, password: string, fullName?: string)
   if (!isSupabaseConfigured()) {
     return { 
       data: null, 
-      error: { message: 'Supabase is not configured. Please set up your environment variables.' } 
+      error: { message: 'Authentication service is not configured. Please contact support.' } 
     }
   }
 
@@ -88,20 +88,10 @@ export const signUp = async (email: string, password: string, fullName?: string)
           error: { message: 'Too many signup attempts. Please wait a moment and try again.' } 
         }
       } else {
-        // For any other database or server errors, provide a generic message
         return { 
           data: null, 
-          error: { message: 'Unable to create account at this time. Please try again in a few minutes.' } 
+          error: { message: error.message || 'Unable to create account. Please try again.' } 
         }
-      }
-    }
-    
-    // If signup was successful but user needs email confirmation
-    if (data?.user && !data.user.email_confirmed_at && !data.session) {
-      return { 
-        data, 
-        error: null,
-        message: 'Please check your email and click the verification link to complete your account setup.'
       }
     }
     
@@ -133,7 +123,7 @@ export const signIn = async (email: string, password: string) => {
   if (!isSupabaseConfigured()) {
     return { 
       data: null, 
-      error: { message: 'Supabase is not configured. Please set up your environment variables.' } 
+      error: { message: 'Authentication service is not configured. Please contact support.' } 
     }
   }
 
@@ -167,6 +157,11 @@ export const signIn = async (email: string, password: string) => {
           data: null, 
           error: { message: 'No account found with this email. Please sign up first.' } 
         }
+      } else {
+        return { 
+          data: null, 
+          error: { message: error.message || 'Sign in failed. Please try again.' } 
+        }
       }
     }
     
@@ -182,7 +177,7 @@ export const signIn = async (email: string, password: string) => {
 
 export const signOut = async () => {
   if (!isSupabaseConfigured()) {
-    return { error: { message: 'Supabase is not configured.' } }
+    return { error: { message: 'Authentication service is not configured.' } }
   }
 
   try {
@@ -196,7 +191,7 @@ export const signOut = async () => {
 
 export const getCurrentUser = async () => {
   if (!isSupabaseConfigured()) {
-    return { user: null, error: { message: 'Supabase is not configured.' } }
+    return { user: null, error: { message: 'Authentication service is not configured.' } }
   }
 
   try {
@@ -212,7 +207,7 @@ export const resetPassword = async (email: string) => {
   if (!isSupabaseConfigured()) {
     return { 
       data: null, 
-      error: { message: 'Supabase is not configured. Please set up your environment variables.' } 
+      error: { message: 'Authentication service is not configured. Please contact support.' } 
     }
   }
 
@@ -235,7 +230,7 @@ export const signInWithGoogle = async () => {
   if (!isSupabaseConfigured()) {
     return { 
       data: null, 
-      error: { message: 'Supabase is not configured. Please set up your environment variables.' } 
+      error: { message: 'Authentication service is not configured. Please contact support.' } 
     }
   }
 
@@ -269,7 +264,7 @@ export const onAuthStateChange = (callback: (event: string, session: any) => voi
 export const isAuthenticated = async () => {
   try {
     const { data: { session } } = await supabase.auth.getSession()
-    return !!session
+    return !!session?.user
   } catch (error) {
     console.error('Error checking auth state:', error)
     return false
