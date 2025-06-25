@@ -69,6 +69,30 @@ function Signup() {
     return emailRegex.test(email);
   };
 
+  const validatePassword = (password: string) => {
+    // Check for minimum length
+    if (password.length < 6) {
+      return { isValid: false, message: 'Password must be at least 6 characters long' };
+    }
+    
+    // Check for uppercase letter
+    if (!/[A-Z]/.test(password)) {
+      return { isValid: false, message: 'Password must contain at least one uppercase letter' };
+    }
+    
+    // Check for lowercase letter
+    if (!/[a-z]/.test(password)) {
+      return { isValid: false, message: 'Password must contain at least one lowercase letter' };
+    }
+    
+    // Check for number
+    if (!/[0-9]/.test(password)) {
+      return { isValid: false, message: 'Password must contain at least one number' };
+    }
+    
+    return { isValid: true, message: '' };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -104,8 +128,9 @@ function Signup() {
         return;
       }
       
-      if (formData.password.length < 6) {
-        setError('Password must be at least 6 characters long');
+      const passwordValidation = validatePassword(formData.password);
+      if (!passwordValidation.isValid) {
+        setError(passwordValidation.message);
         return;
       }
 
@@ -189,16 +214,16 @@ function Signup() {
     if (success) setSuccess(null);
   };
 
-  // Quick test signup function
+  // Quick test signup function with stronger password
   const handleQuickSignup = async () => {
     setLoading(true);
     setError(null);
     setSuccess(null);
     
-    // Generate random test credentials
+    // Generate random test credentials with strong password
     const randomId = Math.random().toString(36).substring(7);
     const testEmail = `test${randomId}@racan.ai`;
-    const testPassword = 'test123456';
+    const testPassword = `Test123${randomId}`; // Strong password with uppercase, lowercase, and numbers
     const testName = `Test User ${randomId}`;
     
     try {
@@ -436,13 +461,18 @@ function Signup() {
                   </div>
                   
                   <div className="text-sm text-gray-500">
-                    Password must be at least 6 characters long
+                    Password must be at least 6 characters long and contain:
+                    <ul className="list-disc list-inside mt-1 space-y-1">
+                      <li>At least one uppercase letter (A-Z)</li>
+                      <li>At least one lowercase letter (a-z)</li>
+                      <li>At least one number (0-9)</li>
+                    </ul>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading || formData.password.length < 6}
+                  disabled={loading || !validatePassword(formData.password).isValid}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Creating account...' : 'Create account'}

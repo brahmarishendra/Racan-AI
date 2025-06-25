@@ -40,20 +40,7 @@ export const signUp = async (email: string, password: string, fullName?: string)
   }
 
   try {
-    // First check if user already exists
-    const { data: existingUser } = await supabase
-      .from('auth.users')
-      .select('email')
-      .eq('email', email)
-      .single()
-
-    if (existingUser) {
-      return { 
-        data: null, 
-        error: { message: 'An account with this email already exists. Please sign in instead.' } 
-      }
-    }
-
+    // Remove the problematic check for existing users - Supabase handles this internally
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -86,10 +73,15 @@ export const signUp = async (email: string, password: string, fullName?: string)
           data: null, 
           error: { message: 'Please enter a valid email address.' } 
         }
-      } else if (error.message.includes('Password should be at least')) {
+      } else if (error.message.includes('Password should be at least') || error.message.includes('weak_password')) {
         return { 
           data: null, 
-          error: { message: 'Password must be at least 6 characters long.' } 
+          error: { message: 'Password must be at least 6 characters long and contain uppercase, lowercase, and numeric characters.' } 
+        }
+      } else if (error.message.includes('Password should contain at least one character')) {
+        return { 
+          data: null, 
+          error: { message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number.' } 
         }
       } else if (error.message.includes('Signup is disabled')) {
         return { 
@@ -100,6 +92,11 @@ export const signUp = async (email: string, password: string, fullName?: string)
         return { 
           data: null, 
           error: { message: 'Too many signup attempts. Please wait a moment and try again.' } 
+        }
+      } else if (error.message.includes('Error sending confirmation email')) {
+        return { 
+          data: null, 
+          error: { message: 'Account created but email confirmation failed. Please contact support to verify your account.' } 
         }
       } else {
         return { 

@@ -69,6 +69,30 @@ function Login() {
     return emailRegex.test(email);
   };
 
+  const validatePassword = (password: string) => {
+    // Check for minimum length
+    if (password.length < 6) {
+      return { isValid: false, message: 'Password must be at least 6 characters long' };
+    }
+    
+    // Check for uppercase letter
+    if (!/[A-Z]/.test(password)) {
+      return { isValid: false, message: 'Password must contain at least one uppercase letter' };
+    }
+    
+    // Check for lowercase letter
+    if (!/[a-z]/.test(password)) {
+      return { isValid: false, message: 'Password must contain at least one lowercase letter' };
+    }
+    
+    // Check for number
+    if (!/[0-9]/.test(password)) {
+      return { isValid: false, message: 'Password must contain at least one number' };
+    }
+    
+    return { isValid: true, message: '' };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -92,6 +116,8 @@ function Login() {
         return;
       }
       
+      // For login, we don't need to validate password strength as strictly
+      // since existing users might have passwords that don't meet current requirements
       if (formData.password.length < 6) {
         setError('Password must be at least 6 characters long');
         return;
@@ -193,15 +219,15 @@ function Login() {
     if (success) setSuccess(null);
   };
 
-  // Quick test login function
+  // Quick test login function with stronger password
   const handleQuickLogin = async () => {
     setLoading(true);
     setError(null);
     setSuccess(null);
     
-    // Use test credentials
+    // Use test credentials with strong password
     const testEmail = 'test@racan.ai';
-    const testPassword = 'test123456';
+    const testPassword = 'Test123456'; // Strong password with uppercase, lowercase, and numbers
     
     try {
       const { data, error } = await signIn(testEmail, testPassword);
