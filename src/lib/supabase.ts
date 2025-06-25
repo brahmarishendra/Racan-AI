@@ -88,15 +88,20 @@ export const signUp = async (email: string, password: string, fullName?: string)
           data: null, 
           error: { message: 'Account creation is temporarily disabled. Please try again later.' } 
         }
-      } else if (error.message.includes('Email rate limit exceeded')) {
+      } else if (error.message.includes('Email rate limit exceeded') || error.message.includes('over_email_send_rate_limit')) {
         return { 
           data: null, 
-          error: { message: 'Too many signup attempts. Please wait a moment and try again.' } 
+          error: { message: 'Too many signup attempts. Please wait 10-15 minutes before trying again, or try signing in if you already have an account.' } 
         }
       } else if (error.message.includes('Error sending confirmation email')) {
         return { 
           data: null, 
           error: { message: 'Account created but email confirmation failed. Please contact support to verify your account.' } 
+        }
+      } else if (error.message.includes('rate limit') || error.status === 429) {
+        return { 
+          data: null, 
+          error: { message: 'Too many requests. Please wait 10-15 minutes before trying again.' } 
         }
       } else {
         return { 
@@ -120,6 +125,11 @@ export const signUp = async (email: string, password: string, fullName?: string)
       return { 
         data: null, 
         error: { message: 'Request timed out. Please try again.' } 
+      }
+    } else if (err.status === 429 || err.message?.includes('rate limit')) {
+      return { 
+        data: null, 
+        error: { message: 'Too many requests. Please wait 10-15 minutes before trying again.' } 
       }
     } else {
       return { 
@@ -158,10 +168,10 @@ export const signIn = async (email: string, password: string) => {
           data: null, 
           error: { message: 'Please check your email and click the verification link before signing in.' } 
         }
-      } else if (error.message.includes('Too many requests')) {
+      } else if (error.message.includes('Too many requests') || error.status === 429) {
         return { 
           data: null, 
-          error: { message: 'Too many login attempts. Please wait a moment and try again.' } 
+          error: { message: 'Too many login attempts. Please wait 10-15 minutes and try again.' } 
         }
       } else if (error.message.includes('User not found')) {
         return { 
@@ -179,6 +189,12 @@ export const signIn = async (email: string, password: string) => {
     return { data, error }
   } catch (err: any) {
     console.error('SignIn unexpected error:', err)
+    if (err.status === 429 || err.message?.includes('rate limit')) {
+      return { 
+        data: null, 
+        error: { message: 'Too many requests. Please wait 10-15 minutes and try again.' } 
+      }
+    }
     return { 
       data: null, 
       error: { message: err.message || 'Network error. Please check your connection and try again.' } 
@@ -226,9 +242,23 @@ export const resetPassword = async (email: string) => {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`
     })
+    
+    if (error && (error.status === 429 || error.message?.includes('rate limit'))) {
+      return { 
+        data: null, 
+        error: { message: 'Too many password reset requests. Please wait 10-15 minutes before trying again.' } 
+      }
+    }
+    
     return { data, error }
   } catch (err: any) {
     console.error('ResetPassword error:', err)
+    if (err.status === 429 || err.message?.includes('rate limit')) {
+      return { 
+        data: null, 
+        error: { message: 'Too many requests. Please wait 10-15 minutes before trying again.' } 
+      }
+    }
     return { 
       data: null, 
       error: { message: err.message || 'Network error. Please try again.' } 
@@ -260,6 +290,12 @@ export const signInWithGoogle = async () => {
     
     if (error) {
       console.error('Google OAuth error:', error)
+      if (error.status === 429 || error.message?.includes('rate limit')) {
+        return { 
+          data: null, 
+          error: { message: 'Too many requests. Please wait 10-15 minutes before trying again.' } 
+        }
+      }
       return { 
         data: null, 
         error: { message: 'Google sign-in failed. Please try again or use email login.' } 
@@ -269,6 +305,12 @@ export const signInWithGoogle = async () => {
     return { data, error }
   } catch (err: any) {
     console.error('Google SignIn unexpected error:', err)
+    if (err.status === 429 || err.message?.includes('rate limit')) {
+      return { 
+        data: null, 
+        error: { message: 'Too many requests. Please wait 10-15 minutes before trying again.' } 
+      }
+    }
     return { 
       data: null, 
       error: { message: 'Google sign-in failed. Please try again or use email login.' } 
@@ -362,15 +404,4 @@ export const updateUserProfile = async (userId: string, updates: { full_name?: s
 export const ensureProfilesTable = async () => {
   // Since we're not using profiles table, just return success
   return { error: null, profilesTableExists: false }
-}
-
-// Manual auth functions for testing
-export const createTestUser = async (email: string, password: string, fullName: string) => {
-  console.log('Creating test user:', { email, fullName })
-  return await signUp(email, password, fullName)
-}
-
-export const loginTestUser = async (email: string, password: string) => {
-  console.log('Logging in test user:', email)
-  return await signIn(email, password)
 }

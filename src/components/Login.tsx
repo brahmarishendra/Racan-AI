@@ -59,7 +59,7 @@ function Login() {
       const timer = setTimeout(() => {
         setError(null);
         setSuccess(null);
-      }, 5000);
+      }, 8000); // Increased timeout for better UX
       return () => clearTimeout(timer);
     }
   }, [error, success]);
@@ -219,35 +219,6 @@ function Login() {
     if (success) setSuccess(null);
   };
 
-  // Quick test login function with stronger password
-  const handleQuickLogin = async () => {
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
-    
-    // Use test credentials with strong password
-    const testEmail = 'test@racan.ai';
-    const testPassword = 'Test123456'; // Strong password with uppercase, lowercase, and numbers
-    
-    try {
-      const { data, error } = await signIn(testEmail, testPassword);
-      
-      if (error) {
-        setError('Test login failed. Please use manual login.');
-      } else if (data?.user) {
-        setSuccess('Test login successful! Redirecting...');
-        setTimeout(() => {
-          window.location.replace('/');
-        }, 1000);
-      }
-    } catch (err) {
-      console.error('Test login error:', err);
-      setError('Test login failed. Please use manual login.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen w-full flex">
       {/* Left side - Sign in form */}
@@ -285,7 +256,14 @@ function Login() {
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-2">
               <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-              <p className="text-red-700 text-sm leading-relaxed">{error}</p>
+              <div className="flex-1">
+                <p className="text-red-700 text-sm leading-relaxed">{error}</p>
+                {error.includes('rate limit') && (
+                  <p className="text-red-600 text-xs mt-2">
+                    Please wait a few minutes before trying again.
+                  </p>
+                )}
+              </div>
             </div>
           )}
 
@@ -296,21 +274,6 @@ function Login() {
               <p className="text-green-700 text-sm">{success}</p>
             </div>
           )}
-
-          {/* Quick Test Login */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-blue-800 mb-2">Quick Test Login</h3>
-            <p className="text-xs text-blue-600 mb-3">
-              Use this for testing the application without creating an account
-            </p>
-            <button
-              onClick={handleQuickLogin}
-              disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-            >
-              {loading ? 'Signing in...' : 'Test Login (test@racan.ai)'}
-            </button>
-          </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             {step === 'email' ? (
