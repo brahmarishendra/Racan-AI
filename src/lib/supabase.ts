@@ -40,6 +40,20 @@ export const signUp = async (email: string, password: string, fullName?: string)
   }
 
   try {
+    // First check if user already exists
+    const { data: existingUser } = await supabase
+      .from('auth.users')
+      .select('email')
+      .eq('email', email)
+      .single()
+
+    if (existingUser) {
+      return { 
+        data: null, 
+        error: { message: 'An account with this email already exists. Please sign in instead.' } 
+      }
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -137,7 +151,7 @@ export const signIn = async (email: string, password: string) => {
       console.error('SignIn error details:', error)
       
       // Handle specific error cases
-      if (error.message.includes('Invalid login credentials')) {
+      if (error.message.includes('Invalid login credentials') || error.message.includes('invalid_credentials')) {
         return { 
           data: null, 
           error: { message: 'Invalid email or password. Please check your credentials and try again.' } 
@@ -351,4 +365,15 @@ export const updateUserProfile = async (userId: string, updates: { full_name?: s
 export const ensureProfilesTable = async () => {
   // Since we're not using profiles table, just return success
   return { error: null, profilesTableExists: false }
+}
+
+// Manual auth functions for testing
+export const createTestUser = async (email: string, password: string, fullName: string) => {
+  console.log('Creating test user:', { email, fullName })
+  return await signUp(email, password, fullName)
+}
+
+export const loginTestUser = async (email: string, password: string) => {
+  console.log('Logging in test user:', email)
+  return await signIn(email, password)
 }

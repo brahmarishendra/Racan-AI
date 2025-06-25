@@ -189,6 +189,37 @@ function Signup() {
     if (success) setSuccess(null);
   };
 
+  // Quick test signup function
+  const handleQuickSignup = async () => {
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+    
+    // Generate random test credentials
+    const randomId = Math.random().toString(36).substring(7);
+    const testEmail = `test${randomId}@racan.ai`;
+    const testPassword = 'test123456';
+    const testName = `Test User ${randomId}`;
+    
+    try {
+      const result = await signUp(testEmail, testPassword, testName);
+      
+      if (result.error) {
+        setError('Test signup failed. Please use manual signup.');
+      } else if (result.data?.user) {
+        setSuccess('Test account created successfully! Redirecting...');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
+      }
+    } catch (err) {
+      console.error('Test signup error:', err);
+      setError('Test signup failed. Please use manual signup.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full flex">
       {/* Left side - Sign up form */}
@@ -238,6 +269,21 @@ function Signup() {
               <p className="text-green-700 text-sm">{success}</p>
             </div>
           )}
+
+          {/* Quick Test Signup */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="text-sm font-medium text-blue-800 mb-2">Quick Test Signup</h3>
+            <p className="text-xs text-blue-600 mb-3">
+              Create a test account instantly to try the application
+            </p>
+            <button
+              onClick={handleQuickSignup}
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+            >
+              {loading ? 'Creating account...' : 'Create Test Account'}
+            </button>
+          </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             {step === 'email' ? (
