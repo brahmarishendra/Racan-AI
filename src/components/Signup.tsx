@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
-import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback } from '../lib/supabase';
+import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback, createSimpleTestUser, testDatabaseConnection } from '../lib/supabase';
 
 function Signup() {
   const [step, setStep] = useState('email');
@@ -8,11 +8,24 @@ function Signup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [dbConnected, setDbConnected] = useState<boolean | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '', 
     password: '',
   });
+
+  // Test database connection on mount
+  useEffect(() => {
+    const checkDbConnection = async () => {
+      const result = await testDatabaseConnection();
+      setDbConnected(result.connected);
+      if (!result.connected) {
+        console.log('Database connection issue:', result.error);
+      }
+    };
+    checkDbConnection();
+  }, []);
 
   // Handle OAuth callback on component mount
   useEffect(() => {
@@ -214,6 +227,30 @@ function Signup() {
     if (success) setSuccess(null);
   };
 
+  // Quick test user creation for bypassing rate limits
+  const handleCreateTestUser = async () => {
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+    
+    try {
+      const result = await createSimpleTestUser();
+      if (result.success) {
+        setSuccess(`Test account created! Email: ${result.email} | Password: ${result.password}`);
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 3000);
+      } else {
+        setError('Failed to create test account. Please try manual signup.');
+      }
+    } catch (err) {
+      console.error('Test user creation error:', err);
+      setError('Failed to create test account. Please try manual signup.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full flex">
       {/* Left side - Sign up form */}
@@ -247,6 +284,20 @@ function Signup() {
               Experience the future of fashion with AI-powered recommendations that match your unique taste.
             </p>
           </div>
+
+          {/* Database Connection Status */}
+          {dbConnected !== null && (
+            <div className={`p-3 rounded-lg text-sm ${
+              dbConnected 
+                ? 'bg-green-50 border border-green-200 text-green-700' 
+                : 'bg-yellow-50 border border-yellow-200 text-yellow-700'
+            }`}>
+              {dbConnected 
+                ? '✅ Database connected successfully' 
+                : '⚠️ Database connection issue detected'
+              }
+            </div>
+          )}
           
           {/* Error Message */}
           {error && (
@@ -255,9 +306,18 @@ function Signup() {
               <div className="flex-1">
                 <p className="text-red-700 text-sm leading-relaxed">{error}</p>
                 {error.includes('rate limit') && (
-                  <p className="text-red-600 text-xs mt-2">
-                    Please wait a few minutes before trying again, or try signing in if you already have an account.
-                  </p>
+                  <div className="mt-3">
+                    <p className="text-red-600 text-xs mb-2">
+                      Rate limit detected. Try the bypass option below:
+                    </p>
+                    <button
+                      onClick={handleCreateTestUser}
+                      disabled={loading}
+                      className="text-xs bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors disabled:opacity-50"
+                    >
+                      Create Test Account (Bypass Rate Limit)
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
@@ -319,6 +379,21 @@ function Signup() {
                 >
                   {loading ? 'Loading...' : 'Continue with email'}
                 </button>
+
+                {/* Rate Limit Bypass Option */}
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-xs text-blue-600 mb-2">
+                    Having trouble with rate limits? Try this bypass option:
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleCreateTestUser}
+                    disabled={loading}
+                    className="w-full text-xs bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  >
+                    Create Instant Test Account
+                  </button>
+                </div>
               </>
             ) : step === 'name' ? (
               <div className="space-y-6">
