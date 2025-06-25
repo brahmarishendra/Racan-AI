@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
-import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured, isAuthenticated } from '../lib/supabase';
+import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback } from '../lib/supabase';
 
 function Login() {
   const [step, setStep] = useState('email');
@@ -13,37 +13,45 @@ function Login() {
     email: '', 
     password: '',
   });
-  
-  const [isPageLoading, setIsPageLoading] = useState(true);
 
+  // Handle OAuth callback on component mount
   useEffect(() => {
-    // Check if user is already authenticated
-    const checkAuth = async () => {
-      const authenticated = await isAuthenticated();
-      if (authenticated) {
-        // Redirect to home if already logged in
-        window.location.replace('/');
-        return;
+    const handleCallback = async () => {
+      // Check if this is an OAuth callback
+      const urlParams = new URLSearchParams(window.location.search);
+      const accessToken = urlParams.get('access_token');
+      const refreshToken = urlParams.get('refresh_token');
+      
+      if (accessToken || refreshToken) {
+        setLoading(true);
+        try {
+          const { user, error } = await handleOAuthCallback();
+          if (error) {
+            setError('Authentication failed. Please try again.');
+          } else if (user) {
+            setSuccess('Login successful! Redirecting...');
+            setTimeout(() => {
+              window.location.replace('/');
+            }, 1000);
+          }
+        } catch (err) {
+          console.error('OAuth callback error:', err);
+          setError('Authentication failed. Please try again.');
+        } finally {
+          setLoading(false);
+        }
       }
-      setIsPageLoading(false);
     };
 
-    checkAuth();
+    handleCallback();
   }, []);
 
   // Check if Supabase is configured on component mount
   useEffect(() => {
-    const checkSetup = async () => {
-      if (!isSupabaseConfigured()) {
-        setError('Authentication service is not configured. Please contact support.');
-        return;
-      }
-    };
-    
-    if (!isPageLoading) {
-      checkSetup();
+    if (!isSupabaseConfigured()) {
+      setError('Authentication service is not configured. Please contact support.');
     }
-  }, [isPageLoading]);
+  }, []);
 
   // Clear messages after some time
   useEffect(() => {
@@ -67,19 +75,19 @@ function Login() {
     setSuccess(null);
     
     if (step === 'email') {
-      if (!formData.email) {
+      if (!formData.email.trim()) {
         setError('Please enter your email address');
         return;
       }
       
-      if (!validateEmail(formData.email)) {
+      if (!validateEmail(formData.email.trim())) {
         setError('Please enter a valid email address');
         return;
       }
       
       setStep('password');
     } else {
-      if (!formData.password) {
+      if (!formData.password.trim()) {
         setError('Please enter your password');
         return;
       }
@@ -92,7 +100,7 @@ function Login() {
       setLoading(true);
       
       try {
-        const { data, error } = await signIn(formData.email, formData.password);
+        const { data, error } = await signIn(formData.email.trim(), formData.password);
         
         if (error) {
           setError(error.message);
@@ -125,12 +133,12 @@ function Login() {
   };
 
   const handleForgotPassword = async () => {
-    if (!formData.email) {
+    if (!formData.email.trim()) {
       setError('Please enter your email address first');
       return;
     }
 
-    if (!validateEmail(formData.email)) {
+    if (!validateEmail(formData.email.trim())) {
       setError('Please enter a valid email address');
       return;
     }
@@ -139,7 +147,7 @@ function Login() {
     setError(null);
     
     try {
-      const { error } = await resetPassword(formData.email);
+      const { error } = await resetPassword(formData.email.trim());
       
       if (error) {
         setError(error.message || 'Failed to send password reset email');
@@ -164,18 +172,16 @@ function Login() {
       
       if (error) {
         console.error('Google OAuth Error Details:', error);
-        setError('Google sign-in is temporarily unavailable. Please use email login instead.');
+        setError('Google sign-in failed. Please try email login instead.');
+        setLoading(false);
       } else if (data) {
-        setSuccess('Google sign-in successful! Redirecting...');
+        // Don't set loading to false here as the redirect will happen
+        setSuccess('Redirecting to Google...');
         // The redirect will be handled automatically by Supabase
-        setTimeout(() => {
-          window.location.replace('/');
-        }, 1000);
       }
     } catch (err) {
       console.error('Google sign-in unexpected error:', err);
       setError('Google sign-in failed. Please try email login instead.');
-    } finally {
       setLoading(false);
     }
   };
@@ -186,73 +192,6 @@ function Login() {
     if (error) setError(null);
     if (success) setSuccess(null);
   };
-
-  // Loading screen
-  if (isPageLoading) {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          {/* Morphing Blob Animation */}
-          <div className="relative w-32 h-32 mx-auto">
-            {/* Main morphing blob */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-300 via-pink-300 to-blue-300 animate-pulse blur-sm opacity-90"></div>
-            <div 
-              className="absolute inset-2 rounded-full bg-gradient-to-br from-violet-400 via-fuchsia-400 to-cyan-300 animate-spin blur-md"
-              style={{
-                animation: 'morph 3s ease-in-out infinite, spin 8s linear infinite',
-                filter: 'blur(8px)',
-              }}
-            ></div>
-            <div 
-              className="absolute inset-4 rounded-full bg-gradient-to-tr from-pink-200 via-purple-200 to-cyan-200"
-              style={{
-                animation: 'morph2 4s ease-in-out infinite reverse',
-                filter: 'blur(4px)',
-              }}
-            ></div>
-            <div 
-              className="absolute inset-8 rounded-full bg-gradient-to-bl from-blue-100 via-purple-100 to-pink-100"
-              style={{
-                animation: 'morph3 2.5s ease-in-out infinite',
-                filter: 'blur(2px)',
-              }}
-            ></div>
-          </div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-        
-        {/* Custom CSS animations */}
-        <style jsx>{`
-          @keyframes morph {
-            0%, 100% {
-              border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            }
-            50% {
-              border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-            }
-          }
-          
-          @keyframes morph2 {
-            0%, 100% {
-              border-radius: 40% 60% 60% 40% / 70% 30% 60% 40%;
-            }
-            50% {
-              border-radius: 70% 30% 40% 60% / 40% 70% 30% 60%;
-            }
-          }
-          
-          @keyframes morph3 {
-            0%, 100% {
-              border-radius: 50% 50% 30% 70% / 30% 70% 70% 30%;
-            }
-            50% {
-              border-radius: 70% 30% 50% 50% / 60% 40% 40% 60%;
-            }
-          }
-        `}</style>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen w-full flex">
@@ -340,12 +279,13 @@ function Login() {
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     disabled={loading}
+                    autoComplete="email"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading || !formData.email}
+                  disabled={loading || !formData.email.trim()}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Loading...' : 'Continue with email'}
@@ -373,6 +313,7 @@ function Login() {
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
                       disabled={loading}
+                      autoComplete="current-password"
                     />
                     <button
                       type="button"

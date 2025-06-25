@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import { isAuthenticated } from './lib/supabase';
+import { isAuthenticated, onAuthStateChange } from './lib/supabase';
 
-// Protected Route component
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
+// Protected Route component for auth pages (login/signup)
+function AuthRoute({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -16,7 +16,18 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
       setAuthenticated(isAuth);
       setLoading(false);
     };
+
     checkAuth();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = onAuthStateChange((event, session) => {
+      setAuthenticated(!!session?.user);
+      setLoading(false);
+    });
+
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, []);
 
   if (loading) {
@@ -48,17 +59,17 @@ function App() {
         <Route 
           path="/signup" 
           element={
-            <ProtectedRoute>
+            <AuthRoute>
               <Signup />
-            </ProtectedRoute>
+            </AuthRoute>
           } 
         />
         <Route 
           path="/login" 
           element={
-            <ProtectedRoute>
+            <AuthRoute>
               <Login />
-            </ProtectedRoute>
+            </AuthRoute>
           } 
         />
       </Routes>

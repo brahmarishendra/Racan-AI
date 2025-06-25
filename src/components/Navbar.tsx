@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogOut, User } from 'lucide-react';
+import { getCurrentUser, signOut, onAuthStateChange } from '../lib/supabase';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +26,32 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  // Check auth state on mount and listen for changes
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const { user } = await getCurrentUser();
+        setUser(user);
+      } catch (error) {
+        console.error('Error checking user:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkUser();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+      setLoading(false);
+    });
+
+    return () => {
+      subscription?.unsubscribe();
+    };
+  }, []);
+
   // Prevent body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
@@ -37,13 +66,27 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
-  const handleNavigation = (path) => {
-    // Replace with your navigation logic
-    console.log(`Navigate to: ${path}`);
-    // For React Router: navigate(path);
-    // For basic navigation: window.location.href = path;
-    window.location.href = path; // Actual navigation
+  const handleNavigation = (path: string) => {
+    window.location.href = path;
     setIsMenuOpen(false);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setUser(null);
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const getUserDisplayName = () => {
+    if (!user) return '';
+    return user.user_metadata?.full_name || 
+           user.user_metadata?.name || 
+           user.email?.split('@')[0] || 
+           'User';
   };
 
   return (
@@ -57,7 +100,8 @@ const Navbar = () => {
           <img
             src="https://i.postimg.cc/rsYBTFzm/image-41.png"
             alt="Racan Logo"
-            className="w-24"
+            className="w-24 cursor-pointer"
+            onClick={() => handleNavigation('/')}
           />
 
           <nav className="hidden md:flex items-center space-x-8">
@@ -79,12 +123,36 @@ const Navbar = () => {
             >
               About us
             </a>
-            <button
-              onClick={() => handleNavigation('/Login')}
-              className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
-            >
-              Try Racan
-            </button>
+            
+            {loading ? (
+              <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+            ) : user ? (
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-[#004AAD] rounded-full flex items-center justify-center">
+                    <User className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-sm text-gray-700 max-w-24 truncate">
+                    {getUserDisplayName()}
+                  </span>
+                </div>
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors duration-300"
+                  title="Sign out"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="text-sm">Sign out</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => handleNavigation('/login')}
+                className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
+              >
+                Try Racan
+              </button>
+            )}
           </nav>
 
           <button
@@ -144,12 +212,37 @@ const Navbar = () => {
             About us
           </a>
 
-          <button 
-            onClick={() => handleNavigation('/Login')}
-            className="mt-8 bg-black text-white px-6 py-3 rounded-full hover:bg-[#d70153] transition-all duration-300"
-          >
-            Try Racan
-          </button>
+          {loading ? (
+            <div className="w-12 h-12 bg-gray-200 rounded-full animate-pulse"></div>
+          ) : user ? (
+            <div className="flex flex-col items-center space-y-4 mt-8">
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 bg-[#004AAD] rounded-full flex items-center justify-center">
+                  <User className="w-6 h-6 text-white" />
+                </div>
+                <div className="text-center">
+                  <p className="text-lg font-medium text-gray-900">
+                    {getUserDisplayName()}
+                  </p>
+                  <p className="text-sm text-gray-600">{user.email}</p>
+                </div>
+              </div>
+              <button
+                onClick={handleSignOut}
+                className="flex items-center space-x-2 text-red-600 hover:text-red-700 transition-colors duration-300"
+              >
+                <LogOut className="w-5 h-5" />
+                <span>Sign out</span>
+              </button>
+            </div>
+          ) : (
+            <button 
+              onClick={() => handleNavigation('/login')}
+              className="mt-8 bg-black text-white px-6 py-3 rounded-full hover:bg-[#d70153] transition-all duration-300"
+            >
+              Try Racan
+            </button>
+          )}
         </nav>
       </div> 
     </> 

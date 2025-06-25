@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
-import { signUp, signInWithGoogle, isSupabaseConfigured, isAuthenticated } from '../lib/supabase';
+import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback } from '../lib/supabase';
 
 function Signup() {
   const [step, setStep] = useState('email');
@@ -14,36 +14,44 @@ function Signup() {
     password: '',
   });
 
-  const [isPageLoading, setIsPageLoading] = useState(true);
-
+  // Handle OAuth callback on component mount
   useEffect(() => {
-    // Check if user is already authenticated
-    const checkAuth = async () => {
-      const authenticated = await isAuthenticated();
-      if (authenticated) {
-        // Redirect to home if already logged in
-        window.location.replace('/');
-        return;
+    const handleCallback = async () => {
+      // Check if this is an OAuth callback
+      const urlParams = new URLSearchParams(window.location.search);
+      const accessToken = urlParams.get('access_token');
+      const refreshToken = urlParams.get('refresh_token');
+      
+      if (accessToken || refreshToken) {
+        setLoading(true);
+        try {
+          const { user, error } = await handleOAuthCallback();
+          if (error) {
+            setError('Authentication failed. Please try again.');
+          } else if (user) {
+            setSuccess('Account created successfully! Redirecting...');
+            setTimeout(() => {
+              window.location.replace('/');
+            }, 1000);
+          }
+        } catch (err) {
+          console.error('OAuth callback error:', err);
+          setError('Authentication failed. Please try again.');
+        } finally {
+          setLoading(false);
+        }
       }
-      setIsPageLoading(false);
     };
 
-    checkAuth();
+    handleCallback();
   }, []);
 
   // Check if Supabase is configured on component mount
   useEffect(() => {
-    const checkSetup = async () => {
-      if (!isSupabaseConfigured()) {
-        setError('Authentication service is not configured. Please contact support.');
-        return;
-      }
-    };
-    
-    if (!isPageLoading) {
-      checkSetup();
+    if (!isSupabaseConfigured()) {
+      setError('Authentication service is not configured. Please contact support.');
     }
-  }, [isPageLoading]);
+  }, []);
 
   // Clear messages after some time
   useEffect(() => {
@@ -67,12 +75,12 @@ function Signup() {
     setSuccess(null);
     
     if (step === 'email') {
-      if (!formData.email) {
+      if (!formData.email.trim()) {
         setError('Please enter your email address');
         return;
       }
       
-      if (!validateEmail(formData.email)) {
+      if (!validateEmail(formData.email.trim())) {
         setError('Please enter a valid email address');
         return;
       }
@@ -91,7 +99,7 @@ function Signup() {
       
       setStep('password');
     } else if (step === 'password') {
-      if (!formData.password) {
+      if (!formData.password.trim()) {
         setError('Please enter a password');
         return;
       }
@@ -105,7 +113,7 @@ function Signup() {
       
       try {
         // Pass the full name to the signUp function
-        const result = await signUp(formData.email, formData.password, formData.name.trim());
+        const result = await signUp(formData.email.trim(), formData.password, formData.name.trim());
         
         if (result.error) {
           setError(result.error.message);
@@ -160,17 +168,16 @@ function Signup() {
       
       if (error) {
         console.error('Google OAuth Error Details:', error);
-        setError('Google sign-up is temporarily unavailable. Please use email signup instead.');
+        setError('Google sign-up failed. Please try email signup instead.');
+        setLoading(false);
       } else if (data) {
-        setSuccess('Google sign-up successful! Redirecting...');
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 1000);
+        // Don't set loading to false here as the redirect will happen
+        setSuccess('Redirecting to Google...');
+        // The redirect will be handled automatically by Supabase
       }
     } catch (err) {
       console.error('Google sign-up unexpected error:', err);
       setError('Google sign-up failed. Please try email signup.');
-    } finally {
       setLoading(false);
     }
   };
@@ -181,73 +188,6 @@ function Signup() {
     if (error) setError(null);
     if (success) setSuccess(null);
   };
-
-  // Loading screen
-  if (isPageLoading) {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          {/* Morphing Blob Animation */}
-          <div className="relative w-32 h-32 mx-auto">
-            {/* Main morphing blob */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-300 via-pink-300 to-blue-300 animate-pulse blur-sm opacity-90"></div>
-            <div 
-              className="absolute inset-2 rounded-full bg-gradient-to-br from-violet-400 via-fuchsia-400 to-cyan-300 animate-spin blur-md"
-              style={{
-                animation: 'morph 3s ease-in-out infinite, spin 8s linear infinite',
-                filter: 'blur(8px)',
-              }}
-            ></div>
-            <div 
-              className="absolute inset-4 rounded-full bg-gradient-to-tr from-pink-200 via-purple-200 to-cyan-200"
-              style={{
-                animation: 'morph2 4s ease-in-out infinite reverse',
-                filter: 'blur(4px)',
-              }}
-            ></div>
-            <div 
-              className="absolute inset-8 rounded-full bg-gradient-to-bl from-blue-100 via-purple-100 to-pink-100"
-              style={{
-                animation: 'morph3 2.5s ease-in-out infinite',
-                filter: 'blur(2px)',
-              }}
-            ></div>
-          </div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-        
-        {/* Custom CSS animations */}
-        <style jsx>{`
-          @keyframes morph {
-            0%, 100% {
-              border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            }
-            50% {
-              border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-            }
-          }
-          
-          @keyframes morph2 {
-            0%, 100% {
-              border-radius: 40% 60% 60% 40% / 70% 30% 60% 40%;
-            }
-            50% {
-              border-radius: 70% 30% 40% 60% / 40% 70% 30% 60%;
-            }
-          }
-          
-          @keyframes morph3 {
-            0%, 100% {
-              border-radius: 50% 50% 30% 70% / 30% 70% 70% 30%;
-            }
-            50% {
-              border-radius: 70% 30% 50% 50% / 60% 40% 40% 60%;
-            }
-          }
-        `}</style>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen w-full flex">
@@ -336,12 +276,13 @@ function Signup() {
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     disabled={loading}
+                    autoComplete="email"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading || !formData.email}
+                  disabled={loading || !formData.email.trim()}
                   className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Loading...' : 'Continue with email'}
@@ -370,6 +311,7 @@ function Signup() {
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
                       disabled={loading}
+                      autoComplete="name"
                     />
                   </div>
                   
@@ -435,6 +377,7 @@ function Signup() {
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
                       disabled={loading}
+                      autoComplete="new-password"
                     />
                     <button
                       type="button"

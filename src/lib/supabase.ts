@@ -225,7 +225,7 @@ export const resetPassword = async (email: string) => {
   }
 }
 
-// Google OAuth sign in
+// Google OAuth sign in with better error handling
 export const signInWithGoogle = async () => {
   if (!isSupabaseConfigured()) {
     return { 
@@ -242,15 +242,25 @@ export const signInWithGoogle = async () => {
         queryParams: {
           access_type: 'offline',
           prompt: 'consent',
-        }
+        },
+        skipBrowserRedirect: false
       }
     })
+    
+    if (error) {
+      console.error('Google OAuth error:', error)
+      return { 
+        data: null, 
+        error: { message: 'Google sign-in failed. Please try again or use email login.' } 
+      }
+    }
+    
     return { data, error }
   } catch (err: any) {
-    console.error('Google SignIn error:', err)
+    console.error('Google SignIn unexpected error:', err)
     return { 
       data: null, 
-      error: { message: err.message || 'Google sign-in failed. Please try again.' } 
+      error: { message: 'Google sign-in failed. Please try again or use email login.' } 
     }
   }
 }
@@ -279,6 +289,21 @@ export const getCurrentSession = async () => {
   } catch (err: any) {
     console.error('GetSession error:', err)
     return { session: null, error: { message: err.message || 'Failed to get session.' } }
+  }
+}
+
+// Handle OAuth callback
+export const handleOAuthCallback = async () => {
+  try {
+    const { data, error } = await supabase.auth.getSession()
+    if (error) {
+      console.error('OAuth callback error:', error)
+      return { user: null, error }
+    }
+    return { user: data.session?.user || null, error: null }
+  } catch (err: any) {
+    console.error('OAuth callback unexpected error:', err)
+    return { user: null, error: { message: err.message || 'OAuth callback failed.' } }
   }
 }
 
