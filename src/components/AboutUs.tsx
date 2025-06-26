@@ -138,21 +138,21 @@ const AboutUs: React.FC = () => {
         </div>
       </section>
 
-      {/* Mission & Vision Section */}
-      <section className="py-16 md:py-24">
+      {/* Mission & Vision Section - Dark Background */}
+      <section className="py-16 md:py-24 bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className={`transform transition-all duration-1000 delay-200 ${
                 isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
               }`}>
-                <h2 className="text-3xl md:text-4xl font-bold text-[#004AAD] mb-6">Our Mission</h2>
-                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">About Racan</h2>
+                <p className="text-gray-300 text-lg leading-relaxed mb-6">
                   To democratize fashion by making personalized style accessible to everyone through 
                   cutting-edge AI technology. We believe that everyone deserves to look and feel their best, 
                   regardless of their fashion expertise or budget.
                 </p>
-                <p className="text-gray-700 text-lg leading-relaxed">
+                <p className="text-gray-300 text-lg leading-relaxed">
                   Our AI-powered platform learns from your preferences, body type, and lifestyle to 
                   provide recommendations that are not just trendy, but truly suited to you.
                 </p>
@@ -164,9 +164,9 @@ const AboutUs: React.FC = () => {
                   <img
                     src="https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&w=800"
                     alt="Fashion AI Technology"
-                    className="w-full h-80 object-cover rounded-2xl shadow-2xl"
+                    className="w-full h-80 object-cover rounded-sm shadow-2xl"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#004AAD]/20 to-transparent rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#004AAD]/20 to-transparent rounded-sm"></div>
                 </div>
               </div>
             </div>
@@ -194,13 +194,13 @@ const AboutUs: React.FC = () => {
               {teamMembers.map((member, index) => (
                 <div
                   key={member.id}
-                  className={`group bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${
+                  className={`group bg-white rounded-sm p-6 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${
                     teamVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                   }`}
                   style={{ transitionDelay: `${index * 150}ms` }}
                 >
                   <div className="relative mb-6">
-                    <div className="w-24 h-24 mx-auto rounded-full overflow-hidden ring-4 ring-[#004AAD]/10 group-hover:ring-[#973cff]/20 transition-all duration-300">
+                    <div className="w-24 h-24 mx-auto rounded-sm overflow-hidden ring-4 ring-[#004AAD]/10 group-hover:ring-[#973cff]/20 transition-all duration-300">
                       <img
                         src={member.image}
                         alt={member.name}
@@ -210,7 +210,7 @@ const AboutUs: React.FC = () => {
                         }}
                       />
                     </div>
-                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#004AAD] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100">
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#004AAD] rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100">
                       {member.linkedin ? (
                         <Linkedin className="w-4 h-4 text-white" />
                       ) : (
@@ -282,12 +282,12 @@ const AboutUs: React.FC = () => {
               {values.map((value, index) => (
                 <div 
                   key={index}
-                  className={`text-center p-6 rounded-2xl bg-gradient-to-br from-[#004AAD]/5 to-[#973cff]/5 hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 ${
+                  className={`text-center p-6 rounded-sm bg-gradient-to-br from-[#004AAD]/5 to-[#973cff]/5 hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 ${
                     valuesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                   }`}
                   style={{ transitionDelay: `${index * 200}ms` }}
                 >
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#004AAD] to-[#973cff] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#004AAD] to-[#973cff] rounded-sm flex items-center justify-center mx-auto mb-4">
                     <span className="text-white text-2xl">{value.icon}</span>
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
@@ -313,7 +313,7 @@ const AboutUs: React.FC = () => {
             </p>
             <a
               href="https://chat-with-racan.vercel.app"
-              className="inline-block bg-white text-[#004AAD] px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
+              className="inline-block bg-white text-[#004AAD] px-8 py-4 rounded-sm text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
             >
               Try Racan AI Now
             </a>
