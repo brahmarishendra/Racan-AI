@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
               <li><a href="#features" className="text-gray-400 hover:text-white transition-colors duration-300">Features</a></li>
               <li><a href="#products" className="text-gray-400 hover:text-white transition-colors duration-300">Products</a></li>
-              <li><a href="#about" className="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+              <li><a href="https://racan-ai.vercel.app/about" className="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
             </ul>
           </div>
           
