@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Home from './components/Home';
+import AboutUs from './components/AboutUs';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import { isAuthenticated, onAuthStateChange } from './lib/supabase';
@@ -56,6 +57,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route 
           path="/signup" 
           element={

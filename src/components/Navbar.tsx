@@ -117,12 +117,12 @@ const Navbar = () => {
             >
               Products
             </a>
-            <a
-              href="#about"
+            <button
+              onClick={() => handleNavigation('/about')}
               className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
             >
-              About us
-            </a>
+              About Us
+            </button>
             
             {loading ? (
               <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
@@ -204,13 +204,12 @@ const Navbar = () => {
           >
             Products
           </a>
-          <a 
-            href="#about"
+          <button
+            onClick={() => handleNavigation('/about')}
             className="text-xl hover:text-[#973cff] transition-colors duration-300"
-            onClick={() => setIsMenuOpen(false)}
           >
-            About us
-          </a>
+            About Us
+          </button>
 
           {loading ? (
             <div className="w-12 h-12 bg-gray-200 rounded-full animate-pulse"></div>
