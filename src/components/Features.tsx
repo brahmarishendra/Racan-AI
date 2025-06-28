@@ -24,9 +24,9 @@ const Features: React.FC = () => {
   const newsItems = [
     {
       id: 1,
-      title: "Racan AI Launches Revolutionary Style Matching Technology",
-      description: "Our latest AI breakthrough can now match your personality with perfect outfit combinations, creating a truly personalized fashion experience.",
-      image: "https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg?auto=compress&cs=tinysrgb&w=800",
+      title: "🚀 Racan AI x DreamX Is Hiring: Frontend Developer Intern (Web3 Stack)",
+      description: "We’re on the lookout for passionate Frontend Development Interns to collaborate with us on our cutting-edge DreamX product and the Racan AI. If you're eager to work on Web3 technologies, sharpen your frontend skills, and grow in a creative AI-driven environment — this is your chance!",
+      image: "https://i.postimg.cc/MKgw8rCf/Whats-App-Image-2025-06-25-at-22-33-39-2e1c8160.jpg",
       link: "https://techcrunch.com/ai-fashion"
     },
     {
