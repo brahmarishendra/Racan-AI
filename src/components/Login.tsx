@@ -222,7 +222,7 @@ function Login() {
               />
               <span className="text-2xl font-semibold">Racan AI</span>
             </div>
-            <h1 className="text-5xl font-serif mb-3">Welcome Back</h1>
+            <h1 className="text-5xl font-serif mb-3">Login</h1>
             <p className="text-gray-600 text-lg">
               Sign in to continue your fashion journey with AI-powered recommendations.
             </p>
@@ -249,37 +249,12 @@ function Login() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {step === 'email' ? (
               <>
-                <div className="flex items-center justify-center w-full">
-                  <button 
-                    type="button"
-                    onClick={handleGoogleSignIn}
-                    disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <img 
-                      src="https://developers.google.com/identity/images/g-logo.png" 
-                      alt="Google" 
-                      className="w-5 h-5"
-                      onError={(e) => {
-                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Ljg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
-                      }}
-                    />
-                    {loading ? 'Connecting...' : 'Continue with Google'}
-                  </button>
-                </div>
-
-                <div className="flex items-center">
-                  <div className="flex-1 border-t border-gray-300"></div>
-                  <span className="px-4 text-gray-500">OR</span>
-                  <div className="flex-1 border-t border-gray-300"></div>
-                </div>
-
                 <div className="space-y-4">
                   <input
                     type="email"
                     required
-                    className="w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                    placeholder="Enter your personal or work email"
+                    className="w-full px-3 py-3 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                    placeholder="Email address"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     disabled={loading}
@@ -290,7 +265,7 @@ function Login() {
                 <button
                   type="submit"
                   disabled={loading || !formData.email.trim()}
-                  className="mt-4 w-full bg-[#FF2D6B] text-white py-3 px-4 rounded-lg hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Loading...' : 'Continue with email'}
                 </button>
@@ -312,8 +287,8 @@ function Login() {
                       type={showPassword ? "text" : "password"}
                       required
                       minLength={6}
-                      className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                      placeholder="Enter your password"
+                      className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                      placeholder="Password"
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
                       disabled={loading}
@@ -334,39 +309,64 @@ function Login() {
                   </div>
                 </div>
 
+                <div className="flex items-center justify-center w-full">
+                  <button 
+                    type="button"
+                    onClick={handleGoogleSignIn}
+                    disabled={loading}
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-sm text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <img 
+                      src="https://developers.google.com/identity/images/g-logo.png" 
+                      alt="Google" 
+                      className="w-5 h-5"
+                      onError={(e) => {
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Ljg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
+                      }}
+                    />
+                    {loading ? 'Connecting...' : 'Continue with Google'}
+                  </button>
+                </div>
+
+                <div className="text-center text-sm text-gray-600">
+                  By logging in, you agree to our{' '}
+                  <a href="#" className="text-blue-600 hover:underline">
+                    Privacy Policy
+                  </a>
+                  .
+                </div>
+
                 <button
                   type="submit"
                   disabled={loading || formData.password.length < 6}
-                  className="mt-4 w-full bg-[#FF2D6B] text-white py-3 px-4 rounded-lg hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Signing in...' : 'Sign in'}
+                  {loading ? 'Signing in...' : 'Login'}
                 </button>
 
-                <button
-                  type="button"
-                  onClick={handleForgotPassword}
-                  disabled={loading}
-                  className="mt-4 w-full text-gray-600 hover:text-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Forgot password?
-                </button>
+                <div className="text-center">
+                  <p className="text-gray-600 mb-2">
+                    Don't have an account yet?{' '}
+                    <button 
+                      onClick={() => window.location.href = '/signup'}
+                      className="text-[#FF2D6B] font-medium hover:underline"
+                      disabled={loading}
+                    >
+                      Sign up
+                    </button>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    disabled={loading}
+                    className="text-gray-600 hover:underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Forgot your password? Click here
+                  </button>
+                </div>
               </div>
             )}
           </form>
-
-          {/* Create an account link at the bottom */}
-          <div className="pt-4 border-t border-gray-200">
-            <p className="text-center text-gray-600">
-              Don't have an account?{' '}
-              <button 
-                onClick={() => window.location.href = '/signup'}
-                className="text-[#FF2D6B] font-medium hover:underline"
-                disabled={loading}
-              >
-                Sign up
-              </button>
-            </p>
-          </div>
 
           <div className="pt-4">
             <button 
