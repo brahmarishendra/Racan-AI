@@ -257,11 +257,36 @@ function Signup() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {step === 'email' ? (
               <>
+                <div className="flex items-center justify-center w-full">
+                  <button 
+                    type="button"
+                    onClick={handleGoogleSignUp}
+                    disabled={loading}
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-[1px] text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <img 
+                      src="https://developers.google.com/identity/images/g-logo.png" 
+                      alt="Google" 
+                      className="w-5 h-5"
+                      onError={(e) => {
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Ljg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
+                      }}
+                    />
+                    {loading ? 'Loading...' : 'Continue with Google'}
+                  </button>
+                </div>
+
+                <div className="flex items-center">
+                  <div className="flex-1 border-t border-gray-300"></div>
+                  <span className="px-4 text-gray-500">OR</span>
+                  <div className="flex-1 border-t border-gray-300"></div>
+                </div>
+
                 <div className="space-y-4">
                   <input
                     type="email"
                     required
-                    className="w-full px-3 py-3 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                    className="w-full px-3 py-3 border border-gray-300 rounded-[1px] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                     placeholder="Email address"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
@@ -273,7 +298,7 @@ function Signup() {
                 <button
                   type="submit"
                   disabled={loading || !formData.email.trim()}
-                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-[1px] text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Loading...' : 'Continue with email'}
                 </button>
@@ -296,7 +321,7 @@ function Signup() {
                       type="text"
                       required
                       minLength={2}
-                      className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                      className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-[1px] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                       placeholder="Enter your full name"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
@@ -313,7 +338,7 @@ function Signup() {
                 <button
                   type="submit"
                   disabled={loading || formData.name.trim().length < 2}
-                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-[1px] text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Loading...' : 'Continue'}
                 </button>
@@ -339,7 +364,7 @@ function Signup() {
                 </p>
                 <button
                   onClick={() => window.location.href = '/login'}
-                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors"
+                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-[1px] text-lg font-semibold hover:bg-[#e6245e] transition-colors"
                 >
                   Go to Sign In
                 </button>
@@ -362,7 +387,7 @@ function Signup() {
                       type={showPassword ? "text" : "password"}
                       required
                       minLength={6}
-                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-[1px] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                       placeholder="Password"
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
@@ -394,14 +419,14 @@ function Signup() {
                     type="button"
                     onClick={handleGoogleSignUp}
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-sm text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-[1px] text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <img 
                       src="https://developers.google.com/identity/images/g-logo.png" 
                       alt="Google" 
                       className="w-5 h-5"
                       onError={(e) => {
-                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Ljg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Tlg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Nlg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
                       }}
                     />
                     {loading ? 'Loading...' : 'Continue with Google'}
@@ -419,7 +444,7 @@ function Signup() {
                 <button
                   type="submit"
                   disabled={loading || !validatePassword(formData.password).isValid}
-                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-[1px] text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Creating account...' : 'Signup'}
                 </button>
