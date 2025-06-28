@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
 import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback, createSimpleTestUser, testDatabaseConnection } from '../lib/supabase';
 
 function Signup() {
-  const [step, setStep] = useState('email');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -106,84 +105,59 @@ function Signup() {
     setError(null);
     setSuccess(null);
     
-    if (step === 'email') {
-      if (!formData.email.trim()) {
-        setError('Please enter your email address');
-        return;
-      }
-      
-      if (!validateEmail(formData.email.trim())) {
-        setError('Please enter a valid email address');
-        return;
-      }
-      
-      setStep('name');
-    } else if (step === 'name') {
-      if (!formData.name.trim()) {
-        setError('Please enter your name');
-        return;
-      }
-      
-      if (formData.name.trim().length < 2) {
-        setError('Name must be at least 2 characters long');
-        return;
-      }
-      
-      setStep('password');
-    } else if (step === 'password') {
-      if (!formData.password.trim()) {
-        setError('Please enter a password');
-        return;
-      }
-      
-      const passwordValidation = validatePassword(formData.password);
-      if (!passwordValidation.isValid) {
-        setError(passwordValidation.message);
-        return;
-      }
-
-      setLoading(true);
-      
-      try {
-        const result = await signUp(formData.email.trim(), formData.password, formData.name.trim());
-        
-        if (result.error) {
-          setError(result.error.message);
-        } else if (result.data?.user) {
-          if (!result.data.user.email_confirmed_at && !result.data.session) {
-            setSuccess('Account created! Please check your email for verification.');
-            setStep('verification');
-          } else {
-            setSuccess('Account created successfully! Redirecting...');
-            setTimeout(() => {
-              window.location.href = '/';
-            }, 1000);
-          }
-        }
-      } catch (err) {
-        console.error('Signup error:', err);
-        setError('An unexpected error occurred. Please try again.');
-      } finally {
-        setLoading(false);
-      }
+    if (!formData.name.trim()) {
+      setError('Please enter your name');
+      return;
     }
-  };
+    
+    if (formData.name.trim().length < 2) {
+      setError('Name must be at least 2 characters long');
+      return;
+    }
 
-  const handleGoBack = () => {
-    if (step === 'password') {
-      setStep('name');
-      setError(null);
-      setSuccess(null);
-    } else if (step === 'name') {
-      setStep('email');
-      setError(null);
-      setSuccess(null);
-    } else if (step === 'verification') {
-      setStep('email');
-      setError(null);
-      setSuccess(null);
-    } else {
-      window.location.href = '/';
+    if (!formData.email.trim()) {
+      setError('Please enter your email address');
+      return;
+    }
+    
+    if (!validateEmail(formData.email.trim())) {
+      setError('Please enter a valid email address');
+      return;
+    }
+    
+    if (!formData.password.trim()) {
+      setError('Please enter a password');
+      return;
+    }
+    
+    const passwordValidation = validatePassword(formData.password);
+    if (!passwordValidation.isValid) {
+      setError(passwordValidation.message);
+      return;
+    }
+
+    setLoading(true);
+    
+    try {
+      const result = await signUp(formData.email.trim(), formData.password, formData.name.trim());
+      
+      if (result.error) {
+        setError(result.error.message);
+      } else if (result.data?.user) {
+        if (!result.data.user.email_confirmed_at && !result.data.session) {
+          setSuccess('Account created! Please check your email for verification.');
+        } else {
+          setSuccess('Account created successfully! Redirecting...');
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1000);
+        }
+      }
+    } catch (err) {
+      console.error('Signup error:', err);
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -239,42 +213,27 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen w-full flex">
-      {/* Left side - Sign up form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="max-w-md w-full space-y-8">
-          <div>
-            {/* Back button */}
-            <button 
-              onClick={handleGoBack}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-8 transition-colors"
-              disabled={loading}
-              type="button"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              {step === 'password' || step === 'name' || step === 'verification' ? 'Back' : 'Home'}
-            </button>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+          {/* Back button */}
+          <button 
+            onClick={() => window.location.href = '/'}
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-8 transition-colors"
+            disabled={loading}
+            type="button"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </button>
 
-            <div className="flex items-center gap-2 mb-12">
-              <img 
-                src="https://i.postimg.cc/50B939gH/Logo.png" 
-                alt="Racan AI" 
-                className="w-8 h-8"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-              <span className="text-2xl font-semibold">Racan AI</span>
-            </div>
-            <h1 className="text-5xl font-serif mb-3">Redefine Your Style</h1>
-            <p className="text-gray-600 text-lg">
-              Experience the future of fashion with AI-powered recommendations that match your unique taste.
-            </p>
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Sign up</h2>
           </div>
 
           {/* Database Connection Status */}
           {dbConnected !== null && (
-            <div className={`p-3 rounded-lg text-sm ${
+            <div className={`p-3 rounded-md text-sm mb-4 ${
               dbConnected 
                 ? 'bg-green-50 border border-green-200 text-green-700' 
                 : 'bg-yellow-50 border border-yellow-200 text-yellow-700'
@@ -288,8 +247,8 @@ function Signup() {
           
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-2">
-              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+            <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-start gap-2 mb-6">
+              <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
                 <p className="text-red-700 text-sm leading-relaxed">{error}</p>
                 {error.includes('rate limit') && (
@@ -312,261 +271,157 @@ function Signup() {
 
           {/* Success Message */}
           {success && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-2">
-              <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+            <div className="bg-green-50 border border-green-200 rounded-md p-3 flex items-center gap-2 mb-6">
+              <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
               <p className="text-green-700 text-sm">{success}</p>
             </div>
           )}
           
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {step === 'email' ? (
-              <>
-                <div className="flex items-center justify-center w-full">
-                  <button 
-                    type="button"
-                    onClick={handleGoogleSignUp}
-                    disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <img 
-                      src="https://developers.google.com/identity/images/g-logo.png" 
-                      alt="Google" 
-                      className="w-5 h-5"
-                      onError={(e) => {
-                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Ljg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
-                      }}
-                    />
-                    {loading ? 'Loading...' : 'Continue with Google'}
-                  </button>
-                </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Full name
+              </label>
+              <input
+                id="name"
+                type="text"
+                required
+                minLength={2}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
+                disabled={loading}
+                autoComplete="name"
+              />
+            </div>
 
-                <div className="flex items-center">
-                  <div className="flex-1 border-t border-gray-300"></div>
-                  <span className="px-4 text-gray-500">OR</span>
-                  <div className="flex-1 border-t border-gray-300"></div>
-                </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email address
+              </label>
+              <input
+                id="email"
+                type="email"
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                disabled={loading}
+                autoComplete="email"
+              />
+            </div>
 
-                <div className="space-y-4">
-                  <input
-                    type="email"
-                    required
-                    className="w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                    placeholder="Enter your personal or work email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    disabled={loading}
-                    autoComplete="email"
-                  />
-                </div>
-
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  minLength={6}
+                  className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  placeholder="Create a strong password"
+                  value={formData.password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  disabled={loading}
+                  autoComplete="new-password"
+                />
                 <button
-                  type="submit"
-                  disabled={loading || !formData.email.trim()}
-                  className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  disabled={loading}
                 >
-                  {loading ? 'Loading...' : 'Continue with email'}
-                </button>
-
-                {/* Rate Limit Bypass Option */}
-                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-xs text-blue-600 mb-2">
-                    Having trouble with rate limits? Try this bypass option:
-                  </p>
-                  <button
-                    type="button"
-                    onClick={handleCreateTestUser}
-                    disabled={loading}
-                    className="w-full text-xs bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
-                  >
-                    Create Instant Test Account
-                  </button>
-                </div>
-              </>
-            ) : step === 'name' ? (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2 className="text-xl font-semibold mb-2">
-                    What's your name?
-                  </h2>
-                  <p className="text-gray-600">
-                    Enter your full name for {formData.email}
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                    <input
-                      type="text"
-                      required
-                      minLength={2}
-                      className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                      placeholder="Enter your full name"
-                      value={formData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
-                      disabled={loading}
-                      autoComplete="name"
-                    />
-                  </div>
-                  
-                  <div className="text-sm text-gray-500">
-                    Name must be at least 2 characters long
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading || formData.name.trim().length < 2}
-                  className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Loading...' : 'Continue'}
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-            ) : step === 'verification' ? (
-              <div className="text-center space-y-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                  <Mail className="w-8 h-8 text-green-600" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-semibold mb-2">Check your inbox</h2>
-                  <p className="text-gray-600">
-                    We sent a verification link to <br />
-                    <span className="font-medium">{formData.email}</span>
-                  </p>
-                </div>
-                <div className="flex items-center justify-center gap-2 text-green-600">
-                  <Check className="w-5 h-5" />
-                  <span className="text-sm">Account created successfully</span>
-                </div>
-                <p className="text-sm text-gray-500">
-                  Click the link in your email to verify your account, then you can sign in.
-                </p>
-                <button
-                  onClick={() => window.location.href = '/login'}
-                  className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors"
-                >
-                  Go to Sign In
-                </button>
+              <div className="text-xs text-gray-500 mt-1">
+                Password must be at least 6 characters with uppercase, lowercase, and number
               </div>
-            ) : (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2 className="text-xl font-semibold mb-2">
-                    Create your password
-                  </h2>
-                  <p className="text-gray-600">
-                    Enter a secure password for {formData.name}
-                  </p>
-                </div>
+            </div>
 
-                <div className="space-y-4">
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      required
-                      minLength={6}
-                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                      placeholder="Create a strong password"
-                      value={formData.password}
-                      onChange={(e) => handleInputChange('password', e.target.value)}
-                      disabled={loading}
-                      autoComplete="new-password"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                      disabled={loading}
-                    >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </button>
-                  </div>
-                  
-                  <div className="text-sm text-gray-500">
-                    Password must be at least 6 characters long and contain:
-                    <ul className="list-disc list-inside mt-1 space-y-1">
-                      <li>At least one uppercase letter (A-Z)</li>
-                      <li>At least one lowercase letter (a-z)</li>
-                      <li>At least one number (0-9)</li>
-                    </ul>
-                  </div>
-                </div>
+            <button
+              type="submit"
+              disabled={loading || !validatePassword(formData.password).isValid || !formData.name.trim() || !formData.email.trim()}
+              className="w-full bg-red-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Creating account...' : 'Sign up'}
+            </button>
 
-                <button
-                  type="submit"
-                  disabled={loading || !validatePassword(formData.password).isValid}
-                  className="mt-4 w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Creating account...' : 'Create account'}
-                </button>
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
               </div>
-            )}
-          </form>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">OR</span>
+              </div>
+            </div>
 
-          <div className="pt-4">
             <button 
               type="button"
-              className="text-gray-600 hover:text-gray-800 flex items-center gap-2 mx-auto"
+              onClick={handleGoogleSignUp}
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-3 py-2 px-4 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Learn more
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 9l-7 7-7-7" />
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
+              {loading ? 'Loading...' : 'Continue with Google'}
             </button>
+
+            <button 
+              type="button"
+              className="w-full flex items-center justify-center gap-3 py-2 px-4 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24c6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
+              </svg>
+              Continue with Apple
+            </button>
+
+            {/* Rate Limit Bypass Option */}
+            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+              <p className="text-xs text-blue-600 mb-2">
+                Having trouble with rate limits? Try this bypass option:
+              </p>
+              <button
+                type="button"
+                onClick={handleCreateTestUser}
+                disabled={loading}
+                className="w-full text-xs bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
+              >
+                Create Instant Test Account
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-6 text-center text-sm text-gray-600">
+            By signing up, you agree to our{' '}
+            <a href="#" className="text-red-600 hover:text-red-500 underline">
+              Privacy Policy
+            </a>
+            .
           </div>
 
-          {/* Sign in link */}
-          <div className="text-center pt-4 border-t border-gray-200">
-            <p className="text-gray-600">
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
               Already have an account?{' '}
               <button 
                 type="button"
                 onClick={() => window.location.href = '/login'}
-                className="text-black font-medium hover:underline"
+                className="text-red-600 hover:text-red-500 font-medium underline"
                 disabled={loading}
               >
                 Sign in
               </button>
             </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Right side - Fashion images */}
-      <div className="hidden lg:block lg:w-1/2 bg-gray-50">
-        <div className="h-screen grid grid-cols-2 gap-4 p-8">
-          <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
-            <img 
-              src="https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg" 
-              alt="Fashion" 
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
-            <img 
-              src="https://i.pinimg.com/736x/94/d2/5f/94d25f091a8fd11ab557d02d4ac03979.jpg" 
-              alt="Fashion" 
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
-            <img 
-              src="https://i.pinimg.com/736x/65/dc/8e/65dc8e24c28415fba29f1dff90c9d970.jpg" 
-              alt="Fashion" 
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
-            <img 
-              src="https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg" 
-              alt="Fashion" 
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
           </div>
         </div>
       </div>
