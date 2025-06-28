@@ -168,18 +168,18 @@ const AboutUs: React.FC = () => {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {teamMembers.map((member, index) => (
                 <div
                   key={member.id}
-                  className={`group text-center transform transition-all duration-700 hover:scale-105 ${
+                  className={`group text-center transform transition-all duration-700 hover:scale-105 hover:-translate-y-2 ${
                     teamVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                   }`}
                   style={{ transitionDelay: `${index * 150}ms` }}
                 >
                   {/* Profile Image */}
-                  <div className="relative mb-6 mx-auto">
-                    <div className="w-40 h-40 md:w-48 md:h-48 mx-auto overflow-hidden rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500 relative">
+                  <div className="relative mb-4 mx-auto">
+                    <div className="w-32 h-32 md:w-40 md:h-40 mx-auto overflow-hidden rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500 relative">
                       <img
                         src={member.image}
                         alt={member.name}
@@ -197,37 +197,43 @@ const AboutUs: React.FC = () => {
                   </div>
                   
                   {/* Name and Role */}
-                  <div className="text-center">
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 group-hover:text-[#004AAD] transition-colors duration-300">
+                  <div className="text-left">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-1 group-hover:text-[#004AAD] transition-colors duration-300">
                       {member.name}
                     </h3>
-                    <p className="text-gray-600 text-base md:text-lg mb-4 group-hover:text-gray-800 transition-colors duration-300">
+                    <p className="text-gray-600 text-sm md:text-base mb-3 group-hover:text-gray-800 transition-colors duration-300">
                       {member.role}
                     </p>
                     
-                    {/* Social Link */}
-                    <div className="flex justify-center">
+                    {/* Arrow Link */}
+                    <div className="flex justify-start">
                       {member.linkedin && member.linkedin !== "#" ? (
                         <a
                           href={member.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 text-gray-600 hover:bg-[#004AAD] hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
+                          className="inline-flex items-center justify-center w-8 h-8 bg-gray-900 text-white hover:bg-[#004AAD] transition-all duration-300 transform hover:scale-110"
                         >
-                          <Linkedin className="w-5 h-5" />
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                          </svg>
                         </a>
                       ) : member.website ? (
                         <a
                           href={member.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 text-gray-600 hover:bg-[#004AAD] hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
+                          className="inline-flex items-center justify-center w-8 h-8 bg-gray-900 text-white hover:bg-[#004AAD] transition-all duration-300 transform hover:scale-110"
                         >
-                          <Globe className="w-5 h-5" />
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                          </svg>
                         </a>
                       ) : (
-                        <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-200 text-gray-400 rounded-full">
-                          <ExternalLink className="w-5 h-5" />
+                        <div className="inline-flex items-center justify-center w-8 h-8 bg-gray-300 text-gray-500">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                          </svg>
                         </div>
                       )}
                     </div>

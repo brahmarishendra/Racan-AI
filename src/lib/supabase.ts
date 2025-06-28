@@ -471,12 +471,13 @@ export const ensureProfilesTable = async () => {
   return { error: null, profilesTableExists: false }
 }
 
-// Test database connection
+// Test database connection - Fixed query
 export const testDatabaseConnection = async () => {
   try {
+    // Use a simple query that doesn't require count(*)
     const { data, error } = await supabase
       .from('profiles')
-      .select('count(*)')
+      .select('id')
       .limit(1)
     
     if (error) {
