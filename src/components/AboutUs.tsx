@@ -179,7 +179,7 @@ const AboutUs: React.FC = () => {
                 >
                   {/* Profile Image */}
                   <div className="relative mb-4 mx-auto">
-                    <div className="w-32 h-32 md:w-40 md:h-40 mx-auto overflow-hidden rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500 relative">
+                    <div className="w-32 h-32 md:w-40 md:h-40 mx-auto overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-500 relative" style={{ borderRadius: '1px' }}>
                       <img
                         src={member.image}
                         alt={member.name}
@@ -192,7 +192,7 @@ const AboutUs: React.FC = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       
                       {/* Hover border effect */}
-                      <div className="absolute inset-0 border-4 border-[#004AAD] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 border-4 border-[#004AAD] opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ borderRadius: '1px' }}></div>
                     </div>
                   </div>
                   
@@ -257,7 +257,7 @@ const AboutUs: React.FC = () => {
             </p>
             <a
               href="https://chat-with-racan.vercel.app"
-              className="inline-block bg-white text-[#004AAD] px-8 py-4 rounded-sm text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
+              className="inline-block bg-white text-[#004AAD] px-8 py-4 rounded-sm text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
             >
               Try Racan AI Now
             </a>
