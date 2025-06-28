@@ -30,7 +30,6 @@ function Signup() {
   // Handle OAuth callback on component mount
   useEffect(() => {
     const handleCallback = async () => {
-      // Check if this is an OAuth callback
       const urlParams = new URLSearchParams(window.location.search);
       const accessToken = urlParams.get('access_token');
       const refreshToken = urlParams.get('refresh_token');
@@ -72,7 +71,7 @@ function Signup() {
       const timer = setTimeout(() => {
         setError(null);
         setSuccess(null);
-      }, 8000); // Increased timeout for better UX
+      }, 8000);
       return () => clearTimeout(timer);
     }
   }, [error, success]);
@@ -83,22 +82,18 @@ function Signup() {
   };
 
   const validatePassword = (password: string) => {
-    // Check for minimum length
     if (password.length < 6) {
       return { isValid: false, message: 'Password must be at least 6 characters long' };
     }
     
-    // Check for uppercase letter
     if (!/[A-Z]/.test(password)) {
       return { isValid: false, message: 'Password must contain at least one uppercase letter' };
     }
     
-    // Check for lowercase letter
     if (!/[a-z]/.test(password)) {
       return { isValid: false, message: 'Password must contain at least one lowercase letter' };
     }
     
-    // Check for number
     if (!/[0-9]/.test(password)) {
       return { isValid: false, message: 'Password must contain at least one number' };
     }
@@ -150,19 +145,16 @@ function Signup() {
       setLoading(true);
       
       try {
-        // Pass the full name to the signUp function
         const result = await signUp(formData.email.trim(), formData.password, formData.name.trim());
         
         if (result.error) {
           setError(result.error.message);
         } else if (result.data?.user) {
-          // Check if user needs email confirmation
           if (!result.data.user.email_confirmed_at && !result.data.session) {
             setSuccess('Account created! Please check your email for verification.');
             setStep('verification');
           } else {
             setSuccess('Account created successfully! Redirecting...');
-            // Auto redirect after successful signup
             setTimeout(() => {
               window.location.href = '/';
             }, 1000);
@@ -191,7 +183,6 @@ function Signup() {
       setError(null);
       setSuccess(null);
     } else {
-      // Navigate to home page
       window.location.href = '/';
     }
   };
@@ -209,9 +200,7 @@ function Signup() {
         setError('Google sign-up failed. Please try email signup instead.');
         setLoading(false);
       } else if (data) {
-        // Don't set loading to false here as the redirect will happen
         setSuccess('Redirecting to Google...');
-        // The redirect will be handled automatically by Supabase
       }
     } catch (err) {
       console.error('Google sign-up unexpected error:', err);
@@ -221,13 +210,11 @@ function Signup() {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData({ ...formData, [field]: value });
-    // Clear errors when user starts typing
+    setFormData(prev => ({ ...prev, [field]: value }));
     if (error) setError(null);
     if (success) setSuccess(null);
   };
 
-  // Quick test user creation for bypassing rate limits
   const handleCreateTestUser = async () => {
     setLoading(true);
     setError(null);

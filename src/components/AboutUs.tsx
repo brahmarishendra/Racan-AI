@@ -6,10 +6,8 @@ import Footer from './Footer';
 const AboutUs: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [teamVisible, setTeamVisible] = useState(false);
-  const [valuesVisible, setValuesVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const teamRef = useRef<HTMLDivElement>(null);
-  const valuesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -21,9 +19,6 @@ const AboutUs: React.FC = () => {
           if (entry.target === teamRef.current && entry.isIntersecting) {
             setTeamVisible(true);
           }
-          if (entry.target === valuesRef.current && entry.isIntersecting) {
-            setValuesVisible(true);
-          }
         });
       },
       {
@@ -34,12 +29,10 @@ const AboutUs: React.FC = () => {
 
     if (sectionRef.current) observer.observe(sectionRef.current);
     if (teamRef.current) observer.observe(teamRef.current);
-    if (valuesRef.current) observer.observe(valuesRef.current);
 
     return () => {
       if (sectionRef.current) observer.unobserve(sectionRef.current);
       if (teamRef.current) observer.unobserve(teamRef.current);
-      if (valuesRef.current) observer.unobserve(valuesRef.current);
     };
   }, []);
 
@@ -50,7 +43,6 @@ const AboutUs: React.FC = () => {
       role: "UI Developer",
       image: "https://i.postimg.cc/Hxh5hDFw/1740918461489.jpg",
       linkedin: "https://www.linkedin.com/in/kesari-brahmarishendra-8a54b0260/",
-      description: "Passionate UI developer with expertise in creating beautiful and functional user interfaces for modern web applications."
     },
     {
       id: 2,
@@ -58,7 +50,6 @@ const AboutUs: React.FC = () => {
       role: "Co-founder",
       image: "https://i.postimg.cc/pXkFjC7K/Whats-App-Image-2025-03-08-at-23-17-43-05d1786f.jpg",
       linkedin: "#",
-      description: "Visionary co-founder driving innovation in AI-powered fashion technology and strategic business development."
     },
     {
       id: 3,
@@ -66,7 +57,6 @@ const AboutUs: React.FC = () => {
       role: "Partner & Marketing",
       image: "https://i.postimg.cc/C1LdPJHg/Whats-App-Image-2025-03-08-at-15-53-37-b38eef7f.jpg",
       linkedin: "#",
-      description: "Strategic marketing partner focused on building brand awareness, user engagement, and market expansion."
     },
     {
       id: 4,
@@ -74,25 +64,6 @@ const AboutUs: React.FC = () => {
       role: "Fashion Stylist",
       image: "https://stylewithingrace.com/wp-content/uploads/elementor/thumbs/New-About-Page-Photo-2024-qids6gfvk1z8f2xb7tj04r4thwq0qcxwrfafs3japs.png",
       website: "https://stylewithingrace.com/",
-      description: "Professional fashion stylist bringing years of industry experience to enhance our AI-powered recommendations."
-    }
-  ];
-
-  const values = [
-    {
-      icon: "🎯",
-      title: "Personalization",
-      description: "Every recommendation is tailored to your unique style, preferences, and lifestyle needs."
-    },
-    {
-      icon: "🚀",
-      title: "Innovation",
-      description: "We continuously push the boundaries of what's possible with AI and fashion technology."
-    },
-    {
-      icon: "💎",
-      title: "Quality",
-      description: "We believe in delivering exceptional quality in both our technology and fashion recommendations."
     }
   ];
 
@@ -174,126 +145,99 @@ const AboutUs: React.FC = () => {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section ref={teamRef} className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
+      {/* Team Section with Grid Background */}
+      <section ref={teamRef} className="py-16 md:py-24 relative overflow-hidden">
+        {/* Grid Background */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(rgba(0, 74, 173, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 74, 173, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-6xl mx-auto">
             <div className={`text-center mb-16 transform transition-all duration-1000 ${
               teamVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#004AAD] mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Meet Our Team
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                The passionate individuals behind Racan AI, bringing together expertise in 
-                technology, fashion, and user experience.
-              </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {teamMembers.map((member, index) => (
                 <div
                   key={member.id}
-                  className={`group bg-white rounded-sm p-6 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${
+                  className={`group text-center transform transition-all duration-700 ${
                     teamVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                   }`}
                   style={{ transitionDelay: `${index * 150}ms` }}
                 >
-                  <div className="relative mb-6">
-                    <div className="w-24 h-24 mx-auto rounded-sm overflow-hidden ring-4 ring-[#004AAD]/10 group-hover:ring-[#973cff]/20 transition-all duration-300">
+                  {/* Profile Image */}
+                  <div className="relative mb-4 mx-auto">
+                    <div className="w-32 h-32 md:w-40 md:h-40 mx-auto overflow-hidden bg-gradient-to-br from-blue-100 to-blue-200 relative">
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover filter sepia-0 saturate-0 brightness-110 contrast-125"
+                        style={{
+                          filter: 'sepia(100%) saturate(200%) hue-rotate(200deg) brightness(0.9) contrast(1.2)'
+                        }}
                         onError={(e) => {
                           e.currentTarget.src = 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400';
                         }}
                       />
-                    </div>
-                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#004AAD] rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100">
-                      {member.linkedin ? (
-                        <Linkedin className="w-4 h-4 text-white" />
-                      ) : (
-                        <Globe className="w-4 h-4 text-white" />
-                      )}
+                      {/* Blue overlay */}
+                      <div className="absolute inset-0 bg-blue-500 mix-blend-multiply opacity-60"></div>
                     </div>
                   </div>
                   
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-[#004AAD] transition-colors duration-300">
+                  {/* Name and Role */}
+                  <div className="text-left">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-1">
                       {member.name}
                     </h3>
-                    <p className="text-[#973cff] font-medium text-sm mb-3">
+                    <p className="text-gray-600 text-sm md:text-base mb-3">
                       {member.role}
                     </p>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                      {member.description}
-                    </p>
                     
-                    {member.linkedin && member.linkedin !== "#" && (
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-[#004AAD] hover:text-[#973cff] transition-colors duration-300 text-sm font-medium"
-                      >
-                        <Linkedin className="w-4 h-4" />
-                        Connect
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    )}
-                    
-                    {member.website && (
-                      <a
-                        href={member.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-[#004AAD] hover:text-[#973cff] transition-colors duration-300 text-sm font-medium"
-                      >
-                        <Globe className="w-4 h-4" />
-                        Website
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    )}
+                    {/* Arrow Link */}
+                    <div className="flex justify-start">
+                      {member.linkedin && member.linkedin !== "#" ? (
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center w-8 h-8 bg-gray-900 text-white hover:bg-blue-600 transition-colors duration-300"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                          </svg>
+                        </a>
+                      ) : member.website ? (
+                        <a
+                          href={member.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center w-8 h-8 bg-gray-900 text-white hover:bg-blue-600 transition-colors duration-300"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                          </svg>
+                        </a>
+                      ) : (
+                        <div className="inline-flex items-center justify-center w-8 h-8 bg-gray-300 text-gray-500">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section ref={valuesRef} className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className={`text-center mb-16 transform transition-all duration-1000 ${
-              valuesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-            }`}>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#004AAD] mb-4">
-                Our Values
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                The principles that guide everything we do at Racan AI.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {values.map((value, index) => (
-                <div 
-                  key={index}
-                  className={`text-center p-6 rounded-sm bg-gradient-to-br from-[#004AAD]/5 to-[#973cff]/5 hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 ${
-                    valuesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                  }`}
-                  style={{ transitionDelay: `${index * 200}ms` }}
-                >
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#004AAD] to-[#973cff] rounded-sm flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">{value.icon}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {value.description}
-                  </p>
                 </div>
               ))}
             </div>

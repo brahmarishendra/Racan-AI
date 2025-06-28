@@ -59,7 +59,7 @@ function Login() {
       const timer = setTimeout(() => {
         setError(null);
         setSuccess(null);
-      }, 8000); // Increased timeout for better UX
+      }, 8000);
       return () => clearTimeout(timer);
     }
   }, [error, success]);
@@ -70,26 +70,9 @@ function Login() {
   };
 
   const validatePassword = (password: string) => {
-    // Check for minimum length
     if (password.length < 6) {
       return { isValid: false, message: 'Password must be at least 6 characters long' };
     }
-    
-    // Check for uppercase letter
-    if (!/[A-Z]/.test(password)) {
-      return { isValid: false, message: 'Password must contain at least one uppercase letter' };
-    }
-    
-    // Check for lowercase letter
-    if (!/[a-z]/.test(password)) {
-      return { isValid: false, message: 'Password must contain at least one lowercase letter' };
-    }
-    
-    // Check for number
-    if (!/[0-9]/.test(password)) {
-      return { isValid: false, message: 'Password must contain at least one number' };
-    }
-    
     return { isValid: true, message: '' };
   };
 
@@ -116,8 +99,6 @@ function Login() {
         return;
       }
       
-      // For login, we don't need to validate password strength as strictly
-      // since existing users might have passwords that don't meet current requirements
       if (formData.password.length < 6) {
         setError('Password must be at least 6 characters long');
         return;
@@ -133,7 +114,6 @@ function Login() {
         } else if (data?.user) {
           setSuccess('Login successful! Redirecting...');
           
-          // Use proper navigation instead of window.location.href
           setTimeout(() => {
             window.location.replace('/');
           }, 1000);
@@ -153,7 +133,6 @@ function Login() {
       setError(null);
       setSuccess(null);
     } else {
-      // Navigate to home page
       window.location.href = '/';
     }
   };
@@ -201,9 +180,7 @@ function Login() {
         setError('Google sign-in failed. Please try email login instead.');
         setLoading(false);
       } else if (data) {
-        // Don't set loading to false here as the redirect will happen
         setSuccess('Redirecting to Google...');
-        // The redirect will be handled automatically by Supabase
       }
     } catch (err) {
       console.error('Google sign-in unexpected error:', err);
@@ -213,8 +190,7 @@ function Login() {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData({ ...formData, [field]: value });
-    // Clear errors when user starts typing
+    setFormData(prev => ({ ...prev, [field]: value }));
     if (error) setError(null);
     if (success) setSuccess(null);
   };
