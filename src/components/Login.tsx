@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
 import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback } from '../lib/supabase';
 
 function Login() {
-  const [step, setStep] = useState('email');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    name: '',
     email: '', 
     password: '',
   });
@@ -17,7 +15,6 @@ function Login() {
   // Handle OAuth callback on component mount
   useEffect(() => {
     const handleCallback = async () => {
-      // Check if this is an OAuth callback
       const urlParams = new URLSearchParams(window.location.search);
       const accessToken = urlParams.get('access_token');
       const refreshToken = urlParams.get('refresh_token');
@@ -69,71 +66,50 @@ function Login() {
     return emailRegex.test(email);
   };
 
-  const validatePassword = (password: string) => {
-    if (password.length < 6) {
-      return { isValid: false, message: 'Password must be at least 6 characters long' };
-    }
-    return { isValid: true, message: '' };
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
     
-    if (step === 'email') {
-      if (!formData.email.trim()) {
-        setError('Please enter your email address');
-        return;
-      }
-      
-      if (!validateEmail(formData.email.trim())) {
-        setError('Please enter a valid email address');
-        return;
-      }
-      
-      setStep('password');
-    } else {
-      if (!formData.password.trim()) {
-        setError('Please enter your password');
-        return;
-      }
-      
-      if (formData.password.length < 6) {
-        setError('Password must be at least 6 characters long');
-        return;
-      }
-
-      setLoading(true);
-      
-      try {
-        const { data, error } = await signIn(formData.email.trim(), formData.password);
-        
-        if (error) {
-          setError(error.message);
-        } else if (data?.user) {
-          setSuccess('Login successful! Redirecting...');
-          
-          setTimeout(() => {
-            window.location.replace('/');
-          }, 1000);
-        }
-      } catch (err) {
-        console.error('Login error:', err);
-        setError('An unexpected error occurred. Please try again.');
-      } finally {
-        setLoading(false);
-      }
+    if (!formData.email.trim()) {
+      setError('Please enter your email address');
+      return;
     }
-  };
+    
+    if (!validateEmail(formData.email.trim())) {
+      setError('Please enter a valid email address');
+      return;
+    }
 
-  const handleGoBack = () => {
-    if (step === 'password') {
-      setStep('email');
-      setError(null);
-      setSuccess(null);
-    } else {
-      window.location.href = '/';
+    if (!formData.password.trim()) {
+      setError('Please enter your password');
+      return;
+    }
+    
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+
+    setLoading(true);
+    
+    try {
+      const { data, error } = await signIn(formData.email.trim(), formData.password);
+      
+      if (error) {
+        setError(error.message);
+      } else if (data?.user) {
+        setSuccess('Login successful! Redirecting...');
+        
+        setTimeout(() => {
+          window.location.replace('/');
+        }, 1000);
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -196,228 +172,126 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full flex">
-      {/* Left side - Sign in form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">Login</h1>
+        </div>
+        
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-2 mb-6">
+            <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-red-700 text-sm leading-relaxed">{error}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Success Message */}
+        {success && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-2 mb-6">
+            <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+            <p className="text-green-700 text-sm">{success}</p>
+          </div>
+        )}
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Email Field */}
           <div>
-            {/* Back button */}
-            <button 
-              onClick={handleGoBack}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-8 transition-colors"
+            <input
+              type="email"
+              required
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              disabled={loading}
+              autoComplete="email"
+            />
+          </div>
+
+          {/* Password Field */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              required
+              minLength={6}
+              className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Password"
+              value={formData.password}
+              onChange={(e) => handleInputChange('password', e.target.value)}
+              disabled={loading}
+              autoComplete="current-password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
               disabled={loading}
             >
-              <ArrowLeft className="w-5 h-5" />
-              {step === 'password' ? 'Back' : 'Home'}
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
+          </div>
 
-            <div className="flex items-center gap-2 mb-12">
-              <img 
-                src="https://i.postimg.cc/50B939gH/Logo.png" 
-                alt="Racan AI" 
-                className="w-8 h-8"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-              <span className="text-2xl font-semibold">Racan AI</span>
-            </div>
-            <h1 className="text-5xl font-serif mb-3">Login</h1>
-            <p className="text-gray-600 text-lg">
-              Sign in to continue your fashion journey with AI-powered recommendations.
+          {/* Google Sign In Button */}
+          <button 
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            {loading ? 'Connecting...' : 'Continue with Google'}
+          </button>
+
+          {/* Privacy Policy */}
+          <div className="text-center text-sm text-gray-600">
+            By logging in, you agree to our{' '}
+            <a href="#" className="text-blue-600 hover:underline">
+              Privacy Policy
+            </a>
+            .
+          </div>
+
+          {/* Login Button */}
+          <button
+            type="submit"
+            disabled={loading || !formData.email.trim() || !formData.password.trim()}
+            className="w-full bg-red-600 text-white py-3 px-4 rounded-lg text-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Signing in...' : 'Login'}
+          </button>
+
+          {/* Sign up link */}
+          <div className="text-center">
+            <p className="text-gray-600 mb-2">
+              Don't have an account yet?{' '}
+              <button 
+                type="button"
+                onClick={() => window.location.href = '/signup'}
+                className="text-red-600 font-medium hover:underline"
+                disabled={loading}
+              >
+                Sign up
+              </button>
             </p>
-          </div>
-          
-          {/* Error Message */}
-          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-2">
-              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-              <div className="flex-1">
-                <p className="text-red-700 text-sm leading-relaxed">{error}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Success Message */}
-          {success && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-2">
-              <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-              <p className="text-green-700 text-sm">{success}</p>
-            </div>
-          )}
-          
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {step === 'email' ? (
-              <>
-                <div className="space-y-4">
-                  <input
-                    type="email"
-                    required
-                    className="w-full px-3 py-3 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                    placeholder="Email address"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    disabled={loading}
-                    autoComplete="email"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading || !formData.email.trim()}
-                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Loading...' : 'Continue with email'}
-                </button>
-              </>
-            ) : (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2 className="text-xl font-semibold mb-2">
-                    Enter your password
-                  </h2>
-                  <p className="text-gray-600 break-all">
-                    Enter your password for {formData.email}
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      required
-                      minLength={6}
-                      className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
-                      placeholder="Password"
-                      value={formData.password}
-                      onChange={(e) => handleInputChange('password', e.target.value)}
-                      disabled={loading}
-                      autoComplete="current-password"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                      disabled={loading}
-                    >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </button>
-                  </div>
-                  
-                  <div className="text-sm text-gray-500">
-                    Password must be at least 6 characters long
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-center w-full">
-                  <button 
-                    type="button"
-                    onClick={handleGoogleSignIn}
-                    disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-sm text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <img 
-                      src="https://developers.google.com/identity/images/g-logo.png" 
-                      alt="Google" 
-                      className="w-5 h-5"
-                      onError={(e) => {
-                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDEyVjE0LjI2SDE3LjY5QzE3LjQzIDE1LjYgMTYuNTggMTYuNzEgMTUuMjcgMTcuMzlWMjAuMDlIMTguOTZDMjEuMTggMTguMDkgMjIuNTYgMTUuNDMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xMiAyM0M5LjI0IDIzIDYuOTUgMjEuOTIgNS4yNyAyMC4wOUw4Ljk2IDE3LjM5QzEwLjA0IDE4LjAzIDExLjM3IDE4LjM4IDEyIDE4LjM4QzE0LjY5IDE4LjM4IDE2Ljk5IDE2LjU2IDE3Ljg0IDE0LjA5SDE0LjEyVjEwLjg0SDE3Ljg0QzE4LjY5IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDguMzcgMjAuOTkgNi41NSAyNCAwLjU1QzI0IDQuNzMgMjIuOTkgMyAyMS4yNyAxSDEuODRDMTYuOTkgMS40NCAxNC43NiAzLjI3IDE0LjEyIDYuMDlIMTcuODRDMTcuODQgNi41NSAxNy44NCA2LjU1IDE3Ljg0IDYuNTVaIiBmaWxsPSIjMzRBODUzIi8+Cjwvc3ZnPg==';
-                      }}
-                    />
-                    {loading ? 'Connecting...' : 'Continue with Google'}
-                  </button>
-                </div>
-
-                <div className="text-center text-sm text-gray-600">
-                  By logging in, you agree to our{' '}
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Privacy Policy
-                  </a>
-                  .
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading || formData.password.length < 6}
-                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Signing in...' : 'Login'}
-                </button>
-
-                <div className="text-center">
-                  <p className="text-gray-600 mb-2">
-                    Don't have an account yet?{' '}
-                    <button 
-                      onClick={() => window.location.href = '/signup'}
-                      className="text-[#FF2D6B] font-medium hover:underline"
-                      disabled={loading}
-                    >
-                      Sign up
-                    </button>
-                  </p>
-                  <button
-                    type="button"
-                    onClick={handleForgotPassword}
-                    disabled={loading}
-                    className="text-gray-600 hover:underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Forgot your password? Click here
-                  </button>
-                </div>
-              </div>
-            )}
-          </form>
-
-          <div className="pt-4">
-            <button 
-              className="text-gray-600 hover:text-gray-800 flex items-center gap-2 mx-auto"
+            <button
+              type="button"
+              onClick={handleForgotPassword}
               disabled={loading}
+              className="text-gray-600 hover:underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Learn more
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 9l-7 7-7-7" />
-              </svg>
+              Forgot your password? <span className="text-red-600">Click here</span>
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* Right side - Fashion images */}
-      <div className="hidden lg:block lg:w-1/2 bg-gray-50">
-        <div className="h-screen grid grid-cols-2 gap-4 p-8">
-          <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
-            <img 
-              src="https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg" 
-              alt="Fashion" 
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
-            <img 
-              src="https://i.pinimg.com/736x/94/d2/5f/94d25f091a8fd11ab557d02d4ac03979.jpg" 
-              alt="Fashion" 
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
-            <img 
-              src="https://i.pinimg.com/736x/65/dc/8e/65dc8e24c28415fba29f1dff90c9d970.jpg" 
-              alt="Fashion" 
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="rounded-2xl overflow-hidden h-[calc(50vh-3rem)]">
-            <img 
-              src="https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg" 
-              alt="Fashion" 
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   );
