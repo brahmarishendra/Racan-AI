@@ -192,7 +192,7 @@ const AboutUs: React.FC = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       
                       {/* Hover border effect */}
-                      <div className="absolute inset-0 border-4 border-[#004AAD] opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ borderRadius: '1px' }}></div>
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ borderRadius: '1px' }}></div>
                     </div>
                   </div>
                   
