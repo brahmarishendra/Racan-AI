@@ -253,7 +253,7 @@ function Login() {
                   <input
                     type="email"
                     required
-                    className="w-full px-3 py-3 border border-gray-300 rounded-[1px] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                    className="w-full px-3 py-3 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                     placeholder="Email address"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
@@ -265,7 +265,7 @@ function Login() {
                 <button
                   type="submit"
                   disabled={loading || !formData.email.trim()}
-                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-[1px] text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Loading...' : 'Continue with email'}
                 </button>
@@ -287,7 +287,7 @@ function Login() {
                       type={showPassword ? "text" : "password"}
                       required
                       minLength={6}
-                      className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-[1px] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+                      className="w-full px-3 py-3 pr-12 border border-gray-300 rounded-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
                       placeholder="Password"
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
@@ -314,7 +314,7 @@ function Login() {
                     type="button"
                     onClick={handleGoogleSignIn}
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-[1px] text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-sm text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <img 
                       src="https://developers.google.com/identity/images/g-logo.png" 
@@ -339,7 +339,7 @@ function Login() {
                 <button
                   type="submit"
                   disabled={loading || formData.password.length < 6}
-                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-[1px] text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-4 w-full bg-[#FF2D6B] text-black py-3 px-4 rounded-sm text-lg font-semibold hover:bg-[#e6245e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Signing in...' : 'Login'}
                 </button>
