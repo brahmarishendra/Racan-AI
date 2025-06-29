@@ -240,45 +240,22 @@ function Login() {
         />
       </div>
 
-      {/* Beautiful Circular Loading Animation - Only for Login Page */}
+      {/* Modern Circular Loading Animation - Only for Login Page */}
       {loading && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[9999] backdrop-blur-sm">
+        <div className="fixed inset-0 bg-white bg-opacity-95 backdrop-blur-sm flex items-center justify-center z-[9999]">
           <div className="text-center">
-            {/* Multi-layered spinning circles */}
-            <div className="relative w-32 h-32 mx-auto mb-6">
-              {/* Outer pulsing ring with blur effect */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 animate-pulse blur-lg opacity-80"></div>
-              
-              {/* Middle spinning ring */}
-              <div className="absolute inset-3 rounded-full border-4 border-transparent animate-spin" style={{
-                background: 'conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6)',
-                borderRadius: '50%',
-                animation: 'spin 2s linear infinite'
-              }}></div>
-              
-              {/* Inner pulsing core */}
-              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-pink-400 via-blue-400 to-purple-400 animate-pulse"></div>
-              
-              {/* Center white dot */}
-              <div className="absolute inset-12 rounded-full bg-white opacity-90 animate-pulse shadow-lg"></div>
-              
-              {/* Additional spinning outer ring */}
-              <div className="absolute inset-1 rounded-full border-2 border-transparent animate-spin" style={{
-                background: 'linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent)',
-                borderRadius: '50%',
-                animation: 'spin 3s linear infinite reverse'
-              }}></div>
+            {/* Main circular spinner */}
+            <div className="relative w-16 h-16 mx-auto mb-4">
+              {/* Outer ring */}
+              <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
+              {/* Spinning ring */}
+              <div className="absolute inset-0 border-4 border-transparent border-t-blue-600 rounded-full animate-spin"></div>
+              {/* Inner pulsing dot */}
+              <div className="absolute inset-4 bg-blue-600 rounded-full animate-pulse opacity-60"></div>
             </div>
             
-            {/* Loading text with bouncing dots */}
-            <div className="text-white">
-              <p className="text-lg font-medium mb-3 animate-pulse">Signing you in...</p>
-              <div className="flex justify-center space-x-1">
-                <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-              </div>
-            </div>
+            {/* Loading text */}
+            <p className="text-gray-600 text-sm font-medium">Signing you in...</p>
           </div>
         </div>
       )}
@@ -420,13 +397,6 @@ function Login() {
           </div>
         </form>
       </main>
-
-      <style jsx>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   );
 }
