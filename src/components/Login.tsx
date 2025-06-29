@@ -240,27 +240,32 @@ function Login() {
         />
       </div>
 
-      {/* Circular Gradient Loading Animation - Only for Login Page */}
+      {/* Circular Gradient Loading Animation - Only shows when loading is true */}
       {loading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-[9999]">
+        <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-[9999]">
           <div className="text-center">
             {/* Circular gradient spinner */}
-            <div className="relative w-20 h-20 mx-auto mb-6">
+            <div className="relative w-24 h-24 mx-auto mb-8">
               {/* Outer gradient ring */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-spin">
+                <div className="absolute inset-2 bg-black rounded-full"></div>
+              </div>
+              
+              {/* Middle gradient ring */}
+              <div className="absolute inset-3 rounded-full bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}>
                 <div className="absolute inset-1 bg-black rounded-full"></div>
               </div>
               
               {/* Inner pulsing gradient circle */}
-              <div className="absolute inset-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full animate-pulse opacity-80"></div>
+              <div className="absolute inset-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full animate-pulse opacity-80"></div>
               
               {/* Center dot */}
-              <div className="absolute inset-7 bg-white rounded-full animate-pulse"></div>
+              <div className="absolute inset-9 bg-white rounded-full animate-pulse"></div>
             </div>
             
             {/* Loading text */}
-            <p className="text-white text-lg font-medium">Signing you in...</p>
-            <div className="mt-2 flex justify-center space-x-1">
+            <p className="text-white text-xl font-medium mb-3">Signing you in</p>
+            <div className="flex justify-center space-x-1">
               <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
               <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
               <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
@@ -269,7 +274,8 @@ function Login() {
         </div>
       )}
 
-      <main className="max-w-sm w-full md:bg-white md:rounded-sm md:shadow-lg p-6 md:p-8">
+      {/* Auth Box - Smaller for desktop only */}
+      <main className="max-w-sm w-full lg:max-w-xs md:bg-white md:rounded-sm md:shadow-lg p-6 md:p-6 lg:p-8">
         {/* Header */}
         <header className="text-center mb-6">
           <h1 className="text-2xl font-medium text-gray-900 mb-2 tracking-tight">Login</h1>
