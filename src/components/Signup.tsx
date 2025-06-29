@@ -242,7 +242,7 @@ function Signup() {
         />
       </div>
 
-      {/* AI Chip Loading Animation - Only for Signup Page */}
+      {/* AI Chip Loading Animation - Black and Gray Theme */}
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-[9999]">
           <div className="text-center">
@@ -254,14 +254,14 @@ function Signup() {
                 viewBox="0 0 96 96" 
                 className="w-full h-full"
               >
-                {/* Central Chip */}
+                {/* Central Chip - Black */}
                 <rect 
                   x="32" 
                   y="32" 
                   width="32" 
                   height="32" 
                   fill="none" 
-                  stroke="#004AAD" 
+                  stroke="#000000" 
                   strokeWidth="2"
                   className="animate-pulse"
                 />
@@ -270,65 +270,65 @@ function Signup() {
                   y="36" 
                   width="24" 
                   height="24" 
-                  fill="#004AAD" 
+                  fill="#000000" 
                   className="animate-pulse"
                   style={{ animationDelay: '0.2s' }}
                 />
                 
-                {/* Circuit Lines - Top */}
+                {/* Circuit Lines - Gray */}
                 <g className="circuit-lines">
-                  <line x1="48" y1="32" x2="48" y2="16" stroke="#973cff" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.4s' }} />
-                  <line x1="40" y1="32" x2="40" y2="20" stroke="#973cff" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
-                  <line x1="56" y1="32" x2="56" y2="20" stroke="#973cff" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.8s' }} />
+                  <line x1="48" y1="32" x2="48" y2="16" stroke="#6B7280" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.4s' }} />
+                  <line x1="40" y1="32" x2="40" y2="20" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
+                  <line x1="56" y1="32" x2="56" y2="20" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.8s' }} />
                   
-                  {/* Circuit Nodes - Top */}
-                  <circle cx="48" cy="16" r="2" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1s' }} />
-                  <circle cx="40" cy="20" r="1.5" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.2s' }} />
-                  <circle cx="56" cy="20" r="1.5" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.4s' }} />
+                  {/* Circuit Nodes - Dark Gray */}
+                  <circle cx="48" cy="16" r="2" fill="#374151" className="animate-pulse" style={{ animationDelay: '1s' }} />
+                  <circle cx="40" cy="20" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.2s' }} />
+                  <circle cx="56" cy="20" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.4s' }} />
                 </g>
                 
                 {/* Circuit Lines - Right */}
                 <g className="circuit-lines">
-                  <line x1="64" y1="48" x2="80" y2="48" stroke="#973cff" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.5s' }} />
-                  <line x1="64" y1="40" x2="76" y2="40" stroke="#973cff" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.7s' }} />
-                  <line x1="64" y1="56" x2="76" y2="56" stroke="#973cff" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.9s' }} />
+                  <line x1="64" y1="48" x2="80" y2="48" stroke="#6B7280" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.5s' }} />
+                  <line x1="64" y1="40" x2="76" y2="40" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.7s' }} />
+                  <line x1="64" y1="56" x2="76" y2="56" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.9s' }} />
                   
-                  {/* Circuit Nodes - Right */}
-                  <circle cx="80" cy="48" r="2" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.1s' }} />
-                  <circle cx="76" cy="40" r="1.5" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.3s' }} />
-                  <circle cx="76" cy="56" r="1.5" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
+                  {/* Circuit Nodes - Dark Gray */}
+                  <circle cx="80" cy="48" r="2" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.1s' }} />
+                  <circle cx="76" cy="40" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.3s' }} />
+                  <circle cx="76" cy="56" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
                 </g>
                 
                 {/* Circuit Lines - Bottom */}
                 <g className="circuit-lines">
-                  <line x1="48" y1="64" x2="48" y2="80" stroke="#973cff" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
-                  <line x1="40" y1="64" x2="40" y2="76" stroke="#973cff" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.8s' }} />
-                  <line x1="56" y1="64" x2="56" y2="76" stroke="#973cff" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '1s' }} />
+                  <line x1="48" y1="64" x2="48" y2="80" stroke="#6B7280" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
+                  <line x1="40" y1="64" x2="40" y2="76" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.8s' }} />
+                  <line x1="56" y1="64" x2="56" y2="76" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '1s' }} />
                   
-                  {/* Circuit Nodes - Bottom */}
-                  <circle cx="48" cy="80" r="2" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.2s' }} />
-                  <circle cx="40" cy="76" r="1.5" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.4s' }} />
-                  <circle cx="56" cy="76" r="1.5" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.6s' }} />
+                  {/* Circuit Nodes - Dark Gray */}
+                  <circle cx="48" cy="80" r="2" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.2s' }} />
+                  <circle cx="40" cy="76" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.4s' }} />
+                  <circle cx="56" cy="76" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.6s' }} />
                 </g>
                 
                 {/* Circuit Lines - Left */}
                 <g className="circuit-lines">
-                  <line x1="32" y1="48" x2="16" y2="48" stroke="#973cff" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.7s' }} />
-                  <line x1="32" y1="40" x2="20" y2="40" stroke="#973cff" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.9s' }} />
-                  <line x1="32" y1="56" x2="20" y2="56" stroke="#973cff" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '1.1s' }} />
+                  <line x1="32" y1="48" x2="16" y2="48" stroke="#6B7280" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.7s' }} />
+                  <line x1="32" y1="40" x2="20" y2="40" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.9s' }} />
+                  <line x1="32" y1="56" x2="20" y2="56" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '1.1s' }} />
                   
-                  {/* Circuit Nodes - Left */}
-                  <circle cx="16" cy="48" r="2" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.3s' }} />
-                  <circle cx="20" cy="40" r="1.5" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
-                  <circle cx="20" cy="56" r="1.5" fill="#973cff" className="animate-pulse" style={{ animationDelay: '1.7s' }} />
+                  {/* Circuit Nodes - Dark Gray */}
+                  <circle cx="16" cy="48" r="2" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.3s' }} />
+                  <circle cx="20" cy="40" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
+                  <circle cx="20" cy="56" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.7s' }} />
                 </g>
                 
-                {/* Data Flow Animation */}
+                {/* Data Flow Animation - Light Gray */}
                 <g className="data-flow">
-                  <circle r="1" fill="#FF2D6B" className="animate-ping">
+                  <circle r="1" fill="#9CA3AF" className="animate-ping">
                     <animateMotion dur="2s" repeatCount="indefinite" path="M48,32 L48,16 M80,48 L64,48 M48,64 L48,80 M16,48 L32,48" />
                   </circle>
-                  <circle r="1" fill="#FF2D6B" className="animate-ping" style={{ animationDelay: '0.5s' }}>
+                  <circle r="1" fill="#9CA3AF" className="animate-ping" style={{ animationDelay: '0.5s' }}>
                     <animateMotion dur="2s" repeatCount="indefinite" begin="0.5s" path="M64,48 L80,48 M48,64 L48,80 M32,48 L16,48 M48,32 L48,16" />
                   </circle>
                 </g>
