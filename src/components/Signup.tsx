@@ -176,8 +176,22 @@ function Signup() {
     if (success) setSuccess(null);
   };
 
+  const handleLogoClick = () => {
+    window.location.href = '/';
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 relative">
+      {/* Logo in top left */}
+      <div className="absolute top-6 left-6 z-10">
+        <img
+          src="https://i.postimg.cc/rsYBTFzm/image-41.png"
+          alt="Racan Logo"
+          className="w-20 md:w-24 cursor-pointer hover:opacity-80 transition-opacity duration-300"
+          onClick={handleLogoClick}
+        />
+      </div>
+
       <div className="max-w-sm w-full md:bg-white md:rounded-sm md:shadow-lg p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-6">
