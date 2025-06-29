@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, LogOut, User } from 'lucide-react';
 import { getCurrentUser, signOut, onAuthStateChange } from '../lib/supabase';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -92,7 +93,7 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[70] bg-white shadow-sm transition-transform duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[70] bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800 transition-all duration-300 ${
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
@@ -107,38 +108,41 @@ const Navbar = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <a
               href="#features"
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              className="text-gray-700 dark:text-gray-300 hover:text-[#973cff] dark:hover:text-[#973cff] transition-colors duration-300"
             >
               Features
             </a>
             <a
               href="#products"
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              className="text-gray-700 dark:text-gray-300 hover:text-[#973cff] dark:hover:text-[#973cff] transition-colors duration-300"
             >
               Products
             </a>
             <button
               onClick={() => handleNavigation('/about')}
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              className="text-gray-700 dark:text-gray-300 hover:text-[#973cff] dark:hover:text-[#973cff] transition-colors duration-300"
             >
               About Us
             </button>
             
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
             {loading ? (
-              <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+              <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
             ) : user ? (
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-[#004AAD] rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#004AAD] dark:bg-[#973cff] rounded-full flex items-center justify-center">
                     <User className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-sm text-gray-700 max-w-24 truncate">
+                  <span className="text-sm text-gray-700 dark:text-gray-300 max-w-24 truncate">
                     {getUserDisplayName()}
                   </span>
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors duration-300"
+                  className="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors duration-300"
                   title="Sign out"
                 >
                   <LogOut className="w-4 h-4" />
@@ -148,26 +152,31 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={() => handleNavigation('/login')}
-                className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
+                className="bg-black dark:bg-[#973cff] text-white px-6 py-2 rounded-full hover:bg-[#d70153] dark:hover:bg-[#004AAD] transition-all duration-300"
               >
                 Try Racan
               </button>
             )}
           </nav>
 
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden z-[80] relative p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center space-x-3">
+            {/* Theme Toggle for Mobile */}
+            <ThemeToggle />
+            
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="z-[80] relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors duration-300"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              {isMenuOpen ? <X size={24} className="text-gray-900 dark:text-gray-100" /> : <Menu size={24} className="text-gray-900 dark:text-gray-100" />}
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`md:hidden fixed inset-0 z-[60] bg-white transition-all duration-500 ease-in-out transform ${
+        className={`md:hidden fixed inset-0 z-[60] bg-white dark:bg-gray-900 transition-all duration-500 ease-in-out transform ${
           isMenuOpen
             ? 'opacity-100 visible translate-y-0'
             : 'opacity-0 invisible pointer-events-none translate-y-[-100%]'
@@ -175,7 +184,7 @@ const Navbar = () => {
         onClick={() => setIsMenuOpen(false)}
       >
         {/* Top navbar area */}
-        <div className="flex justify-between items-center px-6 py-4 shadow-sm">
+        <div className="flex justify-between items-center px-6 py-4 shadow-sm dark:shadow-gray-800">
           <img
             src="https://i.postimg.cc/rsYBTFzm/image-41.png"
             alt="Racan Logo"
@@ -192,43 +201,43 @@ const Navbar = () => {
         >
           <a
             href="#features"
-            className="text-xl hover:text-[#973cff] transition-colors duration-300"
+            className="text-xl text-gray-900 dark:text-gray-100 hover:text-[#973cff] dark:hover:text-[#973cff] transition-colors duration-300"
             onClick={() => setIsMenuOpen(false)}
           >
             Features
           </a>
           <a
             href="#products"
-            className="text-xl hover:text-[#973cff] transition-colors duration-300"
+            className="text-xl text-gray-900 dark:text-gray-100 hover:text-[#973cff] dark:hover:text-[#973cff] transition-colors duration-300"
             onClick={() => setIsMenuOpen(false)}
           >
             Products
           </a>
           <button
             onClick={() => handleNavigation('/about')}
-            className="text-xl hover:text-[#973cff] transition-colors duration-300"
+            className="text-xl text-gray-900 dark:text-gray-100 hover:text-[#973cff] dark:hover:text-[#973cff] transition-colors duration-300"
           >
             About Us
           </button>
 
           {loading ? (
-            <div className="w-12 h-12 bg-gray-200 rounded-full animate-pulse"></div>
+            <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
           ) : user ? (
             <div className="flex flex-col items-center space-y-4 mt-8">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-[#004AAD] rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#004AAD] dark:bg-[#973cff] rounded-full flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-center">
-                  <p className="text-lg font-medium text-gray-900">
+                  <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
                     {getUserDisplayName()}
                   </p>
-                  <p className="text-sm text-gray-600">{user.email}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{user.email}</p>
                 </div>
               </div>
               <button
                 onClick={handleSignOut}
-                className="flex items-center space-x-2 text-red-600 hover:text-red-700 transition-colors duration-300"
+                className="flex items-center space-x-2 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors duration-300"
               >
                 <LogOut className="w-5 h-5" />
                 <span>Sign out</span>
@@ -237,7 +246,7 @@ const Navbar = () => {
           ) : (
             <button 
               onClick={() => handleNavigation('/login')}
-              className="mt-8 bg-black text-white px-6 py-3 rounded-full hover:bg-[#d70153] transition-all duration-300"
+              className="mt-8 bg-black dark:bg-[#973cff] text-white px-6 py-3 rounded-full hover:bg-[#d70153] dark:hover:bg-[#004AAD] transition-all duration-300"
             >
               Try Racan
             </button>

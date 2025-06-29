@@ -11,26 +11,74 @@
   }
   
   body {
-    @apply text-gray-900 overflow-x-hidden;
+    @apply text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 overflow-x-hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Manrope', sans-serif;
+    @apply text-gray-900 dark:text-gray-100;
+  }
+
+  /* Dark mode scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
+
+  /* Selection colors for dark mode */
+  ::selection {
+    @apply bg-[#004AAD] dark:bg-[#973cff] text-white;
+  }
+
+  ::-moz-selection {
+    @apply bg-[#004AAD] dark:bg-[#973cff] text-white;
   }
 }
 
 @layer components {
   .hero-gradient {
-    @apply absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30;
+    @apply absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30 dark:via-black/20 dark:to-black/40;
   }
   
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#004AAD] to-[#973cff];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#004AAD] to-[#973cff] dark:from-[#973cff] dark:to-[#004AAD];
   }
   
   .hover-underline {
-    @apply relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#973cff] 
+    @apply relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#973cff] dark:after:bg-[#004AAD]
            after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  /* Dark mode specific components */
+  .card-dark {
+    @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-gray-900/20;
+  }
+
+  .input-dark {
+    @apply bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 
+           placeholder-gray-500 dark:placeholder-gray-400 focus:border-[#004AAD] dark:focus:border-[#973cff];
+  }
+
+  .btn-primary-dark {
+    @apply bg-[#004AAD] dark:bg-[#973cff] text-white hover:bg-[#003d99] dark:hover:bg-[#7a30cc] 
+           focus:ring-[#004AAD] dark:focus:ring-[#973cff];
+  }
+
+  .btn-secondary-dark {
+    @apply bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 
+           hover:bg-gray-300 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600;
   }
 }
 
@@ -49,6 +97,35 @@
   
   .animate-scale {
     animation: scale 2s ease-in-out infinite;
+  }
+
+  /* Dark mode utilities */
+  .text-primary-dark {
+    @apply text-gray-900 dark:text-gray-100;
+  }
+
+  .text-secondary-dark {
+    @apply text-gray-600 dark:text-gray-300;
+  }
+
+  .text-muted-dark {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  .bg-primary-dark {
+    @apply bg-white dark:bg-gray-900;
+  }
+
+  .bg-secondary-dark {
+    @apply bg-gray-50 dark:bg-gray-800;
+  }
+
+  .border-dark {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+
+  .shadow-dark {
+    @apply shadow-lg dark:shadow-gray-900/20;
   }
 }
 
@@ -89,5 +166,33 @@
   }
   50% {
     transform: scale(1.05);
+  }
+}
+
+/* Dark mode transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Ensure images don't get inverted in dark mode */
+img, video, iframe, embed, object {
+  filter: none !important;
+}
+
+/* Dark mode specific animations */
+@media (prefers-color-scheme: dark) {
+  .animate-pulse {
+    animation: pulse-dark 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes pulse-dark {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
   }
 }
