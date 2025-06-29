@@ -8,10 +8,10 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
   const [animationPhase, setAnimationPhase] = useState(0);
 
   useEffect(() => {
-    const timer1 = setTimeout(() => setAnimationPhase(1), 200);   // Start stroke animation (faster)
-    const timer2 = setTimeout(() => setAnimationPhase(2), 1400);  // Start fill animation (faster)
-    const timer3 = setTimeout(() => setAnimationPhase(3), 2200);  // Add glow effect (faster)
-    const timer4 = setTimeout(() => onComplete(), 2800);          // Exit (much faster)
+    const timer1 = setTimeout(() => setAnimationPhase(1), 150);   // Start stroke animation (even faster)
+    const timer2 = setTimeout(() => setAnimationPhase(2), 1000);  // Start fill animation (faster)
+    const timer3 = setTimeout(() => setAnimationPhase(3), 1600);  // Add glow effect (faster)
+    const timer4 = setTimeout(() => onComplete(), 2200);          // Exit (much faster)
 
     return () => {
       clearTimeout(timer1);
@@ -23,8 +23,8 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center z-[10000]">
-      {/* Responsive Logo Container - Much smaller desktop sizing */}
-      <div className="relative w-24 h-16 sm:w-28 sm:h-18 md:w-32 md:h-20 lg:w-36 lg:h-22 xl:w-40 xl:h-24">
+      {/* Responsive Logo Container - Even smaller desktop sizing */}
+      <div className="relative w-20 h-14 sm:w-24 sm:h-16 md:w-28 md:h-18 lg:w-32 lg:h-20 xl:w-36 xl:h-22">
         <svg 
           width="100%" 
           height="100%" 
@@ -48,11 +48,11 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
                 
                 .logo-path.animate-stroke {
                   opacity: 1;
-                  animation: drawStroke 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+                  animation: drawStroke 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
                 }
                 
                 .logo-path.animate-fill {
-                  animation: fillPath 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+                  animation: fillPath 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
                 }
                 
                 @keyframes drawStroke {
@@ -91,7 +91,7 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
                 
                 .logo-container.glow {
                   filter: drop-shadow(0 0 15px rgba(255, 45, 107, 0.6));
-                  animation: finalGlow 0.6s ease-in-out;
+                  animation: finalGlow 0.4s ease-in-out;
                 }
                 
                 @keyframes finalGlow {
@@ -111,8 +111,8 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
                 
                 .connecting-line.animate {
                   opacity: 1;
-                  animation: drawConnection 0.5s ease-out forwards;
-                  animation-delay: 1s;
+                  animation: drawConnection 0.3s ease-out forwards;
+                  animation-delay: 0.7s;
                 }
                 
                 @keyframes drawConnection {
@@ -136,7 +136,7 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
             <path 
               className={`logo-path ${animationPhase >= 1 ? 'animate-stroke' : ''} ${animationPhase >= 2 ? 'animate-fill' : ''}`}
               d="M310.468658,506.000000 C310.000183,467.739166 310.224670,429.475769 309.789429,391.219910 C309.712982,384.503174 313.487854,380.479187 316.665771,376.030273 C335.045319,350.299561 353.766388,324.812958 372.345184,299.224335 C397.053558,265.193451 421.726166,231.136551 446.435516,197.106323 C465.014221,171.519241 483.588684,145.928757 502.312622,120.448242 C503.509094,118.820053 505.974396,117.155533 507.858582,117.145004 C543.000427,116.948723 578.143738,117.000893 613.823975,117.000893 C613.823975,141.571533 613.823975,165.934128 613.823975,191.546417 C620.345398,184.313766 626.072571,178.091721 631.651367,171.739395 C637.612671,164.951553 643.395752,158.007446 649.324707,151.190765 C660.769470,138.032410 672.427307,125.054703 683.653748,111.713417 C688.144653,106.376381 692.683228,104.837425 699.637634,106.584198 C707.670898,108.601959 716.137329,108.862854 724.397339,110.017952 C735.065125,111.509758 745.707642,113.182732 756.374878,114.678864 C763.019775,115.610855 769.690247,116.360214 776.511780,117.211830 C777.003296,121.036369 777.727539,124.894333 777.951538,128.781113 C778.436768,137.201904 778.566528,145.642807 779.020813,154.065826 C779.962463,171.526688 781.008606,188.982010 782.076233,206.435669 C782.119324,207.140625 782.820312,207.805359 783.607422,208.244415 C784.000000,218.354233 784.000000,228.708450 783.759888,239.192764 C783.051697,239.768692 782.473999,240.143250 782.131348,240.670563 C764.068665,268.474030 746.035034,296.296356 727.975342,324.101715 C722.454346,332.602234 716.867920,341.060211 710.880920,350.194519 C733.422241,350.194519 755.004700,350.194519 777.000000,350.194519 C777.000000,402.342438 777.000000,454.171204 777.000000,506.000000 C737.645752,506.000000 698.291565,506.000000 658.691589,505.575562 C657.630676,488.652161 656.321838,472.158844 656.132019,455.652649 C655.920837,437.285126 656.728577,418.905884 657.094910,400.423676 C655.470764,402.459320 653.422668,404.416534 652.097595,406.779205 C634.506836,438.145294 617.003906,469.560730 599.544922,501.000397 C598.716248,502.492737 598.500977,504.325684 598.000000,506.000000 C563.979126,506.000000 529.958191,506.000000 495.791260,505.644318 C493.707672,493.730682 491.766205,482.173370 489.833649,470.614563 C487.551392,456.963959 485.292938,443.309357 482.992645,429.661774 C481.686096,421.910034 480.316620,414.168915 478.862427,405.769928 C477.571655,407.001434 476.762604,407.596436 476.174225,408.361176 C467.115997,420.134491 458.077637,431.923096 449.052551,443.721863 C436.366028,460.307404 423.633820,476.858734 411.060822,493.529968 C408.088348,497.471313 405.672089,501.832123 403.000000,506.000000 C372.312439,506.000000 341.624878,506.000000 310.468658,506.000000 z"
-              style={{ animationDelay: '0.2s' }}
+              style={{ animationDelay: '0.1s' }}
             />
 
             {/* Connecting line between R and A */}
@@ -157,22 +157,22 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
                 fill="#FF2D6B"
                 opacity="0"
                 style={{
-                  animation: 'fadeInPulse 0.6s ease-out forwards',
-                  animationDelay: '1.4s'
+                  animation: 'fadeInPulse 0.4s ease-out forwards',
+                  animationDelay: '1s'
                 }}
               >
                 <animate 
                   attributeName="r" 
                   values="1;5;3" 
-                  dur="1s" 
-                  begin="1.4s"
+                  dur="0.6s" 
+                  begin="1s"
                   repeatCount="1"
                 />
                 <animate 
                   attributeName="opacity" 
                   values="0;1;0.8" 
-                  dur="0.6s" 
-                  begin="1.4s"
+                  dur="0.4s" 
+                  begin="1s"
                   fill="freeze"
                 />
               </circle>
