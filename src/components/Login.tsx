@@ -151,7 +151,7 @@ function Login() {
         setSuccess('Login successful! Redirecting...');
         
         setTimeout(() => {
-          window.location.replace('/');
+          window.location.href = '/';
         }, 1000);
       }
     } catch (err) {
