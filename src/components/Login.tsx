@@ -240,6 +240,20 @@ function Login() {
         />
       </div>
 
+      {/* Circular Loading Animation - Only for Login Page */}
+      {loading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="text-center">
+            <div className="relative w-32 h-32 mx-auto">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-300 via-pink-300 to-blue-300 animate-pulse blur-sm opacity-90"></div>
+              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 animate-spin"></div>
+              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-pink-300 via-blue-300 to-purple-300 animate-pulse"></div>
+            </div>
+            <p className="mt-4 text-white font-medium">Signing you in...</p>
+          </div>
+        </div>
+      )}
+
       <main className="max-w-sm w-full md:bg-white md:rounded-sm md:shadow-lg p-6 md:p-8">
         {/* Header */}
         <header className="text-center mb-6">
