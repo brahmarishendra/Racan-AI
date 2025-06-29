@@ -5,7 +5,6 @@ import AboutUs from './components/AboutUs';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import StartupAnimation from './components/StartupAnimation';
-import { ThemeProvider } from './contexts/ThemeContext';
 import { isAuthenticated, onAuthStateChange } from './lib/supabase';
 
 // Protected Route component for auth pages (login/signup)
@@ -35,9 +34,9 @@ function AuthRoute({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading...</p>
+          <p className="mt-4 text-gray-600">Loading...</p>
         </div>
       </div>
     );
@@ -77,30 +76,28 @@ function App() {
   }
 
   return (
-    <ThemeProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route 
-            path="/signup" 
-            element={
-              <AuthRoute>
-                <Signup />
-              </AuthRoute>
-            } 
-          />
-          <Route 
-            path="/login" 
-            element={
-              <AuthRoute>
-                <Login />
-              </AuthRoute>
-            } 
-          />
-        </Routes>
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route 
+          path="/signup" 
+          element={
+            <AuthRoute>
+              <Signup />
+            </AuthRoute>
+          } 
+        />
+        <Route 
+          path="/login" 
+          element={
+            <AuthRoute>
+              <Login />
+            </AuthRoute>
+          } 
+        />
+      </Routes>
+    </Router>
   );
 } 
 
