@@ -240,16 +240,36 @@ function Login() {
         />
       </div>
 
-      {/* Circular Loading Animation - Only for Login Page */}
+      {/* Beautiful Circular Loading Animation - Only for Login Page */}
       {loading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 backdrop-blur-sm">
           <div className="text-center">
-            <div className="relative w-32 h-32 mx-auto">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-300 via-pink-300 to-blue-300 animate-pulse blur-sm opacity-90"></div>
-              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 animate-spin"></div>
-              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-pink-300 via-blue-300 to-purple-300 animate-pulse"></div>
+            {/* Multi-layered spinning circles */}
+            <div className="relative w-32 h-32 mx-auto mb-6">
+              {/* Outer pulsing ring */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 animate-pulse blur-md opacity-75"></div>
+              
+              {/* Middle spinning ring */}
+              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 animate-spin" style={{
+                animation: 'spin 2s linear infinite'
+              }}></div>
+              
+              {/* Inner pulsing core */}
+              <div className="absolute inset-6 rounded-full bg-gradient-to-br from-pink-400 via-blue-400 to-purple-400 animate-pulse"></div>
+              
+              {/* Center dot */}
+              <div className="absolute inset-12 rounded-full bg-white opacity-90 animate-pulse"></div>
             </div>
-            <p className="mt-4 text-white font-medium">Signing you in...</p>
+            
+            {/* Loading text */}
+            <div className="text-white">
+              <p className="text-lg font-medium mb-2">Signing you in...</p>
+              <div className="flex justify-center space-x-1">
+                <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              </div>
+            </div>
           </div>
         </div>
       )}
