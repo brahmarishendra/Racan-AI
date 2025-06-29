@@ -242,7 +242,7 @@ function Login() {
 
       {/* Beautiful Circular Loading Animation - Only for Login Page */}
       {loading && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999] backdrop-blur-sm">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[9999] backdrop-blur-sm">
           <div className="text-center">
             {/* Multi-layered spinning circles */}
             <div className="relative w-32 h-32 mx-auto mb-6">
@@ -250,7 +250,7 @@ function Login() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 animate-pulse blur-lg opacity-80"></div>
               
               {/* Middle spinning ring */}
-              <div className="absolute inset-3 rounded-full border-4 border-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-spin" style={{
+              <div className="absolute inset-3 rounded-full border-4 border-transparent animate-spin" style={{
                 background: 'conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6)',
                 borderRadius: '50%',
                 animation: 'spin 2s linear infinite'

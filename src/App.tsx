@@ -4,6 +4,7 @@ import Home from './components/Home';
 import AboutUs from './components/AboutUs';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import StartupAnimation from './components/StartupAnimation';
 import { isAuthenticated, onAuthStateChange } from './lib/supabase';
 
 // Protected Route component for auth pages (login/signup)
@@ -49,7 +50,31 @@ function AuthRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-function App() { 
+function App() {
+  const [showStartup, setShowStartup] = useState(true);
+  const [hasShownStartup, setHasShownStartup] = useState(false);
+
+  useEffect(() => {
+    // Check if startup animation has been shown in this session
+    const startupShown = sessionStorage.getItem('startupAnimationShown');
+    if (startupShown) {
+      setShowStartup(false);
+      setHasShownStartup(true);
+    }
+  }, []);
+
+  const handleStartupComplete = () => {
+    setShowStartup(false);
+    setHasShownStartup(true);
+    // Mark startup as shown for this session
+    sessionStorage.setItem('startupAnimationShown', 'true');
+  };
+
+  // Show startup animation only on first load
+  if (showStartup && !hasShownStartup) {
+    return <StartupAnimation onComplete={handleStartupComplete} />;
+  }
+
   return (
     <Router>
       <Routes>
