@@ -23,13 +23,14 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center z-[10000]">
-      {/* SVG Logo Animation */}
-      <div className="relative w-48 h-32">
+      {/* Responsive Logo Container */}
+      <div className="relative w-32 h-20 sm:w-40 sm:h-24 md:w-48 md:h-32 lg:w-56 lg:h-36 xl:w-64 xl:h-40">
         <svg 
-          width="192" 
-          height="128" 
+          width="100%" 
+          height="100%" 
           viewBox="0 0 783 505" 
           className="w-full h-full"
+          preserveAspectRatio="xMidYMid meet"
         >
           {/* Left part of the logo (R) */}
           <g className={`transition-all duration-1000 ease-out ${
@@ -51,20 +52,20 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
             />
           </g>
 
-          {/* Connection effect - glowing line between the pieces */}
+          {/* Connection effect - glowing circle between the pieces */}
           <g className={`transition-all duration-800 delay-700 ${
             animationPhase >= 2 ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
           }`}>
             <circle 
               cx="391.5" 
               cy="252.5" 
-              r="8" 
+              r="6" 
               fill="#FF2D6B" 
               className="animate-pulse"
             >
               <animate 
                 attributeName="r" 
-                values="4;12;4" 
+                values="3;9;3" 
                 dur="2s" 
                 repeatCount="indefinite"
               />
@@ -83,7 +84,7 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
               x2="391.5" 
               y2="252.5" 
               stroke="#FF2D6B" 
-              strokeWidth="2" 
+              strokeWidth="1.5" 
               opacity="0.7"
               className="animate-pulse"
             />
@@ -93,13 +94,13 @@ const StartupAnimation: React.FC<StartupAnimationProps> = ({ onComplete }) => {
               x2="473" 
               y2="252.5" 
               stroke="#FF2D6B" 
-              strokeWidth="2" 
+              strokeWidth="1.5" 
               opacity="0.7"
               className="animate-pulse"
             />
           </g>
 
-          {/* Final complete logo reveal */}
+          {/* Final complete logo reveal in white */}
           <g className={`transition-all duration-1000 delay-1000 ${
             animationPhase >= 3 ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
           }`}>
