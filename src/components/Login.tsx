@@ -173,9 +173,9 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-sm shadow-lg p-8">
+      <div className="max-w-sm w-full md:bg-white md:rounded-sm md:shadow-lg p-6 md:p-8">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h1 className="text-2xl font-medium text-gray-900 mb-2 tracking-tight">Login</h1>
         </div>
         
