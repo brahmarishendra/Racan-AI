@@ -35,9 +35,6 @@ function AuthRoute({ children }: { children: React.ReactNode }) {
     return (
       <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="relative w-32 h-32 mx-auto">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-300 via-pink-300 to-blue-300 animate-pulse blur-sm opacity-90"></div>
-          </div>
           <p className="mt-4 text-gray-600">Loading...</p>
         </div>
       </div>

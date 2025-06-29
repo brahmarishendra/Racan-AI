@@ -77,7 +77,8 @@ function Login() {
           } else if (user) {
             setSuccess('Login successful! Redirecting...');
             setTimeout(() => {
-              window.location.replace('/');
+              window.history.replaceState(null, '', '/');
+              window.location.href = '/';
             }, 1000);
           }
         } catch (err) {
@@ -151,6 +152,7 @@ function Login() {
         setSuccess('Login successful! Redirecting...');
         
         setTimeout(() => {
+          window.history.replaceState(null, '', '/');
           window.location.href = '/';
         }, 1000);
       }
@@ -221,6 +223,7 @@ function Login() {
   };
 
   const handleLogoClick = () => {
+    window.history.replaceState(null, '', '/');
     window.location.href = '/';
   };
 
@@ -350,7 +353,10 @@ function Login() {
               Don't have an account yet?{' '}
               <button 
                 type="button"
-                onClick={() => window.location.href = '/signup'}
+                onClick={() => {
+                  window.history.replaceState(null, '', '/signup');
+                  window.location.href = '/signup';
+                }}
                 className="text-red-600 font-medium hover:underline underline"
                 disabled={loading}
               >
