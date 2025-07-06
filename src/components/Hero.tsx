@@ -31,7 +31,7 @@ function Hero() {
 
         .hero-container {
           background: #f8f9fa;
-          min-height: 50vh;
+          min-height: 40vh;
           padding: 20px 0;
           display: flex;
           align-items: center;
@@ -40,27 +40,27 @@ function Hero() {
         }
 
         .content-card {
-          background: transparent;
-          border-radius: 0;
+          background: white;
+          border-radius: 24px;
           padding: 0;
-          box-shadow: none;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
           overflow: hidden;
           width: 100%;
-          max-width: 100vw;
-          margin: 0;
+          max-width: 95vw;
+          margin: 0 15px 0 0;
         }
 
         .main-content {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          min-height: 350px;
-          max-width: 95vw;
-          margin: 0 auto;
-          padding: 0 10px;
+          grid-template-columns: 1fr 1.1fr;
+          min-height: 300px;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
         }
 
         .left-content {
-          padding: 30px 40px 30px 0;
+          padding: 25px 35px 25px 40px;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -165,19 +165,23 @@ function Hero() {
         /* Tablet Styles */
         @media (max-width: 1024px) {
           .hero-container {
-            min-height: 45vh;
+            min-height: 35vh;
             padding: 16px 0;
             margin-top: 85px;
           }
           
-          .main-content {
-            min-height: 320px;
+          .content-card {
             max-width: 98vw;
-            padding: 0 5px;
+            margin: 0 10px 0 0;
+          }
+          
+          .main-content {
+            min-height: 280px;
+            grid-template-columns: 1fr 1.05fr;
           }
           
           .left-content {
-            padding: 25px 30px 25px 0;
+            padding: 20px 25px 20px 30px;
           }
           
           .stats-section {
@@ -207,11 +211,14 @@ function Hero() {
             margin-top: 90px;
           }
           
+          .content-card {
+            max-width: 100vw;
+            margin: 0;
+          }
+          
           .main-content {
             grid-template-columns: 1fr;
             min-height: auto;
-            max-width: 100vw;
-            padding: 0;
           }
           
           .left-content {
@@ -221,7 +228,7 @@ function Hero() {
           
           .right-content {
             order: 2;
-            min-height: 280px;
+            min-height: 250px;
           }
           
           .fashion-grid {
@@ -262,7 +269,7 @@ function Hero() {
           }
           
           .right-content {
-            min-height: 250px;
+            min-height: 220px;
           }
           
           .fashion-grid {
