@@ -292,6 +292,7 @@ function Hero() {
           }
           
           .content-card {
+            margin-top: -80px;
             max-width: 100vw;
             margin: 0;
             border-radius: 16px;
@@ -373,6 +374,10 @@ function Hero() {
 
           .content-card {
             border-radius: 12px;
+          }
+          
+          .content-card {
+            margin-top: -80px;
           }
         }
       `}</style>
