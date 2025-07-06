@@ -127,7 +127,6 @@ function Hero() {
         .ai-overlay {
           position: absolute;
           inset: 0px;
-          background: linear-gradient(135deg, rgba(255, 51, 102, 0.8), rgba(151, 60, 255, 0.8));
           display: flex;
           align-items: center;
           justify-content: center;
@@ -531,8 +530,8 @@ function Hero() {
                   />
                   <div className="ai-overlay">
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '20px', marginBottom: '3px' }}>AI</div>
-                      <div style={{ fontSize: '8px', opacity: '0.9' }}>POWERED</div>
+                      <div style={{ fontSize: '20px', marginBottom: '3px' }}></div>
+                      <div style={{ fontSize: '8px', opacity: '0.9' }}></div>
                     </div>
                   </div>
                 </div>
