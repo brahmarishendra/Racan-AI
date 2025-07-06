@@ -287,7 +287,7 @@ function Hero() {
           .hero-container {
             min-height: auto;
             padding: 0 15px;
-            margin-top: 90px;
+            margin-top: 70px;
             margin-bottom: 50px;
           }
           
