@@ -150,7 +150,7 @@ const AboutUs: React.FC = () => {
       id: 4,
       name: "Amy Zanatta",
       role: "Fashion Stylist",
-      image: "https://stylewithingrace.com/wp-content/uploads/elementor/thumbs/New-About-Page-Photo-2024-qids6gfvk1z8f2xb7tj04r4thwq0qcxwrfafs3japs.png",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCV9rQU9MMA82on-J2xaoJEZDMXr2UfIT1vp0JOCaEEmrm5eeUbbzOswjLSZ6OD4LnWRI&usqp=CAUg",
       website: "https://stylewithingrace.com/",
     }
   ];
