@@ -221,7 +221,7 @@ function Hero() {
           }
 
           .hero-container {
-            margin-bottom: 80px;
+            margin-bottom: 20px;
             padding: 0 40px;
           }
 
@@ -245,7 +245,7 @@ function Hero() {
             min-height: 65vh;
             padding: 0 30px;
             margin-top: 85px;
-            margin-bottom: 70px;
+            margin-bottom: 20px;
           }
           
           .content-card {
@@ -288,7 +288,7 @@ function Hero() {
             min-height: auto;
             padding: 0 15px;
             margin-top: 60px;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
           }
           
           .content-card {
@@ -356,7 +356,7 @@ function Hero() {
           .hero-container {
             padding: 0 10px;
             margin-top: 40%;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
           }
           
           .left-content {
