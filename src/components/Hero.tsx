@@ -46,7 +46,7 @@ function Hero() {
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
           overflow: hidden;
           width: 100%;
-          max-width: 1100px;
+          max-width: 1400px;
           margin: 0 auto;
         }
 
