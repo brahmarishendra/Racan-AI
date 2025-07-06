@@ -201,7 +201,7 @@ function Hero() {
         .dream-store-image {
           width: clamp(40px, 8vw, 50px);
           height: clamp(40px, 8vw, 50px);
-          border-radius: 8px;
+          border-radius: 50px;
           object-fit: cover;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
           transition: all 0.3s ease;
@@ -226,6 +226,10 @@ function Hero() {
           }
 
           .left-content {
+            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             padding: 50px 60px;
           }
 
@@ -469,8 +473,8 @@ function Hero() {
                     alt="Dream Store"
                     className="dream-store-image"
                   />
-                  <div style={{ fontSize: 'clamp(7px, 1.3vw, 9px)', color: '#6c757d' }}>
-                    DREAM STORE
+                  <div style={{ fontSize: 'clamp(12px, 1.3vw, 9px)', color: '#000000' }}>
+                  Partner with DreamX Store
                   </div>
                 </a>
               </div>
