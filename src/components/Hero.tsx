@@ -53,7 +53,7 @@ function Hero() {
         .main-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          min-height: 300px;
+          min-height: 280px;
           max-width: 100%;
           margin: 0;
           padding: 0;
@@ -162,6 +162,26 @@ function Hero() {
           background: #00d4aa;
         }
 
+        /* Desktop-specific spacing adjustments */
+        @media (min-width: 1024px) {
+          .left-content {
+            padding: 40px 60px;
+            gap: 24px;
+          }
+          
+          .left-content > div {
+            margin-bottom: 24px;
+          }
+          
+          .left-content > div:last-child {
+            margin-bottom: 0;
+          }
+          
+          .main-content {
+            min-height: 260px;
+          }
+        }
+
         /* Tablet Styles */
         @media (max-width: 1024px) {
           .hero-container {
@@ -228,7 +248,7 @@ function Hero() {
           
           .right-content {
             order: 2;
-            min-height: 180px;
+            min-height: 160px;
           }
           
           .fashion-grid {
@@ -269,7 +289,7 @@ function Hero() {
           }
           
           .right-content {
-            min-height: 160px;
+            min-height: 140px;
           }
           
           .fashion-grid {
