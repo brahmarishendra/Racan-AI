@@ -5,16 +5,12 @@ import About from './About';
 import Features from './Features';
 import Products from './Products';
 import Footer from './Footer';
-import HowItWorks from './HowItWorks';
-import WhyChooseUs from './WhyChooseUs';
-import Testimonials from './Testimonials';
-import FAQ from './FAQ';
 
 function App() {
   // Add structured data for the homepage
   React.useEffect(() => {
     // Update page title dynamically
-    document.title = 'Racan AI - AI Fashion Assistant & Smart Wardrobe';
+    document.title = 'Racan AI - AI-Powered Fashion Assistant & Ecommerce Platform';
     
     // Add FAQ structured data
     const faqStructuredData = {
@@ -83,29 +79,13 @@ function App() {
         <section aria-label="About Racan AI">
           <About />
         </section>
-
-        <section aria-label="How Racan AI works">
-          <HowItWorks />
-        </section>
         
         <section aria-label="Features and capabilities">
           <Features />
         </section>
-
-        <section aria-label="Why choose Racan AI">
-          <WhyChooseUs />
-        </section>
-
-        <section aria-label="Customer testimonials">
-          <Testimonials />
-        </section>
         
         <section aria-label="Products and services">
           <Products />
-        </section>
-
-        <section aria-label="Frequently asked questions">
-          <FAQ />
         </section>
       </main>
       
@@ -118,20 +98,20 @@ function App() {
 
 // SEO metadata for the homepage
 export const metadata = {
-  title: 'Racan AI - AI Fashion Assistant & Smart Wardrobe',
-  description: 'Transform your style with Racan AI\'s personalized outfit recommendations and smart wardrobe management. Discover your perfect fashion identity.',
+  title: 'Racan AI - AI-Powered Fashion Assistant & Ecommerce Platform',
+  description: 'Transform your style with Racan AI - the revolutionary AI-powered fashion assistant and ecommerce platform. Get personalized outfit recommendations and discover your perfect fashion identity.',
   keywords: 'AI fashion assistant, fashion AI, personalized styling, smart wardrobe, fashion ecommerce, outfit recommendations, style AI, fashion technology, virtual stylist, AI shopping assistant',
   openGraph: {
-    title: 'Racan AI - AI Fashion Assistant & Smart Wardrobe',
-    description: 'Transform your style with Racan AI\'s personalized outfit recommendations and smart wardrobe management. Discover your perfect fashion identity.',
+    title: 'Racan AI - AI-Powered Fashion Assistant & Ecommerce Platform',
+    description: 'Transform your style with Racan AI - the revolutionary AI-powered fashion assistant and ecommerce platform.',
     images: ['https://racan-ai.vercel.app/logo.png'],
     url: 'https://racan-ai.vercel.app/',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Racan AI - AI Fashion Assistant & Smart Wardrobe',
-    description: 'Transform your style with Racan AI\'s personalized outfit recommendations and smart wardrobe management. Discover your perfect fashion identity.',
+    title: 'Racan AI - AI-Powered Fashion Assistant & Ecommerce Platform',
+    description: 'Transform your style with Racan AI - the revolutionary AI-powered fashion assistant and ecommerce platform.',
     images: ['https://racan-ai.vercel.app/logo.png'],
   },
   alternates: {
