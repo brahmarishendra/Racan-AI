@@ -9,6 +9,7 @@ const Navbar = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
+  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,9 +81,26 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Close mobile menu when clicking outside or on menu items
+  useEffect(() => {
+    if (isMenuOpen) {
+      const handleClickOutside = (event: MouseEvent) => {
+        const target = event.target as HTMLElement;
+        if (!target.closest('.mobile-menu-container') && !target.closest('.hamburger-menu')) {
+          setIsMenuOpen(false);
+          setIsMobileProductsOpen(false);
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isMenuOpen]);
+
   const handleNavigation = (path: string) => {
     window.location.href = path;
     setIsMenuOpen(false);
+    setIsMobileProductsOpen(false);
   };
 
   const handleSignOut = async () => {
@@ -101,6 +119,16 @@ const Navbar = () => {
            user.user_metadata?.name || 
            user.email?.split('@')[0] || 
            'User';
+  };
+
+  const handleMobileProductsToggle = () => {
+    setIsMobileProductsOpen(!isMobileProductsOpen);
+  };
+
+  const handleMobileProductClick = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+    setIsMenuOpen(false);
+    setIsMobileProductsOpen(false);
   };
 
   return (
@@ -282,6 +310,10 @@ const Navbar = () => {
           border: none;
           min-width: 200px;
           text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
         }
 
         .menu-overlay.open .menu-item {
@@ -307,6 +339,11 @@ const Navbar = () => {
         .menu-overlay.open .menu-item:nth-child(4) {
           transition-delay: 0.4s;
           animation: slideInBounce 0.6s ease-out 0.4s both;
+        }
+
+        .menu-overlay.open .menu-item:nth-child(5) {
+          transition-delay: 0.5s;
+          animation: slideInBounce 0.6s ease-out 0.5s both;
         }
 
         /* Gray hover background with smooth animations */
@@ -359,6 +396,81 @@ const Navbar = () => {
           height: 300px;
         }
 
+        /* Mobile Products Dropdown Styles */
+        .mobile-products-dropdown {
+          width: 100%;
+          background: rgba(249, 250, 251, 0.95);
+          backdrop-filter: blur(10px);
+          border-radius: 12px;
+          margin: 0.5rem 0;
+          padding: 0;
+          overflow: hidden;
+          max-height: 0;
+          opacity: 0;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transform: translateY(-10px);
+        }
+
+        .mobile-products-dropdown.open {
+          max-height: 300px;
+          opacity: 1;
+          transform: translateY(0);
+          padding: 1rem;
+        }
+
+        .mobile-dropdown-item {
+          display: flex;
+          align-items: center;
+          padding: 1rem;
+          margin: 0.5rem 0;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 8px;
+          text-decoration: none;
+          color: #374151;
+          transition: all 0.3s ease;
+          border: 1px solid rgba(229, 231, 235, 0.5);
+          transform: translateX(-20px);
+          opacity: 0;
+        }
+
+        .mobile-products-dropdown.open .mobile-dropdown-item {
+          transform: translateX(0);
+          opacity: 1;
+        }
+
+        .mobile-products-dropdown.open .mobile-dropdown-item:nth-child(1) {
+          transition-delay: 0.1s;
+        }
+
+        .mobile-products-dropdown.open .mobile-dropdown-item:nth-child(2) {
+          transition-delay: 0.2s;
+        }
+
+        .mobile-dropdown-item:hover {
+          background: rgba(255, 255, 255, 1);
+          transform: translateX(5px) scale(1.02);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-dropdown-item-icon {
+          margin-right: 12px;
+          flex-shrink: 0;
+        }
+
+        .mobile-dropdown-item-content h3 {
+          font-size: 1rem;
+          font-weight: 600;
+          margin: 0 0 4px 0;
+          color: #111827;
+        }
+
+        .mobile-dropdown-item-content p {
+          font-size: 0.875rem;
+          margin: 0;
+          color: #6b7280;
+          line-height: 1.4;
+        }
+
         .user-section {
           margin-top: 2rem;
           text-align: center;
@@ -374,8 +486,8 @@ const Navbar = () => {
         .menu-overlay.open .user-section {
           opacity: 1;
           transform: translateY(0);
-          transition-delay: 0.5s;
-          animation: fadeInScale 0.6s ease-out 0.5s both;
+          transition-delay: 0.6s;
+          animation: fadeInScale 0.6s ease-out 0.6s both;
         }
 
         /* Desktop-style Try Racan button for mobile with enhanced hover */
@@ -400,8 +512,8 @@ const Navbar = () => {
         .menu-overlay.open .mobile-try-racan-btn {
           opacity: 1;
           transform: translateY(0) scale(1);
-          transition-delay: 0.6s;
-          animation: bounceIn 0.8s ease-out 0.6s both;
+          transition-delay: 0.7s;
+          animation: bounceIn 0.8s ease-out 0.7s both;
         }
 
         .mobile-try-racan-btn:hover {
@@ -633,7 +745,7 @@ const Navbar = () => {
       </header>
 
       {/* Enhanced Mobile Menu Overlay with Background Image */}
-      <div className={`menu-overlay md:hidden ${isMenuOpen ? 'open' : ''}`}>
+      <div className={`menu-overlay md:hidden mobile-menu-container ${isMenuOpen ? 'open' : ''}`}>
         <nav className="flex flex-col items-center">
           <a
             href="#features"
@@ -642,13 +754,54 @@ const Navbar = () => {
           >
             Features
           </a>
-          <a
-            href="#products"
-            className="menu-item"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Products
-          </a>
+          
+          {/* Mobile Products Dropdown */}
+          <div className="w-full flex flex-col items-center">
+            <button
+              onClick={handleMobileProductsToggle}
+              className="menu-item"
+            >
+              Products
+              <ChevronDown 
+                className={`w-5 h-5 transition-transform duration-300 ${
+                  isMobileProductsOpen ? 'rotate-180' : ''
+                }`} 
+              />
+            </button>
+            
+            <div className={`mobile-products-dropdown ${isMobileProductsOpen ? 'open' : ''}`}>
+              <button
+                onClick={() => handleMobileProductClick('https://chat-with-racan.vercel.app')}
+                className="mobile-dropdown-item"
+              >
+                <div className="mobile-dropdown-item-icon">
+                  <Bot className="w-6 h-6 text-[#973cff]" />
+                </div>
+                <div className="mobile-dropdown-item-content">
+                  <h3>Racan AI Chat Bot</h3>
+                  <p>AI-powered fashion assistant for personalized styling</p>
+                </div>
+              </button>
+              
+              <button
+                onClick={() => handleMobileProductClick('https://dreamxworld.com/')}
+                className="mobile-dropdown-item"
+              >
+                <div className="mobile-dropdown-item-icon">
+                  <img
+                    src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
+                    alt="DreamX"
+                    className="w-6 h-6 rounded-sm object-cover"
+                  />
+                </div>
+                <div className="mobile-dropdown-item-content">
+                  <h3>DreamX Ecommerce</h3>
+                  <p>Premium fashion marketplace with curated collections</p>
+                </div>
+              </button>
+            </div>
+          </div>
+
           <button
             onClick={() => handleNavigation('/about')}
             className="menu-item"
