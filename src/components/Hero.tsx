@@ -31,33 +31,36 @@ function Hero() {
 
         .hero-container {
           background: #f8f9fa;
-          min-height: 70vh;
-          padding: 20px;
+          min-height: 50vh;
+          padding: 20px 0;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-top: 80px; /* Add top margin for mobile */
+          margin-top: 80px;
         }
 
         .content-card {
-          background: white;
-          border-radius: 24px;
+          background: transparent;
+          border-radius: 0;
           padding: 0;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+          box-shadow: none;
           overflow: hidden;
           width: 100%;
-          max-width: 1200px;
-          margin: 0 auto;
+          max-width: 100vw;
+          margin: 0;
         }
 
         .main-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          min-height: 500px;
+          min-height: 350px;
+          max-width: 95vw;
+          margin: 0 auto;
+          padding: 0 10px;
         }
 
         .left-content {
-          padding: 40px 50px;
+          padding: 30px 40px 30px 0;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -162,17 +165,19 @@ function Hero() {
         /* Tablet Styles */
         @media (max-width: 1024px) {
           .hero-container {
-            min-height: 60vh;
-            padding: 16px;
-            margin-top: 100px; /* Increased for tablet */
+            min-height: 45vh;
+            padding: 16px 0;
+            margin-top: 85px;
           }
           
           .main-content {
-            min-height: 450px;
+            min-height: 320px;
+            max-width: 98vw;
+            padding: 0 5px;
           }
           
           .left-content {
-            padding: 32px 40px;
+            padding: 25px 30px 25px 0;
           }
           
           .stats-section {
@@ -189,8 +194,8 @@ function Hero() {
           }
 
           .fashion-grid {
-            gap: 14px; /* Increased gap for better spacing */
-            padding: 14px; /* Increased padding */
+            gap: 10px;
+            padding: 10px;
           }
         }
 
@@ -198,29 +203,30 @@ function Hero() {
         @media (max-width: 768px) {
           .hero-container {
             min-height: auto;
-            padding: 12px;
-            margin-top: 120px; /* Increased significantly for mobile */
-            margin-bottom: 40px; /* Added bottom margin */
+            padding: 12px 0;
+            margin-top: 90px;
           }
           
           .main-content {
             grid-template-columns: 1fr;
             min-height: auto;
+            max-width: 100vw;
+            padding: 0;
           }
           
           .left-content {
-            padding: 32px 24px;
+            padding: 20px 15px;
             order: 1;
           }
           
           .right-content {
             order: 2;
-            min-height: 320px; /* Increased height */
+            min-height: 280px;
           }
           
           .fashion-grid {
-            padding: 10px; /* Increased padding */
-            gap: 10px; /* Increased gap */
+            padding: 8px;
+            gap: 8px;
           }
           
           .stats-section {
@@ -247,39 +253,21 @@ function Hero() {
         /* Small Mobile */
         @media (max-width: 480px) {
           .hero-container {
-            padding: 8px;
-            margin-top: 140px; /* Even more margin for small mobile */
-            margin-bottom: 50px; /* Increased bottom margin */
+            padding: 8px 0;
+            margin-top: 95px;
           }
           
           .left-content {
-            padding: 24px 20px;
+            padding: 15px 10px;
           }
           
           .right-content {
-            min-height: 280px; /* Increased height */
+            min-height: 250px;
           }
           
           .fashion-grid {
-            padding: 8px; /* Increased padding */
-            gap: 8px; /* Increased gap */
-          }
-        }
-
-        /* Extra small screens */
-        @media (max-width: 360px) {
-          .hero-container {
-            margin-top: 160px; /* Maximum margin for very small screens */
-            margin-bottom: 60px;
-          }
-          
-          .right-content {
-            min-height: 300px; /* Even more height for better proportion */
-          }
-          
-          .fashion-grid {
-            padding: 10px; /* More padding for better spacing */
-            gap: 10px; /* More gap for better visual separation */
+            padding: 6px;
+            gap: 6px;
           }
         }
       `}</style>
