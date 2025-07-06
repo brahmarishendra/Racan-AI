@@ -92,15 +92,15 @@ const Navbar = () => {
   return (
     <>
       <style jsx>{`
-        /* Custom Pixel Cursor */
+        /* Custom Pixel Cursor - Exact match to your image */
         * {
-          cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="1" height="1" fill="%23000"/><rect x="1" y="0" width="1" height="1" fill="%23000"/><rect x="2" y="0" width="1" height="1" fill="%23000"/><rect x="3" y="0" width="1" height="1" fill="%23000"/><rect x="4" y="0" width="1" height="1" fill="%23000"/><rect x="5" y="0" width="1" height="1" fill="%23000"/><rect x="0" y="1" width="1" height="1" fill="%23000"/><rect x="1" y="1" width="1" height="1" fill="%23fff"/><rect x="2" y="1" width="1" height="1" fill="%23fff"/><rect x="3" y="1" width="1" height="1" fill="%23fff"/><rect x="4" y="1" width="1" height="1" fill="%23fff"/><rect x="5" y="1" width="1" height="1" fill="%23000"/><rect x="0" y="2" width="1" height="1" fill="%23000"/><rect x="1" y="2" width="1" height="1" fill="%23fff"/><rect x="2" y="2" width="1" height="1" fill="%23fff"/><rect x="3" y="2" width="1" height="1" fill="%23fff"/><rect x="4" y="2" width="1" height="1" fill="%23fff"/><rect x="5" y="2" width="1" height="1" fill="%23000"/><rect x="0" y="3" width="1" height="1" fill="%23000"/><rect x="1" y="3" width="1" height="1" fill="%23fff"/><rect x="2" y="3" width="1" height="1" fill="%23fff"/><rect x="3" y="3" width="1" height="1" fill="%23fff"/><rect x="4" y="3" width="1" height="1" fill="%23fff"/><rect x="5" y="3" width="1" height="1" fill="%23000"/><rect x="0" y="4" width="1" height="1" fill="%23000"/><rect x="1" y="4" width="1" height="1" fill="%23fff"/><rect x="2" y="4" width="1" height="1" fill="%23fff"/><rect x="3" y="4" width="1" height="1" fill="%23fff"/><rect x="4" y="4" width="1" height="1" fill="%23fff"/><rect x="5" y="4" width="1" height="1" fill="%23000"/><rect x="0" y="5" width="1" height="1" fill="%23000"/><rect x="1" y="5" width="1" height="1" fill="%23fff"/><rect x="2" y="5" width="1" height="1" fill="%23fff"/><rect x="3" y="5" width="1" height="1" fill="%23fff"/><rect x="4" y="5" width="1" height="1" fill="%23fff"/><rect x="5" y="5" width="1" height="1" fill="%23000"/><rect x="0" y="6" width="1" height="1" fill="%23000"/><rect x="1" y="6" width="1" height="1" fill="%23fff"/><rect x="2" y="6" width="1" height="1" fill="%23fff"/><rect x="3" y="6" width="1" height="1" fill="%23fff"/><rect x="4" y="6" width="1" height="1" fill="%23fff"/><rect x="5" y="6" width="1" height="1" fill="%23000"/><rect x="0" y="7" width="1" height="1" fill="%23000"/><rect x="1" y="7" width="1" height="1" fill="%23fff"/><rect x="2" y="7" width="1" height="1" fill="%23fff"/><rect x="3" y="7" width="1" height="1" fill="%23fff"/><rect x="4" y="7" width="1" height="1" fill="%23fff"/><rect x="5" y="7" width="1" height="1" fill="%23000"/><rect x="0" y="8" width="1" height="1" fill="%23000"/><rect x="1" y="8" width="1" height="1" fill="%23fff"/><rect x="2" y="8" width="1" height="1" fill="%23fff"/><rect x="3" y="8" width="1" height="1" fill="%23fff"/><rect x="4" y="8" width="1" height="1" fill="%23fff"/><rect x="5" y="8" width="1" height="1" fill="%23000"/><rect x="0" y="9" width="1" height="1" fill="%23000"/><rect x="1" y="9" width="1" height="1" fill="%23fff"/><rect x="2" y="9" width="1" height="1" fill="%23fff"/><rect x="3" y="9" width="1" height="1" fill="%23fff"/><rect x="4" y="9" width="1" height="1" fill="%23fff"/><rect x="5" y="9" width="1" height="1" fill="%23000"/><rect x="0" y="10" width="1" height="1" fill="%23000"/><rect x="1" y="10" width="1" height="1" fill="%23fff"/><rect x="2" y="10" width="1" height="1" fill="%23fff"/><rect x="3" y="10" width="1" height="1" fill="%23fff"/><rect x="4" y="10" width="1" height="1" fill="%23fff"/><rect x="5" y="10" width="1" height="1" fill="%23000"/><rect x="0" y="11" width="1" height="1" fill="%23000"/><rect x="1" y="11" width="1" height="1" fill="%23fff"/><rect x="2" y="11" width="1" height="1" fill="%23fff"/><rect x="3" y="11" width="1" height="1" fill="%23fff"/><rect x="4" y="11" width="1" height="1" fill="%23fff"/><rect x="5" y="11" width="1" height="1" fill="%23000"/><rect x="0" y="12" width="1" height="1" fill="%23000"/><rect x="1" y="12" width="1" height="1" fill="%23000"/><rect x="2" y="12" width="1" height="1" fill="%23000"/><rect x="3" y="12" width="1" height="1" fill="%23000"/><rect x="4" y="12" width="1" height="1" fill="%23000"/><rect x="5" y="12" width="1" height="1" fill="%23000"/></svg>'), auto;
+          cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="0" y="0" width="2" height="2" fill="black"/><rect x="2" y="0" width="2" height="2" fill="black"/><rect x="4" y="0" width="2" height="2" fill="black"/><rect x="6" y="0" width="2" height="2" fill="black"/><rect x="8" y="0" width="2" height="2" fill="black"/><rect x="10" y="0" width="2" height="2" fill="black"/><rect x="0" y="2" width="2" height="2" fill="black"/><rect x="2" y="2" width="2" height="2" fill="white"/><rect x="4" y="2" width="2" height="2" fill="white"/><rect x="6" y="2" width="2" height="2" fill="white"/><rect x="8" y="2" width="2" height="2" fill="white"/><rect x="10" y="2" width="2" height="2" fill="black"/><rect x="0" y="4" width="2" height="2" fill="black"/><rect x="2" y="4" width="2" height="2" fill="white"/><rect x="4" y="4" width="2" height="2" fill="white"/><rect x="6" y="4" width="2" height="2" fill="white"/><rect x="8" y="4" width="2" height="2" fill="white"/><rect x="10" y="4" width="2" height="2" fill="black"/><rect x="0" y="6" width="2" height="2" fill="black"/><rect x="2" y="6" width="2" height="2" fill="white"/><rect x="4" y="6" width="2" height="2" fill="white"/><rect x="6" y="6" width="2" height="2" fill="white"/><rect x="8" y="6" width="2" height="2" fill="white"/><rect x="10" y="6" width="2" height="2" fill="black"/><rect x="0" y="8" width="2" height="2" fill="black"/><rect x="2" y="8" width="2" height="2" fill="white"/><rect x="4" y="8" width="2" height="2" fill="white"/><rect x="6" y="8" width="2" height="2" fill="white"/><rect x="8" y="8" width="2" height="2" fill="white"/><rect x="10" y="8" width="2" height="2" fill="black"/><rect x="0" y="10" width="2" height="2" fill="black"/><rect x="2" y="10" width="2" height="2" fill="white"/><rect x="4" y="10" width="2" height="2" fill="white"/><rect x="6" y="10" width="2" height="2" fill="white"/><rect x="8" y="10" width="2" height="2" fill="white"/><rect x="10" y="10" width="2" height="2" fill="black"/><rect x="0" y="12" width="2" height="2" fill="black"/><rect x="2" y="12" width="2" height="2" fill="white"/><rect x="4" y="12" width="2" height="2" fill="white"/><rect x="6" y="12" width="2" height="2" fill="white"/><rect x="8" y="12" width="2" height="2" fill="white"/><rect x="10" y="12" width="2" height="2" fill="black"/><rect x="0" y="14" width="2" height="2" fill="black"/><rect x="2" y="14" width="2" height="2" fill="white"/><rect x="4" y="14" width="2" height="2" fill="white"/><rect x="6" y="14" width="2" height="2" fill="white"/><rect x="8" y="14" width="2" height="2" fill="white"/><rect x="10" y="14" width="2" height="2" fill="black"/><rect x="0" y="16" width="2" height="2" fill="black"/><rect x="2" y="16" width="2" height="2" fill="white"/><rect x="4" y="16" width="2" height="2" fill="white"/><rect x="6" y="16" width="2" height="2" fill="white"/><rect x="8" y="16" width="2" height="2" fill="white"/><rect x="10" y="16" width="2" height="2" fill="black"/><rect x="0" y="18" width="2" height="2" fill="black"/><rect x="2" y="18" width="2" height="2" fill="white"/><rect x="4" y="18" width="2" height="2" fill="white"/><rect x="6" y="18" width="2" height="2" fill="white"/><rect x="8" y="18" width="2" height="2" fill="white"/><rect x="10" y="18" width="2" height="2" fill="black"/><rect x="0" y="20" width="2" height="2" fill="black"/><rect x="2" y="20" width="2" height="2" fill="white"/><rect x="4" y="20" width="2" height="2" fill="white"/><rect x="6" y="20" width="2" height="2" fill="white"/><rect x="8" y="20" width="2" height="2" fill="white"/><rect x="10" y="20" width="2" height="2" fill="black"/><rect x="0" y="22" width="2" height="2" fill="black"/><rect x="2" y="22" width="2" height="2" fill="black"/><rect x="4" y="22" width="2" height="2" fill="black"/><rect x="6" y="22" width="2" height="2" fill="black"/><rect x="8" y="22" width="2" height="2" fill="black"/><rect x="10" y="22" width="2" height="2" fill="black"/><rect x="2" y="24" width="2" height="2" fill="black"/><rect x="4" y="24" width="2" height="2" fill="white"/><rect x="6" y="24" width="2" height="2" fill="black"/><rect x="4" y="26" width="2" height="2" fill="black"/></svg>') 12 12, auto;
         }
 
-        /* Smaller Hamburger Menu */
+        /* Small Hamburger Menu - 16px */
         .hamburger-menu {
-          width: 18px;
-          height: 18px;
+          width: 16px;
+          height: 16px;
           position: relative;
           cursor: pointer;
           display: flex;
@@ -110,9 +110,9 @@ const Navbar = () => {
         }
 
         .hamburger-line {
-          width: 18px;
+          width: 16px;
           height: 1.5px;
-          background-color: #000;
+          background-color: #333;
           border-radius: 1px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           transform-origin: center;
@@ -120,20 +120,20 @@ const Navbar = () => {
         }
 
         .hamburger-line:nth-child(1) {
-          top: 4px;
+          top: 3px;
         }
 
         .hamburger-line:nth-child(2) {
-          top: 8.5px;
+          top: 7.5px;
         }
 
         .hamburger-line:nth-child(3) {
-          top: 13px;
+          top: 12px;
         }
 
         /* Animated states */
         .hamburger-menu.open .hamburger-line:nth-child(1) {
-          transform: rotate(45deg) translate(3px, 3px);
+          transform: rotate(45deg) translate(2.5px, 2.5px);
         }
 
         .hamburger-menu.open .hamburger-line:nth-child(2) {
@@ -142,10 +142,10 @@ const Navbar = () => {
         }
 
         .hamburger-menu.open .hamburger-line:nth-child(3) {
-          transform: rotate(-45deg) translate(3px, -3px);
+          transform: rotate(-45deg) translate(2.5px, -2.5px);
         }
 
-        /* Menu overlay animation with white background */
+        /* White Background Menu Overlay */
         .menu-overlay {
           position: fixed;
           top: 0;
@@ -170,14 +170,14 @@ const Navbar = () => {
           transform: scale(1);
         }
 
-        /* Animated menu items with smaller fonts */
+        /* Small Font Menu Items */
         .menu-item {
-          font-size: 1.8rem;
+          font-size: 1.4rem;
           font-weight: 400;
           color: #333;
           text-decoration: none;
-          margin: 0.8rem 0;
-          padding: 0.5rem 1.5rem;
+          margin: 0.6rem 0;
+          padding: 0.4rem 1.2rem;
           border-radius: 8px;
           opacity: 0;
           transform: translateY(30px);
@@ -210,14 +210,14 @@ const Navbar = () => {
           transition-delay: 0.4s;
         }
 
-        /* Hover effects with light gray background */
+        /* Light Gray Hover Effects */
         .menu-item:hover {
           background: #f5f5f5;
           color: #ff3366;
-          transform: translateX(10px) scale(1.05);
+          transform: translateX(8px) scale(1.02);
         }
 
-        /* Text animation effects */
+        /* Text Wave Animation */
         .menu-item::before {
           content: '';
           position: absolute;
@@ -233,39 +233,39 @@ const Navbar = () => {
           width: 100%;
         }
 
-        /* Character animation for text */
+        /* Character Animation */
         .menu-item span {
           display: inline-block;
-          transition: all 0.3s ease;
+          transition: all 0.2s ease;
         }
 
         .menu-item:hover span {
-          animation: textWave 0.6s ease-in-out;
+          animation: textWave 0.5s ease-in-out;
         }
 
         .menu-item:hover span:nth-child(1) { animation-delay: 0s; }
-        .menu-item:hover span:nth-child(2) { animation-delay: 0.1s; }
-        .menu-item:hover span:nth-child(3) { animation-delay: 0.2s; }
-        .menu-item:hover span:nth-child(4) { animation-delay: 0.3s; }
-        .menu-item:hover span:nth-child(5) { animation-delay: 0.4s; }
-        .menu-item:hover span:nth-child(6) { animation-delay: 0.5s; }
-        .menu-item:hover span:nth-child(7) { animation-delay: 0.6s; }
-        .menu-item:hover span:nth-child(8) { animation-delay: 0.7s; }
+        .menu-item:hover span:nth-child(2) { animation-delay: 0.05s; }
+        .menu-item:hover span:nth-child(3) { animation-delay: 0.1s; }
+        .menu-item:hover span:nth-child(4) { animation-delay: 0.15s; }
+        .menu-item:hover span:nth-child(5) { animation-delay: 0.2s; }
+        .menu-item:hover span:nth-child(6) { animation-delay: 0.25s; }
+        .menu-item:hover span:nth-child(7) { animation-delay: 0.3s; }
+        .menu-item:hover span:nth-child(8) { animation-delay: 0.35s; }
 
         @keyframes textWave {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-4px) scale(1.1); }
         }
 
-        /* User section styling */
+        /* User Section */
         .user-section {
-          margin-top: 2rem;
+          margin-top: 1.5rem;
           text-align: center;
           opacity: 0;
           transform: translateY(30px);
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          padding: 1rem;
-          border-radius: 12px;
+          padding: 0.8rem;
+          border-radius: 10px;
           background: #f9f9f9;
         }
 
@@ -275,18 +275,18 @@ const Navbar = () => {
           transition-delay: 0.5s;
         }
 
-        /* Try Racan button with animations */
+        /* Try Racan Button */
         .try-racan-btn {
           background: linear-gradient(135deg, #ff3366, #973cff);
           color: white;
-          padding: 0.8rem 1.8rem;
-          border-radius: 25px;
+          padding: 0.7rem 1.5rem;
+          border-radius: 20px;
           text-decoration: none;
           font-weight: 600;
-          font-size: 1rem;
+          font-size: 0.9rem;
           transition: all 0.3s ease;
           display: inline-block;
-          margin-top: 1rem;
+          margin-top: 0.8rem;
           opacity: 0;
           transform: translateY(30px);
           border: none;
@@ -301,17 +301,18 @@ const Navbar = () => {
 
         .try-racan-btn:hover {
           transform: translateY(-2px) scale(1.05);
-          box-shadow: 0 10px 30px rgba(255, 51, 102, 0.3);
+          box-shadow: 0 8px 25px rgba(255, 51, 102, 0.3);
           background: linear-gradient(135deg, #e6245e, #8a35e6);
         }
 
-        /* Desktop navigation hover effects */
+        /* Desktop Navigation - Small Fonts */
         .nav-link {
           position: relative;
-          padding: 0.5rem 1rem;
+          padding: 0.4rem 0.8rem;
           border-radius: 6px;
           transition: all 0.3s ease;
-          font-size: 0.9rem;
+          font-size: 0.8rem;
+          font-weight: 500;
         }
 
         .nav-link:hover {
@@ -335,11 +336,12 @@ const Navbar = () => {
           width: 80%;
         }
 
-        /* Desktop Try Racan button */
+        /* Desktop Try Button - Small */
         .desktop-try-btn {
-          font-size: 0.85rem;
-          padding: 0.5rem 1.2rem;
+          font-size: 0.75rem;
+          padding: 0.4rem 1rem;
           transition: all 0.3s ease;
+          font-weight: 600;
         }
 
         .desktop-try-btn:hover {
@@ -350,7 +352,7 @@ const Navbar = () => {
 
         @media (max-width: 768px) {
           .menu-item {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
           }
         }
       `}</style>
@@ -364,11 +366,11 @@ const Navbar = () => {
           <img
             src="https://i.postimg.cc/rsYBTFzm/image-41.png"
             alt="Racan Logo"
-            className="w-20 cursor-pointer"
+            className="w-18 cursor-pointer"
             onClick={() => handleNavigation('/')}
           />
 
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-4">
             <a
               href="#features"
               className="nav-link text-gray-700 hover:text-[#973cff] transition-colors duration-300"
@@ -389,14 +391,14 @@ const Navbar = () => {
             </button>
             
             {loading ? (
-              <div className="w-6 h-6 bg-gray-200 rounded-full animate-pulse"></div>
+              <div className="w-5 h-5 bg-gray-200 rounded-full animate-pulse"></div>
             ) : user ? (
-              <div className="flex items-center space-x-3">
-                <div className="flex items-center space-x-2">
-                  <div className="w-6 h-6 bg-[#004AAD] rounded-full flex items-center justify-center">
-                    <User className="w-3 h-3 text-white" />
+              <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1">
+                  <div className="w-5 h-5 bg-[#004AAD] rounded-full flex items-center justify-center">
+                    <User className="w-2.5 h-2.5 text-white" />
                   </div>
-                  <span className="text-xs text-gray-700 max-w-20 truncate">
+                  <span className="text-xs text-gray-700 max-w-16 truncate">
                     {getUserDisplayName()}
                   </span>
                 </div>
@@ -405,21 +407,21 @@ const Navbar = () => {
                   className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors duration-300"
                   title="Sign out"
                 >
-                  <LogOut className="w-3 h-3" />
+                  <LogOut className="w-2.5 h-2.5" />
                   <span className="text-xs">Sign out</span>
                 </button>
               </div>
             ) : (
               <button
                 onClick={() => handleNavigation('/login')}
-                className="desktop-try-btn bg-black text-white px-5 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
+                className="desktop-try-btn bg-black text-white rounded-full hover:bg-[#d70153] transition-all duration-300"
               >
                 Try Racan
               </button>
             )}
           </nav>
 
-          {/* Smaller Animated Hamburger Menu Button */}
+          {/* Small Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden z-[80] relative p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
@@ -434,7 +436,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Animated Mobile Menu Overlay with White Background */}
+      {/* White Background Mobile Menu */}
       <div className={`menu-overlay md:hidden ${isMenuOpen ? 'open' : ''}`}>
         <nav className="flex flex-col items-center">
           <a
@@ -459,15 +461,15 @@ const Navbar = () => {
           </button>
 
           {loading ? (
-            <div className="w-10 h-10 bg-gray-200 rounded-full animate-pulse mt-6"></div>
+            <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse mt-4"></div>
           ) : user ? (
             <div className="user-section">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-[#004AAD] rounded-full flex items-center justify-center">
-                  <User className="w-5 h-5 text-white" />
+              <div className="flex items-center space-x-2 mb-3">
+                <div className="w-8 h-8 bg-[#004AAD] rounded-full flex items-center justify-center">
+                  <User className="w-4 h-4 text-white" />
                 </div>
                 <div className="text-center">
-                  <p className="text-base font-medium text-gray-800">
+                  <p className="text-sm font-medium text-gray-800">
                     {getUserDisplayName()}
                   </p>
                   <p className="text-xs text-gray-500">{user.email}</p>
@@ -475,10 +477,10 @@ const Navbar = () => {
               </div>
               <button
                 onClick={handleSignOut}
-                className="flex items-center space-x-2 text-red-500 hover:text-red-600 transition-colors duration-300"
+                className="flex items-center space-x-1 text-red-500 hover:text-red-600 transition-colors duration-300"
               >
-                <LogOut className="w-4 h-4" />
-                <span className="text-sm">Sign out</span>
+                <LogOut className="w-3 h-3" />
+                <span className="text-xs">Sign out</span>
               </button>
             </div>
           ) : (
