@@ -415,7 +415,7 @@ function Hero() {
               </div>
               
               <div className="fashion-grid">
-                {/* Large Fashion Video/GIF */}
+                {/* Large Fashion Video */}
                 <div className="fashion-card large">
                   <video 
                     autoPlay 
@@ -424,7 +424,7 @@ function Hero() {
                     playsInline
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   >
-                    <source src="https://v1.pinimg.com/videos/mc/720p/11/37/4c/11374cc3bc5445df07f758ae4dc481aa.mp4" type="video/mp4" />
+                    <source src="https://packaged-media.redd.it/eocwyp64008f1/pb/m2-res_640p.mp4?m=DASHPlaylist.mpd&v=1&e=1750406400&s=786f2e47ec0a6a250d567c672b5f266cf682a784" type="video/mp4" />
                   </video>
                 </div>
                 

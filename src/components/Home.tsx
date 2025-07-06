@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Hero from './Hero';
-import VideoSection from './VideoSection';
 import About from './About';
 import Features from './Features';
 import Products from './Products';
@@ -75,10 +74,6 @@ function App() {
       <main>
         <section aria-label="Hero section">
           <Hero />
-        </section>
-        
-        <section aria-label="Video demonstration">
-          <VideoSection />
         </section>
         
         <section aria-label="About Racan AI">
