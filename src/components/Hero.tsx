@@ -53,12 +53,12 @@ function Hero() {
 
         .main-content {
           display: grid;
-          grid-template-columns: 2fr 1fr;
+          grid-template-columns: 1fr 1fr;
           min-height: 280px;
           max-width: 100%;
           margin: 0;
           padding: 0;
-          gap: 8px;
+          gap: 20px;
           border-radius: 12px;
           overflow: hidden;
           background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
@@ -178,8 +178,8 @@ function Hero() {
         /* Desktop-specific spacing adjustments */
         @media (min-width: 1024px) {
           .main-content {
-            gap: 8px;
-            grid-template-columns: 2.5fr 1fr;
+            gap: 25px;
+            grid-template-columns: 1fr 1fr;
           }
           
           .main-content {
@@ -217,8 +217,8 @@ function Hero() {
 
           .main-content {
             min-height: 300px;
-            grid-template-columns: 2fr 1fr;
-            gap: 6px;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
           }
 
           .left-content {
