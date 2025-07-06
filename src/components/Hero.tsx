@@ -37,7 +37,7 @@ function Hero() {
           align-items: center;
           justify-content: center;
           margin-top: 80px;
-          margin-bottom: 2  0px;
+          margin-bottom: 20px;
         }
 
         .content-card {
@@ -122,18 +122,6 @@ function Hero() {
         .fashion-card.large {
           grid-row: span 2;
           border-radius: 12px;
-        }
-
-        .ai-overlay {
-          position: absolute;
-          inset: 0px;
-          background: linear-gradient(135deg, rgba(255, 51, 102, 0.8), rgba(151, 60, 255, 0.8));
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 16px;
-          font-weight: bold;
         }
 
         .stats-section {
@@ -505,36 +493,55 @@ function Hero() {
                     muted 
                     loop 
                     playsInline
+                    preload="metadata"
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      console.log('Video failed to load, replacing with image');
+                      const img = document.createElement('img');
+                      img.src = 'https://images.pexels.com/photos/8532609/pexels-photo-8532609.jpeg?auto=compress&cs=tinysrgb&w=800';
+                      img.alt = 'Fashion Model';
+                      img.style.width = '100%';
+                      img.style.height = '100%';
+                      img.style.objectFit = 'cover';
+                      e.currentTarget.parentNode?.replaceChild(img, e.currentTarget);
+                    }}
                   >
                     <source src="https://packaged-media.redd.it/eocwyp64008f1/pb/m2-res_640p.mp4?m=DASHPlaylist.mpd&v=1&e=1750406400&s=786f2e47ec0a6a250d567c672b5f266cf682a784" type="video/mp4" />
+                    {/* Fallback image if video fails */}
+                    <img 
+                      src="https://images.pexels.com/photos/8532609/pexels-photo-8532609.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                      alt="Fashion Model"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   </video>
                 </div>
                 
                 {/* Top Right Fashion Image */}
                 <div className="fashion-card">
                   <img 
-                    src="https://i.pinimg.com/736x/d1/a7/90/d1a790aae1206557418eba5e0638223e.jpg" 
+                    src="https://images.pexels.com/photos/8532473/pexels-photo-8532473.jpeg?auto=compress&cs=tinysrgb&w=400" 
                     alt="Fashion Model 2"
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.pexels.com/photos/7679471/pexels-photo-7679471.jpeg?auto=compress&cs=tinysrgb&w=400';
+                    }}
                   />
                 </div>
                 
-                {/* Bottom Right - AI Element with Overlay */}
+                {/* Bottom Right - Fashion Image without AI overlay */}
                 <div className="fashion-card" style={{ 
                   background: '#f0f0f0',
                   position: 'relative'
                 }}>
                   <img 
-                    src="https://i.pinimg.com/736x/54/a1/e3/54a1e32c53c93895bc44239a351dc2bf.jpg" 
-                    alt="Fashion Model 1"
+                    src="https://images.pexels.com/photos/8532635/pexels-photo-8532635.jpeg?auto=compress&cs=tinysrgb&w=400" 
+                    alt="Fashion Model 3"
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&w=400';
+                    }}
                   />
-                  <div className="ai-overlay">
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '20px', marginBottom: '3px' }}>AI</div>
-                      <div style={{ fontSize: '8px', opacity: '0.9' }}>POWERED</div>
-                    </div>
-                  </div>
                 </div>
               </div>
               
