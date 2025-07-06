@@ -400,7 +400,7 @@ function Hero() {
                 }}>
                   Redefine Your<br />
                   Style With<br />
-                  <span style={{ color: '#ff3366' }}>Racan</span>
+                  <span style={{ color: '#ff3366' }}>Racan AI</span>
                 </h1>
               </div>
 
