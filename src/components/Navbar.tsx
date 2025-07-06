@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, ChevronDown, Bot, ShoppingBag } from 'lucide-react';
 import { getCurrentUser, signOut, onAuthStateChange } from '../lib/supabase';
 
 const Navbar = () => {
@@ -8,6 +8,7 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,6 +66,19 @@ const Navbar = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isMenuOpen]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.products-dropdown-container')) {
+        setIsProductsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleNavigation = (path: string) => {
     window.location.href = path;
@@ -148,14 +162,81 @@ const Navbar = () => {
           transform: rotate(-45deg) translate(2px, -2px);
         }
 
-        /* Menu overlay animation - WHITE BACKGROUND */
+        /* Products Dropdown Styles */
+        .products-dropdown-container {
+          position: relative;
+        }
+
+        .products-dropdown {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 1px;
+          min-width: 280px;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-10px);
+          transition: all 0.2s ease-out;
+          z-index: 50;
+          box-shadow: none;
+        }
+
+        .products-dropdown.open {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+
+        .dropdown-item {
+          display: flex;
+          align-items: center;
+          padding: 12px 16px;
+          text-decoration: none;
+          color: #374151;
+          transition: background-color 0.2s ease;
+          border-bottom: 1px solid #f3f4f6;
+        }
+
+        .dropdown-item:last-child {
+          border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+          background-color: #f9fafb;
+        }
+
+        .dropdown-item-icon {
+          margin-right: 12px;
+          flex-shrink: 0;
+        }
+
+        .dropdown-item-content h3 {
+          font-size: 14px;
+          font-weight: 500;
+          margin: 0 0 2px 0;
+          color: #111827;
+        }
+
+        .dropdown-item-content p {
+          font-size: 12px;
+          margin: 0;
+          color: #6b7280;
+          line-height: 1.4;
+        }
+
+        /* Menu overlay animation - WHITE BACKGROUND with menubar bg */
         .menu-overlay {
           position: fixed;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          background: white;
+          background-image: url('https://i.pinimg.com/736x/35/b0/95/35b0954232776284469e69abde5817ff.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           z-index: 60;
           display: flex;
           flex-direction: column;
@@ -165,6 +246,14 @@ const Navbar = () => {
           visibility: hidden;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           transform: scale(0.95);
+        }
+
+        .menu-overlay::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(255, 255, 255, 0.9);
+          z-index: -1;
         }
 
         .menu-overlay.open {
@@ -276,7 +365,8 @@ const Navbar = () => {
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           padding: 1.5rem;
           border-radius: 16px;
-          background: #f9fafb;
+          background: rgba(249, 250, 251, 0.8);
+          backdrop-filter: blur(10px);
         }
 
         .menu-overlay.open .user-section {
@@ -433,12 +523,60 @@ const Navbar = () => {
             >
               Features
             </a>
-            <a
-              href="#products"
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
-            >
-              Products
-            </a>
+            
+            {/* Products Dropdown */}
+            <div className="products-dropdown-container">
+              <button
+                onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)}
+                className="flex items-center text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              >
+                Products
+                <ChevronDown 
+                  className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                    isProductsDropdownOpen ? 'rotate-180' : ''
+                  }`} 
+                />
+              </button>
+              
+              <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
+                <a
+                  href="https://chat-with-racan.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="dropdown-item"
+                  onClick={() => setIsProductsDropdownOpen(false)}
+                >
+                  <div className="dropdown-item-icon">
+                    <Bot className="w-5 h-5 text-[#973cff]" />
+                  </div>
+                  <div className="dropdown-item-content">
+                    <h3>Racan AI Chat Bot</h3>
+                    <p>AI-powered fashion assistant for personalized styling</p>
+                  </div>
+                </a>
+                
+                <a
+                  href="https://dreamxworld.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="dropdown-item"
+                  onClick={() => setIsProductsDropdownOpen(false)}
+                >
+                  <div className="dropdown-item-icon">
+                    <img
+                      src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
+                      alt="DreamX"
+                      className="w-5 h-5 rounded-sm object-cover"
+                    />
+                  </div>
+                  <div className="dropdown-item-content">
+                    <h3>DreamX Ecommerce</h3>
+                    <p>Premium fashion marketplace with curated collections</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
             <button
               onClick={() => handleNavigation('/about')}
               className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
@@ -492,7 +630,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Enhanced White Background Mobile Menu Overlay */}
+      {/* Enhanced Mobile Menu Overlay with Background Image */}
       <div className={`menu-overlay md:hidden ${isMenuOpen ? 'open' : ''}`}>
         <nav className="flex flex-col items-center">
           <a
