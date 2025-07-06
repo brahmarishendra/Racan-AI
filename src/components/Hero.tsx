@@ -36,6 +36,7 @@ function Hero() {
           display: flex;
           align-items: center;
           justify-content: center;
+          margin-top: 80px; /* Add top margin for mobile */
         }
 
         .content-card {
@@ -163,6 +164,7 @@ function Hero() {
           .hero-container {
             min-height: 60vh;
             padding: 16px;
+            margin-top: 100px; /* Increased for tablet */
           }
           
           .main-content {
@@ -185,6 +187,11 @@ function Hero() {
           .stat-label {
             font-size: 9px;
           }
+
+          .fashion-grid {
+            gap: 14px; /* Increased gap for better spacing */
+            padding: 14px; /* Increased padding */
+          }
         }
 
         /* Mobile Styles */
@@ -192,6 +199,8 @@ function Hero() {
           .hero-container {
             min-height: auto;
             padding: 12px;
+            margin-top: 120px; /* Increased significantly for mobile */
+            margin-bottom: 40px; /* Added bottom margin */
           }
           
           .main-content {
@@ -206,12 +215,12 @@ function Hero() {
           
           .right-content {
             order: 2;
-            min-height: 300px;
+            min-height: 320px; /* Increased height */
           }
           
           .fashion-grid {
-            padding: 8px;
-            gap: 8px;
+            padding: 10px; /* Increased padding */
+            gap: 10px; /* Increased gap */
           }
           
           .stats-section {
@@ -239,6 +248,8 @@ function Hero() {
         @media (max-width: 480px) {
           .hero-container {
             padding: 8px;
+            margin-top: 140px; /* Even more margin for small mobile */
+            margin-bottom: 50px; /* Increased bottom margin */
           }
           
           .left-content {
@@ -246,12 +257,29 @@ function Hero() {
           }
           
           .right-content {
-            min-height: 250px;
+            min-height: 280px; /* Increased height */
           }
           
           .fashion-grid {
-            padding: 6px;
-            gap: 6px;
+            padding: 8px; /* Increased padding */
+            gap: 8px; /* Increased gap */
+          }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 360px) {
+          .hero-container {
+            margin-top: 160px; /* Maximum margin for very small screens */
+            margin-bottom: 60px;
+          }
+          
+          .right-content {
+            min-height: 300px; /* Even more height for better proportion */
+          }
+          
+          .fashion-grid {
+            padding: 10px; /* More padding for better spacing */
+            gap: 10px; /* More gap for better visual separation */
           }
         }
       `}</style>
