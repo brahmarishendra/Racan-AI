@@ -37,7 +37,7 @@ function Hero() {
           align-items: center;
           justify-content: center;
           margin-top: 80px;
-          margin-bottom: 30px;
+          margin-bottom: 20px;
         }
 
         .content-card {
@@ -94,7 +94,6 @@ function Hero() {
           overflow: hidden;
           display: flex;
           align-items: center;
-          height: 42rem;
         }
 
         .fashion-grid {
@@ -318,7 +317,7 @@ function Hero() {
           
           .right-content {
             order: 2;
-            min-height: 120px;
+            min-height: 180px;
           }
           
           .fashion-grid {
@@ -365,7 +364,7 @@ function Hero() {
           }
           
           .right-content {
-            min-height: 120px;
+            min-height: 160px;
           }
           
           .fashion-grid {
