@@ -68,7 +68,7 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
-  // Close dropdown when clicking outside
+  // Close dropdown when clicking outside (Desktop)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -129,6 +129,15 @@ const Navbar = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
     setIsMenuOpen(false);
     setIsMobileProductsOpen(false);
+  };
+
+  // Desktop hover handlers
+  const handleDesktopProductsHover = () => {
+    setIsProductsDropdownOpen(true);
+  };
+
+  const handleDesktopProductsLeave = () => {
+    setIsProductsDropdownOpen(false);
   };
 
   return (
@@ -292,20 +301,20 @@ const Navbar = () => {
           transform: scale(1);
         }
 
-        /* Simple menu items without animations */
+        /* Smaller menu items without animations */
         .menu-item {
-          font-size: 1.5rem;
+          font-size: 1.25rem;
           font-weight: 500;
           color: #374151;
           text-decoration: none;
-          margin: 0.5rem 0;
-          padding: 1rem 2rem;
+          margin: 0.3rem 0;
+          padding: 0.75rem 1.5rem;
           border-radius: 12px;
           position: relative;
           overflow: hidden;
           background: transparent;
           border: none;
-          min-width: 200px;
+          min-width: 150px;
           text-align: center;
           display: flex;
           align-items: center;
@@ -320,7 +329,7 @@ const Navbar = () => {
           background: rgba(249, 250, 251, 0.95);
           backdrop-filter: blur(10px);
           border-radius: 12px;
-          margin: 0.5rem 0;
+          margin: 0.3rem 0;
           padding: 0;
           overflow: hidden;
           max-height: 0;
@@ -330,17 +339,17 @@ const Navbar = () => {
         }
 
         .mobile-products-dropdown.open {
-          max-height: 300px;
+          max-height: 250px;
           opacity: 1;
           transform: translateY(0);
-          padding: 1rem;
+          padding: 0.75rem;
         }
 
         .mobile-dropdown-item {
           display: flex;
           align-items: center;
-          padding: 1rem;
-          margin: 0.5rem 0;
+          padding: 0.75rem;
+          margin: 0.3rem 0;
           background: rgba(255, 255, 255, 0.8);
           border-radius: 8px;
           text-decoration: none;
@@ -365,29 +374,29 @@ const Navbar = () => {
         }
 
         .mobile-dropdown-item-icon {
-          margin-right: 12px;
+          margin-right: 10px;
           flex-shrink: 0;
         }
 
         .mobile-dropdown-item-content h3 {
-          font-size: 1rem;
+          font-size: 0.9rem;
           font-weight: 600;
-          margin: 0 0 4px 0;
+          margin: 0 0 3px 0;
           color: #111827;
         }
 
         .mobile-dropdown-item-content p {
-          font-size: 0.875rem;
+          font-size: 0.8rem;
           margin: 0;
           color: #6b7280;
-          line-height: 1.4;
+          line-height: 1.3;
         }
 
         .user-section {
-          margin-top: 2rem;
+          margin-top: 1.5rem;
           text-align: center;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          padding: 1.5rem;
+          padding: 1.25rem;
           border-radius: 16px;
           background: rgba(249, 250, 251, 0.8);
           backdrop-filter: blur(10px);
@@ -397,14 +406,14 @@ const Navbar = () => {
         .mobile-try-racan-btn {
           background: #000000;
           color: white;
-          padding: 0.75rem 2rem;
+          padding: 0.65rem 1.75rem;
           border-radius: 50px;
           text-decoration: none;
           font-weight: 600;
-          font-size: 1.125rem;
+          font-size: 1rem;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: inline-block;
-          margin-top: 1.5rem;
+          margin-top: 1.25rem;
           border: none;
           position: relative;
           overflow: hidden;
@@ -413,20 +422,22 @@ const Navbar = () => {
         /* Responsive font sizes */
         @media (max-width: 768px) {
           .menu-item {
-            font-size: 1.375rem;
+            font-size: 1.125rem;
+            padding: 0.65rem 1.25rem;
+            min-width: 140px;
           }
           
           .mobile-try-racan-btn {
-            font-size: 1rem;
-            padding: 0.625rem 1.75rem;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.5rem;
           }
         }
 
         @media (max-width: 480px) {
           .menu-item {
-            font-size: 1.25rem;
-            padding: 0.875rem 1.5rem;
-            min-width: 180px;
+            font-size: 1rem;
+            padding: 0.6rem 1rem;
+            min-width: 130px;
           }
         }
       `}</style>
@@ -452,13 +463,21 @@ const Navbar = () => {
               Features
             </a>
             
-            {/* Products Dropdown - NO ARROW */}
-            <div className="products-dropdown-container">
+            {/* Products Dropdown - WITH ARROW for Desktop */}
+            <div 
+              className="products-dropdown-container"
+              onMouseEnter={handleDesktopProductsHover}
+              onMouseLeave={handleDesktopProductsLeave}
+            >
               <button
-                onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)}
-                className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+                className="flex items-center text-gray-700 hover:text-[#973cff] transition-colors duration-300"
               >
                 Products
+                <ChevronDown 
+                  className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                    isProductsDropdownOpen ? 'rotate-180' : ''
+                  }`} 
+                />
               </button>
               
               <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
@@ -467,7 +486,6 @@ const Navbar = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="dropdown-item"
-                  onClick={() => setIsProductsDropdownOpen(false)}
                 >
                   <div className="dropdown-item-icon">
                     <Bot className="w-5 h-5 text-[#973cff]" />
@@ -483,7 +501,6 @@ const Navbar = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="dropdown-item"
-                  onClick={() => setIsProductsDropdownOpen(false)}
                 >
                   <div className="dropdown-item-icon">
                     <img
@@ -564,7 +581,7 @@ const Navbar = () => {
             Features
           </a>
           
-          {/* Mobile Products Dropdown */}
+          {/* Mobile Products Dropdown with Arrow */}
           <div className="w-full flex flex-col items-center">
             <button
               onClick={handleMobileProductsToggle}
@@ -572,7 +589,7 @@ const Navbar = () => {
             >
               Products
               <ChevronDown 
-                className={`w-5 h-5 transition-transform duration-300 ${
+                className={`w-4 h-4 transition-transform duration-300 ${
                   isMobileProductsOpen ? 'rotate-180' : ''
                 }`} 
               />
@@ -584,7 +601,7 @@ const Navbar = () => {
                 className="mobile-dropdown-item"
               >
                 <div className="mobile-dropdown-item-icon">
-                  <Bot className="w-6 h-6 text-[#973cff]" />
+                  <Bot className="w-5 h-5 text-[#973cff]" />
                 </div>
                 <div className="mobile-dropdown-item-content">
                   <h3>Racan AI Chat Bot</h3>
@@ -600,7 +617,7 @@ const Navbar = () => {
                   <img
                     src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
                     alt="DreamX"
-                    className="w-6 h-6 rounded-sm object-cover"
+                    className="w-5 h-5 rounded-sm object-cover"
                   />
                 </div>
                 <div className="mobile-dropdown-item-content">
