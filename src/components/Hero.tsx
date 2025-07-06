@@ -31,8 +31,8 @@ function Hero() {
 
         .hero-container {
           background: #f8f9fa;
-          min-height: 40vh;
-          padding: 20px 0;
+          min-height: 75vh;
+          padding: 0;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -46,21 +46,21 @@ function Hero() {
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
           overflow: hidden;
           width: 100%;
-          max-width: 95vw;
-          margin: 0 25px 0 0;
+          max-width: 1100px;
+          margin: 0 auto;
         }
 
         .main-content {
           display: grid;
-          grid-template-columns: 1fr 1.1fr;
-          min-height: 280px;
+          grid-template-columns: 1fr 1fr;
+          min-height: 350px;
           max-width: 100%;
           margin: 0;
           padding: 0;
         }
 
         .left-content {
-          padding: 25px 35px 25px 40px;
+          padding: 30px 40px;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -77,8 +77,8 @@ function Hero() {
           grid-template-columns: 1fr 1fr;
           grid-template-rows: 1fr 1fr;
           height: 100%;
-          gap: 12px;
-          padding: 12px;
+          gap: 10px;
+          padding: 10px;
         }
 
         .fashion-card {
@@ -115,8 +115,8 @@ function Hero() {
         .stats-section {
           display: flex;
           align-items: center;
-          gap: 24px;
-          margin-top: 32px;
+          gap: 20px;
+          margin-top: 25px;
         }
 
         .stat-item {
@@ -124,7 +124,7 @@ function Hero() {
         }
 
         .stat-number {
-          font-size: 28px;
+          font-size: 26px;
           font-weight: 700;
           color: #333;
           line-height: 1;
@@ -141,15 +141,15 @@ function Hero() {
 
         .floating-elements {
           position: absolute;
-          top: 16px;
-          right: 16px;
+          top: 12px;
+          right: 12px;
           display: flex;
-          gap: 6px;
+          gap: 4px;
         }
 
         .floating-dot {
-          width: 6px;
-          height: 6px;
+          width: 5px;
+          height: 5px;
           border-radius: 50%;
           background: #ff3366;
         }
@@ -165,32 +165,32 @@ function Hero() {
         /* Tablet Styles */
         @media (max-width: 1024px) {
           .hero-container {
-            min-height: 35vh;
-            padding: 16px 0;
+            min-height: 65vh;
+            padding: 0;
             margin-top: 85px;
           }
           
           .content-card {
-            max-width: 98vw;
-            margin: 0 20px 0 0;
+            max-width: 95vw;
+            margin: 0 auto;
           }
           
           .main-content {
-            min-height: 260px;
-            grid-template-columns: 1fr 1.05fr;
+            min-height: 320px;
+            grid-template-columns: 1fr 1fr;
           }
           
           .left-content {
-            padding: 20px 25px 20px 30px;
+            padding: 25px 30px;
           }
           
           .stats-section {
-            gap: 20px;
-            margin-top: 24px;
+            gap: 18px;
+            margin-top: 20px;
           }
           
           .stat-number {
-            font-size: 24px;
+            font-size: 22px;
           }
           
           .stat-label {
@@ -198,8 +198,8 @@ function Hero() {
           }
 
           .fashion-grid {
-            gap: 10px;
-            padding: 10px;
+            gap: 8px;
+            padding: 8px;
           }
         }
 
@@ -207,7 +207,7 @@ function Hero() {
         @media (max-width: 768px) {
           .hero-container {
             min-height: auto;
-            padding: 12px 0;
+            padding: 0;
             margin-top: 90px;
           }
           
@@ -228,19 +228,19 @@ function Hero() {
           
           .right-content {
             order: 2;
-            min-height: 220px;
+            min-height: 200px;
           }
           
           .fashion-grid {
-            padding: 8px;
-            gap: 8px;
+            padding: 6px;
+            gap: 6px;
           }
           
           .stats-section {
             flex-direction: column;
             align-items: flex-start;
-            gap: 16px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 15px;
           }
           
           .stat-item {
@@ -248,7 +248,7 @@ function Hero() {
           }
           
           .stat-number {
-            font-size: 20px;
+            font-size: 18px;
           }
           
           .stat-label {
@@ -260,7 +260,7 @@ function Hero() {
         /* Small Mobile */
         @media (max-width: 480px) {
           .hero-container {
-            padding: 8px 0;
+            padding: 0;
             margin-top: 95px;
           }
           
@@ -269,12 +269,12 @@ function Hero() {
           }
           
           .right-content {
-            min-height: 200px;
+            min-height: 180px;
           }
           
           .fashion-grid {
-            padding: 6px;
-            gap: 6px;
+            padding: 4px;
+            gap: 4px;
           }
         }
       `}</style>
@@ -288,11 +288,11 @@ function Hero() {
             <div className="left-content">
               <div className="animate-fade-in-up">
                 <h1 style={{
-                  fontSize: 'clamp(1.8rem, 4vw, 3.2rem)',
+                  fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)',
                   fontWeight: '700',
                   lineHeight: '1.1',
                   color: '#333',
-                  marginBottom: '20px',
+                  marginBottom: '18px',
                   letterSpacing: '-0.02em'
                 }}>
                   Redefine Your<br />
@@ -303,17 +303,17 @@ function Hero() {
 
               <div className="animate-fade-in-up animation-delay-300">
                 <div style={{
-                  fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
+                  fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
                   color: '#333',
-                  marginBottom: '6px',
+                  marginBottom: '5px',
                   fontWeight: '600'
                 }}>
                   AI-powered assistant + Fashion
                 </div>
                 <div style={{
-                  fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
+                  fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
                   color: '#333',
-                  marginBottom: '24px',
+                  marginBottom: '20px',
                   fontWeight: '600'
                 }}>
                   Ecommerce
@@ -322,11 +322,11 @@ function Hero() {
 
               <div className="animate-fade-in-up animation-delay-600">
                 <p style={{
-                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
                   color: '#6c757d',
-                  lineHeight: '1.6',
-                  marginBottom: '32px',
-                  maxWidth: '380px'
+                  lineHeight: '1.5',
+                  marginBottom: '25px',
+                  maxWidth: '350px'
                 }}>
                   Experience the future of fashion with AI-powered Fashion assistant Ecommerce, 
                   personalized recommendations that match your unique taste.
@@ -337,11 +337,11 @@ function Hero() {
                   style={{
                     background: '#ff3366',
                     color: 'white',
-                    padding: 'clamp(12px, 2vw, 16px) clamp(24px, 4vw, 32px)',
+                    padding: 'clamp(10px, 1.8vw, 14px) clamp(20px, 3.5vw, 28px)',
                     borderRadius: '25px',
                     textDecoration: 'none',
                     fontWeight: '600',
-                    fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                    fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
                     display: 'inline-block',
                     transition: 'all 0.3s ease',
                     border: 'none',
@@ -368,21 +368,21 @@ function Hero() {
                   </div>
                 </div>
                 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <div style={{
-                    width: 'clamp(40px, 8vw, 50px)',
-                    height: 'clamp(40px, 8vw, 50px)',
+                    width: 'clamp(35px, 7vw, 45px)',
+                    height: 'clamp(35px, 7vw, 45px)',
                     border: '2px solid #ddd',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: 'clamp(8px, 1.5vw, 10px)',
+                    fontSize: 'clamp(7px, 1.3vw, 9px)',
                     color: '#6c757d'
                   }}>
                     #1 SPACE
                   </div>
-                  <div style={{ fontSize: 'clamp(8px, 1.5vw, 10px)', color: '#6c757d' }}>
+                  <div style={{ fontSize: 'clamp(7px, 1.3vw, 9px)', color: '#6c757d' }}>
                     COLLABORATIVE CREATIVE NETWORK
                   </div>
                 </div>
@@ -431,8 +431,8 @@ function Hero() {
                   />
                   <div className="ai-overlay">
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '24px', marginBottom: '4px' }}>AI</div>
-                      <div style={{ fontSize: '10px', opacity: '0.9' }}>POWERED</div>
+                      <div style={{ fontSize: '20px', marginBottom: '3px' }}>AI</div>
+                      <div style={{ fontSize: '8px', opacity: '0.9' }}>POWERED</div>
                     </div>
                   </div>
                 </div>
@@ -441,31 +441,31 @@ function Hero() {
               {/* Additional floating elements */}
               <div style={{
                 position: 'absolute',
-                bottom: '16px',
-                left: '16px',
+                bottom: '12px',
+                left: '12px',
                 background: 'white',
-                padding: '8px 12px',
-                borderRadius: '8px',
+                padding: '6px 10px',
+                borderRadius: '6px',
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                fontSize: 'clamp(8px, 1.5vw, 9px)',
+                fontSize: 'clamp(7px, 1.3vw, 8px)',
                 color: '#6c757d'
               }}>
-                <div style={{ fontWeight: '600', color: '#333', marginBottom: '2px' }}>STYLE MATCH</div>
+                <div style={{ fontWeight: '600', color: '#333', marginBottom: '1px' }}>STYLE MATCH</div>
                 <div>98% ACCURACY</div>
               </div>
               
               <div style={{
                 position: 'absolute',
-                top: '50%',
-                right: '16px',
+                top: '45%',
+                right: '12px',
                 background: 'white',
-                padding: '8px 12px',
-                borderRadius: '8px',
+                padding: '6px 10px',
+                borderRadius: '6px',
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                fontSize: 'clamp(8px, 1.5vw, 9px)',
+                fontSize: 'clamp(7px, 1.3vw, 8px)',
                 color: '#6c757d'
               }}>
-                <div style={{ fontWeight: '600', color: '#333', marginBottom: '2px' }}>WARDROBE</div>
+                <div style={{ fontWeight: '600', color: '#333', marginBottom: '1px' }}>WARDROBE</div>
                 <div>SMART AI</div>
               </div>
             </div>
