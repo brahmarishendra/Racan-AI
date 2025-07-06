@@ -292,7 +292,7 @@ const Navbar = () => {
           transform: scale(1);
         }
 
-        /* Enhanced menu items with gray hover background */
+        /* Simple menu items without animations */
         .menu-item {
           font-size: 1.5rem;
           font-weight: 500;
@@ -301,9 +301,6 @@ const Navbar = () => {
           margin: 0.5rem 0;
           padding: 1rem 2rem;
           border-radius: 12px;
-          opacity: 0;
-          transform: translateY(30px) scale(0.9);
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           position: relative;
           overflow: hidden;
           background: transparent;
@@ -314,86 +311,7 @@ const Navbar = () => {
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-        }
-
-        .menu-overlay.open .menu-item {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-
-        .menu-overlay.open .menu-item:nth-child(1) {
-          transition-delay: 0.1s;
-          animation: slideInBounce 0.6s ease-out 0.1s both;
-        }
-
-        .menu-overlay.open .menu-item:nth-child(2) {
-          transition-delay: 0.2s;
-          animation: slideInBounce 0.6s ease-out 0.2s both;
-        }
-
-        .menu-overlay.open .menu-item:nth-child(3) {
-          transition-delay: 0.3s;
-          animation: slideInBounce 0.6s ease-out 0.3s both;
-        }
-
-        .menu-overlay.open .menu-item:nth-child(4) {
-          transition-delay: 0.4s;
-          animation: slideInBounce 0.6s ease-out 0.4s both;
-        }
-
-        .menu-overlay.open .menu-item:nth-child(5) {
-          transition-delay: 0.5s;
-          animation: slideInBounce 0.6s ease-out 0.5s both;
-        }
-
-        /* Gray hover background with smooth animations */
-        .menu-item:hover {
-          background: #f3f4f6;
-          color: #973cff;
-          transform: translateY(-2px) scale(1.05);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Animated underline effect */
-        .menu-item::before {
-          content: '';
-          position: absolute;
-          bottom: 8px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #ff3366, #973cff);
-          border-radius: 2px;
-          transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .menu-item:hover::before {
-          width: 60%;
-        }
-
-        /* Text glow effect on hover */
-        .menu-item:hover {
-          text-shadow: 0 0 8px rgba(151, 60, 255, 0.3);
-        }
-
-        /* Ripple effect */
-        .menu-item::after {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 0;
-          height: 0;
-          background: radial-gradient(circle, rgba(151, 60, 255, 0.1) 0%, transparent 70%);
-          border-radius: 50%;
-          transform: translate(-50%, -50%);
           transition: all 0.3s ease;
-        }
-
-        .menu-item:hover::after {
-          width: 300px;
-          height: 300px;
         }
 
         /* Mobile Products Dropdown Styles */
@@ -446,12 +364,6 @@ const Navbar = () => {
           transition-delay: 0.2s;
         }
 
-        .mobile-dropdown-item:hover {
-          background: rgba(255, 255, 255, 1);
-          transform: translateX(5px) scale(1.02);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
         .mobile-dropdown-item-icon {
           margin-right: 12px;
           flex-shrink: 0;
@@ -474,8 +386,6 @@ const Navbar = () => {
         .user-section {
           margin-top: 2rem;
           text-align: center;
-          opacity: 0;
-          transform: translateY(30px);
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           padding: 1.5rem;
           border-radius: 16px;
@@ -483,14 +393,7 @@ const Navbar = () => {
           backdrop-filter: blur(10px);
         }
 
-        .menu-overlay.open .user-section {
-          opacity: 1;
-          transform: translateY(0);
-          transition-delay: 0.6s;
-          animation: fadeInScale 0.6s ease-out 0.6s both;
-        }
-
-        /* Desktop-style Try Racan button for mobile with enhanced hover */
+        /* Desktop-style Try Racan button for mobile */
         .mobile-try-racan-btn {
           background: #000000;
           color: white;
@@ -502,98 +405,9 @@ const Navbar = () => {
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: inline-block;
           margin-top: 1.5rem;
-          opacity: 0;
-          transform: translateY(30px) scale(0.9);
           border: none;
           position: relative;
           overflow: hidden;
-        }
-
-        .menu-overlay.open .mobile-try-racan-btn {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-          transition-delay: 0.7s;
-          animation: bounceIn 0.8s ease-out 0.7s both;
-        }
-
-        .mobile-try-racan-btn:hover {
-          background: #d70153;
-          transform: translateY(-3px) scale(1.05);
-          box-shadow: 0 8px 25px rgba(215, 1, 83, 0.3);
-        }
-
-        /* Shimmer effect for Try Racan button */
-        .mobile-try-racan-btn::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-          transition: left 0.5s;
-        }
-
-        .mobile-try-racan-btn:hover::before {
-          left: 100%;
-        }
-
-        /* Keyframe animations */
-        @keyframes slideInBounce {
-          0% {
-            opacity: 0;
-            transform: translateY(50px) scale(0.8);
-          }
-          60% {
-            opacity: 1;
-            transform: translateY(-5px) scale(1.05);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes fadeInScale {
-          0% {
-            opacity: 0;
-            transform: translateY(30px) scale(0.8);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes bounceIn {
-          0% {
-            opacity: 0;
-            transform: translateY(30px) scale(0.3);
-          }
-          50% {
-            opacity: 1;
-            transform: translateY(-10px) scale(1.1);
-          }
-          70% {
-            transform: translateY(5px) scale(0.95);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes textGlow {
-          0%, 100% {
-            text-shadow: 0 0 5px rgba(151, 60, 255, 0.3);
-          }
-          50% {
-            text-shadow: 0 0 15px rgba(151, 60, 255, 0.6);
-          }
-        }
-
-        .menu-item:hover {
-          animation: textGlow 1.5s ease-in-out infinite;
         }
 
         /* Responsive font sizes */
