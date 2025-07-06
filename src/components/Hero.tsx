@@ -47,13 +47,13 @@ function Hero() {
           overflow: hidden;
           width: 100%;
           max-width: 95vw;
-          margin: 0 15px 0 0;
+          margin: 0 25px 0 0;
         }
 
         .main-content {
           display: grid;
           grid-template-columns: 1fr 1.1fr;
-          min-height: 300px;
+          min-height: 280px;
           max-width: 100%;
           margin: 0;
           padding: 0;
@@ -172,11 +172,11 @@ function Hero() {
           
           .content-card {
             max-width: 98vw;
-            margin: 0 10px 0 0;
+            margin: 0 20px 0 0;
           }
           
           .main-content {
-            min-height: 280px;
+            min-height: 260px;
             grid-template-columns: 1fr 1.05fr;
           }
           
@@ -228,7 +228,7 @@ function Hero() {
           
           .right-content {
             order: 2;
-            min-height: 250px;
+            min-height: 220px;
           }
           
           .fashion-grid {
@@ -269,7 +269,7 @@ function Hero() {
           }
           
           .right-content {
-            min-height: 220px;
+            min-height: 200px;
           }
           
           .fashion-grid {
