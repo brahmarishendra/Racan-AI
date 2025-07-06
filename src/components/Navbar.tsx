@@ -92,11 +92,20 @@ const Navbar = () => {
   return (
     <>
       <style jsx>{`
+        /* Custom cursor styles */
+        * {
+          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, auto;
+        }
+
+        a, button, [role="button"] {
+          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF2D6B' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23FF2D6B' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
+        }
+
         .hamburger-menu {
-          width: 20px;
-          height: 20px;
+          width: 18px;
+          height: 18px;
           position: relative;
-          cursor: pointer;
+          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF2D6B' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23FF2D6B' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -104,7 +113,7 @@ const Navbar = () => {
         }
 
         .hamburger-line {
-          width: 20px;
+          width: 18px;
           height: 2px;
           background-color: #000;
           border-radius: 1px;
@@ -114,20 +123,20 @@ const Navbar = () => {
         }
 
         .hamburger-line:nth-child(1) {
-          top: 5px;
+          top: 4px;
         }
 
         .hamburger-line:nth-child(2) {
-          top: 9px;
+          top: 8px;
         }
 
         .hamburger-line:nth-child(3) {
-          top: 13px;
+          top: 12px;
         }
 
         /* Animated states */
         .hamburger-menu.open .hamburger-line:nth-child(1) {
-          transform: rotate(45deg) translate(3px, 3px);
+          transform: rotate(45deg) translate(2.5px, 2.5px);
         }
 
         .hamburger-menu.open .hamburger-line:nth-child(2) {
@@ -136,7 +145,7 @@ const Navbar = () => {
         }
 
         .hamburger-menu.open .hamburger-line:nth-child(3) {
-          transform: rotate(-45deg) translate(3px, -3px);
+          transform: rotate(-45deg) translate(2.5px, -2.5px);
         }
 
         /* Menu overlay animation */
@@ -274,7 +283,7 @@ const Navbar = () => {
           <img
             src="https://i.postimg.cc/rsYBTFzm/image-41.png"
             alt="Racan Logo"
-            className="w-24 cursor-pointer"
+            className="w-24"
             onClick={() => handleNavigation('/')}
           />
 
