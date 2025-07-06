@@ -57,6 +57,7 @@ function Hero() {
           max-width: 100%;
           margin: 0;
           padding: 0;
+          gap: 0;
         }
 
         .left-content {
@@ -164,17 +165,8 @@ function Hero() {
 
         /* Desktop-specific spacing adjustments */
         @media (min-width: 1024px) {
-          .left-content {
-            padding: 40px 60px;
-            gap: 24px;
-          }
-          
-          .left-content > div {
-            margin-bottom: 24px;
-          }
-          
-          .left-content > div:last-child {
-            margin-bottom: 0;
+          .main-content {
+            gap: 20px;
           }
           
           .main-content {
@@ -198,6 +190,7 @@ function Hero() {
           .main-content {
             min-height: 280px;
             grid-template-columns: 1fr 1fr;
+            gap: 15px;
           }
           
           .left-content {
@@ -239,11 +232,14 @@ function Hero() {
           .main-content {
             grid-template-columns: 1fr;
             min-height: auto;
+            gap: 0;
           }
           
           .left-content {
             padding: 20px 15px;
             order: 1;
+            text-align: center;
+            align-items: center;
           }
           
           .right-content {
@@ -258,13 +254,14 @@ function Hero() {
           
           .stats-section {
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             gap: 12px;
             margin-top: 15px;
           }
           
           .stat-item {
             width: 100%;
+            text-align: center;
           }
           
           .stat-number {
