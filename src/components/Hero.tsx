@@ -32,62 +32,32 @@ function Hero() {
         .main-container {
           background: #f8f9fa;
           min-height: 100vh;
-          padding: 20px;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .content-card {
           background: white;
-          border-radius: 24px;
+          border-radius: 1px;
           padding: 0;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
           overflow: hidden;
-          max-width: 1400px;
-          margin: 0 auto;
-        }
-
-        .navbar-section {
-          background: white;
-          padding: 16px 32px;
-          border-bottom: 1px solid #e9ecef;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .nav-links {
-          display: flex;
-          align-items: center;
-          gap: 24px;
-        }
-
-        .nav-link {
-          color: #6c757d;
-          text-decoration: none;
-          font-weight: 500;
-          font-size: 14px;
-          padding: 8px 16px;
-          border-radius: 20px;
-          transition: all 0.3s ease;
-        }
-
-        .nav-link.active {
-          background: #ff3366;
-          color: white;
-        }
-
-        .nav-link:hover {
-          background: #f8f9fa;
-          color: #333;
+          width: 100%;
+          max-width: 1200px;
+          height: auto;
+          max-height: 80vh;
         }
 
         .main-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          min-height: 600px;
+          height: 500px;
         }
 
         .left-content {
-          padding: 60px;
+          padding: 40px;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -104,12 +74,12 @@ function Hero() {
           grid-template-columns: 1fr 1fr;
           grid-template-rows: 1fr 1fr;
           height: 100%;
-          gap: 16px;
-          padding: 16px;
+          gap: 12px;
+          padding: 12px;
         }
 
         .fashion-card {
-          border-radius: 16px;
+          border-radius: 1px;
           overflow: hidden;
           position: relative;
           background: white;
@@ -122,6 +92,12 @@ function Hero() {
           object-fit: cover;
         }
 
+        .fashion-card video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
         .fashion-card.large {
           grid-row: span 2;
         }
@@ -129,8 +105,8 @@ function Hero() {
         .stats-section {
           display: flex;
           align-items: center;
-          gap: 32px;
-          margin-top: 40px;
+          gap: 24px;
+          margin-top: 30px;
         }
 
         .stat-item {
@@ -138,32 +114,33 @@ function Hero() {
         }
 
         .stat-number {
-          font-size: 32px;
+          font-size: 24px;
           font-weight: 700;
           color: #333;
           line-height: 1;
         }
 
         .stat-label {
-          font-size: 12px;
+          font-size: 10px;
           color: #6c757d;
           text-transform: uppercase;
           letter-spacing: 1px;
           margin-top: 4px;
+          max-width: 200px;
         }
 
         .floating-elements {
           position: absolute;
-          top: 20px;
-          right: 20px;
+          top: 15px;
+          right: 15px;
           display: flex;
-          gap: 8px;
+          gap: 6px;
         }
 
         .floating-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
+          width: 6px;
+          height: 6px;
+          border-radius: 1px;
           background: #ff3366;
         }
 
@@ -175,87 +152,97 @@ function Hero() {
           background: #00d4aa;
         }
 
-        @media (max-width: 768px) {
+        .info-card {
+          position: absolute;
+          background: white;
+          padding: 8px 12px;
+          border-radius: 1px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          font-size: 9px;
+          color: #6c757d;
+        }
+
+        .info-card-title {
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 2px;
+          font-size: 10px;
+        }
+
+        @media (max-width: 1024px) {
+          .content-card {
+            max-width: 900px;
+            height: auto;
+          }
+          
           .main-content {
-            grid-template-columns: 1fr;
+            height: 450px;
           }
           
           .left-content {
-            padding: 40px 30px;
+            padding: 30px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .main-container {
+            padding: 8px;
           }
           
-          .navbar-section {
-            padding: 16px 20px;
+          .content-card {
+            max-height: none;
           }
           
-          .nav-links {
-            gap: 16px;
+          .main-content {
+            grid-template-columns: 1fr;
+            height: auto;
+          }
+          
+          .left-content {
+            padding: 30px 20px;
+          }
+          
+          .right-content {
+            height: 300px;
           }
           
           .stats-section {
-            gap: 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+          }
+          
+          .fashion-grid {
+            padding: 8px;
+            gap: 8px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .main-container {
+            padding: 5px;
+          }
+          
+          .left-content {
+            padding: 20px 15px;
+          }
+          
+          .right-content {
+            height: 250px;
+          }
+          
+          .stat-number {
+            font-size: 20px;
+          }
+          
+          .stat-label {
+            font-size: 8px;
           }
         }
       `}</style>
       
       <section className="main-container">
         <div className="content-card">
-          
-          {/* Navbar Section */}
-          <div className="navbar-section">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-              <div style={{ 
-                width: '40px', 
-                height: '40px', 
-                background: '#333', 
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: '14px'
-              }}>
-                RA
-              </div>
-              
-              <div className="nav-links">
-                <a href="#" className="nav-link">HOME</a>
-                <a href="#" className="nav-link">ARTISTS</a>
-                <a href="#" className="nav-link active">FEATURES</a>
-                <a href="#" className="nav-link">EVENTS</a>
-                <a href="#" className="nav-link">FORUM</a>
-              </div>
-            </div>
-            
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <div style={{ 
-                padding: '8px 24px',
-                border: '2px dashed #ddd',
-                borderRadius: '20px',
-                fontSize: '12px',
-                color: '#6c757d',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}>
-                DISCOVER ALL OUR PRODUCTS
-              </div>
-              <button style={{
-                background: '#333',
-                color: 'white',
-                border: 'none',
-                padding: '10px 20px',
-                borderRadius: '20px',
-                fontSize: '12px',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}>
-                SUBSCRIBE
-              </button>
-            </div>
-          </div>
-
           {/* Main Content */}
           <div className="main-content">
             
@@ -263,11 +250,11 @@ function Hero() {
             <div className="left-content">
               <div className="animate-fade-in-up">
                 <h1 style={{
-                  fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+                  fontSize: 'clamp(1.8rem, 4vw, 3.2rem)',
                   fontWeight: '700',
                   lineHeight: '1.1',
                   color: '#333',
-                  marginBottom: '24px',
+                  marginBottom: '20px',
                   letterSpacing: '-0.02em'
                 }}>
                   Redefine Your<br />
@@ -278,17 +265,17 @@ function Hero() {
 
               <div className="animate-fade-in-up animation-delay-300">
                 <div style={{
-                  fontSize: '1.25rem',
+                  fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
                   color: '#333',
-                  marginBottom: '8px',
+                  marginBottom: '6px',
                   fontWeight: '600'
                 }}>
                   AI-powered assistant + Fashion
                 </div>
                 <div style={{
-                  fontSize: '1.25rem',
+                  fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
                   color: '#333',
-                  marginBottom: '32px',
+                  marginBottom: '24px',
                   fontWeight: '600'
                 }}>
                   Ecommerce
@@ -297,11 +284,11 @@ function Hero() {
 
               <div className="animate-fade-in-up animation-delay-600">
                 <p style={{
-                  fontSize: '1rem',
+                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                   color: '#6c757d',
                   lineHeight: '1.6',
-                  marginBottom: '40px',
-                  maxWidth: '400px'
+                  marginBottom: '30px',
+                  maxWidth: '350px'
                 }}>
                   Experience the future of fashion with AI-powered Fashion assistant Ecommerce, 
                   personalized recommendations that match your unique taste.
@@ -312,11 +299,11 @@ function Hero() {
                   style={{
                     background: '#ff3366',
                     color: 'white',
-                    padding: '16px 32px',
-                    borderRadius: '25px',
+                    padding: '12px 24px',
+                    borderRadius: '1px',
                     textDecoration: 'none',
                     fontWeight: '600',
-                    fontSize: '1rem',
+                    fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                     display: 'inline-block',
                     transition: 'all 0.3s ease',
                     border: 'none',
@@ -347,21 +334,21 @@ function Hero() {
                   </div>
                 </div>
                 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div style={{
-                    width: '60px',
-                    height: '60px',
+                    width: '50px',
+                    height: '50px',
                     border: '2px solid #ddd',
-                    borderRadius: '50%',
+                    borderRadius: '1px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '12px',
+                    fontSize: '10px',
                     color: '#6c757d'
                   }}>
                     #1 SPACE
                   </div>
-                  <div style={{ fontSize: '12px', color: '#6c757d' }}>
+                  <div style={{ fontSize: '10px', color: '#6c757d' }}>
                     COLLABORATIVE CREATIVE NETWORK
                   </div>
                 </div>
@@ -393,51 +380,53 @@ function Hero() {
                   />
                 </div>
                 
-                {/* Bottom Right - Abstract/Tech Element */}
-                <div className="fashion-card" style={{ 
-                  background: 'linear-gradient(135deg, #ff3366, #973cff)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '24px',
-                  fontWeight: 'bold'
-                }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '32px', marginBottom: '8px' }}>AI</div>
-                    <div style={{ fontSize: '12px', opacity: '0.8' }}>POWERED</div>
+                {/* Bottom Right - AI POWERED Video */}
+                <div className="fashion-card">
+                  <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                    style={{ filter: 'brightness(0.8)' }}
+                  >
+                    <source 
+                      src="https://v1.pinimg.com/videos/mc/720p/11/37/4c/11374cc3bc5445df07f758ae4dc481aa.mp4" 
+                      type="video/mp4" 
+                    />
+                  </video>
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(135deg, rgba(255, 51, 102, 0.8), rgba(151, 60, 255, 0.8))',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontSize: '16px',
+                    fontWeight: 'bold'
+                  }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '20px', marginBottom: '4px' }}>AI</div>
+                      <div style={{ fontSize: '10px', opacity: '0.9' }}>POWERED</div>
+                    </div>
                   </div>
                 </div>
               </div>
               
-              {/* Additional floating elements */}
-              <div style={{
-                position: 'absolute',
-                bottom: '20px',
-                left: '20px',
-                background: 'white',
-                padding: '12px',
-                borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                fontSize: '10px',
-                color: '#6c757d'
+              {/* Floating Info Cards */}
+              <div className="info-card" style={{
+                bottom: '15px',
+                left: '15px'
               }}>
-                <div style={{ fontWeight: '600', color: '#333', marginBottom: '4px' }}>STYLE MATCH</div>
+                <div className="info-card-title">STYLE MATCH</div>
                 <div>98% ACCURACY</div>
               </div>
               
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                right: '20px',
-                background: 'white',
-                padding: '12px',
-                borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                fontSize: '10px',
-                color: '#6c757d'
+              <div className="info-card" style={{
+                top: '45%',
+                right: '15px'
               }}>
-                <div style={{ fontWeight: '600', color: '#333', marginBottom: '4px' }}>WARDROBE</div>
+                <div className="info-card-title">WARDROBE</div>
                 <div>SMART AI</div>
               </div>
             </div>
