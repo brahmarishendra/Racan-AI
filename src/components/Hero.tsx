@@ -342,10 +342,6 @@ function Hero() {
                 <div className="stat-item">
                   <div className="stat-number">150K+</div>
                   <div className="stat-label">
-                    ART COMMUNITY, WHERE ARTISTS FROM<br />
-                    AROUND THE WORLD UNITE TO CELEBRATE<br />
-                    CREATIVITY, EXCHANGE IDEAS, AND ELEVATE<br />
-                    THEIR CRAFT THROUGH SHARED INSPIRATION.
                   </div>
                 </div>
                 
