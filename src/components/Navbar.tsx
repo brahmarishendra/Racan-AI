@@ -581,18 +581,13 @@ const Navbar = () => {
             Features
           </a>
           
-          {/* Mobile Products Dropdown with Arrow */}
+          {/* Mobile Products Dropdown WITHOUT Arrow */}
           <div className="w-full flex flex-col items-center">
             <button
               onClick={handleMobileProductsToggle}
               className="menu-item"
             >
               Products
-              <ChevronDown 
-                className={`w-4 h-4 transition-transform duration-300 ${
-                  isMobileProductsOpen ? 'rotate-180' : ''
-                }`} 
-              />
             </button>
             
             <div className={`mobile-products-dropdown ${isMobileProductsOpen ? 'open' : ''}`}>
