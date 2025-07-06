@@ -53,7 +53,7 @@ function Hero() {
         .main-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          min-height: 350px;
+          min-height: 300px;
           max-width: 100%;
           margin: 0;
           padding: 0;
@@ -176,7 +176,7 @@ function Hero() {
           }
           
           .main-content {
-            min-height: 320px;
+            min-height: 280px;
             grid-template-columns: 1fr 1fr;
           }
           
@@ -228,7 +228,7 @@ function Hero() {
           
           .right-content {
             order: 2;
-            min-height: 200px;
+            min-height: 180px;
           }
           
           .fashion-grid {
@@ -269,7 +269,7 @@ function Hero() {
           }
           
           .right-content {
-            min-height: 180px;
+            min-height: 160px;
           }
           
           .fashion-grid {
