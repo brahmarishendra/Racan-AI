@@ -452,18 +452,13 @@ const Navbar = () => {
               Features
             </a>
             
-            {/* Products Dropdown */}
+            {/* Products Dropdown - NO ARROW */}
             <div className="products-dropdown-container">
               <button
                 onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)}
-                className="flex items-center text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+                className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
               >
                 Products
-                <ChevronDown 
-                  className={`ml-1 w-4 h-4 transition-transform duration-200 ${
-                    isProductsDropdownOpen ? 'rotate-180' : ''
-                  }`} 
-                />
               </button>
               
               <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
