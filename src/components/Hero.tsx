@@ -53,7 +53,7 @@ function Hero() {
 
         .main-content {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 2fr 1fr;
           min-height: 280px;
           max-width: 100%;
           margin: 0;
@@ -61,6 +61,10 @@ function Hero() {
           gap: 8px;
           border-radius: 12px;
           overflow: hidden;
+          background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
         }
 
         .left-content {
@@ -68,12 +72,17 @@ function Hero() {
           display: flex;
           flex-direction: column;
           justify-content: center;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
         }
 
         .right-content {
-          background: #f8f9fa;
+          background: rgba(248, 249, 250, 0.9);
+          backdrop-filter: blur(8px);
           position: relative;
           overflow: hidden;
+          display: flex;
+          align-items: center;
         }
 
         .fashion-grid {
@@ -170,10 +179,11 @@ function Hero() {
         @media (min-width: 1024px) {
           .main-content {
             gap: 8px;
+            grid-template-columns: 2.5fr 1fr;
           }
           
           .main-content {
-            min-height: 260px;
+            min-height: 320px;
           }
 
           .hero-container {
@@ -206,26 +216,15 @@ function Hero() {
           }
 
           .main-content {
-            min-height: 280px;
-            grid-template-columns: 1fr 1fr;
+            min-height: 300px;
+            grid-template-columns: 2fr 1fr;
             gap: 6px;
-            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
           }
 
           .left-content {
             padding: 35px 40px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
           }
 
-          .right-content {
-            background: rgba(248, 249, 250, 0.9);
-            backdrop-filter: blur(8px);
-          }
-          
           .stats-section {
             gap: 20px;
             margin-top: 25px;
@@ -263,10 +262,6 @@ function Hero() {
             grid-template-columns: 1fr;
             min-height: auto;
             gap: 0;
-            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
           }
           
           .left-content {
@@ -274,15 +269,11 @@ function Hero() {
             order: 1;
             text-align: center;
             align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
           }
           
           .right-content {
             order: 2;
-            min-height: 160px;
-            background: rgba(248, 249, 250, 0.9);
-            backdrop-filter: blur(8px);
+            min-height: 180px;
           }
           
           .fashion-grid {
@@ -325,7 +316,7 @@ function Hero() {
           }
           
           .right-content {
-            min-height: 140px;
+            min-height: 160px;
           }
           
           .fashion-grid {
