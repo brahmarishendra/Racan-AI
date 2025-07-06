@@ -41,7 +41,7 @@ function Hero() {
         }
 
         .content-card {
-          background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
+          background-image: url('');
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
