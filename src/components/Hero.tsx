@@ -41,7 +41,10 @@ function Hero() {
         }
 
         .content-card {
-          background: white;
+          background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           border-radius: 24px;
           padding: 0;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
@@ -49,26 +52,34 @@ function Hero() {
           width: 100%;
           max-width: 1400px;
           margin: 0 auto;
+          position: relative;
+        }
+
+        .content-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(2px);
+          z-index: 1;
         }
 
         .main-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          min-height: 280px;
+          min-height: 320px;
           max-width: 100%;
           margin: 0;
           padding: 0;
-          gap: 20px;
+          gap: 25px;
           border-radius: 12px;
           overflow: hidden;
-          background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
+          position: relative;
+          z-index: 2;
         }
 
         .left-content {
-          padding: 40px 50px;
+          padding: 50px 60px;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -128,8 +139,8 @@ function Hero() {
         .stats-section {
           display: flex;
           align-items: center;
-          gap: 25px;
-          margin-top: 30px;
+          gap: 30px;
+          margin-top: 35px;
         }
 
         .stat-item {
@@ -175,14 +186,37 @@ function Hero() {
           background: #00d4aa;
         }
 
+        .dream-store-link {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        }
+
+        .dream-store-link:hover {
+          transform: translateY(-2px);
+        }
+
+        .dream-store-image {
+          width: clamp(40px, 8vw, 50px);
+          height: clamp(40px, 8vw, 50px);
+          border-radius: 8px;
+          object-fit: cover;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+        }
+
+        .dream-store-link:hover .dream-store-image {
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+          transform: scale(1.05);
+        }
+
         /* Desktop-specific spacing adjustments */
         @media (min-width: 1024px) {
           .main-content {
             gap: 25px;
             grid-template-columns: 1fr 1fr;
-          }
-          
-          .main-content {
             min-height: 320px;
           }
 
@@ -256,6 +290,7 @@ function Hero() {
           .content-card {
             max-width: 100vw;
             margin: 0;
+            border-radius: 16px;
           }
           
           .main-content {
@@ -301,6 +336,10 @@ function Hero() {
             font-size: 8px;
             max-width: 100%;
           }
+
+          .dream-store-link {
+            justify-content: center;
+          }
         }
 
         /* Small Mobile */
@@ -322,6 +361,10 @@ function Hero() {
           .fashion-grid {
             padding: 4px;
             gap: 4px;
+          }
+
+          .content-card {
+            border-radius: 12px;
           }
         }
       `}</style>
@@ -415,24 +458,21 @@ function Hero() {
                   </div>
                 </div>
                 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{
-                    width: 'clamp(35px, 7vw, 45px)',
-                    height: 'clamp(35px, 7vw, 45px)',
-                    border: '2px solid #ddd',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 'clamp(7px, 1.3vw, 9px)',
-                    color: '#6c757d'
-                  }}>
-                    #1 SPACE
-                  </div>
+                <a 
+                  href="https://dreamxworld.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="dream-store-link"
+                >
+                  <img
+                    src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
+                    alt="Dream Store"
+                    className="dream-store-image"
+                  />
                   <div style={{ fontSize: 'clamp(7px, 1.3vw, 9px)', color: '#6c757d' }}>
-                    COLLABORATIVE CREATIVE NETWORK
+                    DREAM STORE
                   </div>
-                </div>
+                </a>
               </div>
             </div>
 
