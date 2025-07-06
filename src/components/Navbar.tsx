@@ -168,13 +168,15 @@ const Navbar = () => {
         }
 
         .products-dropdown {
+          margin-top: 20px;
+          margin-left: 0px;
           position: absolute;
           top: 100%;
           left: 0;
           background: white;
           border: 1px solid #e5e7eb;
           border-radius: 1px;
-          min-width: 280px;
+          min-width: 300px;
           opacity: 0;
           visibility: hidden;
           transform: translateY(-10px);

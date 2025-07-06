@@ -37,7 +37,7 @@ function Hero() {
           align-items: center;
           justify-content: center;
           margin-top: 80px;
-          margin-bottom: 20px;
+          margin-bottom: 2  0px;
         }
 
         .content-card {
