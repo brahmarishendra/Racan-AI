@@ -304,6 +304,10 @@ function Hero() {
           }
           
           .left-content {
+            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             padding: 30px 20px;
             order: 1;
             text-align: center;
