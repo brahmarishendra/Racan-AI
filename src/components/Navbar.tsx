@@ -108,38 +108,44 @@ const Navbar = () => {
           height: 2px;
           background-color: #000;
           border-radius: 2px;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
           transform-origin: center;
           position: absolute;
         }
 
         .hamburger-line:nth-child(1) {
           top: 6px;
+          transition-delay: 0s;
         }
 
         .hamburger-line:nth-child(2) {
           top: 11px;
+          transition-delay: 0.1s;
         }
 
         .hamburger-line:nth-child(3) {
           top: 16px;
+          transition-delay: 0.2s;
         }
 
-        /* Animated states */
+        /* Enhanced morphing animation states */
         .hamburger-menu.open .hamburger-line:nth-child(1) {
-          transform: rotate(45deg) translate(3.5px, 3.5px);
+          transform: rotate(45deg) translate(3.5px, 3.5px) scale(1.1);
+          transition-delay: 0.2s;
         }
 
         .hamburger-menu.open .hamburger-line:nth-child(2) {
           opacity: 0;
-          transform: scale(0);
+          transform: scale(0) rotate(180deg);
+          transition-delay: 0s;
         }
 
         .hamburger-menu.open .hamburger-line:nth-child(3) {
-          transform: rotate(-45deg) translate(3.5px, -3.5px);
+          transform: rotate(-45deg) translate(3.5px, -3.5px) scale(1.1);
+          transition-delay: 0.1s;
         }
 
-        /* Menu overlay animation */
+        /* Menu overlay with enhanced morphing animation */
         .menu-overlay {
           position: fixed;
           top: 0;
@@ -154,16 +160,19 @@ const Navbar = () => {
           align-items: center;
           opacity: 0;
           visibility: hidden;
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          transform: scale(0.95);
+          transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          transform: scale(0.8) rotate(-5deg);
+          backdrop-filter: blur(0px);
         }
 
         .menu-overlay.open {
           opacity: 1;
           visibility: visible;
-          transform: scale(1);
+          transform: scale(1) rotate(0deg);
+          backdrop-filter: blur(10px);
         }
 
+        /* Enhanced menu items with fluid morphing */
         .menu-item {
           font-size: 2.5rem;
           font-weight: 300;
@@ -171,15 +180,16 @@ const Navbar = () => {
           text-decoration: none;
           margin: 1rem 0;
           opacity: 0;
-          transform: translateY(30px);
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transform: translateY(50px) rotateX(-90deg);
+          transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
           position: relative;
           overflow: hidden;
+          perspective: 1000px;
         }
 
         .menu-overlay.open .menu-item {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0) rotateX(0deg);
         }
 
         .menu-overlay.open .menu-item:nth-child(1) {
@@ -198,9 +208,11 @@ const Navbar = () => {
           transition-delay: 0.4s;
         }
 
+        /* Enhanced hover effects with morphing */
         .menu-item:hover {
           color: #ff3366;
-          transform: translateX(10px);
+          transform: translateX(20px) scale(1.05) rotateY(5deg);
+          text-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
         }
 
         .menu-item::before {
@@ -209,29 +221,33 @@ const Navbar = () => {
           bottom: -2px;
           left: 0;
           width: 0;
-          height: 2px;
+          height: 3px;
           background: linear-gradient(90deg, #ff3366, #973cff);
-          transition: width 0.3s ease;
+          transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          border-radius: 2px;
         }
 
         .menu-item:hover::before {
           width: 100%;
+          box-shadow: 0 0 10px rgba(255, 51, 102, 0.8);
         }
 
+        /* Enhanced user section with morphing */
         .user-section {
           margin-top: 2rem;
           text-align: center;
           opacity: 0;
-          transform: translateY(30px);
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transform: translateY(50px) scale(0.8);
+          transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         .menu-overlay.open .user-section {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
           transition-delay: 0.5s;
         }
 
+        /* Enhanced Try Racan button with morphing */
         .try-racan-btn {
           background: linear-gradient(135deg, #ff3366, #973cff);
           color: white;
@@ -240,22 +256,58 @@ const Navbar = () => {
           text-decoration: none;
           font-weight: 600;
           font-size: 1.1rem;
-          transition: all 0.3s ease;
+          transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
           display: inline-block;
           margin-top: 1rem;
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(50px) scale(0.8) rotateZ(-10deg);
+          box-shadow: 0 10px 30px rgba(255, 51, 102, 0.3);
         }
 
         .menu-overlay.open .try-racan-btn {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0) scale(1) rotateZ(0deg);
           transition-delay: 0.6s;
         }
 
         .try-racan-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 30px rgba(255, 51, 102, 0.3);
+          transform: translateY(-5px) scale(1.1) rotateZ(2deg);
+          box-shadow: 0 20px 40px rgba(255, 51, 102, 0.5);
+          background: linear-gradient(135deg, #ff3366, #973cff, #ff3366);
+          background-size: 200% 200%;
+          animation: gradientShift 2s ease infinite;
+        }
+
+        /* Additional morphing effects */
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles effect */
+        .menu-overlay::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(circle at 20% 80%, rgba(255, 51, 102, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(151, 60, 255, 0.1) 0%, transparent 50%);
+          opacity: 0;
+          transition: opacity 1s ease;
+          pointer-events: none;
+        }
+
+        .menu-overlay.open::before {
+          opacity: 1;
+        }
+
+        /* Enhanced close button morphing */
+        .hamburger-menu:hover .hamburger-line {
+          background-color: #ff3366;
+          box-shadow: 0 0 5px rgba(255, 51, 102, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -329,7 +381,7 @@ const Navbar = () => {
             )}
           </nav>
 
-          {/* Animated Hamburger Menu Button */}
+          {/* Enhanced Animated Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden z-[80] relative p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
@@ -344,7 +396,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Animated Mobile Menu Overlay */}
+      {/* Enhanced Animated Mobile Menu Overlay */}
       <div className={`menu-overlay md:hidden ${isMenuOpen ? 'open' : ''}`}>
         <nav className="flex flex-col items-center">
           <a
