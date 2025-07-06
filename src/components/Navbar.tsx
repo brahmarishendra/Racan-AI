@@ -310,6 +310,121 @@ const Navbar = () => {
           box-shadow: 0 0 5px rgba(255, 51, 102, 0.3);
         }
 
+        /* Desktop Navigation Hover Effects */
+        .nav-item {
+          position: relative;
+          padding: 8px 20px;
+          border-radius: 30px;
+          transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          overflow: hidden;
+          cursor: pointer;
+        }
+
+        .nav-item::before {
+          content: '';
+          position: absolute;
+          top: -50px;
+          right: -50px;
+          width: 100px;
+          height: 100px;
+          background: radial-gradient(circle, rgba(156, 163, 175, 0.3) 0%, transparent 70%);
+          border-radius: 50%;
+          transform: scale(0);
+          transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          pointer-events: none;
+        }
+
+        .nav-item:hover::before {
+          transform: scale(1.5);
+          animation: bubbleFloat 2s ease-in-out infinite;
+        }
+
+        .nav-item:hover {
+          background-color: rgba(156, 163, 175, 0.2);
+          transform: translateY(-2px) scale(1.05);
+          box-shadow: 0 8px 25px rgba(156, 163, 175, 0.3);
+        }
+
+        .nav-item::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+        }
+
+        .nav-item:hover::after {
+          transform: translateX(100%);
+        }
+
+        @keyframes bubbleFloat {
+          0%, 100% {
+            transform: scale(1.5) translateY(0px);
+            opacity: 0.3;
+          }
+          50% {
+            transform: scale(1.8) translateY(-10px);
+            opacity: 0.6;
+          }
+        }
+
+        /* Additional bubble effects */
+        .nav-item:hover {
+          position: relative;
+        }
+
+        .nav-item:hover::before {
+          animation: bubbleFloat 2s ease-in-out infinite, bubblePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bubblePulse {
+          0%, 100% {
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 0.7;
+          }
+        }
+
+        /* Multiple bubble effect */
+        .nav-item::after {
+          content: '';
+          position: absolute;
+          top: -30px;
+          right: -30px;
+          width: 60px;
+          height: 60px;
+          background: radial-gradient(circle, rgba(156, 163, 175, 0.2) 0%, transparent 70%);
+          border-radius: 50%;
+          transform: scale(0);
+          transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          pointer-events: none;
+        }
+
+        .nav-item:hover::after {
+          transform: scale(1.2);
+          animation: bubbleFloat2 2.5s ease-in-out infinite;
+        }
+
+        @keyframes bubbleFloat2 {
+          0%, 100% {
+            transform: scale(1.2) translateY(0px) translateX(0px);
+            opacity: 0.2;
+          }
+          33% {
+            transform: scale(1.5) translateY(-8px) translateX(-5px);
+            opacity: 0.5;
+          }
+          66% {
+            transform: scale(1.3) translateY(-15px) translateX(5px);
+            opacity: 0.4;
+          }
+        }
+
         @media (max-width: 768px) {
           .menu-item {
             font-size: 2rem;
@@ -330,22 +445,22 @@ const Navbar = () => {
             onClick={() => handleNavigation('/')}
           />
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-4">
             <a
               href="#features"
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              className="nav-item text-gray-700 hover:text-[#973cff] transition-colors duration-300"
             >
               Features
             </a>
             <a
               href="#products"
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              className="nav-item text-gray-700 hover:text-[#973cff] transition-colors duration-300"
             >
               Products
             </a>
             <button
               onClick={() => handleNavigation('/about')}
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              className="nav-item text-gray-700 hover:text-[#973cff] transition-colors duration-300"
             >
               About Us
             </button>
