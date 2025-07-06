@@ -37,6 +37,7 @@ function Hero() {
           align-items: center;
           justify-content: center;
           margin-top: 80px;
+          margin-bottom: 40px;
         }
 
         .content-card {
@@ -57,7 +58,7 @@ function Hero() {
           max-width: 100%;
           margin: 0;
           padding: 0;
-          gap: 0;
+          gap: 15px;
         }
 
         .left-content {
@@ -166,25 +167,36 @@ function Hero() {
         /* Desktop-specific spacing adjustments */
         @media (min-width: 1024px) {
           .main-content {
-            gap: 20px;
+            gap: 15px;
           }
           
           .main-content {
             min-height: 260px;
           }
+
+          .hero-container {
+            margin-bottom: 60px;
+          }
         }
 
         /* Tablet Styles */
-        @media (max-width: 1024px) {
+        @media (max-width: 1024px) and (min-width: 769px) {
           .hero-container {
             min-height: 65vh;
             padding: 0;
             margin-top: 85px;
+            margin-bottom: 50px;
+            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
           }
           
           .content-card {
             max-width: 95vw;
             margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
           }
           
           .main-content {
@@ -222,11 +234,18 @@ function Hero() {
             min-height: auto;
             padding: 0;
             margin-top: 90px;
+            margin-bottom: 40px;
+            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
           }
           
           .content-card {
             max-width: 100vw;
             margin: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
           }
           
           .main-content {
@@ -279,6 +298,7 @@ function Hero() {
           .hero-container {
             padding: 0;
             margin-top: 95px;
+            margin-bottom: 30px;
           }
           
           .left-content {
