@@ -93,8 +93,8 @@ const Navbar = () => {
     <>
       <style jsx>{`
         .hamburger-menu {
-          width: 24px;
-          height: 24px;
+          width: 20px;
+          height: 20px;
           position: relative;
           cursor: pointer;
           display: flex;
@@ -104,30 +104,30 @@ const Navbar = () => {
         }
 
         .hamburger-line {
-          width: 24px;
+          width: 20px;
           height: 2px;
           background-color: #000;
-          border-radius: 2px;
+          border-radius: 1px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           transform-origin: center;
           position: absolute;
         }
 
         .hamburger-line:nth-child(1) {
-          top: 6px;
+          top: 5px;
         }
 
         .hamburger-line:nth-child(2) {
-          top: 11px;
+          top: 9px;
         }
 
         .hamburger-line:nth-child(3) {
-          top: 16px;
+          top: 13px;
         }
 
         /* Animated states */
         .hamburger-menu.open .hamburger-line:nth-child(1) {
-          transform: rotate(45deg) translate(3.5px, 3.5px);
+          transform: rotate(45deg) translate(3px, 3px);
         }
 
         .hamburger-menu.open .hamburger-line:nth-child(2) {
@@ -136,7 +136,7 @@ const Navbar = () => {
         }
 
         .hamburger-menu.open .hamburger-line:nth-child(3) {
-          transform: rotate(-45deg) translate(3.5px, -3.5px);
+          transform: rotate(-45deg) translate(3px, -3px);
         }
 
         /* Menu overlay animation */
@@ -329,7 +329,7 @@ const Navbar = () => {
             )}
           </nav>
 
-          {/* Animated Hamburger Menu Button */}
+          {/* Animated Hamburger Menu Button - Smaller for mobile/tablet */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden z-[80] relative p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
