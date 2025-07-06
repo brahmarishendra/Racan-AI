@@ -355,7 +355,7 @@ function Hero() {
         @media (max-width: 480px) {
           .hero-container {
             padding: 0 10px;
-            margin-top: 95px;
+            margin-top: 40%;
             margin-bottom: 40px;
           }
           
