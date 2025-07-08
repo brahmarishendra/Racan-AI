@@ -547,7 +547,7 @@ const Navbar = () => {
               </div>
             ) : (
               <button
-                onClick={() => handleNavigation('/login')}
+                onClick={() => window.open('https://chat-with-racan.vercel.app', '_blank', 'noopener,noreferrer')}
                 className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
               >
                 Try Racan
@@ -655,7 +655,7 @@ const Navbar = () => {
             </div>
           ) : (
             <button 
-              onClick={() => handleNavigation('/login')}
+              onClick={() => window.open('https://chat-with-racan.vercel.app', '_blank', 'noopener,noreferrer')}
               className="mobile-try-racan-btn"
             >
               Try Racan
