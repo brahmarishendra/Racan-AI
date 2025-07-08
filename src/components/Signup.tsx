@@ -121,15 +121,15 @@ function Signup() {
       return { isValid: false, message: 'Password must be at least 6 characters long' };
     }
     
-    if (!/[A-Z]/.test(password)) {
-      return { isValid: false, message: 'Password must contain at least one uppercase letter' };
+    // Case-insensitive validation - allow any combination of upper/lower case
+    const hasLetter = /[a-zA-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    
+    if (!hasLetter) {
+      return { isValid: false, message: 'Password must contain at least one letter' };
     }
     
-    if (!/[a-z]/.test(password)) {
-      return { isValid: false, message: 'Password must contain at least one lowercase letter' };
-    }
-    
-    if (!/[0-9]/.test(password)) {
+    if (!hasNumber) {
       return { isValid: false, message: 'Password must contain at least one number' };
     }
     
@@ -476,7 +476,7 @@ function Signup() {
 
           {/* Password Requirements */}
           <div id="password-requirements" className="text-xs text-gray-500 mt-1">
-            Password must contain: uppercase, lowercase, number (min 6 characters)
+            Password must contain: at least one letter and one number (min 6 characters)
           </div>
 
           {/* Google Sign Up Button */}

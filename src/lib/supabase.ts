@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Your actual Supabase credentials
+// Your Supabase credentials
 const supabaseUrl = 'https://cedrbmkbynekmvqxyyus.supabase.co'
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZHJibWtieW5la212cXh5eXVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4NzYyOTUsImV4cCI6MjA2MzQ1MjI5NX0.Dnz2ikHRACKLrqd5KmDJaJ9TJQw801mL0g-Zvs68t74'
 
@@ -40,15 +40,18 @@ export const signUp = async (email: string, password: string, fullName?: string)
   }
 
   try {
+    // Normalize email to lowercase
+    const normalizedEmail = email.trim().toLowerCase()
+    
     const { data, error } = await supabase.auth.signUp({
-      email,
+      email: normalizedEmail,
       password,
       options: {
         emailRedirectTo: `${window.location.origin}/`,
         data: {
-          full_name: fullName || email.split('@')[0],
-          name: fullName || email.split('@')[0],
-          email: email
+          full_name: fullName || normalizedEmail.split('@')[0],
+          name: fullName || normalizedEmail.split('@')[0],
+          email: normalizedEmail
         }
       }
     })
@@ -148,8 +151,11 @@ export const signIn = async (email: string, password: string) => {
   }
 
   try {
+    // Normalize email to lowercase
+    const normalizedEmail = email.trim().toLowerCase()
+    
     const { data, error } = await supabase.auth.signInWithPassword({
-      email,
+      email: normalizedEmail,
       password,
     })
     
@@ -238,7 +244,10 @@ export const resetPassword = async (email: string) => {
   }
 
   try {
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    // Normalize email to lowercase
+    const normalizedEmail = email.trim().toLowerCase()
+    
+    const { data, error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, {
       redirectTo: `${window.location.origin}/reset-password`
     })
     
@@ -258,6 +267,51 @@ export const resetPassword = async (email: string) => {
         error: { message: 'Too many requests. Please wait 10-15 minutes before trying again.' } 
       }
     }
+    return { 
+      data: null, 
+      error: { message: err.message || 'Network error. Please try again.' } 
+    }
+  }
+}
+
+// Resend email verification
+export const resendEmailVerification = async (email: string) => {
+  if (!isSupabaseConfigured()) {
+    return { 
+      data: null, 
+      error: { message: 'Authentication service is not configured. Please contact support.' } 
+    }
+  }
+
+  try {
+    // Normalize email to lowercase
+    const normalizedEmail = email.trim().toLowerCase()
+    
+    const { data, error } = await supabase.auth.resend({
+      type: 'signup',
+      email: normalizedEmail,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`
+      }
+    })
+    
+    if (error) {
+      console.error('Resend verification error:', error)
+      if (error.status === 429 || error.message?.includes('rate limit')) {
+        return { 
+          data: null, 
+          error: { message: 'Too many verification emails sent. Please wait a few minutes before trying again.' } 
+        }
+      }
+      return { 
+        data: null, 
+        error: { message: error.message || 'Failed to resend verification email. Please try again.' } 
+      }
+    }
+    
+    return { data, error }
+  } catch (err: any) {
+    console.error('Resend verification unexpected error:', err)
     return { 
       data: null, 
       error: { message: err.message || 'Network error. Please try again.' } 
@@ -356,48 +410,6 @@ export const handleOAuthCallback = async () => {
   } catch (err: any) {
     console.error('OAuth callback unexpected error:', err)
     return { user: null, error: { message: err.message || 'OAuth callback failed.' } }
-  }
-}
-
-// Resend email verification
-export const resendEmailVerification = async (email: string) => {
-  if (!isSupabaseConfigured()) {
-    return { 
-      data: null, 
-      error: { message: 'Authentication service is not configured. Please contact support.' } 
-    }
-  }
-
-  try {
-    const { data, error } = await supabase.auth.resend({
-      type: 'signup',
-      email: email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/`
-      }
-    })
-    
-    if (error) {
-      console.error('Resend verification error:', error)
-      if (error.status === 429 || error.message?.includes('rate limit')) {
-        return { 
-          data: null, 
-          error: { message: 'Too many verification emails sent. Please wait a few minutes before trying again.' } 
-        }
-      }
-      return { 
-        data: null, 
-        error: { message: error.message || 'Failed to resend verification email. Please try again.' } 
-      }
-    }
-    
-    return { data, error }
-  } catch (err: any) {
-    console.error('Resend verification unexpected error:', err)
-    return { 
-      data: null, 
-      error: { message: err.message || 'Network error. Please try again.' } 
-    }
   }
 }
 
