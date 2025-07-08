@@ -127,7 +127,12 @@ const Navbar = () => {
 
   const handleMobileProductClick = (url: string) => {
     if (url === 'https://chat-with-racan.vercel.app') {
-      window.location.href = url;
+      // For mobile products dropdown, use the same auth logic
+      if (user) {
+        window.location.href = url;
+      } else {
+        window.location.href = '/login';
+      }
     } else {
       window.open(url, '_blank', 'noopener,noreferrer');
     }
@@ -145,7 +150,14 @@ const Navbar = () => {
   };
 
   const handleTryRacanClick = () => {
-    window.location.href = 'https://chat-with-racan.vercel.app';
+    // Check if user is authenticated
+    if (user) {
+      // If authenticated, go directly to chat
+      window.location.href = 'https://chat-with-racan.vercel.app';
+    } else {
+      // If not authenticated, show auth pages first
+      window.location.href = '/login';
+    }
   };
 
   return (
@@ -491,7 +503,7 @@ const Navbar = () => {
               
               <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
                 <button
-                  onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
+                  onClick={handleTryRacanClick}
                   className="dropdown-item w-full text-left"
                 >
                   <div className="dropdown-item-icon">
