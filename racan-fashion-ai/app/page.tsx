@@ -659,9 +659,9 @@ export default function ChatInterface() {
               />
               <Button
                 size="sm"
-                variant="destructive"
+                href="#"
                 className="absolute top-1 right-1 h-6 w-6 p-0"
-                onClick={removeImage}
+                aria-label="Try Racan AI"
               >
                 <X className="h-3 w-3" />
               </Button>
