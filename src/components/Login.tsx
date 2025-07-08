@@ -122,6 +122,10 @@ function Login() {
     setError(null);
     setSuccess(null);
     
+    console.log('🔑 Login form submission started')
+    console.log('📧 Email:', formData.email)
+    console.log('🔐 Password length:', formData.password.length)
+    
     if (!formData.email.trim()) {
       setError('Please enter your email address');
       return;
@@ -145,9 +149,12 @@ function Login() {
     setLoading(true);
     
     try {
+      console.log('📞 Calling signIn function...')
       const { data, error } = await signIn(formData.email.trim(), formData.password);
+      console.log('📊 SignIn result:', { data: !!data, error: !!error })
       
       if (error) {
+        console.error('❌ SignIn error:', error)
         if (error.message.includes('Email not confirmed')) {
           setError('Please check your email and click the verification link before signing in.');
           setShowResendButton(true);
@@ -155,6 +162,7 @@ function Login() {
           setError(error.message);
         }
       } else if (data?.user) {
+        console.log('✅ Login successful, redirecting...')
         setSuccess('Login successful! Redirecting...');
         
         setTimeout(() => {

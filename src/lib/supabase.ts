@@ -4,9 +4,16 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = 'https://cedrbmkbynekmvqxyyus.supabase.co'
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZHJibWtieW5la212cXh5eXVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4NzYyOTUsImV4cCI6MjA2MzQ1MjI5NX0.Dnz2ikHRACKLrqd5KmDJaJ9TJQw801mL0g-Zvs68t74'
 
+// Debug logging
+console.log('🔧 Supabase Configuration:')
+console.log('URL:', supabaseUrl)
+console.log('Key (first 20 chars):', supabaseAnonKey.substring(0, 20) + '...')
+
 // Validate environment variables
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing Supabase environment variables. Please check your configuration.')
+} else {
+  console.log('✅ Supabase credentials loaded successfully')
 }
 
 // Create Supabase client with proper email verification settings
@@ -18,10 +25,23 @@ export const supabase = createClient(
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: true,
-      flowType: 'pkce'
+      flowType: 'pkce',
+      debug: true
     }
   }
 )
+
+// Test connection immediately
+supabase.auth.getSession().then(({ data, error }) => {
+  if (error) {
+    console.error('❌ Supabase connection test failed:', error)
+  } else {
+    console.log('✅ Supabase connection test successful')
+    console.log('Current session:', data.session ? 'Active' : 'None')
+  }
+}).catch(err => {
+  console.error('❌ Supabase connection error:', err)
+})
 
 // Check if Supabase is properly configured
 export const isSupabaseConfigured = () => {
@@ -30,9 +50,51 @@ export const isSupabaseConfigured = () => {
          supabaseAnonKey !== 'your-anon-key-here'
 }
 
+// Test database connection with better error handling
+export const testDatabaseConnection = async () => {
+  try {
+    console.log('🔍 Testing database connection...')
+    
+    // Test auth connection first
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+    if (sessionError) {
+      console.error('❌ Auth session test failed:', sessionError)
+      return { connected: false, error: sessionError, type: 'auth' }
+    }
+    console.log('✅ Auth connection successful')
+    
+    // Test database connection
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id')
+      .limit(1)
+    
+    if (error) {
+      console.log('⚠️ Profiles table test failed (this might be normal):', error)
+      // Try a simpler test
+      const { data: authData, error: authError } = await supabase.auth.getUser()
+      if (authError) {
+        console.error('❌ Basic auth test failed:', authError)
+        return { connected: false, error: authError, type: 'auth' }
+      }
+      console.log('✅ Basic auth connection successful')
+      return { connected: true, error: null, type: 'auth-only' }
+    }
+    
+    console.log('✅ Full database connection successful')
+    return { connected: true, error: null, type: 'full' }
+  } catch (err: any) {
+    console.error('❌ Database connection test error:', err)
+    return { connected: false, error: err, type: 'network' }
+  }
+}
+
 // Auth helper functions with proper email verification
 export const signUp = async (email: string, password: string, fullName?: string) => {
+  console.log('🚀 Starting signup process for:', email)
+  
   if (!isSupabaseConfigured()) {
+    console.error('❌ Supabase not configured')
     return { 
       data: null, 
       error: { message: 'Authentication service is not configured. Please contact support.' } 
@@ -42,6 +104,8 @@ export const signUp = async (email: string, password: string, fullName?: string)
   try {
     // Normalize email to lowercase
     const normalizedEmail = email.trim().toLowerCase()
+    console.log('📧 Normalized email:', normalizedEmail)
+    console.log('🔐 Password length:', password.length)
     
     const { data, error } = await supabase.auth.signUp({
       email: normalizedEmail,
@@ -55,6 +119,13 @@ export const signUp = async (email: string, password: string, fullName?: string)
         }
       }
     })
+    
+    console.log('📊 Signup response:', { data: !!data, error: !!error })
+    if (data) {
+      console.log('👤 User created:', data.user?.id)
+      console.log('📧 Email confirmed:', data.user?.email_confirmed_at ? 'Yes' : 'No')
+      console.log('🎫 Session:', data.session ? 'Created' : 'None')
+    }
     
     if (error) {
       console.error('SignUp error details:', error)
@@ -78,12 +149,12 @@ export const signUp = async (email: string, password: string, fullName?: string)
       } else if (error.message.includes('Password should be at least') || error.message.includes('weak_password')) {
         return { 
           data: null, 
-          error: { message: 'Password must be at least 6 characters long and contain uppercase, lowercase, and numeric characters.' } 
+          error: { message: 'Password must be at least 6 characters long and contain at least one letter and one number.' } 
         }
       } else if (error.message.includes('Password should contain at least one character')) {
         return { 
           data: null, 
-          error: { message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number.' } 
+          error: { message: 'Password must contain at least one letter and one number.' } 
         }
       } else if (error.message.includes('Signup is disabled')) {
         return { 
@@ -113,6 +184,7 @@ export const signUp = async (email: string, password: string, fullName?: string)
       }
     }
     
+    console.log('✅ Signup successful')
     return { data, error }
   } catch (err: any) {
     console.error('SignUp unexpected error:', err)
@@ -143,6 +215,8 @@ export const signUp = async (email: string, password: string, fullName?: string)
 }
 
 export const signIn = async (email: string, password: string) => {
+  console.log('🔑 Starting signin process for:', email)
+  
   if (!isSupabaseConfigured()) {
     return { 
       data: null, 
@@ -153,11 +227,19 @@ export const signIn = async (email: string, password: string) => {
   try {
     // Normalize email to lowercase
     const normalizedEmail = email.trim().toLowerCase()
+    console.log('📧 Normalized email:', normalizedEmail)
     
     const { data, error } = await supabase.auth.signInWithPassword({
       email: normalizedEmail,
       password,
     })
+    
+    console.log('📊 Signin response:', { data: !!data, error: !!error })
+    if (data) {
+      console.log('👤 User signed in:', data.user?.id)
+      console.log('📧 Email confirmed:', data.user?.email_confirmed_at ? 'Yes' : 'No')
+      console.log('🎫 Session:', data.session ? 'Active' : 'None')
+    }
     
     if (error) {
       console.error('SignIn error details:', error)
@@ -191,6 +273,7 @@ export const signIn = async (email: string, password: string) => {
       }
     }
     
+    console.log('✅ Signin successful')
     return { data, error }
   } catch (err: any) {
     console.error('SignIn unexpected error:', err)

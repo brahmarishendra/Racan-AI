@@ -141,6 +141,11 @@ function Signup() {
     setError(null);
     setSuccess(null);
     
+    console.log('🚀 Form submission started')
+    console.log('📧 Email:', formData.email)
+    console.log('👤 Username:', formData.username)
+    console.log('🔐 Password length:', formData.password.length)
+    
     if (!formData.email.trim()) {
       setError('Please enter your email address');
       return;
@@ -175,16 +180,22 @@ function Signup() {
     setLoading(true);
     
     try {
+      console.log('📞 Calling signUp function...')
       const result = await signUp(formData.email.trim(), formData.password, formData.username.trim());
+      console.log('📊 SignUp result:', result)
       
       if (result.error) {
+        console.error('❌ SignUp error:', result.error)
         setError(result.error.message);
       } else if (result.data?.user) {
+        console.log('✅ User created successfully:', result.data.user.id)
         if (!result.data.user.email_confirmed_at) {
+          console.log('📧 Email verification required')
           setSuccess('Account created! Please check your email and click the verification link to complete your registration.');
           setShowResendButton(true);
           setUserEmail(formData.email.trim());
         } else {
+          console.log('✅ Email already confirmed, redirecting...')
           setSuccess('Account created successfully! Redirecting...');
           setTimeout(() => {
             window.history.replaceState(null, '', '/');
