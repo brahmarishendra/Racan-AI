@@ -50,45 +50,6 @@ export const isSupabaseConfigured = () => {
          supabaseAnonKey !== 'your-anon-key-here'
 }
 
-// Test database connection with better error handling
-export const testDatabaseConnection = async () => {
-  try {
-    console.log('🔍 Testing database connection...')
-    
-    // Test auth connection first
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
-    if (sessionError) {
-      console.error('❌ Auth session test failed:', sessionError)
-      return { connected: false, error: sessionError, type: 'auth' }
-    }
-    console.log('✅ Auth connection successful')
-    
-    // Test database connection
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('id')
-      .limit(1)
-    
-    if (error) {
-      console.log('⚠️ Profiles table test failed (this might be normal):', error)
-      // Try a simpler test
-      const { data: authData, error: authError } = await supabase.auth.getUser()
-      if (authError) {
-        console.error('❌ Basic auth test failed:', authError)
-        return { connected: false, error: authError, type: 'auth' }
-      }
-      console.log('✅ Basic auth connection successful')
-      return { connected: true, error: null, type: 'auth-only' }
-    }
-    
-    console.log('✅ Full database connection successful')
-    return { connected: true, error: null, type: 'full' }
-  } catch (err: any) {
-    console.error('❌ Database connection test error:', err)
-    return { connected: false, error: err, type: 'network' }
-  }
-}
-
 // Auth helper functions with proper email verification
 export const signUp = async (email: string, password: string, fullName?: string) => {
   console.log('🚀 Starting signup process for:', email)
