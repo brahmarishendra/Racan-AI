@@ -457,8 +457,6 @@ function Hero() {
                     e.currentTarget.style.background = '#ff3366';
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   Try Racan →
                 </a>

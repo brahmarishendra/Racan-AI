@@ -564,6 +564,16 @@ export default function ChatInterface() {
           <Button
             variant="ghost"
             size="icon"
+            onClick={() => window.open('https://dream-x-testing.vercel.app/', '_blank')}
+            className="dark:hover:bg-gray-800 hover:bg-gray-200 transition-colors"
+          >
+            <svg className="h-5 w-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={toggleTheme}
             className="dark:hover:bg-gray-800 hover:bg-gray-200 transition-colors"
           >

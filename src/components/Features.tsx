@@ -350,8 +350,6 @@ const Features: React.FC = () => {
             </h3>
             <a
               href="https://chat-with-racan.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-block bg-[#004AAD] text-white px-6 py-3 text-sm md:text-base hover:bg-[#973cff] mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 hover:shadow-lg active:scale-95 hover:-translate-y-1 button-morph"
               style={{borderRadius: '0px'}}
             >
