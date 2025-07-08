@@ -126,7 +126,11 @@ const Navbar = () => {
   };
 
   const handleMobileProductClick = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    if (url === 'https://chat-with-racan.vercel.app') {
+      window.location.href = url;
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
     setIsMenuOpen(false);
     setIsMobileProductsOpen(false);
   };
@@ -138,6 +142,10 @@ const Navbar = () => {
 
   const handleDesktopProductsLeave = () => {
     setIsProductsDropdownOpen(false);
+  };
+
+  const handleTryRacanClick = () => {
+    window.location.href = 'https://chat-with-racan.vercel.app';
   };
 
   return (
@@ -417,6 +425,7 @@ const Navbar = () => {
           border: none;
           position: relative;
           overflow: hidden;
+          cursor: pointer;
         }
 
         /* Responsive font sizes */
@@ -481,11 +490,9 @@ const Navbar = () => {
               </button>
               
               <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
-                <a
-                  href="https://chat-with-racan.vercel.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="dropdown-item"
+                <button
+                  onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
+                  className="dropdown-item w-full text-left"
                 >
                   <div className="dropdown-item-icon">
                     <Bot className="w-5 h-5 text-[#973cff]" />
@@ -494,7 +501,7 @@ const Navbar = () => {
                     <h3>Racan AI Chat Bot</h3>
                     <p>AI-powered fashion assistant for personalized styling</p>
                   </div>
-                </a>
+                </button>
                 
                 <a
                   href="https://dreamxworld.com/"
@@ -547,7 +554,7 @@ const Navbar = () => {
               </div>
             ) : (
               <button
-                onClick={() => window.open('https://chat-with-racan.vercel.app', '_blank', 'noopener,noreferrer')}
+                onClick={handleTryRacanClick}
                 className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
               >
                 Try Racan
@@ -655,7 +662,7 @@ const Navbar = () => {
             </div>
           ) : (
             <button 
-              onClick={() => window.open('https://chat-with-racan.vercel.app', '_blank', 'noopener,noreferrer')}
+              onClick={handleTryRacanClick}
               className="mobile-try-racan-btn"
             >
               Try Racan

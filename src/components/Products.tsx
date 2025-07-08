@@ -56,14 +56,12 @@ const Products: React.FC = () => {
           </div>
 
           <div className="mt-8 text-center">
-            <a
-              href="https://chat-with-racan.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-amber-600 text-white px-6 py-3 rounded-full hover:bg-amber-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
+            <button
+              onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
+              className="inline-block bg-amber-600 text-white px-6 py-3 rounded-full hover:bg-amber-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border-none cursor-pointer"
             >
               Try Racan AI
-            </a>
+            </button>
           </div>
         </div>
       </div>

@@ -25,7 +25,7 @@ const Features: React.FC = () => {
     {
       id: 1,
       title: "🚀 Racan AI x DreamX Is Hiring: Frontend Developer Intern (Web3 Stack)",
-      description: "We’re on the lookout for passionate Frontend Development Interns to collaborate with us on our cutting-edge DreamX product and the Racan AI. If you're eager to work on Web3 technologies, sharpen your frontend skills, and grow in a creative AI-driven environment — this is your chance!",
+      description: "We're on the lookout for passionate Frontend Development Interns to collaborate with us on our cutting-edge DreamX product and the Racan AI. If you're eager to work on Web3 technologies, sharpen your frontend skills, and grow in a creative AI-driven environment — this is your chance!",
       image: "https://i.postimg.cc/MKgw8rCf/Whats-App-Image-2025-06-25-at-22-33-39-2e1c8160.jpg",
       link: "https://techcrunch.com/ai-fashion"
     },
@@ -348,15 +348,13 @@ const Features: React.FC = () => {
             <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-800 mb-4  transition-all duration-300 hover:scale-105">
               Here is Racan Ai Demo
             </h3>
-            <a
-              href="https://chat-with-racan.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-[#004AAD] text-white px-6 py-3 text-sm md:text-base hover:bg-[#973cff] mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 hover:shadow-lg active:scale-95 hover:-translate-y-1 button-morph"
+            <button
+              onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
+              className="inline-block bg-[#004AAD] text-white px-6 py-3 text-sm md:text-base hover:bg-[#973cff] mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 hover:shadow-lg active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none"
               style={{borderRadius: '0px'}}
             >
               Try Racan AI
-            </a>
+            </button>
           </div>
         </div>
 

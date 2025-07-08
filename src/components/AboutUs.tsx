@@ -355,15 +355,13 @@ const AboutUs: React.FC = () => {
               <p className="text-lg md:text-xl mb-8 opacity-90">
                 Join thousands of users who have already discovered their perfect style with Racan AI.
               </p>
-              <a
-                href="https://chat-with-racan.vercel.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-white text-[#004AAD] px-8 py-4 rounded-sm text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+              <button
+                onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
+                className="inline-block bg-white text-[#004AAD] px-8 py-4 rounded-sm text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-none cursor-pointer"
                 aria-label="Try Racan AI Fashion Assistant"
               >
                 Try Racan AI Now
-              </a>
+              </button>
             </div>
           </div>
         </section>
