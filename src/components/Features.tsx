@@ -348,9 +348,15 @@ const Features: React.FC = () => {
             <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-800 mb-4  transition-all duration-300 hover:scale-105">
               Here is Racan Ai Demo
             </h3>
-            <button className="bg-[#004AAD] text-white px-6 py-3 text-sm md:text-base hover:bg-[#973cff] mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 hover:shadow-lg active:scale-95 hover:-translate-y-1 button-morph" style={{borderRadius: '0px'}}>
-              Join Now
-            </button>
+            <a
+              href="https://chat-with-racan.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#004AAD] text-white px-6 py-3 text-sm md:text-base hover:bg-[#973cff] mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 hover:shadow-lg active:scale-95 hover:-translate-y-1 button-morph"
+              style={{borderRadius: '0px'}}
+            >
+              Try Racan AI
+            </a>
           </div>
         </div>
 
