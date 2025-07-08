@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
-import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback, resendEmailVerification } from '../lib/supabase';
+import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback } from '../lib/supabase';
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [showResendButton, setShowResendButton] = useState(false);
-  const [userEmail, setUserEmail] = useState<string>('');
   const [formData, setFormData] = useState({
     username: '',
     email: '', 
@@ -121,15 +119,15 @@ function Signup() {
       return { isValid: false, message: 'Password must be at least 6 characters long' };
     }
     
-    // Case-insensitive validation - allow any combination of upper/lower case
-    const hasLetter = /[a-zA-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    
-    if (!hasLetter) {
-      return { isValid: false, message: 'Password must contain at least one letter' };
+    if (!/[A-Z]/.test(password)) {
+      return { isValid: false, message: 'Password must contain at least one uppercase letter' };
     }
     
-    if (!hasNumber) {
+    if (!/[a-z]/.test(password)) {
+      return { isValid: false, message: 'Password must contain at least one lowercase letter' };
+    }
+    
+    if (!/[0-9]/.test(password)) {
       return { isValid: false, message: 'Password must contain at least one number' };
     }
     
@@ -140,11 +138,6 @@ function Signup() {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-    
-    console.log('🚀 Form submission started')
-    console.log('📧 Email:', formData.email)
-    console.log('👤 Username:', formData.username)
-    console.log('🔐 Password length:', formData.password.length)
     
     if (!formData.email.trim()) {
       setError('Please enter your email address');
@@ -180,22 +173,14 @@ function Signup() {
     setLoading(true);
     
     try {
-      console.log('📞 Calling signUp function...')
       const result = await signUp(formData.email.trim(), formData.password, formData.username.trim());
-      console.log('📊 SignUp result:', result)
       
       if (result.error) {
-        console.error('❌ SignUp error:', result.error)
         setError(result.error.message);
       } else if (result.data?.user) {
-        console.log('✅ User created successfully:', result.data.user.id)
-        if (!result.data.user.email_confirmed_at) {
-          console.log('📧 Email verification required')
-          setSuccess('Account created! Please check your email and click the verification link to complete your registration.');
-          setShowResendButton(true);
-          setUserEmail(formData.email.trim());
+        if (!result.data.user.email_confirmed_at && !result.data.session) {
+          setSuccess('Account created! Please check your email for verification.');
         } else {
-          console.log('✅ Email already confirmed, redirecting...')
           setSuccess('Account created successfully! Redirecting...');
           setTimeout(() => {
             window.history.replaceState(null, '', '/');
@@ -206,31 +191,6 @@ function Signup() {
     } catch (err) {
       console.error('Signup error:', err);
       setError('An unexpected error occurred. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendVerification = async () => {
-    if (!userEmail) {
-      setError('No email address found. Please try signing up again.');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const { error } = await resendEmailVerification(userEmail);
-      
-      if (error) {
-        setError(error.message);
-      } else {
-        setSuccess('Verification email sent! Please check your inbox.');
-      }
-    } catch (err) {
-      console.error('Resend verification error:', err);
-      setError('Failed to resend verification email. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -407,18 +367,7 @@ function Signup() {
         {success && (
           <div className="bg-green-50 border border-green-200 rounded-sm p-4 flex items-center gap-2 mb-6" role="alert">
             <Check className="w-5 h-5 text-green-500 flex-shrink-0" aria-hidden="true" />
-            <div className="flex-1">
-              <p className="text-green-700 text-sm">{success}</p>
-              {showResendButton && (
-                <button
-                  onClick={handleResendVerification}
-                  disabled={loading}
-                  className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Didn't receive the email? Click here to resend
-                </button>
-              )}
-            </div>
+            <p className="text-green-700 text-sm">{success}</p>
           </div>
         )}
         
@@ -487,7 +436,7 @@ function Signup() {
 
           {/* Password Requirements */}
           <div id="password-requirements" className="text-xs text-gray-500 mt-1">
-            Password must contain: at least one letter and one number (min 6 characters)
+            Password must contain: uppercase, lowercase, number (min 6 characters)
           </div>
 
           {/* Google Sign Up Button */}

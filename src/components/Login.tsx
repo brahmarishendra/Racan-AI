@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
-import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback, resendEmailVerification } from '../lib/supabase';
+import { signIn, resetPassword, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback } from '../lib/supabase';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [showResendButton, setShowResendButton] = useState(false);
   const [formData, setFormData] = useState({
     email: '', 
     password: '',
@@ -122,10 +121,6 @@ function Login() {
     setError(null);
     setSuccess(null);
     
-    console.log('🔑 Login form submission started')
-    console.log('📧 Email:', formData.email)
-    console.log('🔐 Password length:', formData.password.length)
-    
     if (!formData.email.trim()) {
       setError('Please enter your email address');
       return;
@@ -149,20 +144,11 @@ function Login() {
     setLoading(true);
     
     try {
-      console.log('📞 Calling signIn function...')
       const { data, error } = await signIn(formData.email.trim(), formData.password);
-      console.log('📊 SignIn result:', { data: !!data, error: !!error })
       
       if (error) {
-        console.error('❌ SignIn error:', error)
-        if (error.message.includes('Email not confirmed')) {
-          setError('Please check your email and click the verification link before signing in.');
-          setShowResendButton(true);
-        } else {
-          setError(error.message);
-        }
+        setError(error.message);
       } else if (data?.user) {
-        console.log('✅ Login successful, redirecting...')
         setSuccess('Login successful! Redirecting...');
         
         setTimeout(() => {
@@ -173,37 +159,6 @@ function Login() {
     } catch (err) {
       console.error('Login error:', err);
       setError('An unexpected error occurred. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendVerification = async () => {
-    if (!formData.email.trim()) {
-      setError('Please enter your email address first');
-      return;
-    }
-
-    if (!validateEmail(formData.email.trim())) {
-      setError('Please enter a valid email address');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const { error } = await resendEmailVerification(formData.email.trim());
-      
-      if (error) {
-        setError(error.message);
-      } else {
-        setSuccess('Verification email sent! Please check your inbox and click the verification link.');
-        setShowResendButton(false);
-      }
-    } catch (err) {
-      console.error('Resend verification error:', err);
-      setError('Failed to resend verification email. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -402,15 +357,6 @@ function Login() {
             <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <div className="flex-1">
               <p className="text-red-700 text-sm leading-relaxed">{error}</p>
-              {showResendButton && (
-                <button
-                  onClick={handleResendVerification}
-                  disabled={loading}
-                  className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Resend verification email
-                </button>
-              )}
             </div>
           </div>
         )}
