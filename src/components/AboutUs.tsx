@@ -357,6 +357,8 @@ const AboutUs: React.FC = () => {
               </p>
               <a
                 href="https://chat-with-racan.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block bg-white text-[#004AAD] px-8 py-4 rounded-sm text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
                 aria-label="Try Racan AI Fashion Assistant"
               >

@@ -152,7 +152,7 @@ export const RacanXVindof = (): JSX.Element => {
 
             {/* Try Racan Button - Desktop Only */}
             <button className="hidden lg:block h-12 bg-[#ff2c6a] rounded-[26px] px-6 font-['Poppins',sans-serif] font-medium text-white text-xl hover:bg-[#e6245e] transition-colors">
-              <a href="https://chat-with-racan.vercel.app" className="text-white no-underline">
+              <a href="https://chat-with-racan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white no-underline">
                 Try Racan
               </a>
             </button>
@@ -220,7 +220,7 @@ export const RacanXVindof = (): JSX.Element => {
 
               {/* Try Racan Button */}
               <button className="mt-8 h-12 bg-[#ff2c6a] rounded-[26px] px-8 font-['Poppins',sans-serif] font-medium text-white text-xl w-full">
-                <a href="https://chat-with-racan.vercel.app" className="text-white no-underline">
+                <a href="https://chat-with-racan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white no-underline">
                   Try Racan
                 </a>
               </button>
