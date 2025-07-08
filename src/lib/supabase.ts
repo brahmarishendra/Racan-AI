@@ -6,10 +6,10 @@ const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
 // Validate environment variables
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables. Please check your .env file.')
+  console.error('Missing Supabase environment variables. Please check your configuration.')
 }
 
-// Create Supabase client with error handling
+// Create Supabase client with proper email verification settings
 export const supabase = createClient(
   supabaseUrl, 
   supabaseAnonKey,
@@ -30,69 +30,7 @@ export const isSupabaseConfigured = () => {
          supabaseAnonKey !== 'your-anon-key-here'
 }
 
-// Create a test user directly in the database (bypassing email confirmation)
-export const createTestUserDirectly = async (email: string, password: string, fullName: string) => {
-  if (!isSupabaseConfigured()) {
-    return { 
-      data: null, 
-      error: { message: 'Authentication service is not configured. Please contact support.' } 
-    }
-  }
-
-  try {
-    // First try to sign up normally but with email confirmation disabled
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/`,
-        data: {
-          full_name: fullName || email.split('@')[0],
-          name: fullName || email.split('@')[0],
-          email: email
-        }
-      }
-    })
-    
-    if (error) {
-      console.error('Direct signup error:', error)
-      return { data: null, error }
-    }
-    
-    // If successful, try to create profile directly
-    if (data.user) {
-      try {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert({
-            id: data.user.id,
-            email: email,
-            full_name: fullName || email.split('@')[0],
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-          })
-        
-        if (profileError) {
-          console.log('Profile creation error (may be normal):', profileError)
-          // Don't fail the signup if profile creation fails - the trigger should handle it
-        }
-      } catch (profileErr) {
-        console.log('Profile creation attempt failed (may be normal):', profileErr)
-        // Continue anyway - the trigger should create the profile
-      }
-    }
-    
-    return { data, error }
-  } catch (err: any) {
-    console.error('Direct signup unexpected error:', err)
-    return { 
-      data: null, 
-      error: { message: err.message || 'Failed to create account directly.' } 
-    }
-  }
-}
-
-// Auth helper functions with better error handling
+// Auth helper functions with proper email verification
 export const signUp = async (email: string, password: string, fullName?: string) => {
   if (!isSupabaseConfigured()) {
     return { 
@@ -102,13 +40,6 @@ export const signUp = async (email: string, password: string, fullName?: string)
   }
 
   try {
-    // Try direct creation first to bypass rate limits
-    const directResult = await createTestUserDirectly(email, password, fullName || email.split('@')[0])
-    if (directResult.data && !directResult.error) {
-      return directResult
-    }
-
-    // Fallback to normal signup
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -157,18 +88,20 @@ export const signUp = async (email: string, password: string, fullName?: string)
           error: { message: 'Account creation is temporarily disabled. Please try again later.' } 
         }
       } else if (error.message.includes('Email rate limit exceeded') || error.message.includes('over_email_send_rate_limit')) {
-        // Try the direct method as a fallback
-        console.log('Rate limit hit, trying direct creation...')
-        return await createTestUserDirectly(email, password, fullName || email.split('@')[0])
+        return { 
+          data: null, 
+          error: { message: 'Too many emails sent. Please wait a few minutes before trying again.' } 
+        }
       } else if (error.message.includes('Error sending confirmation email')) {
         return { 
           data: null, 
           error: { message: 'Account created but email confirmation failed. Please contact support to verify your account.' } 
         }
       } else if (error.message.includes('rate limit') || error.status === 429) {
-        // Try the direct method as a fallback
-        console.log('Rate limit detected, trying direct creation...')
-        return await createTestUserDirectly(email, password, fullName || email.split('@')[0])
+        return { 
+          data: null, 
+          error: { message: 'Too many requests. Please wait a few minutes before trying again.' } 
+        }
       } else {
         return { 
           data: null, 
@@ -193,9 +126,10 @@ export const signUp = async (email: string, password: string, fullName?: string)
         error: { message: 'Request timed out. Please try again.' } 
       }
     } else if (err.status === 429 || err.message?.includes('rate limit')) {
-      // Try the direct method as a fallback
-      console.log('Rate limit in catch, trying direct creation...')
-      return await createTestUserDirectly(email, password, fullName || email.split('@')[0])
+      return { 
+        data: null, 
+        error: { message: 'Too many requests. Please wait a few minutes before trying again.' } 
+      }
     } else {
       return { 
         data: null, 
@@ -425,6 +359,48 @@ export const handleOAuthCallback = async () => {
   }
 }
 
+// Resend email verification
+export const resendEmailVerification = async (email: string) => {
+  if (!isSupabaseConfigured()) {
+    return { 
+      data: null, 
+      error: { message: 'Authentication service is not configured. Please contact support.' } 
+    }
+  }
+
+  try {
+    const { data, error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`
+      }
+    })
+    
+    if (error) {
+      console.error('Resend verification error:', error)
+      if (error.status === 429 || error.message?.includes('rate limit')) {
+        return { 
+          data: null, 
+          error: { message: 'Too many verification emails sent. Please wait a few minutes before trying again.' } 
+        }
+      }
+      return { 
+        data: null, 
+        error: { message: error.message || 'Failed to resend verification email. Please try again.' } 
+      }
+    }
+    
+    return { data, error }
+  } catch (err: any) {
+    console.error('Resend verification unexpected error:', err)
+    return { 
+      data: null, 
+      error: { message: err.message || 'Network error. Please try again.' } 
+    }
+  }
+}
+
 // Simplified profile functions that don't depend on profiles table
 export const getUserProfile = async (userId: string) => {
   // Since profiles table doesn't exist, return user data from auth
@@ -490,29 +466,5 @@ export const testDatabaseConnection = async () => {
   } catch (err: any) {
     console.log('Database connection test error:', err)
     return { connected: false, error: err }
-  }
-}
-
-// Create a simple test user for immediate access
-export const createSimpleTestUser = async () => {
-  const timestamp = Date.now()
-  const testEmail = `user${timestamp}@test.local`
-  const testPassword = 'Test123456'
-  const testName = `Test User ${timestamp}`
-  
-  console.log('Creating simple test user:', testEmail)
-  
-  try {
-    const result = await signUp(testEmail, testPassword, testName)
-    if (result.data && !result.error) {
-      console.log('Test user created successfully:', result.data.user?.email)
-      return { success: true, email: testEmail, password: testPassword, user: result.data.user }
-    } else {
-      console.error('Test user creation failed:', result.error)
-      return { success: false, error: result.error }
-    }
-  } catch (err) {
-    console.error('Test user creation error:', err)
-    return { success: false, error: err }
   }
 }

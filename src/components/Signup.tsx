@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
-import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback } from '../lib/supabase';
+import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback, resendEmailVerification } from '../lib/supabase';
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [showResendButton, setShowResendButton] = useState(false);
+  const [userEmail, setUserEmail] = useState<string>('');
   const [formData, setFormData] = useState({
     username: '',
     email: '', 
@@ -178,8 +180,10 @@ function Signup() {
       if (result.error) {
         setError(result.error.message);
       } else if (result.data?.user) {
-        if (!result.data.user.email_confirmed_at && !result.data.session) {
-          setSuccess('Account created! Please check your email for verification.');
+        if (!result.data.user.email_confirmed_at) {
+          setSuccess('Account created! Please check your email and click the verification link to complete your registration.');
+          setShowResendButton(true);
+          setUserEmail(formData.email.trim());
         } else {
           setSuccess('Account created successfully! Redirecting...');
           setTimeout(() => {
@@ -191,6 +195,31 @@ function Signup() {
     } catch (err) {
       console.error('Signup error:', err);
       setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    if (!userEmail) {
+      setError('No email address found. Please try signing up again.');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const { error } = await resendEmailVerification(userEmail);
+      
+      if (error) {
+        setError(error.message);
+      } else {
+        setSuccess('Verification email sent! Please check your inbox.');
+      }
+    } catch (err) {
+      console.error('Resend verification error:', err);
+      setError('Failed to resend verification email. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -367,7 +396,18 @@ function Signup() {
         {success && (
           <div className="bg-green-50 border border-green-200 rounded-sm p-4 flex items-center gap-2 mb-6" role="alert">
             <Check className="w-5 h-5 text-green-500 flex-shrink-0" aria-hidden="true" />
-            <p className="text-green-700 text-sm">{success}</p>
+            <div className="flex-1">
+              <p className="text-green-700 text-sm">{success}</p>
+              {showResendButton && (
+                <button
+                  onClick={handleResendVerification}
+                  disabled={loading}
+                  className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Didn't receive the email? Click here to resend
+                </button>
+              )}
+            </div>
           </div>
         )}
         
