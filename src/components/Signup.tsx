@@ -383,14 +383,14 @@ function Signup() {
 
       <main className="max-w-xs w-full md:bg-white md:bg-opacity-95 md:backdrop-blur-sm md:rounded-sm md:shadow-2xl p-5 md:p-6 relative z-10">
         {/* Header */}
-        <header className="text-center mb-6">
+        <header className="text-center mb-4">
           <h1 className="text-2xl font-medium text-gray-900 mb-2 tracking-tight">Sign up</h1>
           <p className="text-sm text-gray-600">Create your AI fashion assistant account</p>
         </header>
         
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-sm p-4 flex items-start gap-2 mb-6" role="alert">
+          <div className="bg-red-50 border border-red-200 rounded-sm p-3 flex items-start gap-2 mb-4" role="alert">
             <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <div className="flex-1">
               <p className="text-red-700 text-sm leading-relaxed">{error}</p>
@@ -400,7 +400,7 @@ function Signup() {
 
         {/* Success Message */}
         {success && (
-          <div className="bg-green-50 border border-green-200 rounded-sm p-4 flex items-center gap-2 mb-6" role="alert">
+          <div className="bg-green-50 border border-green-200 rounded-sm p-3 flex items-center gap-2 mb-4" role="alert">
             <Check className="w-5 h-5 text-green-500 flex-shrink-0" aria-hidden="true" />
             <div className="flex-1">
               <p className="text-green-700 text-sm">{success}</p>
@@ -417,7 +417,7 @@ function Signup() {
           </div>
         )}
         
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-3" noValidate>
           {/* Email Field */}
           <div>
             <label htmlFor="email" className="sr-only">Email address</label>
@@ -425,7 +425,7 @@ function Signup() {
               id="email"
               type="email"
               required
-              className="w-full px-3 py-3 border-b border-gray-300 bg-transparent placeholder-gray-500 focus:outline-none focus:border-gray-900 text-gray-900"
+              className="w-full px-3 py-2.5 border-b border-gray-300 bg-transparent placeholder-gray-500 focus:outline-none focus:border-gray-900 text-gray-900"
               placeholder="Email address"
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
@@ -443,7 +443,7 @@ function Signup() {
               type="text"
               required
               minLength={2}
-              className="w-full px-3 py-3 border-b border-gray-300 bg-transparent placeholder-gray-500 focus:outline-none focus:border-gray-900 text-gray-900"
+              className="w-full px-3 py-2.5 border-b border-gray-300 bg-transparent placeholder-gray-500 focus:outline-none focus:border-gray-900 text-gray-900"
               placeholder="Username"
               value={formData.username}
               onChange={(e) => handleInputChange('username', e.target.value)}
@@ -461,7 +461,7 @@ function Signup() {
               type={showPassword ? "text" : "password"}
               required
               minLength={6}
-              className="w-full px-3 py-3 pr-12 border-b border-gray-300 bg-transparent placeholder-gray-500 focus:outline-none focus:border-gray-900 text-gray-900"
+              className="w-full px-3 py-2.5 pr-12 border-b border-gray-300 bg-transparent placeholder-gray-500 focus:outline-none focus:border-gray-900 text-gray-900"
               placeholder="Password"
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
@@ -481,17 +481,17 @@ function Signup() {
           </div>
 
           {/* Password Requirements */}
-          <div id="password-requirements" className="text-xs text-gray-500 mt-1">
+          <div id="password-requirements" className="text-xs text-gray-500 mt-1 mb-2">
             Password must contain: uppercase, lowercase, number (min 6 characters)
           </div>
 
           {/* Google Sign Up Button */}
-          <div className="pt-4">
+          <div className="pt-3">
             <button 
               type="button"
               onClick={handleGoogleSignUp}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-300 rounded-full text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-gray-300 rounded-full text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Sign up with Google"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
@@ -505,7 +505,7 @@ function Signup() {
           </div>
 
           {/* Privacy Policy */}
-          <div className="text-center text-sm text-gray-600 py-4">
+          <div className="text-center text-sm text-gray-600 py-3">
             By signing up, you agree to our{' '}
             <a href="#" className="text-blue-600 hover:underline underline">
               Privacy Policy
@@ -517,13 +517,13 @@ function Signup() {
           <button
             type="submit"
             disabled={loading || !validatePassword(formData.password).isValid}
-            className="w-full bg-red-600 text-white py-3 px-4 rounded-full text-base font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-red-600 text-white py-2.5 px-4 rounded-full text-base font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Creating account...' : 'Sign up'}
           </button>
 
           {/* Sign in link */}
-          <div className="text-center pt-4">
+          <div className="text-center pt-3">
             <p className="text-gray-600 text-sm">
               Already have an account?{' '}
               <button 
