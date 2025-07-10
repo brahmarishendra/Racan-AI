@@ -381,7 +381,7 @@ function Signup() {
         </div>
       )}
 
-      <main className="max-w-xs w-full md:bg-white md:bg-opacity-95 md:backdrop-blur-sm md:rounded-sm md:shadow-2xl p-5 md:p-6 relative z-10">
+      <main className="max-w-sm w-full md:bg-white md:bg-opacity-95 md:backdrop-blur-sm md:rounded-sm md:shadow-2xl p-6 md:p-8 relative z-10">
         {/* Header */}
         <header className="text-center mb-4">
           <h1 className="text-2xl font-medium text-gray-900 mb-2 tracking-tight">Sign up</h1>
