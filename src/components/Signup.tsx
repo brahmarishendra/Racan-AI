@@ -259,9 +259,15 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-gray-50 md:bg-cover md:bg-center md:bg-no-repeat flex items-center justify-center p-4 relative" 
+         style={{ 
+           backgroundImage: window.innerWidth >= 768 ? 'url(https://i.pinimg.com/1200x/b7/87/0e/b7870ee068085d61cb621868b908d596.jpg)' : 'none' 
+         }}>
+      {/* Desktop Background Overlay */}
+      <div className="hidden md:block absolute inset-0 bg-black bg-opacity-40 backdrop-blur-[1px]"></div>
+      
       {/* Logo in top left */}
-      <div className="absolute top-6 left-6 z-10">
+      <div className="absolute top-6 left-6 z-20">
         <img
           src="https://i.postimg.cc/rsYBTFzm/image-41.png"
           alt="Racan AI Logo - AI Fashion Assistant"
@@ -375,7 +381,7 @@ function Signup() {
         </div>
       )}
 
-      <main className="max-w-sm w-full md:bg-white md:rounded-sm md:shadow-lg p-6 md:p-8">
+      <main className="max-w-sm w-full md:bg-white md:bg-opacity-95 md:backdrop-blur-sm md:rounded-sm md:shadow-2xl p-6 md:p-8 relative z-10">
         {/* Header */}
         <header className="text-center mb-6">
           <h1 className="text-2xl font-medium text-gray-900 mb-2 tracking-tight">Sign up</h1>
