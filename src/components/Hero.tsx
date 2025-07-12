@@ -15,6 +15,24 @@ function Hero() {
           }
         }
         
+        @keyframes gradientShift {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+        
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+        
         .animate-fade-in-up {
           animation: fadeInUp 0.8s ease-out forwards;
         }
@@ -30,38 +48,45 @@ function Hero() {
         }
 
         .hero-container {
-          background: #f8f9fa;
-          min-height: 75vh;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%);
+          background-size: 400% 400%;
+          animation: gradientShift 20s ease infinite;
+          min-height: 100vh;
           padding: 0 20px;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-top: 80px;
-          margin-bottom: 2  0px;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .hero-container::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: 
+            radial-gradient(circle at 20% 80%, rgba(0, 212, 170, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+          pointer-events: none;
         }
 
         .content-card {
-          background-image: url('');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
           border-radius: 24px;
           padding: 0;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
           overflow: hidden;
           width: 100%;
           max-width: 1400px;
           margin: 0 auto;
           position: relative;
-        }
-
-        .content-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(2px);
-          z-index: 1;
+          z-index: 2;
+          background: rgba(15, 23, 42, 0.4);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         }
 
         .main-content {
@@ -75,7 +100,6 @@ function Hero() {
           border-radius: 12px;
           overflow: hidden;
           position: relative;
-          z-index: 2;
         }
 
         .left-content {
@@ -83,12 +107,24 @@ function Hero() {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(15, 23, 42, 0.6);
           backdrop-filter: blur(10px);
+          position: relative;
+        }
+
+        .left-content::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(0, 212, 170, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+          pointer-events: none;
         }
 
         .right-content {
-          background: rgba(248, 249, 250, 0.9);
+          background: rgba(15, 23, 42, 0.3);
           backdrop-filter: blur(8px);
           position: relative;
           overflow: hidden;
@@ -109,8 +145,15 @@ function Hero() {
           border-radius: 12px;
           overflow: hidden;
           position: relative;
-          background: white;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+          background: rgba(15, 23, 42, 0.8);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.3s ease;
+        }
+
+        .fashion-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 35px rgba(0, 212, 170, 0.2);
         }
 
         .fashion-card img, .fashion-card video {
@@ -133,6 +176,8 @@ function Hero() {
           color: white;
           font-size: 16px;
           font-weight: bold;
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(5px);
         }
 
         .stats-section {
@@ -149,13 +194,13 @@ function Hero() {
         .stat-number {
           font-size: 26px;
           font-weight: 700;
-          color: #333;
+          color: #00d4aa;
           line-height: 1;
         }
 
         .stat-label {
           font-size: 10px;
-          color: #6c757d;
+          color: #94a3b8;
           text-transform: uppercase;
           letter-spacing: 1px;
           margin-top: 4px;
@@ -174,15 +219,18 @@ function Hero() {
           width: 5px;
           height: 5px;
           border-radius: 50%;
-          background: #ff3366;
+          background: #00d4aa;
+          animation: float 3s ease-in-out infinite;
         }
 
         .floating-dot:nth-child(2) {
-          background: #973cff;
+          background: #0ea5e9;
+          animation-delay: 0.5s;
         }
 
         .floating-dot:nth-child(3) {
-          background: #00d4aa;
+          background: #a855f7;
+          animation-delay: 1s;
         }
 
         .dream-store-link {
@@ -202,13 +250,60 @@ function Hero() {
           height: clamp(40px, 8vw, 50px);
           border-radius: 50px;
           object-fit: cover;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
           transition: all 0.3s ease;
+          border: 2px solid rgba(0, 212, 170, 0.3);
         }
 
         .dream-store-link:hover .dream-store-image {
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 8px 20px rgba(0, 212, 170, 0.5);
           transform: scale(1.05);
+        }
+
+        .gradient-text {
+          background: linear-gradient(135deg, #00d4aa 0%, #0ea5e9 50%, #a855f7 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-size: 200% 200%;
+          animation: gradientShift 3s ease infinite;
+        }
+
+        .cta-button {
+          background: linear-gradient(135deg, #00d4aa 0%, #0ea5e9 100%);
+          color: white;
+          padding: clamp(10px, 1.8vw, 14px) clamp(20px, 3.5vw, 28px);
+          border-radius: 25px;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+          display: inline-block;
+          transition: all 0.3s ease;
+          border: none;
+          cursor: pointer;
+          box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .cta-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+          left: 100%;
+        }
+
+        .cta-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
         }
 
         /* Desktop-specific spacing adjustments */
@@ -225,10 +320,6 @@ function Hero() {
           }
 
           .left-content {
-            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             padding: 50px 60px;
           }
 
@@ -241,7 +332,7 @@ function Hero() {
         /* Tablet Styles */
         @media (max-width: 1024px) and (min-width: 769px) {
           .hero-container {
-            min-height: 65vh;
+            min-height: 90vh;
             padding: 0 30px;
             margin-top: 85px;
             margin-bottom: 20px;
@@ -284,14 +375,14 @@ function Hero() {
         /* Mobile Styles */
         @media (max-width: 768px) {
           .hero-container {
-            min-height: auto;
+            min-height: 100vh;
             padding: 0 15px;
             margin-top: 60px;
             margin-bottom: 20px;
           }
           
           .content-card {
-            margin-top: -80px;
+            margin-top: 0;
             max-width: 100vw;
             margin: 0;
             border-radius: 16px;
@@ -304,10 +395,6 @@ function Hero() {
           }
           
           .left-content {
-            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             padding: 30px 20px;
             order: 1;
             text-align: center;
@@ -354,7 +441,7 @@ function Hero() {
         @media (max-width: 480px) {
           .hero-container {
             padding: 0 10px;
-            margin-top: 40%;
+            margin-top: 80px;
             margin-bottom: 20px;
           }
           
@@ -374,10 +461,6 @@ function Hero() {
           .content-card {
             border-radius: 12px;
           }
-          
-          .content-card {
-            margin-top: -80px;
-          }
         }
       `}</style>
       
@@ -393,20 +476,20 @@ function Hero() {
                   fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)',
                   fontWeight: '700',
                   lineHeight: '1.1',
-                  color: '#333',
+                  color: '#e2e8f0',
                   marginBottom: '18px',
                   letterSpacing: '-0.02em'
                 }}>
                   Redefine Your<br />
                   Style With<br />
-                  <span style={{ color: '#ff3366' }}>Racan AI</span>
+                  <span className="gradient-text">Racan AI</span>
                 </h1>
               </div>
 
               <div className="animate-fade-in-up animation-delay-300">
                 <div style={{
                   fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
-                  color: '#333',
+                  color: '#00d4aa',
                   marginBottom: '5px',
                   fontWeight: '600'
                 }}>
@@ -414,7 +497,7 @@ function Hero() {
                 </div>
                 <div style={{
                   fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
-                  color: '#333',
+                  color: '#00d4aa',
                   marginBottom: '20px',
                   fontWeight: '600'
                 }}>
@@ -425,7 +508,7 @@ function Hero() {
               <div className="animate-fade-in-up animation-delay-600">
                 <p style={{
                   fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
-                  color: '#6c757d',
+                  color: '#94a3b8',
                   lineHeight: '1.5',
                   marginBottom: '25px',
                   maxWidth: '350px'
@@ -436,27 +519,7 @@ function Hero() {
 
                 <button
                   onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-                  style={{
-                    background: '#ff3366',
-                    color: 'white',
-                    padding: 'clamp(10px, 1.8vw, 14px) clamp(20px, 3.5vw, 28px)',
-                    borderRadius: '25px',
-                    textDecoration: 'none',
-                    fontWeight: '600',
-                    fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
-                    display: 'inline-block',
-                    transition: 'all 0.3s ease',
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = '#d70153';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = '#ff3366';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
+                  className="cta-button"
                 >
                   Try Racan →
                 </button>
@@ -467,6 +530,7 @@ function Hero() {
                 <div className="stat-item">
                   <div className="stat-number">150K+</div>
                   <div className="stat-label">
+                    USERS TRANSFORMED
                   </div>
                 </div>
                 
@@ -481,8 +545,8 @@ function Hero() {
                     alt="Dream Store"
                     className="dream-store-image"
                   />
-                  <div style={{ fontSize: 'clamp(12px, 1.3vw, 9px)', color: '#000000' }}>
-                  Partner with DreamX Store
+                  <div style={{ fontSize: 'clamp(12px, 1.3vw, 9px)', color: '#94a3b8' }}>
+                    Partner with DreamX Store
                   </div>
                 </a>
               </div>
@@ -520,7 +584,7 @@ function Hero() {
                 
                 {/* Bottom Right - AI Element with Overlay */}
                 <div className="fashion-card" style={{ 
-                  background: '#f0f0f0',
+                  background: 'rgba(15, 23, 42, 0.8)',
                   position: 'relative'
                 }}>
                   <img 
@@ -530,8 +594,8 @@ function Hero() {
                   />
                   <div className="ai-overlay">
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '20px', marginBottom: '3px' }}></div>
-                      <div style={{ fontSize: '8px', opacity: '0.9' }}></div>
+                      <div style={{ fontSize: '20px', marginBottom: '3px', color: '#00d4aa' }}>AI</div>
+                      <div style={{ fontSize: '8px', opacity: '0.9', color: '#e2e8f0' }}>POWERED</div>
                     </div>
                   </div>
                 </div>
@@ -542,14 +606,15 @@ function Hero() {
                 position: 'absolute',
                 bottom: '12px',
                 left: '12px',
-                background: 'white',
+                background: 'rgba(15, 23, 42, 0.9)',
+                backdropFilter: 'blur(10px)',
                 padding: '6px 10px',
                 borderRadius: '6px',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
                 fontSize: 'clamp(7px, 1.3vw, 8px)',
-                color: '#6c757d'
+                color: '#94a3b8'
               }}>
-                <div style={{ fontWeight: '600', color: '#333', marginBottom: '1px' }}>STYLE MATCH</div>
+                <div style={{ fontWeight: '600', color: '#00d4aa', marginBottom: '1px' }}>STYLE MATCH</div>
                 <div>98% ACCURACY</div>
               </div>
               
@@ -557,14 +622,15 @@ function Hero() {
                 position: 'absolute',
                 top: '45%',
                 right: '12px',
-                background: 'white',
+                background: 'rgba(15, 23, 42, 0.9)',
+                backdropFilter: 'blur(10px)',
                 padding: '6px 10px',
                 borderRadius: '6px',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
                 fontSize: 'clamp(7px, 1.3vw, 8px)',
-                color: '#6c757d'
+                color: '#94a3b8'
               }}>
-                <div style={{ fontWeight: '600', color: '#333', marginBottom: '1px' }}>WARDROBE</div>
+                <div style={{ fontWeight: '600', color: '#00d4aa', marginBottom: '1px' }}>WARDROBE</div>
                 <div>SMART AI</div>
               </div>
             </div>
