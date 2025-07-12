@@ -294,7 +294,7 @@ const Features: React.FC = () => {
         {/* Demo Section */}
         <div 
           ref={sectionRef}
-          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 bg-gray-50 rounded-2xl border border-gray-100 ${
+          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 ${
             isVisible ? '' : ''
           }`}
         >
