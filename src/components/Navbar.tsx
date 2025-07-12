@@ -163,20 +163,93 @@ const Navbar = () => {
   return (
     <>
       <style jsx>{`
+        /* Portal Gaming Style Navbar */
+        .portal-navbar {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 0 4px 32px rgba(0, 0, 0, 0.04);
+        }
+
+        .portal-nav-item {
+          position: relative;
+          padding: 8px 16px;
+          border-radius: 12px;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          color: #374151;
+          font-weight: 500;
+        }
+
+        .portal-nav-item:hover {
+          background: rgba(103, 126, 234, 0.08);
+          color: #667eea;
+          transform: translateY(-1px);
+        }
+
+        .portal-nav-item::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(103, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+          border-radius: 12px;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .portal-nav-item:hover::before {
+          opacity: 1;
+        }
+
+        .portal-cta-button {
+          background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+          color: white;
+          padding: 10px 24px;
+          border-radius: 50px;
+          font-weight: 600;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .portal-cta-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.6s ease;
+        }
+
+        .portal-cta-button:hover::before {
+          left: 100%;
+        }
+
+        .portal-cta-button:hover {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(103, 126, 234, 0.3);
+        }
+
         /* Custom cursor styles */
         * {
           cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, auto;
         }
 
         a, button, [role="button"] {
-          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF2D6B' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23FF2D6B' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
+          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23667eea' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23667eea' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
         }
 
         .hamburger-menu {
           width: 16px;
           height: 16px;
           position: relative;
-          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF2D6B' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23FF2D6B' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
+          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23667eea' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23667eea' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -186,7 +259,7 @@ const Navbar = () => {
         .hamburger-line {
           width: 16px;
           height: 1.5px;
-          background-color: #000;
+          background-color: #374151;
           border-radius: 1px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           transform-origin: center;
@@ -230,16 +303,17 @@ const Navbar = () => {
           position: absolute;
           top: 100%;
           left: 0;
-          background: white;
-          border: 1px solid #e5e7eb;
-          border-radius: 1px;
-          min-width: 300px;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 16px;
+          min-width: 320px;
           opacity: 0;
           visibility: hidden;
           transform: translateY(-10px);
-          transition: all 0.2s ease-out;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           z-index: 50;
-          box-shadow: none;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         .products-dropdown.open {
@@ -251,30 +325,55 @@ const Navbar = () => {
         .dropdown-item {
           display: flex;
           align-items: center;
-          padding: 12px 16px;
+          padding: 16px 20px;
           text-decoration: none;
           color: #374151;
-          transition: background-color 0.2s ease;
-          border-bottom: 1px solid #f3f4f6;
+          transition: all 0.3s ease;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+          position: relative;
+          overflow: hidden;
         }
 
         .dropdown-item:last-child {
           border-bottom: none;
         }
 
+        .dropdown-item::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, rgba(103, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+          transition: left 0.4s ease;
+        }
+
+        .dropdown-item:hover::before {
+          left: 0;
+        }
+
         .dropdown-item:hover {
-          background-color: #f9fafb;
+          color: #667eea;
+          transform: translateX(4px);
         }
 
         .dropdown-item-icon {
           margin-right: 12px;
           flex-shrink: 0;
+          z-index: 1;
+          position: relative;
+        }
+
+        .dropdown-item-content {
+          z-index: 1;
+          position: relative;
         }
 
         .dropdown-item-content h3 {
           font-size: 14px;
-          font-weight: 500;
-          margin: 0 0 2px 0;
+          font-weight: 600;
+          margin: 0 0 4px 0;
           color: #111827;
         }
 
@@ -285,17 +384,15 @@ const Navbar = () => {
           line-height: 1.4;
         }
 
-        /* Menu overlay animation - WHITE BACKGROUND with menubar bg */
+        /* Menu overlay animation - Portal Gaming Style */
         .menu-overlay {
           position: fixed;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          background-image: url('https://i.pinimg.com/736x/35/b0/95/35b0954232776284469e69abde5817ff.jpg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+          backdrop-filter: blur(20px);
           z-index: 60;
           display: flex;
           flex-direction: column;
@@ -307,40 +404,52 @@ const Navbar = () => {
           transform: scale(0.95);
         }
 
-        .menu-overlay::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(255, 255, 255, 0.9);
-          z-index: -1;
-        }
-
         .menu-overlay.open {
           opacity: 1;
           visibility: visible;
           transform: scale(1);
         }
 
-        /* Smaller menu items without animations */
+        /* Portal Gaming Style menu items */
         .menu-item {
           font-size: 1.25rem;
-          font-weight: 500;
+          font-weight: 600;
           color: #374151;
           text-decoration: none;
-          margin: 0.3rem 0;
-          padding: 0.75rem 1.5rem;
-          border-radius: 12px;
+          margin: 0.4rem 0;
+          padding: 1rem 2rem;
+          border-radius: 16px;
           position: relative;
           overflow: hidden;
           background: transparent;
           border: none;
-          min-width: 150px;
+          min-width: 180px;
           text-align: center;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .menu-item::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, rgba(103, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+          transition: left 0.4s ease;
+        }
+
+        .menu-item:hover::before {
+          left: 0;
+        }
+
+        .menu-item:hover {
+          color: #667eea;
+          transform: translateY(-2px);
         }
 
         /* Mobile Products Dropdown Styles */
@@ -348,8 +457,8 @@ const Navbar = () => {
           width: 100%;
           background: rgba(249, 250, 251, 0.95);
           backdrop-filter: blur(10px);
-          border-radius: 12px;
-          margin: 0.3rem 0;
+          border-radius: 16px;
+          margin: 0.4rem 0;
           padding: 0;
           overflow: hidden;
           max-height: 0;
@@ -359,25 +468,42 @@ const Navbar = () => {
         }
 
         .mobile-products-dropdown.open {
-          max-height: 250px;
+          max-height: 280px;
           opacity: 1;
           transform: translateY(0);
-          padding: 0.75rem;
+          padding: 1rem;
         }
 
         .mobile-dropdown-item {
           display: flex;
           align-items: center;
-          padding: 0.75rem;
-          margin: 0.3rem 0;
-          background: rgba(255, 255, 255, 0.8);
-          border-radius: 8px;
+          padding: 1rem;
+          margin: 0.4rem 0;
+          background: rgba(255, 255, 255, 0.9);
+          border-radius: 12px;
           text-decoration: none;
           color: #374151;
           transition: all 0.3s ease;
-          border: 1px solid rgba(229, 231, 235, 0.5);
+          border: 1px solid rgba(0, 0, 0, 0.05);
           transform: translateX(-20px);
           opacity: 0;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .mobile-dropdown-item::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, rgba(103, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+          transition: left 0.4s ease;
+        }
+
+        .mobile-dropdown-item:hover::before {
+          left: 0;
         }
 
         .mobile-products-dropdown.open .mobile-dropdown-item {
@@ -394,14 +520,21 @@ const Navbar = () => {
         }
 
         .mobile-dropdown-item-icon {
-          margin-right: 10px;
+          margin-right: 12px;
           flex-shrink: 0;
+          z-index: 1;
+          position: relative;
+        }
+
+        .mobile-dropdown-item-content {
+          z-index: 1;
+          position: relative;
         }
 
         .mobile-dropdown-item-content h3 {
-          font-size: 0.9rem;
+          font-size: 0.95rem;
           font-weight: 600;
-          margin: 0 0 3px 0;
+          margin: 0 0 4px 0;
           color: #111827;
         }
 
@@ -413,58 +546,80 @@ const Navbar = () => {
         }
 
         .user-section {
-          margin-top: 1.5rem;
+          margin-top: 2rem;
           text-align: center;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          padding: 1.25rem;
-          border-radius: 16px;
-          background: rgba(249, 250, 251, 0.8);
+          padding: 1.5rem;
+          border-radius: 20px;
+          background: rgba(249, 250, 251, 0.9);
           backdrop-filter: blur(10px);
+          border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        /* Desktop-style Try Racan button for mobile */
+        /* Portal Gaming Style Try Racan button for mobile */
         .mobile-try-racan-btn {
-          background: #000000;
+          background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
           color: white;
-          padding: 0.65rem 1.75rem;
+          padding: 0.8rem 2rem;
           border-radius: 50px;
           text-decoration: none;
           font-weight: 600;
           font-size: 1rem;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: inline-block;
-          margin-top: 1.25rem;
+          margin-top: 1.5rem;
           border: none;
           position: relative;
           overflow: hidden;
           cursor: pointer;
         }
 
+        .mobile-try-racan-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.6s ease;
+        }
+
+        .mobile-try-racan-btn:hover::before {
+          left: 100%;
+        }
+
+        .mobile-try-racan-btn:hover {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(103, 126, 234, 0.3);
+        }
+
         /* Responsive font sizes */
         @media (max-width: 768px) {
           .menu-item {
             font-size: 1.125rem;
-            padding: 0.65rem 1.25rem;
-            min-width: 140px;
+            padding: 0.8rem 1.5rem;
+            min-width: 160px;
           }
           
           .mobile-try-racan-btn {
             font-size: 0.95rem;
-            padding: 0.6rem 1.5rem;
+            padding: 0.7rem 1.75rem;
           }
         }
 
         @media (max-width: 480px) {
           .menu-item {
             font-size: 1rem;
-            padding: 0.6rem 1rem;
-            min-width: 130px;
+            padding: 0.7rem 1.25rem;
+            min-width: 150px;
           }
         }
       `}</style>
 
       <header
-        className={`fixed top-0 left-0 right-0 z-[70] bg-white shadow-sm transition-transform duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[70] portal-navbar transition-transform duration-300 ${
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
@@ -476,10 +631,10 @@ const Navbar = () => {
             onClick={() => handleNavigation('/')}
           />
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-2">
             <a
               href="#features"
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              className="portal-nav-item"
             >
               Features
             </a>
@@ -491,7 +646,7 @@ const Navbar = () => {
               onMouseLeave={handleDesktopProductsLeave}
             >
               <button
-                className="flex items-center text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+                className="portal-nav-item flex items-center"
               >
                 Products
                 <ChevronDown 
@@ -507,7 +662,7 @@ const Navbar = () => {
                   className="dropdown-item w-full text-left"
                 >
                   <div className="dropdown-item-icon">
-                    <Bot className="w-5 h-5 text-[#973cff]" />
+                    <Bot className="w-5 h-5 text-[#667eea]" />
                   </div>
                   <div className="dropdown-item-content">
                     <h3>Racan AI Chat Bot</h3>
@@ -538,7 +693,7 @@ const Navbar = () => {
 
             <button
               onClick={() => handleNavigation('/about')}
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+              className="portal-nav-item"
             >
               About Us
             </button>
@@ -548,7 +703,7 @@ const Navbar = () => {
             ) : user ? (
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-[#004AAD] rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#667eea] rounded-full flex items-center justify-center">
                     <User className="w-4 h-4 text-white" />
                   </div>
                   <span className="text-sm text-gray-700 max-w-24 truncate">
@@ -567,14 +722,14 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={handleTryRacanClick}
-                className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
+                className="portal-cta-button"
               >
                 Try Racan
               </button>
             )}
           </nav>
 
-          {/* Smaller Hamburger Menu Button */}
+          {/* Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden z-[80] relative p-3 hover:bg-gray-100 rounded-full transition-colors duration-300"
@@ -589,7 +744,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Enhanced Mobile Menu Overlay with Background Image */}
+      {/* Enhanced Mobile Menu Overlay - Portal Gaming Style */}
       <div className={`menu-overlay md:hidden mobile-menu-container ${isMenuOpen ? 'open' : ''}`}>
         <nav className="flex flex-col items-center">
           <a
@@ -615,7 +770,7 @@ const Navbar = () => {
                 className="mobile-dropdown-item"
               >
                 <div className="mobile-dropdown-item-icon">
-                  <Bot className="w-5 h-5 text-[#973cff]" />
+                  <Bot className="w-5 h-5 text-[#667eea]" />
                 </div>
                 <div className="mobile-dropdown-item-content">
                   <h3>Racan AI Chat Bot</h3>
@@ -654,7 +809,7 @@ const Navbar = () => {
           ) : user ? (
             <div className="user-section">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-[#004AAD] rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#667eea] rounded-full flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-center">

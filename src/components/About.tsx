@@ -49,62 +49,80 @@ const About: React.FC = () => {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
     >
-      {/* Floating Background Elements - Portal Style */}
+      {/* Portal Gaming Style Background - Hexagonal Network */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Hexagonal floating elements */}
-        <div 
-          className="absolute w-20 h-20 opacity-10"
-          style={{
-            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px) rotate(45deg)`,
-            transition: 'transform 0.3s ease-out',
-            top: '15%',
-            left: '10%',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)'
-          }}
-        />
-        <div 
-          className="absolute w-16 h-16 opacity-15"
-          style={{
-            transform: `translate(${mousePosition.x * -0.015}px, ${mousePosition.y * -0.015}px) rotate(-30deg)`,
-            transition: 'transform 0.3s ease-out',
-            top: '60%',
-            right: '15%',
-            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-            clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)'
-          }}
-        />
-        <div 
-          className="absolute w-12 h-12 opacity-20"
-          style={{
-            transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px) rotate(60deg)`,
-            transition: 'transform 0.3s ease-out',
-            bottom: '20%',
-            left: '20%',
-            background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-            clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)'
-          }}
-        />
-        
-        {/* AI Neural Network Lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-5" viewBox="0 0 800 600">
-          <defs>
-            <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#667eea" />
-              <stop offset="50%" stopColor="#764ba2" />
-              <stop offset="100%" stopColor="#f093fb" />
-            </linearGradient>
-          </defs>
-          <g className="animate-pulse">
-            <line x1="100" y1="150" x2="300" y2="200" stroke="url(#neuralGradient)" strokeWidth="1" />
-            <line x1="300" y1="200" x2="500" y2="180" stroke="url(#neuralGradient)" strokeWidth="1" />
-            <line x1="500" y1="180" x2="700" y2="220" stroke="url(#neuralGradient)" strokeWidth="1" />
-            <circle cx="100" cy="150" r="3" fill="#667eea" className="animate-ping" />
-            <circle cx="300" cy="200" r="3" fill="#764ba2" className="animate-ping" style={{animationDelay: '0.5s'}} />
-            <circle cx="500" cy="180" r="3" fill="#f093fb" className="animate-ping" style={{animationDelay: '1s'}} />
-            <circle cx="700" cy="220" r="3" fill="#4facfe" className="animate-ping" style={{animationDelay: '1.5s'}} />
-          </g>
-        </svg>
+        {/* Central Hub */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="relative">
+            {/* Central hexagon */}
+            <div 
+              className="w-24 h-24 opacity-5"
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+                animation: 'portalPulse 4s ease-in-out infinite'
+              }}
+            />
+            
+            {/* Surrounding hexagons */}
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-16 h-16 opacity-10"
+                style={{
+                  background: `linear-gradient(135deg, ${i % 2 === 0 ? '#f093fb' : '#4facfe'} 0%, ${i % 2 === 0 ? '#f5576c' : '#00f2fe'} 100%)`,
+                  clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+                  top: `${Math.sin((i * 60) * Math.PI / 180) * 80 - 32}px`,
+                  left: `${Math.cos((i * 60) * Math.PI / 180) * 80 - 32}px`,
+                  animation: `portalOrbit 8s ease-in-out infinite`,
+                  animationDelay: `${i * 0.5}s`
+                }}
+              />
+            ))}
+            
+            {/* Connection lines */}
+            <svg className="absolute inset-0 w-48 h-48 -translate-x-1/2 -translate-y-1/2 opacity-5" viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="portalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#667eea" />
+                  <stop offset="50%" stopColor="#764ba2" />
+                  <stop offset="100%" stopColor="#f093fb" />
+                </linearGradient>
+              </defs>
+              {[...Array(6)].map((_, i) => (
+                <line
+                  key={i}
+                  x1="100"
+                  y1="100"
+                  x2={100 + Math.cos((i * 60) * Math.PI / 180) * 60}
+                  y2={100 + Math.sin((i * 60) * Math.PI / 180) * 60}
+                  stroke="url(#portalGradient)"
+                  strokeWidth="1"
+                  className="animate-pulse"
+                  style={{ animationDelay: `${i * 0.3}s` }}
+                />
+              ))}
+            </svg>
+          </div>
+        </div>
+
+        {/* Floating geometric shapes */}
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute opacity-5"
+            style={{
+              left: `${10 + i * 12}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              width: '20px',
+              height: '20px',
+              background: `linear-gradient(135deg, ${i % 3 === 0 ? '#667eea' : i % 3 === 1 ? '#f093fb' : '#4facfe'} 0%, ${i % 3 === 0 ? '#764ba2' : i % 3 === 1 ? '#f5576c' : '#00f2fe'} 100%)`,
+              clipPath: i % 2 === 0 ? 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' : 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+              animation: `portalFloat 6s ease-in-out infinite`,
+              animationDelay: `${i * 0.8}s`
+            }}
+          />
+        ))}
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -176,7 +194,7 @@ const About: React.FC = () => {
                     : 'translate-x-12 opacity-0 scale-95'
                 }`}
               >
-                <div className="relative w-full max-w-[360px] h-[480px] sm:max-w-[360px] sm:h-[480px] md:max-w-[455px] md:h-[600px] mx-auto overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 hover:rotate-1 transition-all duration-700 group border border-slate-200/50">
+                <div className="relative w-full max-w-[360px] h-[480px] sm:max-w-[360px] sm:h-[480px] md:max-w-[455px] md:h-[600px] mx-auto overflow-hidden rounded-3xl transform hover:scale-105 hover:rotate-1 transition-all duration-700 group border border-slate-200/50">
                   
                   {/* Portal-style Glowing Border Animation */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-3xl opacity-0 group-hover:opacity-75 blur-sm animate-pulse transition-opacity duration-500"></div>
@@ -226,28 +244,40 @@ const About: React.FC = () => {
           animation-delay: 1s;
         }
         
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-        
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes hexagon-pulse {
+        @keyframes portalPulse {
           0%, 100% { 
             transform: scale(1) rotate(0deg);
+            opacity: 0.05;
+          }
+          50% { 
+            transform: scale(1.2) rotate(180deg);
+            opacity: 0.15;
+          }
+        }
+        
+        @keyframes portalOrbit {
+          0% { 
+            transform: rotate(0deg) translateX(80px) rotate(0deg);
             opacity: 0.1;
           }
           50% { 
-            transform: scale(1.1) rotate(180deg);
-            opacity: 0.3;
+            opacity: 0.2;
+          }
+          100% { 
+            transform: rotate(360deg) translateX(80px) rotate(-360deg);
+            opacity: 0.1;
           }
         }
         
-        .hexagon-animate {
-          animation: hexagon-pulse 4s ease-in-out infinite;
+        @keyframes portalFloat {
+          0%, 100% { 
+            transform: translateY(0px) rotate(0deg);
+            opacity: 0.05;
+          }
+          50% { 
+            transform: translateY(-20px) rotate(180deg);
+            opacity: 0.15;
+          }
         }
       `}</style>
     </section>

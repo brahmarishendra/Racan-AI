@@ -182,42 +182,90 @@ const Features: React.FC = () => {
 
   return (
     <section id="features" className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-white to-gray-50 -mt-[20px] overflow-hidden relative">
-      {/* Portal-style floating particles background */}
+      {/* Portal Gaming Style Background */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        {/* Central Network Hub */}
+        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="relative">
+            {/* Main hexagonal hub */}
+            <div 
+              className="w-32 h-32 opacity-5"
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+                animation: 'portalPulse 6s ease-in-out infinite'
+              }}
+            />
+            
+            {/* Orbiting feature nodes */}
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-20 h-20 opacity-10"
+                style={{
+                  background: `linear-gradient(135deg, ${['#f093fb', '#4facfe', '#43e97b'][i]} 0%, ${['#f5576c', '#00f2fe', '#38f9d7'][i]} 100%)`,
+                  clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+                  top: `${Math.sin((i * 120) * Math.PI / 180) * 120 - 40}px`,
+                  left: `${Math.cos((i * 120) * Math.PI / 180) * 120 - 40}px`,
+                  animation: `portalOrbit 12s linear infinite`,
+                  animationDelay: `${i * 2}s`
+                }}
+              />
+            ))}
+            
+            {/* Connection beams */}
+            <svg className="absolute inset-0 w-80 h-80 -translate-x-1/2 -translate-y-1/2 opacity-5" viewBox="0 0 320 320">
+              <defs>
+                <linearGradient id="beamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#667eea" />
+                  <stop offset="50%" stopColor="#764ba2" />
+                  <stop offset="100%" stopColor="#f093fb" />
+                </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge> 
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              {[...Array(3)].map((_, i) => (
+                <line
+                  key={i}
+                  x1="160"
+                  y1="160"
+                  x2={160 + Math.cos((i * 120) * Math.PI / 180) * 100}
+                  y2={160 + Math.sin((i * 120) * Math.PI / 180) * 100}
+                  stroke="url(#beamGradient)"
+                  strokeWidth="2"
+                  filter="url(#glow)"
+                  className="animate-pulse"
+                  style={{ animationDelay: `${i * 0.5}s` }}
+                />
+              ))}
+            </svg>
+          </div>
+        </div>
+
+        {/* Floating geometric elements */}
+        {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute opacity-10"
+            className="absolute opacity-5"
             style={{
-              left: `${10 + i * 12}%`,
-              top: `${20 + (i % 3) * 25}%`,
-              width: '12px',
-              height: '12px',
-              background: `linear-gradient(135deg, ${i % 2 === 0 ? '#667eea' : '#764ba2'} 0%, ${i % 2 === 0 ? '#764ba2' : '#f093fb'} 100%)`,
-              clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${6 + i}s`
+              left: `${5 + i * 8}%`,
+              top: `${15 + (i % 4) * 20}%`,
+              width: `${16 + (i % 3) * 8}px`,
+              height: `${16 + (i % 3) * 8}px`,
+              background: `linear-gradient(135deg, ${['#667eea', '#f093fb', '#4facfe', '#43e97b'][i % 4]} 0%, ${['#764ba2', '#f5576c', '#00f2fe', '#38f9d7'][i % 4]} 100%)`,
+              clipPath: i % 3 === 0 ? 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' : 
+                        i % 3 === 1 ? 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' :
+                        'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
+              animation: `portalFloat 8s ease-in-out infinite`,
+              animationDelay: `${i * 0.6}s`
             }}
           />
         ))}
-        
-        {/* AI Neural Network Background */}
-        <svg className="absolute inset-0 w-full h-full opacity-5" viewBox="0 0 1200 800">
-          <defs>
-            <linearGradient id="neuralBg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#667eea" />
-              <stop offset="50%" stopColor="#764ba2" />
-              <stop offset="100%" stopColor="#f093fb" />
-            </linearGradient>
-          </defs>
-          <g className="animate-pulse">
-            <path d="M100,200 Q300,100 500,200 T900,200" stroke="url(#neuralBg)" strokeWidth="1" fill="none" />
-            <path d="M150,400 Q350,300 550,400 T950,400" stroke="url(#neuralBg)" strokeWidth="1" fill="none" />
-            <circle cx="100" cy="200" r="2" fill="#667eea" className="animate-ping" />
-            <circle cx="500" cy="200" r="2" fill="#764ba2" className="animate-ping" style={{animationDelay: '1s'}} />
-            <circle cx="900" cy="200" r="2" fill="#f093fb" className="animate-ping" style={{animationDelay: '2s'}} />
-          </g>
-        </svg>
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -229,9 +277,9 @@ const Features: React.FC = () => {
           ref={featuresRef}
           className="grid md:grid-cols-3 gap-6 mt-16 px-4"
         >
-          {/* AI-Powered Styling */}
+          {/* AI-Powered Styling - NO SHADOW */}
           <div 
-            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card shadow-lg hover:shadow-2xl ${
+            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-3'
             }`} 
             style={{ transitionDelay: '0ms' }}
@@ -270,9 +318,9 @@ const Features: React.FC = () => {
             </div>
           </div>
 
-          {/* Character Selection */}
+          {/* Character Selection - NO SHADOW */}
           <div 
-            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card shadow-lg hover:shadow-2xl ${
+            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-[-3deg]'
             }`} 
             style={{ transitionDelay: '200ms' }}
@@ -310,9 +358,9 @@ const Features: React.FC = () => {
             </div>
           </div>
 
-          {/* Smart Wardrobe Assistant */}
+          {/* Smart Wardrobe Assistant - NO SHADOW */}
           <div 
-            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card shadow-lg hover:shadow-2xl ${
+            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-2'
             }`} 
             style={{ transitionDelay: '400ms' }}
@@ -354,13 +402,13 @@ const Features: React.FC = () => {
         {/* Demo Section */}
         <div 
           ref={sectionRef}
-          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 bg-gradient-to-br from-white/80 to-slate-50/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 shadow-lg demo-container ${
+          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 bg-gradient-to-br from-white/80 to-slate-50/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 demo-container ${
             isVisible ? '' : ''
           }`}
         >
           
           <div className="w-full lg:w-3/3 mb-8 lg:mb-0 transform transition-all duration-700">   
-  <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] video-glow overflow-hidden border border-slate-200/50">     
+  <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] rounded-2xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] video-glow overflow-hidden border border-slate-200/50">     
     <iframe        
       title="vimeo-player"       
       src="https://player.vimeo.com/video/1093285476?h=3e899faaff&autoplay=1&loop=1&muted=1&controls=0&background=1"        
@@ -382,7 +430,7 @@ const Features: React.FC = () => {
             </h3>
             <button
               onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-              className="inline-block bg-gradient-to-r from-slate-900 to-slate-800 text-white px-6 py-3 text-sm md:text-base hover:from-purple-900 hover:to-slate-900 mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 hover:shadow-lg active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none rounded-full"
+              className="inline-block bg-gradient-to-r from-slate-900 to-slate-800 text-white px-6 py-3 text-sm md:text-base hover:from-purple-900 hover:to-slate-900 mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none rounded-full"
             >
               Try Racan AI
             </button>
@@ -480,9 +528,40 @@ const Features: React.FC = () => {
           }
         }
 
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
+        @keyframes portalPulse {
+          0%, 100% { 
+            transform: scale(1) rotate(0deg);
+            opacity: 0.05;
+          }
+          50% { 
+            transform: scale(1.3) rotate(180deg);
+            opacity: 0.15;
+          }
+        }
+
+        @keyframes portalOrbit {
+          0% { 
+            transform: rotate(0deg) translateX(120px) rotate(0deg);
+            opacity: 0.1;
+          }
+          50% { 
+            opacity: 0.2;
+          }
+          100% { 
+            transform: rotate(360deg) translateX(120px) rotate(-360deg);
+            opacity: 0.1;
+          }
+        }
+
+        @keyframes portalFloat {
+          0%, 100% { 
+            transform: translateY(0px) rotate(0deg);
+            opacity: 0.05;
+          }
+          50% { 
+            transform: translateY(-25px) rotate(180deg);
+            opacity: 0.15;
+          }
         }
 
         @keyframes shimmer {
@@ -525,23 +604,17 @@ const Features: React.FC = () => {
           animation-delay: 0.3s;
         }
 
-        .floating-particle {
-          position: absolute;
-          width: 6px;
-          height: 6px;
-          background: linear-gradient(45deg, #667eea, #764ba2);
-          border-radius: 50%;
-          animation: float 6s ease-in-out infinite;
-          opacity: 0.6;
-        }
-
         .shimmer-effect {
           background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
           animation: shimmer 2s infinite;
         }
 
+        .feature-card {
+          /* Removed shadow styles */
+        }
+
         .feature-card:hover {
-          box-shadow: 0 20px 40px rgba(100, 116, 139, 0.15);
+          /* Removed hover shadow styles */
         }
 
         .morphing-button:hover {
