@@ -6,8 +6,6 @@ const Features: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [featuresVisible, setFeaturesVisible] = useState(false);
   const [newsVisible, setNewsVisible] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [showCookiePopup, setShowCookiePopup] = useState(true);
   const [showCustomizeModal, setShowCustomizeModal] = useState(false);
   const [cookiePreferences, setCookiePreferences] = useState({
@@ -66,15 +64,6 @@ const Features: React.FC = () => {
       setCookiePreferences(JSON.parse(savedPreferences));
       setShowCookiePopup(false);
     }
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   useEffect(() => {
@@ -185,7 +174,7 @@ const Features: React.FC = () => {
 
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 text-center transform transition-all duration-1000 opacity-0 translate-y-8 animate-title-reveal">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 text-center mb-4">
           Our Features
         </h2>
 
@@ -199,8 +188,6 @@ const Features: React.FC = () => {
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-3'
             }`} 
             style={{ transitionDelay: '0ms' }}
-            onMouseEnter={() => setHoveredCard(0)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
@@ -209,10 +196,6 @@ const Features: React.FC = () => {
                 className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-2"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-100 transition-opacity duration-300"></div>
-              {hoveredCard === 0 && (
-                <div className="absolute inset-0 shimmer-effect pointer-events-none" />
-              )}
-              {/* Portal-style corner indicators */}
               <div className="absolute top-3 right-3 w-6 h-6 border-2 border-purple-400/50 rounded-full opacity-100 transition-opacity duration-300">
                 <div className="w-2 h-2 bg-purple-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
               </div>
@@ -240,8 +223,6 @@ const Features: React.FC = () => {
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-[-3deg]'
             }`} 
             style={{ transitionDelay: '200ms' }}
-            onMouseEnter={() => setHoveredCard(1)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
@@ -250,9 +231,6 @@ const Features: React.FC = () => {
                 className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-[-2deg]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-100 transition-opacity duration-300"></div>
-              {hoveredCard === 1 && (
-                <div className="absolute inset-0 shimmer-effect pointer-events-none" />
-              )}
               <div className="absolute top-3 right-3 w-6 h-6 border-2 border-blue-400/50 rounded-full opacity-100 transition-opacity duration-300">
                 <div className="w-2 h-2 bg-blue-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
               </div>
@@ -280,8 +258,6 @@ const Features: React.FC = () => {
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-2'
             }`} 
             style={{ transitionDelay: '400ms' }}
-            onMouseEnter={() => setHoveredCard(2)}
-            onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
@@ -290,9 +266,6 @@ const Features: React.FC = () => {
                 className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-1"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-100 transition-opacity duration-300"></div>
-              {hoveredCard === 2 && (
-                <div className="absolute inset-0 shimmer-effect pointer-events-none" />
-              )}
               <div className="absolute top-3 right-3 w-6 h-6 border-2 border-pink-400/50 rounded-full opacity-100 transition-opacity duration-300">
                 <div className="w-2 h-2 bg-pink-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
               </div>
@@ -318,9 +291,10 @@ const Features: React.FC = () => {
         {/* Demo Section */}
         <div 
           ref={sectionRef}
-          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 bg-gradient-to-br from-white/80 to-slate-50/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 demo-container ${
+          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 backdrop-blur-sm rounded-2xl border border-slate-200/50 demo-container ${
             isVisible ? '' : ''
           }`}
+          style={{ backgroundColor: '#EDEAF5' }}
         >
           
           <div className="w-full lg:w-3/3 mb-8 lg:mb-0 transform transition-all duration-700">   
@@ -341,8 +315,8 @@ const Features: React.FC = () => {
           <div className={`w-full lg:w-2/3 text-center lg:text-right px-4 lg:mr-[2rem] -mt-[46px] lg:mt-[-50px] transform transition-all duration-800 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-slate-900 mb-4 transition-all duration-300 hover:scale-105">
-              Here is Racan Ai Demo
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-slate-900 mb-4 transition-all duration-300">
+              Here is <span className="racan-ai-text">Racan AI</span> Demo
             </h3>
             <button
               onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
@@ -359,10 +333,10 @@ const Features: React.FC = () => {
             newsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <div className="mb-4 md:mb-0">
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2 hover:text-purple-700 transition-colors duration-300 typewriter-effect" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2 transition-colors duration-300" style={{ fontFamily: 'Poppins, sans-serif' }}>
                 News & Blogs
               </h2>
-              <p className="text-sm text-slate-600 max-w-lg font-normal transition-colors duration-300 hover:text-slate-800 slide-in-text" style={{ fontFamily: 'Azeret Mono, monospace' }}>
+              <p className="text-sm text-slate-600 max-w-lg font-normal transition-colors duration-300" style={{ fontFamily: 'Azeret Mono, monospace' }}>
                 Stay updated with the latest from Racan AI. Discover new features, success stories, and fashion insights.
               </p>
             </div>
@@ -415,7 +389,7 @@ const Features: React.FC = () => {
                       </div>
                     </div>
                     <div className="p-4 transform transition-all duration-300 group-hover:translate-y-[-2px]">
-                      <h3 className="text-sm font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-purple-700 transition-colors duration-300 glitch-text" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      <h3 className="text-sm font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-purple-700 transition-colors duration-300" style={{ fontFamily: 'Poppins, sans-serif' }}>
                         {item.title}
                       </h3>
                       <p className="text-xs text-slate-600 mb-3 line-clamp-3 group-hover:text-slate-700 transition-colors duration-300" style={{ fontFamily: 'Azeret Mono, monospace' }}>
@@ -429,197 +403,143 @@ const Features: React.FC = () => {
           </div>
         </div>
 
+        {/* Interactive Image Gallery Section */}
+        <div className="mt-16 px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+              Interactive Gallery
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Explore our AI-powered fashion recommendations through this interactive showcase
+            </p>
+          </div>
+          
+          <div className="interactive-gallery-container relative h-96 overflow-hidden rounded-2xl border border-slate-200/50">
+            <div className="gallery-track flex transition-transform duration-1000 ease-out h-full">
+              <div className="gallery-item flex-shrink-0 w-80 h-full relative overflow-hidden rounded-xl mx-2">
+                <img
+                  src="https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Fashion AI 1"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
+                  <div className="text-white">
+                    <h3 className="text-lg font-bold mb-2">AI Style Match</h3>
+                    <p className="text-sm opacity-90">Perfect outfit combinations</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="gallery-item flex-shrink-0 w-80 h-full relative overflow-hidden rounded-xl mx-2">
+                <img
+                  src="https://images.pexels.com/photos/7679471/pexels-photo-7679471.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Fashion AI 2"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
+                  <div className="text-white">
+                    <h3 className="text-lg font-bold mb-2">Smart Wardrobe</h3>
+                    <p className="text-sm opacity-90">Organize with intelligence</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="gallery-item flex-shrink-0 w-80 h-full relative overflow-hidden rounded-xl mx-2">
+                <img
+                  src="https://i.postimg.cc/VvypZYJt/ddf.png"
+                  alt="Fashion AI 3"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
+                  <div className="text-white">
+                    <h3 className="text-lg font-bold mb-2">Character Styling</h3>
+                    <p className="text-sm opacity-90">Personalized recommendations</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="gallery-item flex-shrink-0 w-80 h-full relative overflow-hidden rounded-xl mx-2">
+                <img
+                  src="https://majestic-halva-16882d.netlify.app/image-9.png"
+                  alt="Fashion AI 4"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
+                  <div className="text-white">
+                    <h3 className="text-lg font-bold mb-2">Trend Analysis</h3>
+                    <p className="text-sm opacity-90">Stay ahead of fashion</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="gallery-item flex-shrink-0 w-80 h-full relative overflow-hidden rounded-xl mx-2">
+                <img
+                  src="https://majestic-halva-16882d.netlify.app/image-10.png"
+                  alt="Fashion AI 5"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
+                  <div className="text-white">
+                    <h3 className="text-lg font-bold mb-2">Color Coordination</h3>
+                    <p className="text-sm opacity-90">Perfect color matches</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       {/* Styles */}
       <style jsx>{`
-        @keyframes fade-in-up {
+        /* Racan AI Text Animation */
+        @keyframes racanSlide {
           0% {
+            transform: translate3d(-100px, 0px, 0px);
             opacity: 0;
-            transform: translateY(2rem);
           }
           100% {
+            transform: translate3d(0px, 0px, 0px);
             opacity: 1;
-            transform: translateY(0);
           }
         }
-
-        @keyframes portalPulse {
-          0%, 100% { 
-            transform: scale(1) rotate(0deg);
-            opacity: 0.05;
-          }
-          50% { 
-            transform: scale(1.3) rotate(180deg);
-            opacity: 0.15;
-          }
+        
+        .racan-ai-text {
+          display: inline-block;
+          animation: racanSlide 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
         }
-
-        @keyframes portalOrbit {
-          0% { 
-            transform: rotate(0deg) translateX(120px) rotate(0deg);
-            opacity: 0.1;
+        
+        /* Interactive Gallery Animations */
+        @keyframes gallerySlide {
+          0% {
+            transform: translate3d(0px, 0px, 0px);
           }
-          50% { 
-            opacity: 0.2;
-          }
-          100% { 
-            transform: rotate(360deg) translateX(120px) rotate(-360deg);
-            opacity: 0.1;
+          100% {
+            transform: translate3d(-1600px, 0px, 0px);
           }
         }
-
-        @keyframes portalFloat {
-          0%, 100% { 
-            transform: translateY(0px) rotate(0deg);
-            opacity: 0.05;
-          }
-          50% { 
-            transform: translateY(-25px) rotate(180deg);
-            opacity: 0.15;
-          }
+        
+        .interactive-gallery-container {
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
-
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+        
+        .gallery-track {
+          animation: gallerySlide 20s linear infinite;
+          width: calc(320px * 10); /* 5 items * 2 for seamless loop */
         }
-
-        @keyframes morph {
-          0%, 100% { border-radius: 50%; }
-          50% { border-radius: 20%; }
+        
+        .gallery-item {
+          transition: all 0.3s ease;
         }
-
-        @keyframes wave {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-5px); }
-        }
-
-        @keyframes typewriter {
-          from { width: 0; }
-          to { width: 100%; }
-        }
-
-        @keyframes slide-in {
-          from { transform: translateX(-50px); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes rotate-icon {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-
-        .animate-fade-in-up {
-          animation: fade-in-up 1s ease-out forwards;
-          animation-delay: 0.2s;
-        }
-
-        .animate-title-reveal {
-          animation: fade-in-up 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-          animation-delay: 0.3s;
-        }
-
-        .shimmer-effect {
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-          animation: shimmer 2s infinite;
-        }
-
-        .feature-card {
-          /* Removed shadow styles */
-        }
-
-        .feature-card:hover {
-          /* Removed hover shadow styles */
-        }
-
-        .morphing-button:hover {
-          animation: morph 0.6s ease-in-out;
-        }
-
-        .glitch-text:hover {
-          animation: glitch 0.3s infinite;
-        }
-
-        .animate-text-wave {
-          animation: wave 2s ease-in-out infinite;
-        }
-
-        .typewriter-effect {
-          overflow: hidden;
-          white-space: nowrap;
-          animation: typewriter 2s steps(40, end), fade-in-up 0.5s;
-        }
-
-        .slide-in-text {
-          animation: slide-in 1s ease-out forwards;
-          animation-delay: 0.5s;
-        }
-
-        .rotating-icon:hover .lucide-arrow-right {
-          animation: rotate-icon 0.5s ease-in-out;
-        }
-
-        .video-glow:hover {
-          filter: drop-shadow(0 0 20px rgba(100, 116, 139, 0.3));
-        }
-
-        .button-morph {
-          position: relative;
-          overflow: hidden;
-        }
-
-        .button-morph:hover {
-          border-radius: 25px !important;
-        }
-
-        .button-morph:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-          transition: left 0.5s;
-        }
-
-        .button-morph:hover:before {
-          left: 100%;
-        }
-
-        .news-card-hover:hover {
-          background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
-        }
-
-        .magnetic-link {
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .magnetic-link:hover {
-          transform: translateX(3px) scale(1.05);
-        }
-
-        .demo-container {
-          position: relative;
-        }
-
-        .demo-container:before {
-          content: '';
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
-          border-radius: inherit;
-          z-index: -1;
-          opacity: 0;
-          transition: opacity 0.3s;
-        }
-
-        .demo-container:hover:before {
-          opacity: 0.1;
+        
+        .gallery-item:hover {
+          transform: scale(1.05);
+          z-index: 10;
         }
 
         .news-scroll-container::-webkit-scrollbar {
@@ -631,13 +551,6 @@ const Features: React.FC = () => {
           transform: translateY(-1px);
         }
 
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-        }
       `}</style>
 
       {/* Cookie Popup */}
