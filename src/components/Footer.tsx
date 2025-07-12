@@ -3,17 +3,17 @@ import { Instagram, Twitter, Facebook, Linkedin, Mail } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gradient-to-br from-black via-gray-900 to-black text-white py-12 md:py-16 relative overflow-hidden">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-12 md:py-16 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Geometric floating elements */}
         <div className="absolute w-12 h-12 opacity-5 top-16 left-20" style={{
-          background: 'linear-gradient(135deg, #FF5722 0%, #FF9800 100%)',
+          background: 'linear-gradient(135deg, #6B7280 0%, #9CA3AF 100%)',
           clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
           animation: 'float 8s ease-in-out infinite'
         }}></div>
         <div className="absolute w-8 h-8 opacity-10 bottom-20 right-32" style={{
-          background: 'linear-gradient(135deg, #FF5722 0%, #E91E63 100%)',
+          background: 'linear-gradient(135deg, #4B5563 0%, #6B7280 100%)',
           clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
           animation: 'float 6s ease-in-out infinite',
           animationDelay: '1s'
@@ -23,17 +23,17 @@ const Footer: React.FC = () => {
         <svg className="absolute inset-0 w-full h-full opacity-5" viewBox="0 0 1200 400">
           <defs>
             <linearGradient id="footerGrid" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#FF5722" />
-              <stop offset="50%" stopColor="#FF9800" />
-              <stop offset="100%" stopColor="#E91E63" />
+              <stop offset="0%" stopColor="#6B7280" />
+              <stop offset="50%" stopColor="#9CA3AF" />
+              <stop offset="100%" stopColor="#4B5563" />
             </linearGradient>
           </defs>
           <g className="animate-pulse">
             <path d="M100,100 Q300,50 500,100 T900,100" stroke="url(#footerGrid)" strokeWidth="1" fill="none" />
             <path d="M150,200 Q350,150 550,200 T950,200" stroke="url(#footerGrid)" strokeWidth="1" fill="none" />
-            <circle cx="100" cy="100" r="1.5" fill="#FF5722" className="animate-ping" />
-            <circle cx="500" cy="100" r="1.5" fill="#FF9800" className="animate-ping" style={{animationDelay: '1s'}} />
-            <circle cx="900" cy="100" r="1.5" fill="#E91E63" className="animate-ping" style={{animationDelay: '2s'}} />
+            <circle cx="100" cy="100" r="1.5" fill="#6B7280" className="animate-ping" />
+            <circle cx="500" cy="100" r="1.5" fill="#9CA3AF" className="animate-ping" style={{animationDelay: '1s'}} />
+            <circle cx="900" cy="100" r="1.5" fill="#4B5563" className="animate-ping" style={{animationDelay: '2s'}} />
           </g>
         </svg>
       </div>
@@ -50,16 +50,16 @@ const Footer: React.FC = () => {
               Redefining fashion with AI-powered recommendations and personalized style assistance.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/racan.ai?utm_source=ig_web_button_share_sheet&igsh=MXR2czM5N2JoYnJlbg==" className="text-gray-400 hover:text-orange-400 transition-colors duration-300 transform hover:scale-110">
+              <a href="https://www.instagram.com/racan.ai?utm_source=ig_web_button_share_sheet&igsh=MXR2czM5N2JoYnJlbg==" className="text-gray-400 hover:text-gray-300 transition-colors duration-300 transform hover:scale-110">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-orange-400 transition-colors duration-300 transform hover:scale-110">
+              <a href="#" className="text-gray-400 hover:text-gray-300 transition-colors duration-300 transform hover:scale-110">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-300 transform hover:scale-110">
+              <a href="#" className="text-gray-400 hover:text-gray-300 transition-colors duration-300 transform hover:scale-110">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-orange-600 transition-colors duration-300 transform hover:scale-110">
+              <a href="#" className="text-gray-400 hover:text-gray-300 transition-colors duration-300 transform hover:scale-110">
                 <Linkedin size={20} />
               </a>
             </div>

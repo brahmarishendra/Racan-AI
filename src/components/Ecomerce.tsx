@@ -96,19 +96,19 @@ export const RacanXVindof = (): JSX.Element => {
   };
 
   return (
-    <div className="bg-[#FF5722] w-full">
-      <div className="bg-[#FF5722] overflow-hidden w-full max-w-[1536px] mx-auto relative">
+    <div className="bg-gray-50 w-full">
+      <div className="bg-gray-50 overflow-hidden w-full max-w-[1536px] mx-auto relative">
         {/* Header */}
-        <header className="w-full h-16 md:h-20 lg:h-[120px] relative bg-[#FF5722] flex items-center justify-between px-4 md:px-6 lg:px-[106px]">
+        <header className="w-full h-16 md:h-20 lg:h-[120px] relative bg-gray-50 flex items-center justify-between px-4 md:px-6 lg:px-[106px]">
           {/* Mobile Menu Button - Left Side */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden z-50 relative order-1"
           >
             {isMenuOpen ? (
-              <X className="w-6 h-6 text-black" />
+              <X className="w-6 h-6 text-gray-900" />
             ) : (
-              <Menu className="w-6 h-6 text-black" />
+              <Menu className="w-6 h-6 text-gray-900" />
             )}
           </button>
 
@@ -127,7 +127,7 @@ export const RacanXVindof = (): JSX.Element => {
               <a
                 key={index}
                 href={link.href}
-                className="font-['Outfit',sans-serif] font-normal text-black text-xl xl:text-2xl hover:text-gray-800 transition-colors"
+                className="font-['Outfit',sans-serif] font-normal text-gray-900 text-xl xl:text-2xl hover:text-gray-700 transition-colors"
               >
                 {link.text}
               </a>
@@ -137,21 +137,21 @@ export const RacanXVindof = (): JSX.Element => {
           {/* Right Side Icons */}
           <div className="flex items-center space-x-3 md:space-x-4 order-3">
             {/* Shopping Bag Icon */}
-            <div className="relative w-8 h-8 md:w-10 md:h-10 lg:w-11 lg:h-[43px] bg-black/10 rounded-full lg:rounded-[22px] flex items-center justify-center">
+            <div className="relative w-8 h-8 md:w-10 md:h-10 lg:w-11 lg:h-[43px] bg-gray-200 rounded-full lg:rounded-[22px] flex items-center justify-center">
               <img
                 src="https://img.icons8.com/?size=100&id=3686&format=png&color=000000"
                 alt="Shopping Bag"
                 className="w-4 h-4 md:w-5 md:h-5 lg:w-[21px] lg:h-[21px]"
               />
               {cartItems.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-gray-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {cartItems.length}
                 </span>
               )}
             </div>
 
             {/* Try Racan Button - Desktop Only */}
-            <button className="hidden lg:block h-12 bg-black rounded-[26px] px-6 font-['Poppins',sans-serif] font-medium text-white text-xl hover:bg-gray-800 transition-colors">
+            <button className="hidden lg:block h-12 bg-gray-900 rounded-[26px] px-6 font-['Poppins',sans-serif] font-medium text-white text-xl hover:bg-gray-800 transition-colors">
               <a href="https://chat-with-racan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white no-underline">
                 Try Racan
               </a>
@@ -168,18 +168,18 @@ export const RacanXVindof = (): JSX.Element => {
 
         {/* Mobile Menu Overlay */}
         {isMenuOpen && (
-          <div className="lg:hidden fixed inset-0 bg-[#FF5722] z-40 pt-20">
+          <div className="lg:hidden fixed inset-0 bg-gray-50 z-40 pt-20">
             <nav className="flex flex-col items-start px-6 space-y-6 pt-8">
               {/* Profile Section in Mobile Menu */}
-              <div className="flex items-center space-x-4 pb-6 border-b border-black/20 w-full">
+              <div className="flex items-center space-x-4 pb-6 border-b border-gray-300 w-full">
                 <img
                   className="w-12 h-12 object-cover rounded-full"
                   alt="User Profile"
                   src="https://i.pinimg.com/736x/94/e6/cc/94e6cc707a02f2ae57b722cf3dddb9af.jpg"
                 />
                 <div>
-                  <p className="font-['Poppins',sans-serif] font-medium text-black text-lg">John Doe</p>
-                  <p className="font-['Outfit',sans-serif] text-black/70 text-sm">john@example.com</p>
+                  <p className="font-['Poppins',sans-serif] font-medium text-gray-900 text-lg">John Doe</p>
+                  <p className="font-['Outfit',sans-serif] text-gray-600 text-sm">john@example.com</p>
                 </div>
               </div>
 
@@ -188,7 +188,7 @@ export const RacanXVindof = (): JSX.Element => {
                 <a
                   key={index}
                   href={link.href}
-                  className="font-['Outfit',sans-serif] font-normal text-black text-xl w-full py-2"
+                  className="font-['Outfit',sans-serif] font-normal text-gray-900 text-xl w-full py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.text}
@@ -198,28 +198,28 @@ export const RacanXVindof = (): JSX.Element => {
               {/* Additional Menu Items */}
               <a
                 href="#"
-                className="font-['Outfit',sans-serif] font-normal text-black text-xl w-full py-2"
+                className="font-['Outfit',sans-serif] font-normal text-gray-900 text-xl w-full py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Profile
               </a>
               <a
                 href="#"
-                className="font-['Outfit',sans-serif] font-normal text-black text-xl w-full py-2"
+                className="font-['Outfit',sans-serif] font-normal text-gray-900 text-xl w-full py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Orders
               </a>
               <a
                 href="#"
-                className="font-['Outfit',sans-serif] font-normal text-black text-xl w-full py-2"
+                className="font-['Outfit',sans-serif] font-normal text-gray-900 text-xl w-full py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Settings
               </a>
 
               {/* Try Racan Button */}
-              <button className="mt-8 h-12 bg-black rounded-[26px] px-8 font-['Poppins',sans-serif] font-medium text-white text-xl w-full">
+              <button className="mt-8 h-12 bg-gray-900 rounded-[26px] px-8 font-['Poppins',sans-serif] font-medium text-white text-xl w-full">
                 <a href="https://chat-with-racan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white no-underline">
                   Try Racan
                 </a>
@@ -263,7 +263,7 @@ export const RacanXVindof = (): JSX.Element => {
                 key={index}
                 onClick={() => setCurrentSlide(index)}
                 className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-[31px] lg:h-[30px] rounded-sm transition-colors ${
-                  index === currentSlide ? 'bg-black' : 'bg-white/50'
+                  index === currentSlide ? 'bg-gray-900' : 'bg-white/50'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -274,17 +274,17 @@ export const RacanXVindof = (): JSX.Element => {
         {/* T-shirts For Men Section */}
         <section className="mt-8 sm:mt-12 md:mt-16 lg:mt-[83px] px-4 md:px-8 lg:px-[155px]">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8 lg:mb-10">
-            <h2 className="font-['Shinko_Sans-Regular',sans-serif] font-normal text-black text-xl sm:text-2xl md:text-3xl lg:text-5xl mb-4 sm:mb-0">
+            <h2 className="font-['Shinko_Sans-Regular',sans-serif] font-normal text-gray-900 text-xl sm:text-2xl md:text-3xl lg:text-5xl mb-4 sm:mb-0">
               T-shirts For Men
             </h2>
             <div className="flex items-center">
               <a
                 href="#"
-                className="font-['Poppins',sans-serif] font-medium text-black text-base sm:text-lg md:text-xl lg:text-2xl underline hover:no-underline"
+                className="font-['Poppins',sans-serif] font-medium text-gray-900 text-base sm:text-lg md:text-xl lg:text-2xl underline hover:no-underline"
               >
                 View More
               </a>
-              <span className="ml-2 text-black text-base sm:text-lg md:text-xl lg:text-2xl">→</span>
+              <span className="ml-2 text-gray-900 text-base sm:text-lg md:text-xl lg:text-2xl">→</span>
             </div>
           </div>
 
@@ -312,7 +312,7 @@ export const RacanXVindof = (): JSX.Element => {
                 </div>
                 <button 
                   onClick={() => addToCart(shirt.id)}
-                  className="absolute w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-[59px] right-3 md:right-4 lg:right-5 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
+                  className="absolute w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-[59px] right-3 md:right-4 lg:right-5 bg-gray-900 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
                 >
                   <ShoppingCart className="text-white w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
                 </button>
@@ -322,14 +322,14 @@ export const RacanXVindof = (): JSX.Element => {
         </section>
 
         {/* Limited-Time Offers Section */}
-        <section className="w-full mt-12 sm:mt-16 md:mt-20 lg:mt-[98px] bg-black/10 py-8 sm:py-12 md:py-16 lg:py-[76px]">
+        <section className="w-full mt-12 sm:mt-16 md:mt-20 lg:mt-[98px] bg-gray-100 py-8 sm:py-12 md:py-16 lg:py-[76px]">
           <div className="px-4 md:px-8 lg:px-[95px]">
             <div className="flex flex-col lg:flex-row items-start mb-8 md:mb-12 lg:mb-[76px]">
-              <h2 className="font-['Spline_Sans_Mono',monospace] font-medium text-black text-2xl sm:text-3xl md:text-4xl lg:text-[64px] leading-tight max-w-full lg:max-w-[650px] mb-4 lg:mb-0">
+              <h2 className="font-['Spline_Sans_Mono',monospace] font-medium text-gray-900 text-2xl sm:text-3xl md:text-4xl lg:text-[64px] leading-tight max-w-full lg:max-w-[650px] mb-4 lg:mb-0">
                 Vindof Limited-Time Offers
               </h2>
-              <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[82px] lg:h-[82px] bg-black rounded-full border border-solid border-white flex items-center justify-center lg:ml-4">
-                <span className="font-['Outfit',sans-serif] font-medium text-[#FF5722] text-lg sm:text-xl md:text-2xl lg:text-[32px]">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[82px] lg:h-[82px] bg-gray-900 rounded-full border border-solid border-gray-300 flex items-center justify-center lg:ml-4">
+                <span className="font-['Outfit',sans-serif] font-medium text-gray-50 text-lg sm:text-xl md:text-2xl lg:text-[32px]">
                   40%
                 </span>
               </div>
@@ -343,7 +343,7 @@ export const RacanXVindof = (): JSX.Element => {
                   src="https://images.pexels.com/photos/8532609/pexels-photo-8532609.jpeg?auto=compress&cs=tinysrgb&w=800"
                 />
               </div>
-              <div className="w-full lg:w-1/3 bg-black rounded-xl border border-solid border-white p-4 md:p-6 lg:p-[26px] flex flex-col items-center">
+              <div className="w-full lg:w-1/3 bg-gray-900 rounded-xl border border-solid border-gray-300 p-4 md:p-6 lg:p-[26px] flex flex-col items-center">
                 <img
                   className="w-full h-40 sm:h-48 md:h-56 lg:h-[262px] object-cover mb-4 sm:mb-6 md:mb-8 lg:mb-10 rounded-lg"
                   alt="Pretending Tee"
@@ -361,7 +361,7 @@ export const RacanXVindof = (): JSX.Element => {
 
         {/* Vindof shirts for men Banner */}
         <section className="w-full h-48 sm:h-64 md:h-80 lg:h-[637px] bg-[url('https://images.pexels.com/photos/8532635/pexels-photo-8532635.jpeg?auto=compress&cs=tinysrgb&w=1000')] bg-cover bg-center relative">
-          <h2 className="absolute w-full max-w-[280px] sm:max-w-xs md:max-w-md lg:max-w-[510px] top-1/2 transform -translate-y-1/2 left-4 md:left-8 lg:left-[92px] font-['Shinko_Sans-Regular',sans-serif] font-normal text-black text-2xl sm:text-3xl md:text-4xl lg:text-[64px] leading-tight">
+          <h2 className="absolute w-full max-w-[280px] sm:max-w-xs md:max-w-md lg:max-w-[510px] top-1/2 transform -translate-y-1/2 left-4 md:left-8 lg:left-[92px] font-['Shinko_Sans-Regular',sans-serif] font-normal text-gray-900 text-2xl sm:text-3xl md:text-4xl lg:text-[64px] leading-tight">
             Vindof shirts for men
           </h2>
         </section>
@@ -369,17 +369,17 @@ export const RacanXVindof = (): JSX.Element => {
         {/* Premium shirts Section */}
         <section className="mt-8 sm:mt-12 md:mt-16 lg:mt-[69px] px-4 md:px-8 lg:px-[152px] pb-8 sm:pb-12 md:pb-16 lg:pb-[85px]">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8 lg:mb-10">
-            <h2 className="font-['Shinko_Sans-Regular',sans-serif] font-normal text-black text-xl sm:text-2xl md:text-3xl lg:text-5xl mb-4 sm:mb-0">
+            <h2 className="font-['Shinko_Sans-Regular',sans-serif] font-normal text-gray-900 text-xl sm:text-2xl md:text-3xl lg:text-5xl mb-4 sm:mb-0">
               Premium shirts
             </h2>
             <div className="flex items-center">
               <a
                 href="#"
-                className="font-['Poppins',sans-serif] font-medium text-black text-base sm:text-lg md:text-xl lg:text-2xl underline hover:no-underline"
+                className="font-['Poppins',sans-serif] font-medium text-gray-900 text-base sm:text-lg md:text-xl lg:text-2xl underline hover:no-underline"
               >
                 View More
               </a>
-              <span className="ml-2 text-black text-base sm:text-lg md:text-xl lg:text-2xl">→</span>
+              <span className="ml-2 text-gray-900 text-base sm:text-lg md:text-xl lg:text-2xl">→</span>
             </div>
           </div>
 
@@ -407,7 +407,7 @@ export const RacanXVindof = (): JSX.Element => {
                 </div>
                 <button 
                   onClick={() => addToCart(shirt.id)}
-                  className="absolute w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-[59px] right-3 md:right-4 lg:right-5 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
+                  className="absolute w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-[59px] right-3 md:right-4 lg:right-5 bg-gray-900 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
                 >
                   <ShoppingCart className="text-white w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
                 </button>
@@ -417,7 +417,7 @@ export const RacanXVindof = (): JSX.Element => {
         </section>
 
         {/* Footer */}
-        <footer className="w-full bg-black border-t border-gray-700 py-12 md:py-16 lg:py-20">
+        <footer className="w-full bg-gray-900 border-t border-gray-700 py-12 md:py-16 lg:py-20">
           <div className="px-4 md:px-8 lg:px-[95px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
               {/* About Racan */}
