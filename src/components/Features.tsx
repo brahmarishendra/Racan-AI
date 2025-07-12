@@ -412,12 +412,15 @@ const Features: React.FC = () => {
               {newsItems.map((item, index) => (
                 <div key={item.id} className={`w-80 md:w-72 lg:w-80 flex-shrink-0 transform transition-all duration-700 news-card ${
                   newsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                }`} style={{ transitionDelay: `${index * 150}ms` }}>
+                }`} style={{ 
+                  transitionDelay: `${index * 150}ms`
+                }}>
                   <a 
                     href={item.link} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="block border border-black/20 rounded-2xl overflow-hidden bg-black/80 backdrop-blur-sm hover:shadow-xl transition-all duration-500 h-full group hover:scale-[1.02] hover:-translate-y-2 news-card-hover"
+                    className="block border border-black/20 overflow-hidden bg-black/80 backdrop-blur-sm hover:shadow-xl transition-all duration-500 h-full group hover:scale-[1.02] hover:-translate-y-2 news-card-hover"
+                    style={{ borderRadius: '1px' }}
                   >
                     <div className="aspect-[4/3] overflow-hidden relative">
                       <img

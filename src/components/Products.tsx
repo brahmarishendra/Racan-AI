@@ -97,9 +97,15 @@ const Products: React.FC = () => {
           <div className="mt-8 text-center">
             <button
               onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-              className="inline-block bg-gradient-to-r from-gray-800 to-gray-900 text-white px-6 py-3 rounded-full hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border-none cursor-pointer border border-gray-300/30"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-gray-800 to-gray-900 text-white px-6 py-3 hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border-none cursor-pointer border border-gray-300/30"
+              style={{ borderRadius: '1px' }}
             >
               Try Racan AI
+              <div className="bg-white rounded-full w-6 h-6 flex items-center justify-center">
+                <svg className="w-3 h-3 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l9.2-9.2M17 17V7H7" />
+                </svg>
+              </div>
             </button>
           </div>
         </div>

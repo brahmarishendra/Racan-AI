@@ -120,12 +120,13 @@ const About: React.FC = () => {
                 }`}
               >
                 <div className="relative w-full max-w-[360px] h-[480px] sm:max-w-[360px] sm:h-[480px] md:max-w-[455px] md:h-[600px] mx-auto overflow-hidden rounded-3xl transform hover:scale-105 hover:rotate-1 transition-all duration-700 group border border-slate-200/50">
+                <div className="relative w-full max-w-[360px] h-[480px] sm:max-w-[360px] sm:h-[480px] md:max-w-[455px] md:h-[600px] mx-auto overflow-hidden transform hover:scale-105 hover:rotate-1 transition-all duration-700 group border border-slate-200/50" style={{ borderRadius: '1px' }}>
                   
                   {/* Portal-style Glowing Border Animation */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-3xl opacity-0 group-hover:opacity-75 blur-sm animate-pulse transition-opacity duration-500"></div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 opacity-0 group-hover:opacity-75 blur-sm animate-pulse transition-opacity duration-500" style={{ borderRadius: '1px' }}></div>
                   
                   {/* Main Image */}
-                  <div className="relative z-10 w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-slate-50 to-white">
+                  <div className="relative z-10 w-full h-full overflow-hidden bg-gradient-to-br from-slate-50 to-white" style={{ borderRadius: '1px' }}>
                     <img
                       src="https://i.postimg.cc/jjp2L24q/Jacket-and-Cap-Style-Statement.png"
                       alt="Racan AI Feature"
@@ -210,3 +211,5 @@ const About: React.FC = () => {
 };
 
 export default About;
+  )
+}
