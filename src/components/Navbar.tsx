@@ -735,6 +735,7 @@ const Navbar = () => {
                 className="products-dropdown-container"
                 onMouseEnter={handleDesktopProductsHover}
                 onMouseLeave={handleDesktopProductsLeave}
+                style={{ display: 'none' }}
               >
                 <button
                   className="portal-nav-item flex items-center"
@@ -854,6 +855,7 @@ const Navbar = () => {
             <button
               onClick={handleMobileProductsToggle}
               className="menu-item"
+              style={{ display: 'none' }}
             >
               Products
             </button>
