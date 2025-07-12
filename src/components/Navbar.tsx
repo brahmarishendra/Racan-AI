@@ -177,7 +177,7 @@ const Navbar = () => {
           backdrop-filter: blur(10px);
           border: 1px solid rgba(0, 0, 0, 0.12);
           border-radius: 50px;
-          padding: 8px 16px;
+          padding: 4px 12px;
           display: flex;
           align-items: center;
           gap: 8px;
@@ -192,7 +192,7 @@ const Navbar = () => {
 
         .portal-nav-item {
           position: relative;
-          padding: 12px 20px;
+          padding: 8px 16px;
           border-radius: 25px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           color: #64748b;
@@ -221,7 +221,7 @@ const Navbar = () => {
         .portal-cta-button {
           background: #000000;
           color: white;
-          padding: 12px 24px;
+          padding: 8px 20px;
           border-radius: 50px;
           font-weight: 600;
           font-size: 14px;
