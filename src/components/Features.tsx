@@ -24,8 +24,8 @@ const Features: React.FC = () => {
     const handleScroll = () => {
       if (scrollTextRef.current) {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-        scrollTextRef.current.style.transform = `translateX(${rate}px)`;
+        const rate = scrolled * -0.3;
+        scrollTextRef.current.style.transform = `translateX(${rate}px) rotate(-15deg)`;
       }
     };
 
@@ -190,10 +190,10 @@ const Features: React.FC = () => {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <div 
           ref={scrollTextRef}
-          className="text-[20vw] font-bold text-black/5 whitespace-nowrap select-none"
+          className="text-[15vw] font-bold text-black/8 whitespace-nowrap select-none"
           style={{ willChange: 'transform' }}
         >
-          RACAN AI • FASHION • STYLE • RACAN AI • FASHION • STYLE • 
+          RACAN FASHION ASSISTANT • RACAN FASHION ASSISTANT • RACAN FASHION ASSISTANT • 
         </div>
       </div>
 
@@ -211,7 +211,7 @@ const Features: React.FC = () => {
             className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-3'
             }`} 
-            style={{ borderRadius: '1px' }}
+            style={{ borderRadius: '12px', background: '#000000' }}
             style={{ transitionDelay: '0ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
@@ -227,15 +227,17 @@ const Features: React.FC = () => {
             </div>
             <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
               <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
+              <h3 className="text-lg font-bold text-white mb-3 transition-colors duration-300 animate-text-wave">
                 AI-Powered Styling
               </h3>
-              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
                 Get personalized outfit recommendations based on your style
                 preferences.
               </p>
               <a
                 href="#"
                 className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
+                className="inline-flex items-center text-orange-400 hover:text-orange-300 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
                 Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
@@ -247,7 +249,7 @@ const Features: React.FC = () => {
             className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-[-3deg]'
             }`} 
-            style={{ borderRadius: '1px' }}
+            style={{ borderRadius: '12px', background: '#000000' }}
             style={{ transitionDelay: '200ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
@@ -262,16 +264,16 @@ const Features: React.FC = () => {
               </div>
             </div>
             <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
+              <h3 className="text-lg font-bold text-white mb-3 transition-colors duration-300 animate-text-wave">
                 Character Selection
               </h3>
-              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
                 Pick your character and get style recommendations that match
                 their vibe.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
+                className="inline-flex items-center text-orange-400 hover:text-orange-300 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
                 Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
@@ -283,7 +285,7 @@ const Features: React.FC = () => {
             className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-2'
             }`} 
-            style={{ borderRadius: '1px' }}
+            style={{ borderRadius: '12px', background: '#000000' }}
             style={{ transitionDelay: '400ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
@@ -298,16 +300,16 @@ const Features: React.FC = () => {
               </div>
             </div>
             <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
+              <h3 className="text-lg font-bold text-white mb-3 transition-colors duration-300 animate-text-wave">
                 Smart Wardrobe Assistant
               </h3>
-              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
                 Organize your closet and create new outfit combinations with AI
                 assistance.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
+                className="inline-flex items-center text-orange-400 hover:text-orange-300 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
                 Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
