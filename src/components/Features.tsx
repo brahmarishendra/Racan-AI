@@ -190,10 +190,10 @@ const Features: React.FC = () => {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <div 
           ref={scrollTextRef}
-          className="text-[20vw] font-bold text-black/5 whitespace-nowrap select-none"
+          className="text-[20vw] font-bold text-black/5 whitespace-nowrap select-none transform rotate-12"
           style={{ willChange: 'transform' }}
         >
-          RACAN AI • FASHION • STYLE • RACAN AI • FASHION • STYLE • 
+          RACAN FASHION ASSISTANT • RACAN FASHION ASSISTANT • RACAN FASHION ASSISTANT • 
         </div>
       </div>
 
@@ -208,109 +208,79 @@ const Features: React.FC = () => {
         >
           {/* AI-Powered Styling */}
           <div 
-            className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-black backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card rounded-xl ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-3'
             }`} 
-            style={{ borderRadius: '1px' }}
             style={{ transitionDelay: '0ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
                 src="https://i.postimg.cc/VvypZYJt/ddf.png"
                 alt="AI-Powered Styling"
-                className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-2"
+                className="w-full h-full object-cover transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 transition-opacity duration-300"></div>
-              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-orange-400/50 rounded-full opacity-100 transition-opacity duration-300">
-                <div className="w-2 h-2 bg-orange-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
             </div>
-            <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
+            <div className="p-6 absolute bottom-0 left-0 right-0">
+              <h3 className="text-lg font-bold text-white mb-3 transition-colors duration-300">
                 AI-Powered Styling
               </h3>
-              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
                 Get personalized outfit recommendations based on your style
                 preferences.
               </p>
-              <a
-                href="#"
-                className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
-              >
-                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
-              </a>
             </div>
           </div>
 
           {/* Character Selection */}
           <div 
-            className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-black backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card rounded-xl ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-[-3deg]'
             }`} 
-            style={{ borderRadius: '1px' }}
             style={{ transitionDelay: '200ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
                 src="https://majestic-halva-16882d.netlify.app/image-9.png"
                 alt="Character Selection"
-                className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-[-2deg]"
+                className="w-full h-full object-cover transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 transition-opacity duration-300"></div>
-              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-orange-400/50 rounded-full opacity-100 transition-opacity duration-300">
-                <div className="w-2 h-2 bg-orange-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
             </div>
-            <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
+            <div className="p-6 absolute bottom-0 left-0 right-0">
+              <h3 className="text-lg font-bold text-white mb-3 transition-colors duration-300">
                 Character Selection
               </h3>
-              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
                 Pick your character and get style recommendations that match
                 their vibe.
               </p>
-              <a
-                href="#"
-                className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
-              >
-                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
-              </a>
             </div>
           </div>
 
           {/* Smart Wardrobe Assistant */}
           <div 
-            className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-black backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card rounded-xl ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-2'
             }`} 
-            style={{ borderRadius: '1px' }}
             style={{ transitionDelay: '400ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
                 src="https://majestic-halva-16882d.netlify.app/image-10.png"
                 alt="Smart Wardrobe Assistant"
-                className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-1"
+                className="w-full h-full object-cover transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 transition-opacity duration-300"></div>
-              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-orange-400/50 rounded-full opacity-100 transition-opacity duration-300">
-                <div className="w-2 h-2 bg-orange-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
             </div>
-            <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
+            <div className="p-6 absolute bottom-0 left-0 right-0">
+              <h3 className="text-lg font-bold text-white mb-3 transition-colors duration-300">
                 Smart Wardrobe Assistant
               </h3>
-              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
                 Organize your closet and create new outfit combinations with AI
                 assistance.
               </p>
-              <a
-                href="#"
-                className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
-              >
-                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
-              </a>
             </div>
           </div>
         </div>
@@ -318,14 +288,14 @@ const Features: React.FC = () => {
         {/* Demo Section */}
         <div 
           ref={sectionRef}
-          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 backdrop-blur-sm border border-orange-500/30 demo-container ${
+          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 backdrop-blur-sm border border-orange-500/30 demo-container ${
             isVisible ? '' : ''
           }`}
-          style={{ backgroundColor: '#EDEAF5', borderRadius: '1px' }}
+          style={{ backgroundColor: '#EDEAF5', borderRadius: '12px' }}
         >
           
-          <div className="w-full lg:w-3/3 mb-8 lg:mb-0 transform transition-all duration-700">   
-            <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] video-glow overflow-hidden border border-orange-500/30" style={{ borderRadius: '1px' }}>     
+          <div className="w-full lg:w-3/3 mb-8 lg:mb-0">   
+            <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] video-glow overflow-hidden border border-orange-500/30 rounded-xl">     
               <iframe        
                 title="vimeo-player"       
                 src="https://player.vimeo.com/video/1093285476?h=3e899faaff&autoplay=1&loop=1&muted=1&controls=0&background=1"        
@@ -339,7 +309,7 @@ const Features: React.FC = () => {
               />   
             </div> 
           </div>
-          <div className={`w-full lg:w-2/3 text-center lg:text-right px-4 lg:mr-[2rem] -mt-[46px] lg:mt-[-50px] transform transition-all duration-800 delay-300 ${
+          <div className={`w-full lg:w-2/3 text-center lg:text-right px-4 lg:mr-[2rem] -mt-[46px] lg:mt-[-50px] ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
             <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 transition-all duration-300">

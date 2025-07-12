@@ -369,8 +369,8 @@ const Navbar = () => {
         }
 
         .products-dropdown {
-          margin-top: 20px;
-          margin-left: 0px;
+          margin-top: 8px;
+          margin-left: -20px;
           position: absolute;
           top: 100%;
           left: 0;
@@ -383,7 +383,7 @@ const Navbar = () => {
           visibility: hidden;
           transform: translateY(-10px);
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          z-index: 50;
+          z-index: 100;
           box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
 
