@@ -49,81 +49,6 @@ const About: React.FC = () => {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
     >
-      {/* Portal Gaming Style Background - Hexagonal Network */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Central Hub */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="relative">
-            {/* Central hexagon */}
-            <div 
-              className="w-24 h-24 opacity-5"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
-                animation: 'portalPulse 4s ease-in-out infinite'
-              }}
-            />
-            
-            {/* Surrounding hexagons */}
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-16 h-16 opacity-10"
-                style={{
-                  background: `linear-gradient(135deg, ${i % 2 === 0 ? '#f093fb' : '#4facfe'} 0%, ${i % 2 === 0 ? '#f5576c' : '#00f2fe'} 100%)`,
-                  clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
-                  top: `${Math.sin((i * 60) * Math.PI / 180) * 80 - 32}px`,
-                  left: `${Math.cos((i * 60) * Math.PI / 180) * 80 - 32}px`,
-                  animation: `portalOrbit 8s ease-in-out infinite`,
-                  animationDelay: `${i * 0.5}s`
-                }}
-              />
-            ))}
-            
-            {/* Connection lines */}
-            <svg className="absolute inset-0 w-48 h-48 -translate-x-1/2 -translate-y-1/2 opacity-5" viewBox="0 0 200 200">
-              <defs>
-                <linearGradient id="portalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#667eea" />
-                  <stop offset="50%" stopColor="#764ba2" />
-                  <stop offset="100%" stopColor="#f093fb" />
-                </linearGradient>
-              </defs>
-              {[...Array(6)].map((_, i) => (
-                <line
-                  key={i}
-                  x1="100"
-                  y1="100"
-                  x2={100 + Math.cos((i * 60) * Math.PI / 180) * 60}
-                  y2={100 + Math.sin((i * 60) * Math.PI / 180) * 60}
-                  stroke="url(#portalGradient)"
-                  strokeWidth="1"
-                  className="animate-pulse"
-                  style={{ animationDelay: `${i * 0.3}s` }}
-                />
-              ))}
-            </svg>
-          </div>
-        </div>
-
-        {/* Floating geometric shapes */}
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute opacity-5"
-            style={{
-              left: `${10 + i * 12}%`,
-              top: `${20 + (i % 3) * 25}%`,
-              width: '20px',
-              height: '20px',
-              background: `linear-gradient(135deg, ${i % 3 === 0 ? '#667eea' : i % 3 === 1 ? '#f093fb' : '#4facfe'} 0%, ${i % 3 === 0 ? '#764ba2' : i % 3 === 1 ? '#f5576c' : '#00f2fe'} 100%)`,
-              clipPath: i % 2 === 0 ? 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' : 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-              animation: `portalFloat 6s ease-in-out infinite`,
-              animationDelay: `${i * 0.8}s`
-            }}
-          />
-        ))}
-      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
@@ -141,7 +66,7 @@ const About: React.FC = () => {
                 <h2 className="text-3xl md:text-4xl lg:text-5xl text-slate-900 font-bold mb-6 font-manrope relative">
                   <span className="inline-block hover:animate-pulse">About</span>
                   <span 
-                    className="inline-block ml-2 bg-gradient-to-r from-slate-900 via-purple-900 to-slate-800 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 cursor-default"
+                    className="inline-block ml-2 bg-gradient-to-r from-slate-900 via-purple-900 to-slate-800 bg-clip-text text-transparent scale-110 transition-transform duration-300 cursor-default"
                   >
                     Racan AI
                   </span>
@@ -156,7 +81,7 @@ const About: React.FC = () => {
                     : 'translate-y-8 opacity-0'
                 }`}
               >
-                <p className="text-sm md:text-xl leading-relaxed text-slate-700 mb-8 hover:text-slate-900 transition-colors duration-300">
+                <p className="text-sm md:text-xl leading-relaxed text-slate-900 mb-8 transition-colors duration-300">
                   <span className="font-semibold text-slate-900 hover:text-purple-700 transition-colors duration-300 cursor-default">
                     Racan AI
                   </span> is a revolutionary fashion assistant that combines artificial
@@ -176,7 +101,7 @@ const About: React.FC = () => {
               >
                 <a
                   href="#"
-                  className="group inline-block bg-gradient-to-r from-slate-900 to-slate-800 text-white px-8 py-4 rounded-full hover:from-purple-900 hover:to-slate-900 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden border border-slate-200"
+                  className="group inline-block bg-gradient-to-r from-purple-900 to-slate-900 text-white px-8 py-4 rounded-full transition-all duration-500 transform -translate-y-2 shadow-2xl relative overflow-hidden border border-slate-200"
                 >
                   <span className="relative z-10 group-hover:animate-pulse">Learn More</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>

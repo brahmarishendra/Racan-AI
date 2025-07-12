@@ -182,91 +182,7 @@ const Features: React.FC = () => {
 
   return (
     <section id="features" className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-white to-gray-50 -mt-[20px] overflow-hidden relative">
-      {/* Portal Gaming Style Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Central Network Hub */}
-        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="relative">
-            {/* Main hexagonal hub */}
-            <div 
-              className="w-32 h-32 opacity-5"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
-                animation: 'portalPulse 6s ease-in-out infinite'
-              }}
-            />
-            
-            {/* Orbiting feature nodes */}
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-20 h-20 opacity-10"
-                style={{
-                  background: `linear-gradient(135deg, ${['#f093fb', '#4facfe', '#43e97b'][i]} 0%, ${['#f5576c', '#00f2fe', '#38f9d7'][i]} 100%)`,
-                  clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
-                  top: `${Math.sin((i * 120) * Math.PI / 180) * 120 - 40}px`,
-                  left: `${Math.cos((i * 120) * Math.PI / 180) * 120 - 40}px`,
-                  animation: `portalOrbit 12s linear infinite`,
-                  animationDelay: `${i * 2}s`
-                }}
-              />
-            ))}
-            
-            {/* Connection beams */}
-            <svg className="absolute inset-0 w-80 h-80 -translate-x-1/2 -translate-y-1/2 opacity-5" viewBox="0 0 320 320">
-              <defs>
-                <linearGradient id="beamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#667eea" />
-                  <stop offset="50%" stopColor="#764ba2" />
-                  <stop offset="100%" stopColor="#f093fb" />
-                </linearGradient>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                  <feMerge> 
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-              {[...Array(3)].map((_, i) => (
-                <line
-                  key={i}
-                  x1="160"
-                  y1="160"
-                  x2={160 + Math.cos((i * 120) * Math.PI / 180) * 100}
-                  y2={160 + Math.sin((i * 120) * Math.PI / 180) * 100}
-                  stroke="url(#beamGradient)"
-                  strokeWidth="2"
-                  filter="url(#glow)"
-                  className="animate-pulse"
-                  style={{ animationDelay: `${i * 0.5}s` }}
-                />
-              ))}
-            </svg>
-          </div>
-        </div>
 
-        {/* Floating geometric elements */}
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute opacity-5"
-            style={{
-              left: `${5 + i * 8}%`,
-              top: `${15 + (i % 4) * 20}%`,
-              width: `${16 + (i % 3) * 8}px`,
-              height: `${16 + (i % 3) * 8}px`,
-              background: `linear-gradient(135deg, ${['#667eea', '#f093fb', '#4facfe', '#43e97b'][i % 4]} 0%, ${['#764ba2', '#f5576c', '#00f2fe', '#38f9d7'][i % 4]} 100%)`,
-              clipPath: i % 3 === 0 ? 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' : 
-                        i % 3 === 1 ? 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' :
-                        'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
-              animation: `portalFloat 8s ease-in-out infinite`,
-              animationDelay: `${i * 0.6}s`
-            }}
-          />
-        ))}
-      </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 text-center transform transition-all duration-1000 opacity-0 translate-y-8 animate-title-reveal">
@@ -290,30 +206,30 @@ const Features: React.FC = () => {
               <img
                 src="https://i.postimg.cc/VvypZYJt/ddf.png"
                 alt="AI-Powered Styling"
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 group-hover:rotate-2"
+                className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-2"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-100 transition-opacity duration-300"></div>
               {hoveredCard === 0 && (
                 <div className="absolute inset-0 shimmer-effect pointer-events-none" />
               )}
               {/* Portal-style corner indicators */}
-              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-purple-400/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-purple-400/50 rounded-full opacity-100 transition-opacity duration-300">
                 <div className="w-2 h-2 bg-purple-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
               </div>
             </div>
-            <div className="p-6 transform transition-all duration-300 group-hover:translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-purple-700 animate-text-wave">
+            <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
+              <h3 className="text-lg font-bold text-purple-700 mb-3 transition-colors duration-300 animate-text-wave">
                 AI-Powered Styling
               </h3>
-              <p className="text-sm text-slate-600 mb-4 transition-colors duration-300 group-hover:text-slate-700 leading-relaxed">
+              <p className="text-sm text-slate-700 mb-4 transition-colors duration-300 leading-relaxed">
                 Get personalized outfit recommendations based on your style
                 preferences.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-slate-900 hover:text-purple-700 transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
+                className="inline-flex items-center text-purple-700 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
-                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
+                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
             </div>
           </div>
@@ -331,29 +247,29 @@ const Features: React.FC = () => {
               <img
                 src="https://majestic-halva-16882d.netlify.app/image-9.png"
                 alt="Character Selection"
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 group-hover:rotate-[-2deg]"
+                className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-[-2deg]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-100 transition-opacity duration-300"></div>
               {hoveredCard === 1 && (
                 <div className="absolute inset-0 shimmer-effect pointer-events-none" />
               )}
-              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-blue-400/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-blue-400/50 rounded-full opacity-100 transition-opacity duration-300">
                 <div className="w-2 h-2 bg-blue-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
               </div>
             </div>
-            <div className="p-6 transform transition-all duration-300 group-hover:translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-blue-700 animate-text-wave">
+            <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
+              <h3 className="text-lg font-bold text-blue-700 mb-3 transition-colors duration-300 animate-text-wave">
                 Character Selection
               </h3>
-              <p className="text-sm text-slate-600 mb-4 transition-colors duration-300 group-hover:text-slate-700 leading-relaxed">
+              <p className="text-sm text-slate-700 mb-4 transition-colors duration-300 leading-relaxed">
                 Pick your character and get style recommendations that match
                 their vibe.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-slate-900 hover:text-blue-700 transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
+                className="inline-flex items-center text-blue-700 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
-                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
+                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
             </div>
           </div>
@@ -371,29 +287,29 @@ const Features: React.FC = () => {
               <img
                 src="https://majestic-halva-16882d.netlify.app/image-10.png"
                 alt="Smart Wardrobe Assistant"
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 group-hover:rotate-1"
+                className="w-full h-full object-cover transform scale-110 transition-transform duration-700 rotate-1"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-100 transition-opacity duration-300"></div>
               {hoveredCard === 2 && (
                 <div className="absolute inset-0 shimmer-effect pointer-events-none" />
               )}
-              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-pink-400/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-pink-400/50 rounded-full opacity-100 transition-opacity duration-300">
                 <div className="w-2 h-2 bg-pink-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
               </div>
             </div>
-            <div className="p-6 transform transition-all duration-300 group-hover:translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-pink-700 animate-text-wave">
+            <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
+              <h3 className="text-lg font-bold text-pink-700 mb-3 transition-colors duration-300 animate-text-wave">
                 Smart Wardrobe Assistant
               </h3>
-              <p className="text-sm text-slate-600 mb-4 transition-colors duration-300 group-hover:text-slate-700 leading-relaxed">
+              <p className="text-sm text-slate-700 mb-4 transition-colors duration-300 leading-relaxed">
                 Organize your closet and create new outfit combinations with AI
                 assistance.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-slate-900 hover:text-pink-700 transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
+                className="inline-flex items-center text-pink-700 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
-                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
+                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
             </div>
           </div>

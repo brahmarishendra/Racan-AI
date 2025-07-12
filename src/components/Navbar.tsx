@@ -165,29 +165,59 @@ const Navbar = () => {
       <style jsx>{`
         /* Portal Gaming Style Navbar */
         .portal-navbar {
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(255, 255, 255, 0.1);
           backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-          box-shadow: 0 4px 32px rgba(0, 0, 0, 0.04);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          animation: navbarFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes navbarFloat {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-2px); }
+        }
+
+        @keyframes navItemGlow {
+          0%, 100% { box-shadow: 0 0 5px rgba(103, 126, 234, 0); }
+          50% { box-shadow: 0 0 20px rgba(103, 126, 234, 0.3); }
+        }
+
+        @keyframes glassShimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
         }
 
         /* Navigation Container - Portal Gaming Style */
         .nav-container {
-          background: rgba(241, 245, 249, 0.9);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(0, 0, 0, 0.12);
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 50px;
           padding: 4px 12px;
           display: flex;
           align-items: center;
           gap: 8px;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .nav-container::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -200%;
+          width: 200%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+          animation: glassShimmer 3s infinite;
         }
 
         .nav-container:hover {
-          background: rgba(226, 232, 240, 0.95);
-          border-color: rgba(0, 0, 0, 0.16);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+          background: rgba(255, 255, 255, 0.25);
+          border-color: rgba(255, 255, 255, 0.3);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+          transform: translateY(-1px);
         }
 
         .portal-nav-item {
@@ -195,26 +225,28 @@ const Navbar = () => {
           padding: 8px 16px;
           border-radius: 25px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          color: #64748b;
+          color: #374151;
           font-weight: 500;
           font-size: 14px;
           text-decoration: none;
           cursor: pointer;
           border: none;
           background: transparent;
+          z-index: 2;
         }
 
         .portal-nav-item:hover {
-          background: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 0.2);
           color: #1e293b;
           transform: translateY(-1px);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+          animation: navItemGlow 2s ease-in-out infinite;
         }
 
         .portal-nav-item.active {
-          background: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 0.2);
           color: #1e293b;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         /* Try Racan Button - Portal Gaming Style */
@@ -234,6 +266,7 @@ const Navbar = () => {
           align-items: center;
           gap: 8px;
           text-decoration: none;
+          z-index: 2;
         }
 
         .portal-cta-button::before {
@@ -334,9 +367,9 @@ const Navbar = () => {
           position: absolute;
           top: 100%;
           left: 0;
-          background: rgba(255, 255, 255, 0.98);
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(0, 0, 0, 0.08);
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(25px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 16px;
           min-width: 320px;
           opacity: 0;
@@ -344,7 +377,7 @@ const Navbar = () => {
           transform: translateY(-10px);
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           z-index: 50;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
 
         .products-dropdown.open {
@@ -360,7 +393,7 @@ const Navbar = () => {
           text-decoration: none;
           color: #374151;
           transition: all 0.3s ease;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           position: relative;
           overflow: hidden;
         }
@@ -376,7 +409,7 @@ const Navbar = () => {
           left: -100%;
           width: 100%;
           height: 100%;
-          background: linear-gradient(135deg, rgba(103, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+          background: rgba(255, 255, 255, 0.1);
           transition: left 0.4s ease;
         }
 
@@ -385,7 +418,7 @@ const Navbar = () => {
         }
 
         .dropdown-item:hover {
-          color: #667eea;
+          color: #374151;
           transform: translateX(4px);
         }
 
