@@ -735,17 +735,11 @@ const Navbar = () => {
                 className="products-dropdown-container"
                 onMouseEnter={handleDesktopProductsHover}
                 onMouseLeave={handleDesktopProductsLeave}
-                style={{ display: 'none' }}
               >
                 <button
                   className="portal-nav-item flex items-center"
                 >
                   Products
-                  <ChevronDown 
-                    className={`ml-1 w-4 h-4 transition-transform duration-200 ${
-                      isProductsDropdownOpen ? 'rotate-180' : ''
-                    }`} 
-                  />
                 </button>
                 
                 <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
@@ -855,7 +849,6 @@ const Navbar = () => {
             <button
               onClick={handleMobileProductsToggle}
               className="menu-item"
-              style={{ display: 'none' }}
             >
               Products
             </button>
