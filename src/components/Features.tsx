@@ -185,7 +185,7 @@ const Features: React.FC = () => {
   };
 
   return (
-    <section id="features" className="py-16 md:py-24 bg-[#FF8A65] -mt-[20px] overflow-hidden relative">
+    <section id="features" className="py-16 md:py-24 bg-[#FFB199] -mt-[20px] overflow-hidden relative">
       {/* Scrolling Text Background */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <div 
