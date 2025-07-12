@@ -96,10 +96,10 @@ export const RacanXVindof = (): JSX.Element => {
   };
 
   return (
-    <div className="bg-white w-full">
-      <div className="bg-white overflow-hidden w-full max-w-[1536px] mx-auto relative">
+    <div className="bg-[#FF5722] w-full">
+      <div className="bg-[#FF5722] overflow-hidden w-full max-w-[1536px] mx-auto relative">
         {/* Header */}
-        <header className="w-full h-16 md:h-20 lg:h-[120px] relative bg-white flex items-center justify-between px-4 md:px-6 lg:px-[106px]">
+        <header className="w-full h-16 md:h-20 lg:h-[120px] relative bg-[#FF5722] flex items-center justify-between px-4 md:px-6 lg:px-[106px]">
           {/* Mobile Menu Button - Left Side */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -127,7 +127,7 @@ export const RacanXVindof = (): JSX.Element => {
               <a
                 key={index}
                 href={link.href}
-                className="font-['Outfit',sans-serif] font-normal text-black text-xl xl:text-2xl hover:text-gray-600 transition-colors"
+                className="font-['Outfit',sans-serif] font-normal text-black text-xl xl:text-2xl hover:text-gray-800 transition-colors"
               >
                 {link.text}
               </a>
@@ -137,21 +137,21 @@ export const RacanXVindof = (): JSX.Element => {
           {/* Right Side Icons */}
           <div className="flex items-center space-x-3 md:space-x-4 order-3">
             {/* Shopping Bag Icon */}
-            <div className="relative w-8 h-8 md:w-10 md:h-10 lg:w-11 lg:h-[43px] bg-[#eeeeee] rounded-full lg:rounded-[22px] flex items-center justify-center">
+            <div className="relative w-8 h-8 md:w-10 md:h-10 lg:w-11 lg:h-[43px] bg-black/10 rounded-full lg:rounded-[22px] flex items-center justify-center">
               <img
                 src="https://img.icons8.com/?size=100&id=3686&format=png&color=000000"
                 alt="Shopping Bag"
                 className="w-4 h-4 md:w-5 md:h-5 lg:w-[21px] lg:h-[21px]"
               />
               {cartItems.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#ff2c6a] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {cartItems.length}
                 </span>
               )}
             </div>
 
             {/* Try Racan Button - Desktop Only */}
-            <button className="hidden lg:block h-12 bg-[#ff2c6a] rounded-[26px] px-6 font-['Poppins',sans-serif] font-medium text-white text-xl hover:bg-[#e6245e] transition-colors">
+            <button className="hidden lg:block h-12 bg-black rounded-[26px] px-6 font-['Poppins',sans-serif] font-medium text-white text-xl hover:bg-gray-800 transition-colors">
               <a href="https://chat-with-racan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white no-underline">
                 Try Racan
               </a>
@@ -168,10 +168,10 @@ export const RacanXVindof = (): JSX.Element => {
 
         {/* Mobile Menu Overlay */}
         {isMenuOpen && (
-          <div className="lg:hidden fixed inset-0 bg-white z-40 pt-20">
+          <div className="lg:hidden fixed inset-0 bg-[#FF5722] z-40 pt-20">
             <nav className="flex flex-col items-start px-6 space-y-6 pt-8">
               {/* Profile Section in Mobile Menu */}
-              <div className="flex items-center space-x-4 pb-6 border-b border-gray-200 w-full">
+              <div className="flex items-center space-x-4 pb-6 border-b border-black/20 w-full">
                 <img
                   className="w-12 h-12 object-cover rounded-full"
                   alt="User Profile"
@@ -179,7 +179,7 @@ export const RacanXVindof = (): JSX.Element => {
                 />
                 <div>
                   <p className="font-['Poppins',sans-serif] font-medium text-black text-lg">John Doe</p>
-                  <p className="font-['Outfit',sans-serif] text-gray-600 text-sm">john@example.com</p>
+                  <p className="font-['Outfit',sans-serif] text-black/70 text-sm">john@example.com</p>
                 </div>
               </div>
 
@@ -219,7 +219,7 @@ export const RacanXVindof = (): JSX.Element => {
               </a>
 
               {/* Try Racan Button */}
-              <button className="mt-8 h-12 bg-[#ff2c6a] rounded-[26px] px-8 font-['Poppins',sans-serif] font-medium text-white text-xl w-full">
+              <button className="mt-8 h-12 bg-black rounded-[26px] px-8 font-['Poppins',sans-serif] font-medium text-white text-xl w-full">
                 <a href="https://chat-with-racan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white no-underline">
                   Try Racan
                 </a>
@@ -263,7 +263,7 @@ export const RacanXVindof = (): JSX.Element => {
                 key={index}
                 onClick={() => setCurrentSlide(index)}
                 className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-[31px] lg:h-[30px] rounded-sm transition-colors ${
-                  index === currentSlide ? 'bg-[#ddff80]' : 'bg-white/50'
+                  index === currentSlide ? 'bg-black' : 'bg-white/50'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -280,11 +280,11 @@ export const RacanXVindof = (): JSX.Element => {
             <div className="flex items-center">
               <a
                 href="#"
-                className="font-['Poppins',sans-serif] font-medium text-[#0e6eff] text-base sm:text-lg md:text-xl lg:text-2xl underline hover:no-underline"
+                className="font-['Poppins',sans-serif] font-medium text-black text-base sm:text-lg md:text-xl lg:text-2xl underline hover:no-underline"
               >
                 View More
               </a>
-              <span className="ml-2 text-[#0e6eff] text-base sm:text-lg md:text-xl lg:text-2xl">→</span>
+              <span className="ml-2 text-black text-base sm:text-lg md:text-xl lg:text-2xl">→</span>
             </div>
           </div>
 
@@ -312,7 +312,7 @@ export const RacanXVindof = (): JSX.Element => {
                 </div>
                 <button 
                   onClick={() => addToCart(shirt.id)}
-                  className="absolute w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-[59px] right-3 md:right-4 lg:right-5 bg-[#ff2c6a] rounded-full flex items-center justify-center hover:bg-[#e6245e] transition-colors"
+                  className="absolute w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-[59px] right-3 md:right-4 lg:right-5 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
                 >
                   <ShoppingCart className="text-white w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
                 </button>
@@ -322,14 +322,14 @@ export const RacanXVindof = (): JSX.Element => {
         </section>
 
         {/* Limited-Time Offers Section */}
-        <section className="w-full mt-12 sm:mt-16 md:mt-20 lg:mt-[98px] bg-[#9fead33b] py-8 sm:py-12 md:py-16 lg:py-[76px]">
+        <section className="w-full mt-12 sm:mt-16 md:mt-20 lg:mt-[98px] bg-black/10 py-8 sm:py-12 md:py-16 lg:py-[76px]">
           <div className="px-4 md:px-8 lg:px-[95px]">
             <div className="flex flex-col lg:flex-row items-start mb-8 md:mb-12 lg:mb-[76px]">
-              <h2 className="font-['Spline_Sans_Mono',monospace] font-medium text-[#363535] text-2xl sm:text-3xl md:text-4xl lg:text-[64px] leading-tight max-w-full lg:max-w-[650px] mb-4 lg:mb-0">
+              <h2 className="font-['Spline_Sans_Mono',monospace] font-medium text-black text-2xl sm:text-3xl md:text-4xl lg:text-[64px] leading-tight max-w-full lg:max-w-[650px] mb-4 lg:mb-0">
                 Vindof Limited-Time Offers
               </h2>
-              <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[82px] lg:h-[82px] bg-[#ffe094] rounded-full border border-solid border-black flex items-center justify-center lg:ml-4">
-                <span className="font-['Outfit',sans-serif] font-medium text-[#ff2d6b] text-lg sm:text-xl md:text-2xl lg:text-[32px]">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[82px] lg:h-[82px] bg-black rounded-full border border-solid border-white flex items-center justify-center lg:ml-4">
+                <span className="font-['Outfit',sans-serif] font-medium text-[#FF5722] text-lg sm:text-xl md:text-2xl lg:text-[32px]">
                   40%
                 </span>
               </div>
@@ -343,13 +343,13 @@ export const RacanXVindof = (): JSX.Element => {
                   src="https://images.pexels.com/photos/8532609/pexels-photo-8532609.jpeg?auto=compress&cs=tinysrgb&w=800"
                 />
               </div>
-              <div className="w-full lg:w-1/3 bg-white rounded-xl border border-solid border-black p-4 md:p-6 lg:p-[26px] flex flex-col items-center">
+              <div className="w-full lg:w-1/3 bg-black rounded-xl border border-solid border-white p-4 md:p-6 lg:p-[26px] flex flex-col items-center">
                 <img
                   className="w-full h-40 sm:h-48 md:h-56 lg:h-[262px] object-cover mb-4 sm:mb-6 md:mb-8 lg:mb-10 rounded-lg"
                   alt="Pretending Tee"
                   src="https://images.pexels.com/photos/8532473/pexels-photo-8532473.jpeg?auto=compress&cs=tinysrgb&w=400"
                 />
-                <p className="font-['Spline_Sans_Mono',monospace] font-medium text-black text-xs sm:text-sm md:text-base lg:text-base text-center leading-relaxed">
+                <p className="font-['Spline_Sans_Mono',monospace] font-medium text-white text-xs sm:text-sm md:text-base lg:text-base text-center leading-relaxed">
                   The Pretending Tee Featuring a painted portrait with a
                   zipper covering the eyes and the words "so — when do we
                   stop pretending,"
@@ -375,11 +375,11 @@ export const RacanXVindof = (): JSX.Element => {
             <div className="flex items-center">
               <a
                 href="#"
-                className="font-['Poppins',sans-serif] font-medium text-[#0e6eff] text-base sm:text-lg md:text-xl lg:text-2xl underline hover:no-underline"
+                className="font-['Poppins',sans-serif] font-medium text-black text-base sm:text-lg md:text-xl lg:text-2xl underline hover:no-underline"
               >
                 View More
               </a>
-              <span className="ml-2 text-[#0e6eff] text-base sm:text-lg md:text-xl lg:text-2xl">→</span>
+              <span className="ml-2 text-black text-base sm:text-lg md:text-xl lg:text-2xl">→</span>
             </div>
           </div>
 
@@ -407,7 +407,7 @@ export const RacanXVindof = (): JSX.Element => {
                 </div>
                 <button 
                   onClick={() => addToCart(shirt.id)}
-                  className="absolute w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-[59px] right-3 md:right-4 lg:right-5 bg-[#ff2c6a] rounded-full flex items-center justify-center hover:bg-[#e6245e] transition-colors"
+                  className="absolute w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-[59px] right-3 md:right-4 lg:right-5 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
                 >
                   <ShoppingCart className="text-white w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
                 </button>
@@ -417,40 +417,40 @@ export const RacanXVindof = (): JSX.Element => {
         </section>
 
         {/* Footer */}
-        <footer className="w-full bg-white border-t border-gray-200 py-12 md:py-16 lg:py-20">
+        <footer className="w-full bg-black border-t border-gray-700 py-12 md:py-16 lg:py-20">
           <div className="px-4 md:px-8 lg:px-[95px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
               {/* About Racan */}
               <div className="lg:col-span-1">
                 <img
-                  className="h-8 mb-6"
+                  className="h-8 mb-6 filter brightness-0 invert"
                   alt="Racan Logo"
                   src="https://i.postimg.cc/rsYBTFzm/image-41.png"
                 />
-                <h3 className="font-['Poppins',sans-serif] font-semibold text-lg mb-4 text-black">About Racan</h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                <h3 className="font-['Poppins',sans-serif] font-semibold text-lg mb-4 text-white">About Racan</h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-6">
                   Premium fashion brand offering high-quality clothing for the modern lifestyle.
                 </p>
               </div>
 
               {/* Quick Links */}
               <div>
-                <h3 className="font-['Poppins',sans-serif] font-semibold text-lg mb-4 text-black">Quick Links</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li><a href="#" className="hover:text-black transition-colors">Home</a></li>
-                  <li><a href="#" className="hover:text-black transition-colors">New Arrivals</a></li>
-                  <li><a href="#" className="hover:text-black transition-colors">Catalog</a></li>
-                  <li><a href="#" className="hover:text-black transition-colors">Contact Us</a></li>
+                <h3 className="font-['Poppins',sans-serif] font-semibold text-lg mb-4 text-white">Quick Links</h3>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li><a href="#" className="hover:text-white transition-colors">Home</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">New Arrivals</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Catalog</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
                 </ul>
               </div>
 
               {/* Contact Info */}
               <div>
-                <h3 className="font-['Poppins',sans-serif] font-semibold text-lg mb-4 text-black">Contact</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <h3 className="font-['Poppins',sans-serif] font-semibold text-lg mb-4 text-white">Contact</h3>
+                <ul className="space-y-2 text-sm text-gray-400">
                   <li className="flex items-center">
                     <Mail className="w-4 h-4 mr-2" />
-                    <a href="mailto:ssbkfdurga17@gmail.com" className="hover:text-black transition-colors">
+                    <a href="mailto:ssbkfdurga17@gmail.com" className="hover:text-white transition-colors">
                       ssbkfdurga17@gmail.com
                     </a>
                   </li>
@@ -462,22 +462,22 @@ export const RacanXVindof = (): JSX.Element => {
 
               {/* Follow Us */}
               <div>
-                <h3 className="font-['Poppins',sans-serif] font-semibold text-lg mb-4 text-black">Follow Us</h3>
+                <h3 className="font-['Poppins',sans-serif] font-semibold text-lg mb-4 text-white">Follow Us</h3>
                 <div className="flex space-x-4">
-                  <a href="#" className="text-gray-600 hover:text-black transition-colors">
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
                     <Instagram className="w-6 h-6" />
                   </a>
-                  <a href="#" className="text-gray-600 hover:text-black transition-colors">
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
                     <Twitter className="w-6 h-6" />
                   </a>
-                  <a href="#" className="text-gray-600 hover:text-black transition-colors">
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
                     <Facebook className="w-6 h-6" />
                   </a>
                 </div>
               </div>
             </div>
             
-            <div className="border-t border-gray-200 mt-12 pt-8 text-center text-sm text-gray-500">
+            <div className="border-t border-gray-700 mt-12 pt-8 text-center text-sm text-gray-500">
               © 2024 Racan. All rights reserved.
             </div>
           </div>
