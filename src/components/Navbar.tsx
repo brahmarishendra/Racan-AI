@@ -369,8 +369,8 @@ const Navbar = () => {
         }
 
         .products-dropdown {
-          margin-top: 20px;
-          margin-left: 0px;
+          margin-top: 8px;
+          margin-left: -20px;
           position: absolute;
           top: 100%;
           left: 0;
@@ -378,19 +378,21 @@ const Navbar = () => {
           backdrop-filter: blur(25px);
           border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 16px;
-          min-width: 320px;
+          min-width: 340px;
           opacity: 0;
           visibility: hidden;
           transform: translateY(-10px);
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           z-index: 50;
           box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+          pointer-events: none;
         }
 
         .products-dropdown.open {
           opacity: 1;
           visibility: visible;
           transform: translateY(0);
+          pointer-events: auto;
         }
 
         .dropdown-item {
@@ -398,12 +400,17 @@ const Navbar = () => {
           align-items: center;
           padding: 16px 20px;
           text-decoration: none;
-          color: #374151;
+          color: #111827;
           transition: all 0.3s ease;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           position: relative;
           overflow: hidden;
           justify-content: space-between;
+          cursor: pointer;
+          border: none;
+          background: transparent;
+          width: 100%;
+          text-align: left;
         }
 
         .dropdown-item:last-child {
@@ -426,7 +433,7 @@ const Navbar = () => {
         }
 
         .dropdown-item:hover {
-          color: #374151;
+          color: #111827;
           transform: translateX(4px);
         }
 
@@ -454,6 +461,16 @@ const Navbar = () => {
           margin: 0;
           color: #6b7280;
           line-height: 1.4;
+        }
+
+        .dropdown-item-arrow {
+          opacity: 0.6;
+          transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover .dropdown-item-arrow {
+          opacity: 1;
+          transform: translate(2px, -2px);
         }
 
         /* Menu overlay animation - Portal Gaming Style */
@@ -734,13 +751,18 @@ const Navbar = () => {
               {/* Products Dropdown */}
               <div 
                 className="products-dropdown-container"
-                onMouseEnter={handleDesktopProductsHover}
-                onMouseLeave={handleDesktopProductsLeave}
+                onMouseEnter={() => setIsProductsDropdownOpen(true)}
+                onMouseLeave={() => setIsProductsDropdownOpen(false)}
               >
                 <button
-                  className="portal-nav-item flex items-center"
+                  className="portal-nav-item flex items-center gap-1"
                 >
                   Products
+                  <ChevronDown 
+                    className={`w-4 h-4 transition-transform duration-300 ${
+                      isProductsDropdownOpen ? 'rotate-180' : 'rotate-0'
+                    }`} 
+                  />
                 </button>
                 
                 <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
@@ -748,12 +770,17 @@ const Navbar = () => {
                     onClick={handleTryRacanClick}
                     className="dropdown-item w-full text-left"
                   >
-                    <div className="dropdown-item-icon">
-                      <Bot className="w-5 h-5 text-[#667eea]" />
+                    <div className="flex items-center">
+                      <div className="dropdown-item-icon">
+                        <Bot className="w-6 h-6 text-[#667eea]" />
+                      </div>
+                      <div className="dropdown-item-content">
+                        <h3>Racan AI Chat Bot</h3>
+                        <p>AI-powered fashion assistant for personalized styling</p>
+                      </div>
                     </div>
-                    <div className="dropdown-item-content">
-                      <h3>Racan AI Chat Bot</h3>
-                      <p>AI-powered fashion assistant for personalized styling</p>
+                    <div className="dropdown-item-arrow">
+                      <ArrowUpRight className="w-4 h-4 text-gray-500" />
                     </div>
                   </button>
                   
@@ -763,16 +790,21 @@ const Navbar = () => {
                     rel="noopener noreferrer"
                     className="dropdown-item"
                   >
-                    <div className="dropdown-item-icon">
-                      <img
-                        src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
-                        alt="DreamX"
-                        className="w-5 h-5 rounded-sm object-cover"
-                      />
+                    <div className="flex items-center">
+                      <div className="dropdown-item-icon">
+                        <img
+                          src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
+                          alt="DreamX"
+                          className="w-6 h-6 rounded-sm object-cover"
+                        />
+                      </div>
+                      <div className="dropdown-item-content">
+                        <h3>DreamX Ecommerce</h3>
+                        <p>Premium fashion marketplace with curated collections</p>
+                      </div>
                     </div>
-                    <div className="dropdown-item-content">
-                      <h3>DreamX Ecommerce</h3>
-                      <p>Premium fashion marketplace with curated collections</p>
+                    <div className="dropdown-item-arrow">
+                      <ArrowUpRight className="w-4 h-4 text-gray-500" />
                     </div>
                   </a>
                 </div>
