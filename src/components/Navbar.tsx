@@ -403,6 +403,7 @@ const Navbar = () => {
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           position: relative;
           overflow: hidden;
+          justify-content: space-between;
         }
 
         .dropdown-item:last-child {
