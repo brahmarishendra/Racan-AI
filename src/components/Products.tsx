@@ -5,9 +5,9 @@ const Products: React.FC = () => {
   return (
     <section
       id="products"
-      className="py-16 md:py-24 bg-[#002235] -mt-[30px] text-white relative overflow-hidden"
+      className="py-16 md:py-24 bg-gray-900 -mt-[30px] text-white relative overflow-hidden"
     >
-      <div className="container mx-auto px-4 ">
+      <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-5 text-center mb-3">
             <div className="text-xs md:text-sm text-yellow-300 opacity-80">
@@ -67,7 +67,7 @@ const Products: React.FC = () => {
       </div>
 
       {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#fffcfc] to-transparent"></div>
+      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white to-transparent"></div>
     </section>
   );
 };

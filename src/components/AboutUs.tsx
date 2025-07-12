@@ -166,13 +166,13 @@ const AboutUs: React.FC = () => {
         {/* Hero Section */}
         <section 
           ref={sectionRef}
-          className="relative pt-32 pb-16 bg-gradient-to-br from-[#004AAD]/5 to-[#973cff]/5 overflow-hidden"
+          className="relative pt-32 pb-16 bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden border-b border-gray-100"
           aria-labelledby="about-hero-title"
         >
           {/* Background decorative elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute w-96 h-96 bg-gradient-to-br from-[#004AAD]/10 to-[#973cff]/10 rounded-full blur-3xl -top-48 -left-48"></div>
-            <div className="absolute w-80 h-80 bg-gradient-to-br from-[#973cff]/10 to-[#004AAD]/10 rounded-full blur-3xl -bottom-40 -right-40"></div>
+            <div className="absolute w-96 h-96 bg-gradient-to-br from-blue-50/30 to-purple-50/30 rounded-full blur-3xl -top-48 -left-48"></div>
+            <div className="absolute w-80 h-80 bg-gradient-to-br from-purple-50/20 to-blue-50/20 rounded-full blur-3xl -bottom-40 -right-40"></div>
           </div>
 
           <div className="container mx-auto px-4 relative z-10">
@@ -185,7 +185,7 @@ const AboutUs: React.FC = () => {
                 <nav aria-label="Breadcrumb" className="mb-8">
                   <button 
                     onClick={() => window.location.href = '/'}
-                    className="inline-flex items-center gap-2 text-[#004AAD] hover:text-[#973cff] transition-colors duration-300"
+                    className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-300 font-medium"
                     aria-label="Go back to home page"
                   >
                     <ArrowLeft className="w-5 h-5" />
@@ -193,10 +193,10 @@ const AboutUs: React.FC = () => {
                   </button>
                 </nav>
                 
-                <h1 id="about-hero-title" className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#004AAD] mb-6">
-                  About <span className="bg-gradient-to-r from-[#004AAD] to-[#973cff] bg-clip-text text-transparent">Racan AI</span>
+                <h1 id="about-hero-title" className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
+                  About <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Racan AI</span>
                 </h1>
-                <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
+                <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
                   We're revolutionizing the fashion industry with AI-powered recommendations 
                   that understand your unique style, preferences, and personality.
                 </p>
@@ -206,20 +206,20 @@ const AboutUs: React.FC = () => {
         </section>
 
         {/* Mission & Vision Section */}
-        <section className="py-16 md:py-24 bg-gray-900" aria-labelledby="mission-title">
+        <section className="py-16 md:py-24 bg-white" aria-labelledby="mission-title">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className={`transform transition-all duration-1000 delay-200 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
                 }`}>
-                  <h2 id="mission-title" className="text-3xl md:text-4xl font-bold text-white mb-6">About Racan</h2>
-                  <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                  <h2 id="mission-title" className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 tracking-tight">About Racan</h2>
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
                     To democratize fashion by making personalized style accessible to everyone through 
                     cutting-edge AI technology. We believe that everyone deserves to look and feel their best, 
                     regardless of their fashion expertise or budget.
                   </p>
-                  <p className="text-gray-300 text-lg leading-relaxed">
+                  <p className="text-gray-600 text-lg leading-relaxed">
                     Our AI-powered platform learns from your preferences, body type, and lifestyle to 
                     provide recommendations that are not just trendy, but truly suited to you.
                   </p>
@@ -231,10 +231,10 @@ const AboutUs: React.FC = () => {
                     <img
                       src="https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&w=800"
                       alt="Fashion AI Technology - AI-powered styling and recommendations"
-                      className="w-full h-80 object-cover rounded-sm shadow-2xl"
+                      className="w-full h-80 object-cover rounded-xl shadow-lg border border-gray-100"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#004AAD]/20 to-transparent rounded-sm"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent rounded-xl"></div>
                   </div>
                 </div>
               </div>
@@ -243,24 +243,13 @@ const AboutUs: React.FC = () => {
         </section>
 
         {/* Team Section */}
-        <section ref={teamRef} className="py-16 md:py-24 relative overflow-hidden" aria-labelledby="team-title">
-          {/* Grid Background */}
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `
-                linear-gradient(rgba(0, 74, 173, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 74, 173, 0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: '40px 40px'
-            }}></div>
-          </div>
-
+        <section ref={teamRef} className="py-16 md:py-24 bg-gray-50 relative overflow-hidden" aria-labelledby="team-title">
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-6xl mx-auto">
               <div className={`text-center mb-16 transform transition-all duration-1000 ${
                 teamVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
               }`}>
-                <h2 id="team-title" className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                <h2 id="team-title" className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
                   Meet Our Team
                 </h2>
               </div>
@@ -276,7 +265,7 @@ const AboutUs: React.FC = () => {
                   >
                     {/* Profile Image */}
                     <div className="relative mb-4 mx-auto">
-                      <div className="w-32 h-32 md:w-40 md:h-40 mx-auto overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-500 relative" style={{ borderRadius: '1px' }}>
+                      <div className="w-32 h-32 md:w-40 md:h-40 mx-auto overflow-hidden rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-500 relative bg-white border border-gray-100">
                         <img
                           src={member.image}
                           alt={`${member.name} - ${member.role} at Racan AI`}
@@ -287,19 +276,16 @@ const AboutUs: React.FC = () => {
                           }}
                         />
                         {/* Hover overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        
-                        {/* Hover border effect */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ borderRadius: '1px' }}></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
                       </div>
                     </div>
                     
                     {/* Name and Role */}
                     <div className="text-left">
-                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-1 group-hover:text-[#004AAD] transition-colors duration-300">
+                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-1 group-hover:text-gray-700 transition-colors duration-300">
                         {member.name}
                       </h3>
-                      <p className="text-gray-600 text-sm md:text-base mb-3 group-hover:text-gray-800 transition-colors duration-300">
+                      <p className="text-gray-600 text-sm md:text-base mb-3 group-hover:text-gray-700 transition-colors duration-300">
                         {member.role}
                       </p>
                       
@@ -310,7 +296,7 @@ const AboutUs: React.FC = () => {
                             href={member.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center w-8 h-8 bg-gray-900 text-white hover:bg-[#004AAD] transition-all duration-300 transform hover:scale-110"
+                            className="inline-flex items-center justify-center w-8 h-8 bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 rounded-lg"
                             aria-label={`View ${member.name}'s LinkedIn profile`}
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -322,7 +308,7 @@ const AboutUs: React.FC = () => {
                             href={member.website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center w-8 h-8 bg-gray-900 text-white hover:bg-[#004AAD] transition-all duration-300 transform hover:scale-110"
+                            className="inline-flex items-center justify-center w-8 h-8 bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 rounded-lg"
                             aria-label={`Visit ${member.name}'s website`}
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -330,7 +316,7 @@ const AboutUs: React.FC = () => {
                             </svg>
                           </a>
                         ) : (
-                          <div className="inline-flex items-center justify-center w-8 h-8 bg-gray-300 text-gray-500" aria-hidden="true">
+                          <div className="inline-flex items-center justify-center w-8 h-8 bg-gray-300 text-gray-500 rounded-lg" aria-hidden="true">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
@@ -346,18 +332,18 @@ const AboutUs: React.FC = () => {
         </section>
 
         {/* Call to Action Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-[#004AAD] to-[#973cff]" aria-labelledby="cta-title">
+        <section className="py-16 md:py-24 bg-gray-900" aria-labelledby="cta-title">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center text-white">
-              <h2 id="cta-title" className="text-3xl md:text-4xl font-bold mb-6">
+              <h2 id="cta-title" className="text-3xl md:text-4xl font-bold mb-6 tracking-tight">
                 Ready to Transform Your Style?
               </h2>
-              <p className="text-lg md:text-xl mb-8 opacity-90">
+              <p className="text-lg md:text-xl mb-8 opacity-90 leading-relaxed">
                 Join thousands of users who have already discovered their perfect style with Racan AI.
               </p>
               <button
                 onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-                className="inline-block bg-white text-[#004AAD] px-8 py-4 rounded-sm text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-none cursor-pointer"
+                className="inline-block bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-none cursor-pointer"
                 aria-label="Try Racan AI Fashion Assistant"
               >
                 Try Racan AI Now
