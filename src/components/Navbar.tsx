@@ -163,10 +163,20 @@ const Navbar = () => {
   return (
     <>
       <style jsx>{`
+        /* Custom cursor styles */
+        * {
+          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, auto;
+        }
+
+        a, button, [role="button"] {
+          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF2D6B' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23FF2D6B' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
+        }
+
         .hamburger-menu {
           width: 16px;
           height: 16px;
           position: relative;
+          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF2D6B' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23FF2D6B' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -176,7 +186,7 @@ const Navbar = () => {
         .hamburger-line {
           width: 16px;
           height: 1.5px;
-          background-color: #1e293b;
+          background-color: #000;
           border-radius: 1px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           transform-origin: center;
@@ -220,17 +230,16 @@ const Navbar = () => {
           position: absolute;
           top: 100%;
           left: 0;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 12px;
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 1px;
           min-width: 300px;
           opacity: 0;
           visibility: hidden;
           transform: translateY(-10px);
           transition: all 0.2s ease-out;
           z-index: 50;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+          box-shadow: none;
         }
 
         .products-dropdown.open {
@@ -242,11 +251,11 @@ const Navbar = () => {
         .dropdown-item {
           display: flex;
           align-items: center;
-          padding: 16px 20px;
+          padding: 12px 16px;
           text-decoration: none;
-          color: #1e293b;
-          transition: all 0.2s ease;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+          color: #374151;
+          transition: background-color 0.2s ease;
+          border-bottom: 1px solid #f3f4f6;
         }
 
         .dropdown-item:last-child {
@@ -254,8 +263,7 @@ const Navbar = () => {
         }
 
         .dropdown-item:hover {
-          background: rgba(0, 212, 170, 0.05);
-          color: #00d4aa;
+          background-color: #f9fafb;
         }
 
         .dropdown-item-icon {
@@ -267,24 +275,27 @@ const Navbar = () => {
           font-size: 14px;
           font-weight: 500;
           margin: 0 0 2px 0;
-          color: inherit;
+          color: #111827;
         }
 
         .dropdown-item-content p {
           font-size: 12px;
           margin: 0;
-          color: #64748b;
+          color: #6b7280;
           line-height: 1.4;
         }
 
-        /* Menu overlay animation */
+        /* Menu overlay animation - WHITE BACKGROUND with menubar bg */
         .menu-overlay {
           position: fixed;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+          background-image: url('https://i.pinimg.com/736x/35/b0/95/35b0954232776284469e69abde5817ff.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           z-index: 60;
           display: flex;
           flex-direction: column;
@@ -296,16 +307,25 @@ const Navbar = () => {
           transform: scale(0.95);
         }
 
+        .menu-overlay::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(255, 255, 255, 0.9);
+          z-index: -1;
+        }
+
         .menu-overlay.open {
           opacity: 1;
           visibility: visible;
           transform: scale(1);
         }
 
+        /* Smaller menu items without animations */
         .menu-item {
           font-size: 1.25rem;
           font-weight: 500;
-          color: #e2e8f0;
+          color: #374151;
           text-decoration: none;
           margin: 0.3rem 0;
           padding: 0.75rem 1.5rem;
@@ -323,15 +343,10 @@ const Navbar = () => {
           transition: all 0.3s ease;
         }
 
-        .menu-item:hover {
-          color: #00d4aa;
-          background: rgba(0, 212, 170, 0.1);
-        }
-
         /* Mobile Products Dropdown Styles */
         .mobile-products-dropdown {
           width: 100%;
-          background: rgba(15, 23, 42, 0.8);
+          background: rgba(249, 250, 251, 0.95);
           backdrop-filter: blur(10px);
           border-radius: 12px;
           margin: 0.3rem 0;
@@ -355,19 +370,14 @@ const Navbar = () => {
           align-items: center;
           padding: 0.75rem;
           margin: 0.3rem 0;
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(255, 255, 255, 0.8);
           border-radius: 8px;
           text-decoration: none;
-          color: #e2e8f0;
+          color: #374151;
           transition: all 0.3s ease;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(229, 231, 235, 0.5);
           transform: translateX(-20px);
           opacity: 0;
-        }
-
-        .mobile-dropdown-item:hover {
-          background: rgba(0, 212, 170, 0.1);
-          color: #00d4aa;
         }
 
         .mobile-products-dropdown.open .mobile-dropdown-item {
@@ -392,13 +402,13 @@ const Navbar = () => {
           font-size: 0.9rem;
           font-weight: 600;
           margin: 0 0 3px 0;
-          color: inherit;
+          color: #111827;
         }
 
         .mobile-dropdown-item-content p {
           font-size: 0.8rem;
           margin: 0;
-          color: #94a3b8;
+          color: #6b7280;
           line-height: 1.3;
         }
 
@@ -408,13 +418,13 @@ const Navbar = () => {
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           padding: 1.25rem;
           border-radius: 16px;
-          background: rgba(15, 23, 42, 0.8);
+          background: rgba(249, 250, 251, 0.8);
           backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Desktop-style Try Racan button for mobile */
         .mobile-try-racan-btn {
-          background: linear-gradient(135deg, #00d4aa 0%, #0ea5e9 100%);
+          background: #000000;
           color: white;
           padding: 0.65rem 1.75rem;
           border-radius: 50px;
@@ -428,12 +438,6 @@ const Navbar = () => {
           position: relative;
           overflow: hidden;
           cursor: pointer;
-          box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
-        }
-
-        .mobile-try-racan-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
         }
 
         /* Responsive font sizes */
@@ -460,7 +464,7 @@ const Navbar = () => {
       `}</style>
 
       <header
-        className={`fixed top-0 left-0 right-0 z-[70] bg-white/80 backdrop-blur-xl border-b border-black/10 transition-transform duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[70] bg-white shadow-sm transition-transform duration-300 ${
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
@@ -468,26 +472,26 @@ const Navbar = () => {
           <img
             src="https://i.postimg.cc/rsYBTFzm/image-41.png"
             alt="Racan Logo"
-            className="w-24 cursor-pointer hover:opacity-80 transition-opacity"
+            className="w-24"
             onClick={() => handleNavigation('/')}
           />
 
           <nav className="hidden md:flex items-center space-x-8">
             <a
               href="#features"
-              className="text-slate-700 hover:text-emerald-400 transition-colors duration-300 font-medium"
+              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
             >
               Features
             </a>
             
-            {/* Products Dropdown */}
+            {/* Products Dropdown - WITH ARROW for Desktop */}
             <div 
               className="products-dropdown-container"
               onMouseEnter={handleDesktopProductsHover}
               onMouseLeave={handleDesktopProductsLeave}
             >
               <button
-                className="flex items-center text-slate-700 hover:text-emerald-400 transition-colors duration-300 font-medium"
+                className="flex items-center text-gray-700 hover:text-[#973cff] transition-colors duration-300"
               >
                 Products
                 <ChevronDown 
@@ -503,7 +507,7 @@ const Navbar = () => {
                   className="dropdown-item w-full text-left"
                 >
                   <div className="dropdown-item-icon">
-                    <Bot className="w-5 h-5 text-emerald-400" />
+                    <Bot className="w-5 h-5 text-[#973cff]" />
                   </div>
                   <div className="dropdown-item-content">
                     <h3>Racan AI Chat Bot</h3>
@@ -534,26 +538,26 @@ const Navbar = () => {
 
             <button
               onClick={() => handleNavigation('/about')}
-              className="text-slate-700 hover:text-emerald-400 transition-colors duration-300 font-medium"
+              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
             >
               About Us
             </button>
             
             {loading ? (
-              <div className="w-8 h-8 bg-slate-200 rounded-full animate-pulse"></div>
+              <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
             ) : user ? (
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#004AAD] rounded-full flex items-center justify-center">
                     <User className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-sm text-slate-700 max-w-24 truncate">
+                  <span className="text-sm text-gray-700 max-w-24 truncate">
                     {getUserDisplayName()}
                   </span>
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-1 text-slate-600 hover:text-red-400 transition-colors duration-300"
+                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors duration-300"
                   title="Sign out"
                 >
                   <LogOut className="w-4 h-4" />
@@ -563,17 +567,17 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={handleTryRacanClick}
-                className="bg-gradient-to-r from-emerald-400 to-blue-500 text-white px-6 py-2 rounded-full hover:from-emerald-500 hover:to-blue-600 transition-all duration-300 font-medium shadow-lg hover:shadow-emerald-500/25"
+                className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
               >
                 Try Racan
               </button>
             )}
           </nav>
 
-          {/* Hamburger Menu Button */}
+          {/* Smaller Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden z-[80] relative p-3 hover:bg-black/10 rounded-full transition-colors duration-300"
+            className="md:hidden z-[80] relative p-3 hover:bg-gray-100 rounded-full transition-colors duration-300"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             <div className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`}>
@@ -585,7 +589,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Enhanced Mobile Menu Overlay with Background Image */}
       <div className={`menu-overlay md:hidden mobile-menu-container ${isMenuOpen ? 'open' : ''}`}>
         <nav className="flex flex-col items-center">
           <a
@@ -596,7 +600,7 @@ const Navbar = () => {
             Features
           </a>
           
-          {/* Mobile Products Dropdown */}
+          {/* Mobile Products Dropdown WITHOUT Arrow */}
           <div className="w-full flex flex-col items-center">
             <button
               onClick={handleMobileProductsToggle}
@@ -611,7 +615,7 @@ const Navbar = () => {
                 className="mobile-dropdown-item"
               >
                 <div className="mobile-dropdown-item-icon">
-                  <Bot className="w-5 h-5 text-emerald-400" />
+                  <Bot className="w-5 h-5 text-[#973cff]" />
                 </div>
                 <div className="mobile-dropdown-item-content">
                   <h3>Racan AI Chat Bot</h3>
@@ -646,23 +650,23 @@ const Navbar = () => {
           </button>
 
           {loading ? (
-            <div className="w-12 h-12 bg-slate-700 rounded-full animate-pulse mt-8"></div>
+            <div className="w-12 h-12 bg-gray-200 rounded-full animate-pulse mt-8"></div>
           ) : user ? (
             <div className="user-section">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#004AAD] rounded-full flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-center">
-                  <p className="text-lg font-medium text-slate-200">
+                  <p className="text-lg font-medium text-gray-900">
                     {getUserDisplayName()}
                   </p>
-                  <p className="text-sm text-slate-400">{user.email}</p>
+                  <p className="text-sm text-gray-600">{user.email}</p>
                 </div>
               </div>
               <button
                 onClick={handleSignOut}
-                className="flex items-center space-x-2 text-red-400 hover:text-red-300 transition-colors duration-300"
+                className="flex items-center space-x-2 text-red-600 hover:text-red-700 transition-colors duration-300"
               >
                 <LogOut className="w-5 h-5" />
                 <span>Sign out</span>
