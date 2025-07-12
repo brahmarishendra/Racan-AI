@@ -173,9 +173,9 @@ const Navbar = () => {
 
         /* Navigation Container - Portal Gaming Style */
         .nav-container {
-          background: rgba(248, 250, 252, 0.8);
+          background: rgba(241, 245, 249, 0.9);
           backdrop-filter: blur(10px);
-          border: 1px solid rgba(0, 0, 0, 0.08);
+          border: 1px solid rgba(0, 0, 0, 0.12);
           border-radius: 50px;
           padding: 8px 16px;
           display: flex;
@@ -185,8 +185,8 @@ const Navbar = () => {
         }
 
         .nav-container:hover {
-          background: rgba(248, 250, 252, 0.95);
-          border-color: rgba(0, 0, 0, 0.12);
+          background: rgba(226, 232, 240, 0.95);
+          border-color: rgba(0, 0, 0, 0.16);
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
         }
 
