@@ -253,8 +253,8 @@ const Navbar = () => {
         .portal-cta-button {
           background: #000000;
           color: white;
-          padding: 8px 20px;
-          border-radius: 50px;
+          padding: 8px 16px 8px 20px;
+          border-radius: 1px;
           font-weight: 600;
           font-size: 14px;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -264,7 +264,7 @@ const Navbar = () => {
           cursor: pointer;
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 12px;
           text-decoration: none;
           z-index: 2;
         }
@@ -290,14 +290,26 @@ const Navbar = () => {
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .portal-cta-button:hover .arrow-icon {
-          transform: translate(2px, -2px);
+        .portal-cta-button:hover .arrow-circle {
+          transform: scale(1.1);
+          background: #f0f0f0;
+        }
+
+        .arrow-circle {
+          background: white;
+          border-radius: 50%;
+          width: 28px;
+          height: 28px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: transform 0.3s ease;
         }
 
         .arrow-icon {
-          transition: transform 0.3s ease;
-          width: 16px;
-          height: 16px;
+          width: 14px;
+          height: 14px;
+          color: #000000;
         }
 
         /* Custom cursor styles */
@@ -624,15 +636,15 @@ const Navbar = () => {
         .mobile-try-racan-btn {
           background: #000000;
           color: white;
-          padding: 0.8rem 2rem;
-          border-radius: 50px;
+          padding: 0.8rem 1.5rem 0.8rem 2rem;
+          border-radius: 1px;
           text-decoration: none;
           font-weight: 600;
           font-size: 1rem;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: 12px;
           margin-top: 1.5rem;
           border: none;
           position: relative;
@@ -661,8 +673,9 @@ const Navbar = () => {
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .mobile-try-racan-btn:hover .arrow-icon {
-          transform: translate(2px, -2px);
+        .mobile-try-racan-btn:hover .arrow-circle {
+          transform: scale(1.1);
+          background: #f0f0f0;
         }
 
         /* Responsive font sizes */
@@ -799,7 +812,9 @@ const Navbar = () => {
                 className="portal-cta-button"
               >
                 Try Racan
-                <ArrowUpRight className="arrow-icon" />
+                <div className="arrow-circle">
+                  <ArrowUpRight className="arrow-icon" />
+                </div>
               </button>
             )}
           </div>
@@ -908,7 +923,9 @@ const Navbar = () => {
               className="mobile-try-racan-btn"
             >
               Try Racan
-              <ArrowUpRight className="arrow-icon" />
+              <div className="arrow-circle">
+                <ArrowUpRight className="arrow-icon" />
+              </div>
             </button>
           )}
         </nav>
