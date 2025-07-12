@@ -106,7 +106,7 @@ function Hero() {
         }
 
         .fashion-card {
-          border-radius: 1px;
+          border-radius: 12px;
           overflow: hidden;
           position: relative;
           background: white;
@@ -121,7 +121,7 @@ function Hero() {
 
         .fashion-card.large {
           grid-row: span 2;
-          border-radius: 1px;
+          border-radius: 12px;
         }
 
         .ai-overlay {

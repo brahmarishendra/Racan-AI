@@ -185,7 +185,7 @@ const Features: React.FC = () => {
   };
 
   return (
-    <section id="features" className="py-16 md:py-24 bg-[#FFB199] -mt-[20px] overflow-hidden relative">
+    <section id="features" className="py-16 md:py-24 bg-[#FF5722] -mt-[20px] overflow-hidden relative">
       {/* Scrolling Text Background */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <div 
@@ -211,10 +211,7 @@ const Features: React.FC = () => {
             className={`group bg-black/90 backdrop-blur-sm rounded-2xl border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-3'
             }`} 
-            style={{ 
-              transitionDelay: '0ms',
-              borderRadius: '1px'
-            }}
+            style={{ transitionDelay: '0ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
@@ -249,10 +246,7 @@ const Features: React.FC = () => {
             className={`group bg-black/90 backdrop-blur-sm rounded-2xl border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-[-3deg]'
             }`} 
-            style={{ 
-              transitionDelay: '200ms',
-              borderRadius: '1px'
-            }}
+            style={{ transitionDelay: '200ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
@@ -287,10 +281,7 @@ const Features: React.FC = () => {
             className={`group bg-black/90 backdrop-blur-sm rounded-2xl border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-2'
             }`} 
-            style={{ 
-              transitionDelay: '400ms',
-              borderRadius: '1px'
-            }}
+            style={{ transitionDelay: '400ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
@@ -327,10 +318,7 @@ const Features: React.FC = () => {
           className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 backdrop-blur-sm rounded-2xl border border-orange-500/30 demo-container ${
             isVisible ? '' : ''
           }`}
-          style={{ 
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            borderRadius: '1px'
-          }}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
         >
           
           <div className="w-full lg:w-3/3 mb-8 lg:mb-0 transform transition-all duration-700">   
@@ -356,15 +344,9 @@ const Features: React.FC = () => {
             </h3>
             <button
               onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-600 to-orange-700 text-white px-6 py-3 text-sm md:text-base hover:from-orange-700 hover:to-orange-800 mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none"
-              style={{ borderRadius: '1px' }}
+              className="inline-block bg-gradient-to-r from-orange-600 to-orange-700 text-white px-6 py-3 text-sm md:text-base hover:from-orange-700 hover:to-orange-800 mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none rounded-full"
             >
               Try Racan AI
-              <div className="bg-white rounded-full w-6 h-6 flex items-center justify-center">
-                <svg className="w-3 h-3 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l9.2-9.2M17 17V7H7" />
-                </svg>
-              </div>
             </button>
           </div>
         </div>
@@ -412,15 +394,12 @@ const Features: React.FC = () => {
               {newsItems.map((item, index) => (
                 <div key={item.id} className={`w-80 md:w-72 lg:w-80 flex-shrink-0 transform transition-all duration-700 news-card ${
                   newsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                }`} style={{ 
-                  transitionDelay: `${index * 150}ms`
-                }}>
+                }`} style={{ transitionDelay: `${index * 150}ms` }}>
                   <a 
                     href={item.link} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="block border border-black/20 overflow-hidden bg-black/80 backdrop-blur-sm hover:shadow-xl transition-all duration-500 h-full group hover:scale-[1.02] hover:-translate-y-2 news-card-hover"
-                    style={{ borderRadius: '1px' }}
+                    className="block border border-black/20 rounded-2xl overflow-hidden bg-black/80 backdrop-blur-sm hover:shadow-xl transition-all duration-500 h-full group hover:scale-[1.02] hover:-translate-y-2 news-card-hover"
                   >
                     <div className="aspect-[4/3] overflow-hidden relative">
                       <img
