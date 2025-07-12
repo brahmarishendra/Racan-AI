@@ -737,10 +737,9 @@ const Navbar = () => {
                 onMouseLeave={handleDesktopProductsLeave}
               >
                 <button
-                  className="portal-nav-item flex items-center gap-1"
+                  className="portal-nav-item flex items-center"
                 >
                   Products
-                  <ChevronDown className="w-4 h-4 transition-transform duration-300" />
                 </button>
                 
                 <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
@@ -849,10 +848,9 @@ const Navbar = () => {
           <div className="w-full flex flex-col items-center">
             <button
               onClick={handleMobileProductsToggle}
-              className="menu-item flex items-center gap-2"
+              className="menu-item"
             >
               Products
-              <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isMobileProductsOpen ? 'rotate-180' : ''}`} />
             </button>
             
             <div className={`mobile-products-dropdown ${isMobileProductsOpen ? 'open' : ''}`}>
