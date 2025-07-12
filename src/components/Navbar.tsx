@@ -374,9 +374,9 @@ const Navbar = () => {
           position: absolute;
           top: 100%;
           left: 0;
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(25px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 16px;
           min-width: 340px;
           opacity: 0;
@@ -384,7 +384,7 @@ const Navbar = () => {
           transform: translateY(-10px);
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           z-index: 50;
-          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
           pointer-events: none;
         }
 
@@ -400,9 +400,9 @@ const Navbar = () => {
           align-items: center;
           padding: 16px 20px;
           text-decoration: none;
-          color: #111827;
+          color: #374151;
           transition: all 0.3s ease;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
           position: relative;
           overflow: hidden;
           justify-content: space-between;
@@ -424,7 +424,7 @@ const Navbar = () => {
           left: -100%;
           width: 100%;
           height: 100%;
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(59, 130, 246, 0.08);
           transition: left 0.4s ease;
         }
 
@@ -433,7 +433,7 @@ const Navbar = () => {
         }
 
         .dropdown-item:hover {
-          color: #111827;
+          color: #1f2937;
           transform: translateX(4px);
         }
 
@@ -453,7 +453,7 @@ const Navbar = () => {
           font-size: 14px;
           font-weight: 600;
           margin: 0 0 4px 0;
-          color: #111827;
+          color: #1f2937;
         }
 
         .dropdown-item-content p {

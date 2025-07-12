@@ -214,8 +214,7 @@ const Features: React.FC = () => {
             className={`group bg-black backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-3'
             }`} 
-            style={{ borderRadius: '12px' }}
-            style={{ transitionDelay: '0ms' }}
+            style={{ borderRadius: '12px', transitionDelay: '0ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
@@ -250,8 +249,7 @@ const Features: React.FC = () => {
             className={`group bg-black backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-[-3deg]'
             }`} 
-            style={{ borderRadius: '12px' }}
-            style={{ transitionDelay: '200ms' }}
+            style={{ borderRadius: '12px', transitionDelay: '200ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
@@ -286,8 +284,7 @@ const Features: React.FC = () => {
             className={`group bg-black backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-2'
             }`} 
-            style={{ borderRadius: '12px' }}
-            style={{ transitionDelay: '400ms' }}
+            style={{ borderRadius: '12px', transitionDelay: '400ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
               <img
