@@ -176,7 +176,7 @@ const Navbar = () => {
         .hamburger-line {
           width: 16px;
           height: 1.5px;
-          background-color: #ffffff;
+          background-color: #1e293b;
           border-radius: 1px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           transform-origin: center;
@@ -220,9 +220,9 @@ const Navbar = () => {
           position: absolute;
           top: 100%;
           left: 0;
-          background: rgba(15, 23, 42, 0.95);
+          background: rgba(255, 255, 255, 0.95);
           backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 12px;
           min-width: 300px;
           opacity: 0;
@@ -230,7 +230,7 @@ const Navbar = () => {
           transform: translateY(-10px);
           transition: all 0.2s ease-out;
           z-index: 50;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         .products-dropdown.open {
@@ -244,9 +244,9 @@ const Navbar = () => {
           align-items: center;
           padding: 16px 20px;
           text-decoration: none;
-          color: #e2e8f0;
+          color: #1e293b;
           transition: all 0.2s ease;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .dropdown-item:last-child {
@@ -254,7 +254,7 @@ const Navbar = () => {
         }
 
         .dropdown-item:hover {
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(0, 212, 170, 0.05);
           color: #00d4aa;
         }
 
@@ -273,7 +273,7 @@ const Navbar = () => {
         .dropdown-item-content p {
           font-size: 12px;
           margin: 0;
-          color: #94a3b8;
+          color: #64748b;
           line-height: 1.4;
         }
 
@@ -284,7 +284,7 @@ const Navbar = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+          background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
           z-index: 60;
           display: flex;
           flex-direction: column;
@@ -460,7 +460,7 @@ const Navbar = () => {
       `}</style>
 
       <header
-        className={`fixed top-0 left-0 right-0 z-[70] bg-slate-900/80 backdrop-blur-xl border-b border-white/10 transition-transform duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[70] bg-white/80 backdrop-blur-xl border-b border-black/10 transition-transform duration-300 ${
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
@@ -475,7 +475,7 @@ const Navbar = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <a
               href="#features"
-              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 font-medium"
+              className="text-slate-700 hover:text-emerald-400 transition-colors duration-300 font-medium"
             >
               Features
             </a>
@@ -487,7 +487,7 @@ const Navbar = () => {
               onMouseLeave={handleDesktopProductsLeave}
             >
               <button
-                className="flex items-center text-slate-300 hover:text-emerald-400 transition-colors duration-300 font-medium"
+                className="flex items-center text-slate-700 hover:text-emerald-400 transition-colors duration-300 font-medium"
               >
                 Products
                 <ChevronDown 
@@ -534,26 +534,26 @@ const Navbar = () => {
 
             <button
               onClick={() => handleNavigation('/about')}
-              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 font-medium"
+              className="text-slate-700 hover:text-emerald-400 transition-colors duration-300 font-medium"
             >
               About Us
             </button>
             
             {loading ? (
-              <div className="w-8 h-8 bg-slate-700 rounded-full animate-pulse"></div>
+              <div className="w-8 h-8 bg-slate-200 rounded-full animate-pulse"></div>
             ) : user ? (
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
                   <div className="w-8 h-8 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center">
                     <User className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-sm text-slate-300 max-w-24 truncate">
+                  <span className="text-sm text-slate-700 max-w-24 truncate">
                     {getUserDisplayName()}
                   </span>
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-1 text-slate-400 hover:text-red-400 transition-colors duration-300"
+                  className="flex items-center space-x-1 text-slate-600 hover:text-red-400 transition-colors duration-300"
                   title="Sign out"
                 >
                   <LogOut className="w-4 h-4" />
@@ -573,7 +573,7 @@ const Navbar = () => {
           {/* Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden z-[80] relative p-3 hover:bg-white/10 rounded-full transition-colors duration-300"
+            className="md:hidden z-[80] relative p-3 hover:bg-black/10 rounded-full transition-colors duration-300"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             <div className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`}>

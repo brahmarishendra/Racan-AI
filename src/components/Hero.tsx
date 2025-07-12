@@ -48,7 +48,7 @@ function Hero() {
         }
 
         .hero-container {
-          background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%);
+          background: linear-gradient(135deg, #1e293b 0%, #334155 25%, #475569 50%, #334155 75%, #1e293b 100%);
           background-size: 400% 400%;
           animation: gradientShift 20s ease infinite;
           min-height: 100vh;
