@@ -45,39 +45,66 @@ const About: React.FC = () => {
   return (
     <section 
       id="about" 
-      className="py-16 md:py-24 bg-[#EEFFC1] relative overflow-hidden"
+      className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-white to-gray-50 relative overflow-hidden"
       ref={sectionRef}
       onMouseMove={handleMouseMove}
     >
-      {/* Floating Background Elements */}
+      {/* Floating Background Elements - Portal Style */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Hexagonal floating elements */}
         <div 
-          className="absolute w-32 h-32 bg-gradient-to-br from-[#004AAD]/10 to-[#973cff]/10 rounded-full blur-xl"
+          className="absolute w-20 h-20 opacity-10"
           style={{
-            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`,
+            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px) rotate(45deg)`,
             transition: 'transform 0.3s ease-out',
-            top: '10%',
+            top: '15%',
             left: '10%',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)'
           }}
         />
         <div 
-          className="absolute w-24 h-24 bg-gradient-to-br from-[#973cff]/15 to-[#004AAD]/15 rounded-full blur-lg"
+          className="absolute w-16 h-16 opacity-15"
           style={{
-            transform: `translate(${mousePosition.x * -0.015}px, ${mousePosition.y * -0.015}px)`,
+            transform: `translate(${mousePosition.x * -0.015}px, ${mousePosition.y * -0.015}px) rotate(-30deg)`,
             transition: 'transform 0.3s ease-out',
             top: '60%',
             right: '15%',
+            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)'
           }}
         />
         <div 
-          className="absolute w-16 h-16 bg-gradient-to-br from-[#004AAD]/20 to-[#973cff]/20 rounded-full blur-md"
+          className="absolute w-12 h-12 opacity-20"
           style={{
-            transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px)`,
+            transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px) rotate(60deg)`,
             transition: 'transform 0.3s ease-out',
             bottom: '20%',
             left: '20%',
+            background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)'
           }}
         />
+        
+        {/* AI Neural Network Lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-5" viewBox="0 0 800 600">
+          <defs>
+            <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#667eea" />
+              <stop offset="50%" stopColor="#764ba2" />
+              <stop offset="100%" stopColor="#f093fb" />
+            </linearGradient>
+          </defs>
+          <g className="animate-pulse">
+            <line x1="100" y1="150" x2="300" y2="200" stroke="url(#neuralGradient)" strokeWidth="1" />
+            <line x1="300" y1="200" x2="500" y2="180" stroke="url(#neuralGradient)" strokeWidth="1" />
+            <line x1="500" y1="180" x2="700" y2="220" stroke="url(#neuralGradient)" strokeWidth="1" />
+            <circle cx="100" cy="150" r="3" fill="#667eea" className="animate-ping" />
+            <circle cx="300" cy="200" r="3" fill="#764ba2" className="animate-ping" style={{animationDelay: '0.5s'}} />
+            <circle cx="500" cy="180" r="3" fill="#f093fb" className="animate-ping" style={{animationDelay: '1s'}} />
+            <circle cx="700" cy="220" r="3" fill="#4facfe" className="animate-ping" style={{animationDelay: '1.5s'}} />
+          </g>
+        </svg>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -93,14 +120,14 @@ const About: React.FC = () => {
                     : '-translate-x-12 opacity-0'
                 }`}
               >
-                <h2 className="text-3xl md:text-4xl lg:text-5xl text-[#004AAD] font-semibold mb-6 font-manrope relative">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl text-slate-900 font-bold mb-6 font-manrope relative">
                   <span className="inline-block hover:animate-pulse">About</span>
                   <span 
-                    className="inline-block ml-2 bg-gradient-to-r from-[#004AAD] to-[#973cff] bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 cursor-default"
+                    className="inline-block ml-2 bg-gradient-to-r from-slate-900 via-purple-900 to-slate-800 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 cursor-default"
                   >
                     Racan AI
                   </span>
-                  <div className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-[#004AAD] to-[#973cff] animate-expand-width"></div>
+                  <div className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-purple-600 to-blue-600 animate-expand-width"></div>
                 </h2>
               </div>
 
@@ -111,8 +138,8 @@ const About: React.FC = () => {
                     : 'translate-y-8 opacity-0'
                 }`}
               >
-                <p className="text-sm md:text-xl leading-relaxed text-black md:text-gray-900 mb-8 hover:text-gray-700 transition-colors duration-300">
-                  <span className="font-normal text-[#004AAD] hover:text-[#973cff] transition-colors duration-300 cursor-default">
+                <p className="text-sm md:text-xl leading-relaxed text-slate-700 mb-8 hover:text-slate-900 transition-colors duration-300">
+                  <span className="font-semibold text-slate-900 hover:text-purple-700 transition-colors duration-300 cursor-default">
                     Racan AI
                   </span> is a revolutionary fashion assistant that combines artificial
                   intelligence with e-commerce to transform your shopping
@@ -131,11 +158,11 @@ const About: React.FC = () => {
               >
                 <a
                   href="#"
-                  className="group inline-block bg-[#004AAD] text-white px-8 py-4 rounded-full hover:bg-[#d70153] transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden"
+                  className="group inline-block bg-gradient-to-r from-slate-900 to-slate-800 text-white px-8 py-4 rounded-full hover:from-purple-900 hover:to-slate-900 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden border border-slate-200"
                 >
                   <span className="relative z-10 group-hover:animate-pulse">Learn More</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#973cff] to-[#d70153] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute -inset-1 bg-gradient-to-r from-[#004AAD] to-[#973cff] rounded-full blur opacity-0 group-hover:opacity-75 transition-opacity duration-500 animate-pulse"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity duration-500 animate-pulse"></div>
                 </a>
               </div>
             </div>
@@ -149,28 +176,37 @@ const About: React.FC = () => {
                     : 'translate-x-12 opacity-0 scale-95'
                 }`}
               >
-                <div className="relative w-full max-w-[360px] h-[480px] sm:max-w-[360px] sm:h-[480px] md:max-w-[455px] md:h-[600px] mx-auto overflow-hidden rounded-2xl shadow-2xl transform hover:scale-105 hover:rotate-1 transition-all duration-700 group">
+                <div className="relative w-full max-w-[360px] h-[480px] sm:max-w-[360px] sm:h-[480px] md:max-w-[455px] md:h-[600px] mx-auto overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 hover:rotate-1 transition-all duration-700 group border border-slate-200/50">
                   
-                  {/* Glowing Border Animation */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-[#004AAD] via-[#973cff] to-[#d70153] rounded-2xl opacity-0 group-hover:opacity-75 blur-sm animate-pulse transition-opacity duration-500"></div>
+                  {/* Portal-style Glowing Border Animation */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-3xl opacity-0 group-hover:opacity-75 blur-sm animate-pulse transition-opacity duration-500"></div>
                   
                   {/* Main Image */}
-                  <div className="relative z-10 w-full h-full rounded-2xl overflow-hidden">
+                  <div className="relative z-10 w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-slate-50 to-white">
                     <img
                       src="https://i.postimg.cc/jjp2L24q/Jacket-and-Cap-Style-Statement.png"
                       alt="Racan AI Feature"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     
-                    {/* Overlay Effects */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#004AAD]/20 to-[#973cff]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    {/* Portal-style Overlay Effects */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
-                    {/* Shimmer Effect */}
+                    {/* Hexagonal Shimmer Effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
                     
-                    {/* Corner Accents */}
-                    <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    {/* Portal-style Corner Accents */}
+                    <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-purple-400/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-tl-lg"></div>
+                    <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-blue-400/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-br-lg"></div>
+                    
+                    {/* AI Fashion Indicators */}
+                    <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full animate-pulse"></div>
+                    </div>
+                    
+                    <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div className="text-xs font-semibold text-slate-700">AI STYLED</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -197,6 +233,21 @@ const About: React.FC = () => {
         
         .animate-float {
           animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes hexagon-pulse {
+          0%, 100% { 
+            transform: scale(1) rotate(0deg);
+            opacity: 0.1;
+          }
+          50% { 
+            transform: scale(1.1) rotate(180deg);
+            opacity: 0.3;
+          }
+        }
+        
+        .hexagon-animate {
+          animation: hexagon-pulse 4s ease-in-out infinite;
         }
       `}</style>
     </section>

@@ -181,24 +181,47 @@ const Features: React.FC = () => {
   };
 
   return (
-    <section id="features" className="py-16 md:py-24 bg-white -mt-[20px] overflow-hidden relative">
-      {/* Floating particles background */}
+    <section id="features" className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-white to-gray-50 -mt-[20px] overflow-hidden relative">
+      {/* Portal-style floating particles background */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="floating-particle"
+            className="absolute opacity-10"
             style={{
-              left: `${15 + i * 15}%`,
-              animationDelay: `${i * 2}s`,
-              animationDuration: `${8 + i * 2}s`
+              left: `${10 + i * 12}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              width: '12px',
+              height: '12px',
+              background: `linear-gradient(135deg, ${i % 2 === 0 ? '#667eea' : '#764ba2'} 0%, ${i % 2 === 0 ? '#764ba2' : '#f093fb'} 100%)`,
+              clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${6 + i}s`
             }}
           />
         ))}
+        
+        {/* AI Neural Network Background */}
+        <svg className="absolute inset-0 w-full h-full opacity-5" viewBox="0 0 1200 800">
+          <defs>
+            <linearGradient id="neuralBg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#667eea" />
+              <stop offset="50%" stopColor="#764ba2" />
+              <stop offset="100%" stopColor="#f093fb" />
+            </linearGradient>
+          </defs>
+          <g className="animate-pulse">
+            <path d="M100,200 Q300,100 500,200 T900,200" stroke="url(#neuralBg)" strokeWidth="1" fill="none" />
+            <path d="M150,400 Q350,300 550,400 T950,400" stroke="url(#neuralBg)" strokeWidth="1" fill="none" />
+            <circle cx="100" cy="200" r="2" fill="#667eea" className="animate-ping" />
+            <circle cx="500" cy="200" r="2" fill="#764ba2" className="animate-ping" style={{animationDelay: '1s'}} />
+            <circle cx="900" cy="200" r="2" fill="#f093fb" className="animate-ping" style={{animationDelay: '2s'}} />
+          </g>
+        </svg>
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#004AAD] text-center transform transition-all duration-1000 opacity-0 translate-y-8 animate-title-reveal">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 text-center transform transition-all duration-1000 opacity-0 translate-y-8 animate-title-reveal">
           Our Features
         </h2>
 
@@ -208,7 +231,7 @@ const Features: React.FC = () => {
         >
           {/* AI-Powered Styling */}
           <div 
-            className={`group bg-white rounded-[2px] border border-gray-100 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card shadow-lg hover:shadow-2xl ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-3'
             }`} 
             style={{ transitionDelay: '0ms' }}
@@ -221,31 +244,35 @@ const Features: React.FC = () => {
                 alt="AI-Powered Styling"
                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 group-hover:rotate-2"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               {hoveredCard === 0 && (
                 <div className="absolute inset-0 shimmer-effect pointer-events-none" />
               )}
+              {/* Portal-style corner indicators */}
+              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-purple-400/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="w-2 h-2 bg-purple-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+              </div>
             </div>
-            <div className="p-4 transform transition-all duration-300 group-hover:translate-y-[-2px]">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2 transition-colors duration-300 group-hover:text-[#004AAD] animate-text-wave">
+            <div className="p-6 transform transition-all duration-300 group-hover:translate-y-[-2px]">
+              <h3 className="text-lg font-bold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-purple-700 animate-text-wave">
                 AI-Powered Styling
               </h3>
-              <p className="text-sm text-gray-600 mb-3 transition-colors duration-300 group-hover:text-gray-700">
+              <p className="text-sm text-slate-600 mb-4 transition-colors duration-300 group-hover:text-slate-700 leading-relaxed">
                 Get personalized outfit recommendations based on your style
                 preferences.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-[#004AAD] hover:text-[#973cff] transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
+                className="inline-flex items-center text-slate-900 hover:text-purple-700 transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
               >
-                Learn more <ArrowRight className="ml-2 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
+                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
               </a>
             </div>
           </div>
 
           {/* Character Selection */}
           <div 
-            className={`group bg-white rounded-[2px] border border-gray-100 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card shadow-lg hover:shadow-2xl ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-[-3deg]'
             }`} 
             style={{ transitionDelay: '200ms' }}
@@ -258,31 +285,34 @@ const Features: React.FC = () => {
                 alt="Character Selection"
                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 group-hover:rotate-[-2deg]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               {hoveredCard === 1 && (
                 <div className="absolute inset-0 shimmer-effect pointer-events-none" />
               )}
+              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-blue-400/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="w-2 h-2 bg-blue-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+              </div>
             </div>
-            <div className="p-4 transform transition-all duration-300 group-hover:translate-y-[-2px]">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2 transition-colors duration-300 group-hover:text-[#004AAD] animate-text-wave">
+            <div className="p-6 transform transition-all duration-300 group-hover:translate-y-[-2px]">
+              <h3 className="text-lg font-bold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-blue-700 animate-text-wave">
                 Character Selection
               </h3>
-              <p className="text-sm text-gray-600 mb-3 transition-colors duration-300 group-hover:text-gray-700">
+              <p className="text-sm text-slate-600 mb-4 transition-colors duration-300 group-hover:text-slate-700 leading-relaxed">
                 Pick your character and get style recommendations that match
                 their vibe.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-[#004AAD] hover:text-[#973cff] transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
+                className="inline-flex items-center text-slate-900 hover:text-blue-700 transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
               >
-                Learn more <ArrowRight className="ml-2 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
+                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
               </a>
             </div>
           </div>
 
           {/* Smart Wardrobe Assistant */}
           <div 
-            className={`group bg-white rounded-[2px] border border-gray-100 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 transition-all duration-700 overflow-hidden transform feature-card shadow-lg hover:shadow-2xl ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-2'
             }`} 
             style={{ transitionDelay: '400ms' }}
@@ -295,24 +325,27 @@ const Features: React.FC = () => {
                 alt="Smart Wardrobe Assistant"
                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 group-hover:rotate-1"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               {hoveredCard === 2 && (
                 <div className="absolute inset-0 shimmer-effect pointer-events-none" />
               )}
+              <div className="absolute top-3 right-3 w-6 h-6 border-2 border-pink-400/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="w-2 h-2 bg-pink-500 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+              </div>
             </div>
-            <div className="p-4 transform transition-all duration-300 group-hover:translate-y-[-2px]">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2 transition-colors duration-300 group-hover:text-[#004AAD] animate-text-wave">
+            <div className="p-6 transform transition-all duration-300 group-hover:translate-y-[-2px]">
+              <h3 className="text-lg font-bold text-slate-900 mb-3 transition-colors duration-300 group-hover:text-pink-700 animate-text-wave">
                 Smart Wardrobe Assistant
               </h3>
-              <p className="text-sm text-gray-600 mb-3 transition-colors duration-300 group-hover:text-gray-700">
+              <p className="text-sm text-slate-600 mb-4 transition-colors duration-300 group-hover:text-slate-700 leading-relaxed">
                 Organize your closet and create new outfit combinations with AI
                 assistance.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-[#004AAD] hover:text-[#973cff] transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
+                className="inline-flex items-center text-slate-900 hover:text-pink-700 transition-all duration-300 text-sm font-semibold group-hover:translate-x-1 magnetic-link"
               >
-                Learn more <ArrowRight className="ml-2 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
+                Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:rotate-12" />
               </a>
             </div>
           </div>
@@ -321,14 +354,13 @@ const Features: React.FC = () => {
         {/* Demo Section */}
         <div 
           ref={sectionRef}
-          className={`mt-12 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-8 lg:py-12 gap-12 lg:gap-2 transition-all duration-1000 demo-container ${
+          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 bg-gradient-to-br from-white/80 to-slate-50/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 shadow-lg demo-container ${
             isVisible ? '' : ''
           }`}
-          style={{backgroundColor: '#F4FFD1'}}
         >
           
           <div className="w-full lg:w-3/3 mb-8 lg:mb-0 transform transition-all duration-700">   
-  <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] video-glow overflow-hidden">     
+  <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] video-glow overflow-hidden border border-slate-200/50">     
     <iframe        
       title="vimeo-player"       
       src="https://player.vimeo.com/video/1093285476?h=3e899faaff&autoplay=1&loop=1&muted=1&controls=0&background=1"        
@@ -345,13 +377,12 @@ const Features: React.FC = () => {
           <div className={`w-full lg:w-2/3 text-center lg:text-right px-4 lg:mr-[2rem] -mt-[46px] lg:mt-[-50px] transform transition-all duration-800 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-800 mb-4  transition-all duration-300 hover:scale-105">
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-slate-900 mb-4 transition-all duration-300 hover:scale-105">
               Here is Racan Ai Demo
             </h3>
             <button
               onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-              className="inline-block bg-[#004AAD] text-white px-6 py-3 text-sm md:text-base hover:bg-[#973cff] mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 hover:shadow-lg active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none"
-              style={{borderRadius: '0px'}}
+              className="inline-block bg-gradient-to-r from-slate-900 to-slate-800 text-white px-6 py-3 text-sm md:text-base hover:from-purple-900 hover:to-slate-900 mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 hover:shadow-lg active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none rounded-full"
             >
               Try Racan AI
             </button>
@@ -364,10 +395,10 @@ const Features: React.FC = () => {
             newsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <div className="mb-4 md:mb-0">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 hover:text-[#004AAD] transition-colors duration-300 typewriter-effect" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2 hover:text-purple-700 transition-colors duration-300 typewriter-effect" style={{ fontFamily: 'Poppins, sans-serif' }}>
                 News & Blogs
               </h2>
-              <p className="text-sm text-gray-600 max-w-lg font-normal transition-colors duration-300 hover:text-gray-800 slide-in-text" style={{ fontFamily: 'Azeret Mono, monospace' }}>
+              <p className="text-sm text-slate-600 max-w-lg font-normal transition-colors duration-300 hover:text-slate-800 slide-in-text" style={{ fontFamily: 'Azeret Mono, monospace' }}>
                 Stay updated with the latest from Racan AI. Discover new features, success stories, and fashion insights.
               </p>
             </div>
@@ -376,15 +407,15 @@ const Features: React.FC = () => {
             }`}>
               <button
                 onClick={prevSlide}
-                className="w-10 h-10 rounded-full border border-black border-opacity-[100] flex items-center justify-center hover:bg-[#F4FFD1] hover:border-opacity-80 transition-all duration-300 hover:scale-110 hover:shadow-md active:scale-95 morphing-button"
+                className="w-10 h-10 rounded-full border border-slate-300 border-opacity-[100] flex items-center justify-center hover:bg-slate-100 hover:border-opacity-80 transition-all duration-300 hover:scale-110 hover:shadow-md active:scale-95 morphing-button"
               >
-                <ChevronLeft className="w-4 h-4 text-gray-600 transition-transform duration-300 hover:scale-110" />
+                <ChevronLeft className="w-4 h-4 text-slate-600 transition-transform duration-300 hover:scale-110" />
               </button>
               <button
                 onClick={nextSlide}
-                className="w-10 h-10 rounded-full border border-black border-opacity-[100] flex items-center justify-center hover:bg-[#F4FFD1] hover:border-opacity-80 transition-all duration-300 hover:scale-110 hover:shadow-md active:scale-95 morphing-button"
+                className="w-10 h-10 rounded-full border border-slate-300 border-opacity-[100] flex items-center justify-center hover:bg-slate-100 hover:border-opacity-80 transition-all duration-300 hover:scale-110 hover:shadow-md active:scale-95 morphing-button"
               >
-                <ChevronRight className="w-4 h-4 text-gray-600 transition-transform duration-300 hover:scale-110" />
+                <ChevronRight className="w-4 h-4 text-slate-600 transition-transform duration-300 hover:scale-110" />
               </button>
             </div>
           </div>
@@ -406,7 +437,7 @@ const Features: React.FC = () => {
                     href={item.link} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="block border border-black border-opacity-[0.30] rounded-[2px] overflow-hidden bg-white hover:shadow-xl transition-all duration-500 h-full group hover:scale-[1.02] hover:-translate-y-2 news-card-hover"
+                    className="block border border-slate-200 border-opacity-[0.50] rounded-2xl overflow-hidden bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-500 h-full group hover:scale-[1.02] hover:-translate-y-2 news-card-hover"
                   >
                     <div className="aspect-[4/3] overflow-hidden relative">
                       <img
@@ -414,16 +445,16 @@ const Features: React.FC = () => {
                         alt={item.title}
                         className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 rotating-icon">
-                        <ArrowRight className="w-4 h-4 text-[#004AAD]" />
+                        <ArrowRight className="w-4 h-4 text-slate-900" />
                       </div>
                     </div>
                     <div className="p-4 transform transition-all duration-300 group-hover:translate-y-[-2px]">
-                      <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#004AAD] transition-colors duration-300 glitch-text" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      <h3 className="text-sm font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-purple-700 transition-colors duration-300 glitch-text" style={{ fontFamily: 'Poppins, sans-serif' }}>
                         {item.title}
                       </h3>
-                      <p className="text-xs text-gray-600 mb-3 line-clamp-3 group-hover:text-gray-700 transition-colors duration-300" style={{ fontFamily: 'Azeret Mono, monospace' }}>
+                      <p className="text-xs text-slate-600 mb-3 line-clamp-3 group-hover:text-slate-700 transition-colors duration-300" style={{ fontFamily: 'Azeret Mono, monospace' }}>
                         {item.description}
                       </p>
                     </div>
@@ -464,7 +495,6 @@ const Features: React.FC = () => {
           50% { border-radius: 20%; }
         }
 
-     
         @keyframes wave {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-5px); }
@@ -499,7 +529,7 @@ const Features: React.FC = () => {
           position: absolute;
           width: 6px;
           height: 6px;
-          background: linear-gradient(45deg, #004AAD, #973cff);
+          background: linear-gradient(45deg, #667eea, #764ba2);
           border-radius: 50%;
           animation: float 6s ease-in-out infinite;
           opacity: 0.6;
@@ -511,7 +541,7 @@ const Features: React.FC = () => {
         }
 
         .feature-card:hover {
-          box-shadow: 0 20px 40px rgba(0, 74, 173, 0.15);
+          box-shadow: 0 20px 40px rgba(100, 116, 139, 0.15);
         }
 
         .morphing-button:hover {
@@ -542,7 +572,7 @@ const Features: React.FC = () => {
         }
 
         .video-glow:hover {
-          filter: drop-shadow(0 0 20px rgba(0, 74, 173, 0.3));
+          filter: drop-shadow(0 0 20px rgba(100, 116, 139, 0.3));
         }
 
         .button-morph {
@@ -592,7 +622,7 @@ const Features: React.FC = () => {
           left: -2px;
           right: -2px;
           bottom: -2px;
-          background: linear-gradient(45deg, #004AAD, #973cff, #004AAD);
+          background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
           border-radius: inherit;
           z-index: -1;
           opacity: 0;
@@ -623,29 +653,29 @@ const Features: React.FC = () => {
 
       {/* Cookie Popup */}
       {showCookiePopup && (
-        <div className="fixed bottom-0 left-0 right-0 md:bottom-4 md:left-auto md:right-4 md:max-w-md bg-black text-white p-4 md:rounded shadow-lg z-50 border border-gray-700 cookie-popup">
+        <div className="fixed bottom-0 left-0 right-0 md:bottom-4 md:left-auto md:right-4 md:max-w-md bg-slate-900 text-white p-4 md:rounded-2xl shadow-lg z-50 border border-slate-700 cookie-popup">
           <h3 className="text-lg font-semibold mb-2">Cookie settings</h3>
-          <p className="text-sm text-gray-300 mb-4">
+          <p className="text-sm text-slate-300 mb-4">
             We use cookies to deliver and improve our services, analyze site usage, and if you agree, to customize or personalize your experience and market our services to you. You can read our Cookie Policy{' '}
             <span className="underline cursor-pointer">here</span>.
           </p>
           <div className="space-y-2">
             <button
               onClick={handleCustomizeCookies}
-              className="w-full py-2 px-4 border border-gray-600 text-white rounded hover:bg-gray-800 transition-colors duration-300 text-sm"
+              className="w-full py-2 px-4 border border-slate-600 text-white rounded-full hover:bg-slate-800 transition-colors duration-300 text-sm"
             >
               Customize Cookie Settings
             </button>
             <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={handleRejectCookies}
-                className="flex-1 py-2 px-4 bg-transparent border border-gray-600 text-white rounded hover:bg-gray-800 transition-colors duration-300 text-sm"
+                className="flex-1 py-2 px-4 bg-transparent border border-slate-600 text-white rounded-full hover:bg-slate-800 transition-colors duration-300 text-sm"
               >
                 Reject All Cookies
               </button>
               <button
                 onClick={handleAcceptCookies}
-                className="flex-1 py-2 px-4 bg-white text-black rounded hover:bg-gray-200 transition-colors duration-300 text-sm font-medium"
+                className="flex-1 py-2 px-4 bg-white text-slate-900 rounded-full hover:bg-slate-200 transition-colors duration-300 text-sm font-medium"
               >
                 Accept All Cookies
               </button>
@@ -656,14 +686,14 @@ const Features: React.FC = () => {
 
       {/* Cookie Customize Modal */}
       {showCustomizeModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-slate-900 bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold text-gray-900">Cookie Preferences</h3>
+                <h3 className="text-xl font-semibold text-slate-900">Cookie Preferences</h3>
                 <button
                   onClick={() => setShowCustomizeModal(false)}
-                  className="text-gray-400 hover:text-gray-500 transition-colors"
+                  className="text-slate-400 hover:text-slate-500 transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -673,15 +703,15 @@ const Features: React.FC = () => {
                 {/* Necessary Cookies */}
                 <div className="flex items-center justify-between py-2 border-b">
                   <div>
-                    <h4 className="font-medium text-gray-900">Necessary Cookies</h4>
-                    <p className="text-sm text-gray-500">Required for the website to function properly</p>
+                    <h4 className="font-medium text-slate-900">Necessary Cookies</h4>
+                    <p className="text-sm text-slate-500">Required for the website to function properly</p>
                   </div>
                   <div className="relative">
                     <input
                       type="checkbox"
                       checked={true}
                       disabled
-                      className="h-4 w-4 rounded border-gray-300 text-[#004AAD] focus:ring-[#004AAD] cursor-not-allowed opacity-50"
+                      className="h-4 w-4 rounded border-slate-300 text-purple-600 focus:ring-purple-600 cursor-not-allowed opacity-50"
                     />
                   </div>
                 </div>
@@ -689,15 +719,15 @@ const Features: React.FC = () => {
                 {/* Analytics Cookies */}
                 <div className="flex items-center justify-between py-2 border-b">
                   <div>
-                    <h4 className="font-medium text-gray-900">Analytics Cookies</h4>
-                    <p className="text-sm text-gray-500">Help us improve our website by collecting usage information</p>
+                    <h4 className="font-medium text-slate-900">Analytics Cookies</h4>
+                    <p className="text-sm text-slate-500">Help us improve our website by collecting usage information</p>
                   </div>
                   <div className="relative">
                     <input
                       type="checkbox"
                       checked={cookiePreferences.analytics}
                       onChange={() => handleTogglePreference('analytics')}
-                      className="h-4 w-4 rounded border-gray-300 text-[#004AAD] focus:ring-[#004AAD] cursor-pointer"
+                      className="h-4 w-4 rounded border-slate-300 text-purple-600 focus:ring-purple-600 cursor-pointer"
                     />
                   </div>
                 </div>
@@ -705,15 +735,15 @@ const Features: React.FC = () => {
                 {/* Marketing Cookies */}
                 <div className="flex items-center justify-between py-2 border-b">
                   <div>
-                    <h4 className="font-medium text-gray-900">Marketing Cookies</h4>
-                    <p className="text-sm text-gray-500">Used to deliver relevant ads and marketing campaigns</p>
+                    <h4 className="font-medium text-slate-900">Marketing Cookies</h4>
+                    <p className="text-sm text-slate-500">Used to deliver relevant ads and marketing campaigns</p>
                   </div>
                   <div className="relative">
                     <input
                       type="checkbox"
                       checked={cookiePreferences.marketing}
                       onChange={() => handleTogglePreference('marketing')}
-                      className="h-4 w-4 rounded border-gray-300 text-[#004AAD] focus:ring-[#004AAD] cursor-pointer"
+                      className="h-4 w-4 rounded border-slate-300 text-purple-600 focus:ring-purple-600 cursor-pointer"
                     />
                   </div>
                 </div>
@@ -721,15 +751,15 @@ const Features: React.FC = () => {
                 {/* Personalization Cookies */}
                 <div className="flex items-center justify-between py-2 border-b">
                   <div>
-                    <h4 className="font-medium text-gray-900">Personalization Cookies</h4>
-                    <p className="text-sm text-gray-500">Remember your preferences and provide personalized features</p>
+                    <h4 className="font-medium text-slate-900">Personalization Cookies</h4>
+                    <p className="text-sm text-slate-500">Remember your preferences and provide personalized features</p>
                   </div>
                   <div className="relative">
                     <input
                       type="checkbox"
                       checked={cookiePreferences.personalization}
                       onChange={() => handleTogglePreference('personalization')}
-                      className="h-4 w-4 rounded border-gray-300 text-[#004AAD] focus:ring-[#004AAD] cursor-pointer"
+                      className="h-4 w-4 rounded border-slate-300 text-purple-600 focus:ring-purple-600 cursor-pointer"
                     />
                   </div>
                 </div>
@@ -738,13 +768,13 @@ const Features: React.FC = () => {
               <div className="mt-6 flex justify-end gap-3">
                 <button
                   onClick={() => setShowCustomizeModal(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-500 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSavePreferences}
-                  className="px-4 py-2 bg-[#004AAD] text-white text-sm font-medium rounded hover:bg-[#973cff] transition-colors"
+                  className="px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-purple-900 transition-colors"
                 >
                   Save Preferences
                 </button>
