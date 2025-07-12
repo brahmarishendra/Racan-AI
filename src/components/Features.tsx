@@ -185,7 +185,7 @@ const Features: React.FC = () => {
   };
 
   return (
-    <section id="features" className="py-16 md:py-24 bg-[#FF5722] -mt-[20px] overflow-hidden relative">
+    <section id="features" className="py-16 md:py-24 bg-[#FF8A50] -mt-[20px] overflow-hidden relative">
       {/* Scrolling Text Background */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <div 
@@ -208,9 +208,10 @@ const Features: React.FC = () => {
         >
           {/* AI-Powered Styling */}
           <div 
-            className={`group bg-black/90 backdrop-blur-sm rounded-2xl border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-3'
             }`} 
+            style={{ borderRadius: '1px' }}
             style={{ transitionDelay: '0ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
@@ -225,16 +226,16 @@ const Features: React.FC = () => {
               </div>
             </div>
             <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-orange-400 mb-3 transition-colors duration-300 animate-text-wave">
+              <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
                 AI-Powered Styling
               </h3>
-              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
                 Get personalized outfit recommendations based on your style
                 preferences.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-orange-400 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
+                className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
                 Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
@@ -243,9 +244,10 @@ const Features: React.FC = () => {
 
           {/* Character Selection */}
           <div 
-            className={`group bg-black/90 backdrop-blur-sm rounded-2xl border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-[-3deg]'
             }`} 
+            style={{ borderRadius: '1px' }}
             style={{ transitionDelay: '200ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
@@ -260,16 +262,16 @@ const Features: React.FC = () => {
               </div>
             </div>
             <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-orange-400 mb-3 transition-colors duration-300 animate-text-wave">
+              <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
                 Character Selection
               </h3>
-              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
                 Pick your character and get style recommendations that match
                 their vibe.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-orange-400 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
+                className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
                 Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
@@ -278,9 +280,10 @@ const Features: React.FC = () => {
 
           {/* Smart Wardrobe Assistant */}
           <div 
-            className={`group bg-black/90 backdrop-blur-sm rounded-2xl border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
+            className={`group bg-[#EDEAF5] backdrop-blur-sm border border-orange-500/30 transition-all duration-700 overflow-hidden transform feature-card ${
               featuresVisible ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-12 rotate-2'
             }`} 
+            style={{ borderRadius: '1px' }}
             style={{ transitionDelay: '400ms' }}
           >
             <div className="aspect-[4/3] overflow-hidden relative">
@@ -295,16 +298,16 @@ const Features: React.FC = () => {
               </div>
             </div>
             <div className="p-6 transform transition-all duration-300 translate-y-[-2px]">
-              <h3 className="text-lg font-bold text-orange-400 mb-3 transition-colors duration-300 animate-text-wave">
+              <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors duration-300 animate-text-wave">
                 Smart Wardrobe Assistant
               </h3>
-              <p className="text-sm text-gray-300 mb-4 transition-colors duration-300 leading-relaxed">
+              <p className="text-sm text-gray-600 mb-4 transition-colors duration-300 leading-relaxed">
                 Organize your closet and create new outfit combinations with AI
                 assistance.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center text-orange-400 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
+                className="inline-flex items-center text-orange-600 transition-all duration-300 text-sm font-semibold translate-x-1 magnetic-link"
               >
                 Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 translate-x-1 rotate-12" />
               </a>
@@ -315,14 +318,14 @@ const Features: React.FC = () => {
         {/* Demo Section */}
         <div 
           ref={sectionRef}
-          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 backdrop-blur-sm rounded-2xl border border-orange-500/30 demo-container ${
+          className={`mt-16 w-full flex flex-col lg:flex-row items-center px-4 lg:px-8 py-12 lg:py-16 gap-12 lg:gap-2 transition-all duration-1000 backdrop-blur-sm border border-orange-500/30 demo-container ${
             isVisible ? '' : ''
           }`}
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+          style={{ backgroundColor: '#EDEAF5', borderRadius: '1px' }}
         >
           
           <div className="w-full lg:w-3/3 mb-8 lg:mb-0 transform transition-all duration-700">   
-            <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] rounded-2xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] video-glow overflow-hidden border border-orange-500/30">     
+            <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] video-glow overflow-hidden border border-orange-500/30" style={{ borderRadius: '1px' }}>     
               <iframe        
                 title="vimeo-player"       
                 src="https://player.vimeo.com/video/1093285476?h=3e899faaff&autoplay=1&loop=1&muted=1&controls=0&background=1"        
@@ -339,12 +342,12 @@ const Features: React.FC = () => {
           <div className={`w-full lg:w-2/3 text-center lg:text-right px-4 lg:mr-[2rem] -mt-[46px] lg:mt-[-50px] transform transition-all duration-800 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4 transition-all duration-300">
-              Here is <span className="racan-ai-text text-orange-400">Racan AI</span> Demo
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 transition-all duration-300">
+              Here is <span className="racan-ai-text text-orange-600">Racan AI</span> Demo
             </h3>
             <button
               onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-              className="inline-block bg-gradient-to-r from-orange-600 to-orange-700 text-white px-6 py-3 text-sm md:text-base hover:from-orange-700 hover:to-orange-800 mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none rounded-full"
+              className="inline-block bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 text-sm md:text-base hover:from-orange-600 hover:to-orange-700 mt-[0px] lg:mt-[20px] transition-all duration-300 lg:mr-[12rem] transform hover:scale-105 active:scale-95 hover:-translate-y-1 button-morph cursor-pointer border-none rounded-full"
             >
               Try Racan AI
             </button>

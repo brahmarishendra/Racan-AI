@@ -251,12 +251,12 @@ const Navbar = () => {
 
         /* Try Racan Button - Portal Gaming Style */
         .portal-cta-button {
-          background: #000000;
+          background: #FF8A50;
           color: white;
-          padding: 8px 20px;
+          padding: 10px 24px;
           border-radius: 50px;
           font-weight: 600;
-          font-size: 14px;
+          font-size: 15px;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           position: relative;
           overflow: hidden;
@@ -285,9 +285,9 @@ const Navbar = () => {
         }
 
         .portal-cta-button:hover {
-          background: #000000;
+          background: #FF7A40;
           transform: translateY(-2px);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 8px 32px rgba(255, 138, 80, 0.3);
         }
 
         .portal-cta-button:hover .arrow-icon {
@@ -298,6 +298,10 @@ const Navbar = () => {
           transition: transform 0.3s ease;
           width: 16px;
           height: 16px;
+          background: white;
+          border-radius: 50%;
+          padding: 2px;
+          color: #FF8A50;
         }
 
         /* Custom cursor styles */
@@ -622,13 +626,13 @@ const Navbar = () => {
 
         /* Portal Gaming Style Try Racan button for mobile */
         .mobile-try-racan-btn {
-          background: #000000;
+          background: #FF8A50;
           color: white;
-          padding: 0.8rem 2rem;
+          padding: 0.9rem 2.2rem;
           border-radius: 50px;
           text-decoration: none;
           font-weight: 600;
-          font-size: 1rem;
+          font-size: 1.05rem;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: inline-flex;
           align-items: center;
@@ -656,13 +660,20 @@ const Navbar = () => {
         }
 
         .mobile-try-racan-btn:hover {
-          background: #000000;
+          background: #FF7A40;
           transform: translateY(-2px);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 8px 32px rgba(255, 138, 80, 0.3);
         }
 
         .mobile-try-racan-btn:hover .arrow-icon {
           transform: translate(2px, -2px);
+        }
+
+        .mobile-try-racan-btn .arrow-icon {
+          background: white;
+          border-radius: 50%;
+          padding: 2px;
+          color: #FF8A50;
         }
 
         /* Responsive font sizes */
@@ -674,8 +685,8 @@ const Navbar = () => {
           }
           
           .mobile-try-racan-btn {
-            font-size: 0.95rem;
-            padding: 0.7rem 1.75rem;
+            font-size: 1rem;
+            padding: 0.8rem 1.9rem;
           }
         }
 
