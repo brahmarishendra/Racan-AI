@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, User, ChevronDown, Bot, ShoppingBag } from 'lucide-react';
+import { LogOut, User, ChevronDown, Bot, ArrowUpRight } from 'lucide-react';
 import { getCurrentUser, signOut, onAuthStateChange } from '../lib/supabase';
 
 const Navbar = () => {
@@ -171,48 +171,69 @@ const Navbar = () => {
           box-shadow: 0 4px 32px rgba(0, 0, 0, 0.04);
         }
 
+        /* Navigation Container - Portal Gaming Style */
+        .nav-container {
+          background: rgba(248, 250, 252, 0.8);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 50px;
+          padding: 8px 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          transition: all 0.3s ease;
+        }
+
+        .nav-container:hover {
+          background: rgba(248, 250, 252, 0.95);
+          border-color: rgba(0, 0, 0, 0.12);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
         .portal-nav-item {
           position: relative;
-          padding: 8px 16px;
-          border-radius: 12px;
+          padding: 12px 20px;
+          border-radius: 25px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          color: #374151;
+          color: #64748b;
           font-weight: 500;
+          font-size: 14px;
+          text-decoration: none;
+          cursor: pointer;
+          border: none;
+          background: transparent;
         }
 
         .portal-nav-item:hover {
-          background: rgba(103, 126, 234, 0.08);
-          color: #667eea;
+          background: rgba(255, 255, 255, 0.9);
+          color: #1e293b;
           transform: translateY(-1px);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
-        .portal-nav-item::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(135deg, rgba(103, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-          border-radius: 12px;
-          opacity: 0;
-          transition: opacity 0.3s ease;
+        .portal-nav-item.active {
+          background: rgba(255, 255, 255, 0.9);
+          color: #1e293b;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
-        .portal-nav-item:hover::before {
-          opacity: 1;
-        }
-
+        /* Try Racan Button - Portal Gaming Style */
         .portal-cta-button {
-          background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+          background: #000000;
           color: white;
-          padding: 10px 24px;
+          padding: 12px 24px;
           border-radius: 50px;
           font-weight: 600;
+          font-size: 14px;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           position: relative;
           overflow: hidden;
-          border: 1px solid rgba(0, 0, 0, 0.1);
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          text-decoration: none;
         }
 
         .portal-cta-button::before {
@@ -231,9 +252,19 @@ const Navbar = () => {
         }
 
         .portal-cta-button:hover {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: #000000;
           transform: translateY(-2px);
-          box-shadow: 0 8px 32px rgba(103, 126, 234, 0.3);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .portal-cta-button:hover .arrow-icon {
+          transform: translate(2px, -2px);
+        }
+
+        .arrow-icon {
+          transition: transform 0.3s ease;
+          width: 16px;
+          height: 16px;
         }
 
         /* Custom cursor styles */
@@ -558,7 +589,7 @@ const Navbar = () => {
 
         /* Portal Gaming Style Try Racan button for mobile */
         .mobile-try-racan-btn {
-          background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+          background: #000000;
           color: white;
           padding: 0.8rem 2rem;
           border-radius: 50px;
@@ -566,7 +597,9 @@ const Navbar = () => {
           font-weight: 600;
           font-size: 1rem;
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
           margin-top: 1.5rem;
           border: none;
           position: relative;
@@ -590,9 +623,13 @@ const Navbar = () => {
         }
 
         .mobile-try-racan-btn:hover {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: #000000;
           transform: translateY(-2px);
-          box-shadow: 0 8px 32px rgba(103, 126, 234, 0.3);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-try-racan-btn:hover .arrow-icon {
+          transform: translate(2px, -2px);
         }
 
         /* Responsive font sizes */
@@ -631,73 +668,77 @@ const Navbar = () => {
             onClick={() => handleNavigation('/')}
           />
 
-          <nav className="hidden md:flex items-center space-x-2">
-            <a
-              href="#features"
-              className="portal-nav-item"
-            >
-              Features
-            </a>
-            
-            {/* Products Dropdown - WITH ARROW for Desktop */}
-            <div 
-              className="products-dropdown-container"
-              onMouseEnter={handleDesktopProductsHover}
-              onMouseLeave={handleDesktopProductsLeave}
-            >
-              <button
-                className="portal-nav-item flex items-center"
+          {/* Desktop Navigation - Portal Gaming Style Container */}
+          <div className="hidden md:flex items-center gap-6">
+            <div className="nav-container">
+              <a
+                href="#features"
+                className="portal-nav-item"
               >
-                Products
-                <ChevronDown 
-                  className={`ml-1 w-4 h-4 transition-transform duration-200 ${
-                    isProductsDropdownOpen ? 'rotate-180' : ''
-                  }`} 
-                />
-              </button>
+                Features
+              </a>
               
-              <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
+              {/* Products Dropdown */}
+              <div 
+                className="products-dropdown-container"
+                onMouseEnter={handleDesktopProductsHover}
+                onMouseLeave={handleDesktopProductsLeave}
+              >
                 <button
-                  onClick={handleTryRacanClick}
-                  className="dropdown-item w-full text-left"
+                  className="portal-nav-item flex items-center"
                 >
-                  <div className="dropdown-item-icon">
-                    <Bot className="w-5 h-5 text-[#667eea]" />
-                  </div>
-                  <div className="dropdown-item-content">
-                    <h3>Racan AI Chat Bot</h3>
-                    <p>AI-powered fashion assistant for personalized styling</p>
-                  </div>
+                  Products
+                  <ChevronDown 
+                    className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                      isProductsDropdownOpen ? 'rotate-180' : ''
+                    }`} 
+                  />
                 </button>
                 
-                <a
-                  href="https://dreamxworld.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="dropdown-item"
-                >
-                  <div className="dropdown-item-icon">
-                    <img
-                      src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
-                      alt="DreamX"
-                      className="w-5 h-5 rounded-sm object-cover"
-                    />
-                  </div>
-                  <div className="dropdown-item-content">
-                    <h3>DreamX Ecommerce</h3>
-                    <p>Premium fashion marketplace with curated collections</p>
-                  </div>
-                </a>
+                <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
+                  <button
+                    onClick={handleTryRacanClick}
+                    className="dropdown-item w-full text-left"
+                  >
+                    <div className="dropdown-item-icon">
+                      <Bot className="w-5 h-5 text-[#667eea]" />
+                    </div>
+                    <div className="dropdown-item-content">
+                      <h3>Racan AI Chat Bot</h3>
+                      <p>AI-powered fashion assistant for personalized styling</p>
+                    </div>
+                  </button>
+                  
+                  <a
+                    href="https://dreamxworld.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="dropdown-item"
+                  >
+                    <div className="dropdown-item-icon">
+                      <img
+                        src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
+                        alt="DreamX"
+                        className="w-5 h-5 rounded-sm object-cover"
+                      />
+                    </div>
+                    <div className="dropdown-item-content">
+                      <h3>DreamX Ecommerce</h3>
+                      <p>Premium fashion marketplace with curated collections</p>
+                    </div>
+                  </a>
+                </div>
               </div>
+
+              <button
+                onClick={() => handleNavigation('/about')}
+                className="portal-nav-item"
+              >
+                About Us
+              </button>
             </div>
 
-            <button
-              onClick={() => handleNavigation('/about')}
-              className="portal-nav-item"
-            >
-              About Us
-            </button>
-            
+            {/* User Section or Try Racan Button */}
             {loading ? (
               <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
             ) : user ? (
@@ -725,9 +766,10 @@ const Navbar = () => {
                 className="portal-cta-button"
               >
                 Try Racan
+                <ArrowUpRight className="arrow-icon" />
               </button>
             )}
-          </nav>
+          </div>
 
           {/* Hamburger Menu Button */}
           <button
@@ -755,7 +797,7 @@ const Navbar = () => {
             Features
           </a>
           
-          {/* Mobile Products Dropdown WITHOUT Arrow */}
+          {/* Mobile Products Dropdown */}
           <div className="w-full flex flex-col items-center">
             <button
               onClick={handleMobileProductsToggle}
@@ -833,6 +875,7 @@ const Navbar = () => {
               className="mobile-try-racan-btn"
             >
               Try Racan
+              <ArrowUpRight className="arrow-icon" />
             </button>
           )}
         </nav>
