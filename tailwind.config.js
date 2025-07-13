@@ -1,15 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
-        mono: ['var(--font-ibm-plex-mono)', 'monospace'],
-        manrope: ['var(--font-manrope)', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'monospace'],
+        manrope: ['Manrope', 'sans-serif'],
       },
       colors: {
         primary: {
@@ -59,4 +55,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
