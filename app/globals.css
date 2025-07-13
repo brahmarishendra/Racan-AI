@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-ibm-plex-mono), monospace;
     scroll-behavior: smooth;
   }
   
@@ -15,7 +13,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Manrope', sans-serif;
+    font-family: var(--font-manrope), sans-serif;
   }
 }
 
