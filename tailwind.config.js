@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
         mono: ['"IBM Plex Mono"', 'monospace'],
         manrope: ['Manrope', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        azeret: ['"Azeret Mono"', 'monospace'],
       },
       colors: {
         primary: {
@@ -44,6 +46,12 @@ export default {
           800: '#3d1966',
           900: '#1e0c33',
         },
+        racan: {
+          blue: '#004AAD',
+          purple: '#973cff',
+          pink: '#ff3366',
+          red: '#d70153',
+        }
       },
       animation: {
         float: 'float 8s ease-in-out infinite',
@@ -51,8 +59,73 @@ export default {
         floatRight: 'floatRight 8s ease-in-out infinite',
         fadeInUp: 'fadeInUp 1s ease-out forwards',
         scrollWheel: 'scrollWheel 1.5s infinite',
+        textWave: 'textWave 2s ease-in-out infinite',
+        expandWidth: 'expandWidth 2s ease-out forwards',
+        fadeInPulse: 'fadeInPulse 0.4s ease-out forwards',
+        gallerySlide: 'gallerySlide 20s linear infinite',
+        racanSlide: 'racanSlide 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        drawStroke: 'drawStroke 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        fillPath: 'fillPath 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        finalGlow: 'finalGlow 0.4s ease-in-out',
+        drawConnection: 'drawConnection 0.3s ease-out forwards',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '88': '22rem',
+        '100': '25rem',
+        '112': '28rem',
+        '128': '32rem',
+      },
+      screens: {
+        'xs': '475px',
+        '3xl': '1600px',
+      },
+      zIndex: {
+        '60': '60',
+        '70': '70',
+        '80': '80',
+        '90': '90',
+        '100': '100',
+      },
+      backdropBlur: {
+        xs: '2px',
+      },
+      boxShadow: {
+        'glow': '0 0 20px rgba(151, 60, 255, 0.3)',
+        'glow-blue': '0 0 20px rgba(0, 74, 173, 0.3)',
+        'glow-pink': '0 0 20px rgba(255, 51, 102, 0.3)',
+      },
+      borderRadius: {
+        '4xl': '2rem',
+      },
+      transitionDuration: {
+        '400': '400ms',
+        '600': '600ms',
+        '800': '800ms',
+        '1200': '1200ms',
+      },
+      transitionTimingFunction: {
+        'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+        'smooth': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
       },
     },
   },
   plugins: [],
+  safelist: [
+    'animate-fadeInUp',
+    'animate-float',
+    'animate-textWave',
+    'animate-expandWidth',
+    'animate-fadeInPulse',
+    'animate-gallerySlide',
+    'animate-racanSlide',
+    'line-clamp-2',
+    'line-clamp-3',
+    'z-navbar',
+    'z-mobile-menu',
+    'z-dropdown',
+    'z-modal',
+    'z-loading',
+  ],
 };
