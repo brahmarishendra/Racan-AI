@@ -89,8 +89,8 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4 text-white">Contact Us</h3>
             <div className="flex items-center space-x-3 mb-3">
               <Mail size={18} className="text-gray-400" />
-              <a href="mailto:ssbkfdurga17@gmail.com" className="text-gray-400 hover:text-white transition-colors duration-300">
-               <b> racan8@zohomail.in </b>
+              <a href="mailto:racan8@zohomail.in" className="text-gray-400 hover:text-white transition-colors duration-300">
+               <b>racan8@zohomail.in</b>
               </a>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
