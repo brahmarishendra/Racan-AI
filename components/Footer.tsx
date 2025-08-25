@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
               <a href="#" className="text-gray-400 hover:text-gray-300 transition-colors duration-300 transform hover:scale-110">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-300 transition-colors duration-300 transform hover:scale-110">
+              <a href="https://cal.com/racacn-ai/meeting" className="text-gray-400 hover:text-gray-300 transition-colors duration-300 transform hover:scale-110">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4 text-white">Resources</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">Blog</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">Help Center</a></li>
+              <li><a href="https://cal.com/racacn-ai/meeting" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">collab with us</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">Privacy Policy</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">Terms of Service</a></li>
             </ul>
