@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4 text-white">Resources</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">Blog</a></li>
-              <li><a href="https://cal.com/racacn-ai/meeting" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">collab with us</a></li>
+              <li><a href="https://cal.com/racacn-ai/30min" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">Contact to add your Brand</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">Privacy Policy</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300 hover:translate-x-1 transform inline-block">Terms of Service</a></li>
             </ul>
