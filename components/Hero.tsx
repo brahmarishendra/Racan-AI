@@ -458,7 +458,7 @@ function Hero() {
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
-                   Pre Sales Book Now →
+                   Pre-Sales · Book Now →
                 </button>
               </div>
 
