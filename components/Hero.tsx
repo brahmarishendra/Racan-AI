@@ -435,7 +435,7 @@ function Hero() {
                 </p>
 
                 <button
-                  onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
+                  onClick={() => window.location.href = 'https://cal.com/racacn-ai/30min'}
                   style={{
                     background: '#ff3366',
                     color: 'white',
