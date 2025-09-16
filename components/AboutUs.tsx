@@ -137,20 +137,20 @@ const AboutUs: React.FC = () => {
       name: "Ganji Lokesh",
       role: "product manager",
       image: "https://i.postimg.cc/pXkFjC7K/Whats-App-Image-2025-03-08-at-23-17-43-05d1786f.jpg",
-      linkedin: "#",
+      linkedin: "https://www.linkedin.com/in/ganji-lokesh-301061223/",
     },
     {
       id: 3,
       name: "Sai deepak ambati",
       role: "AI Automation & Workflow",
       image: "https://i.postimg.cc/25C9649n/Whats-App-Image-2025-09-16-at-22-48-59-3206fc85.jpg",
-      linkedin: "#",
+      linkedin: "https://www.linkedin.com/in/sai-deepak-ambati-85454b31b/",
     },
     {
       id: 4,
       name: "Amy Zanatta",
       role: "Fashion Stylist",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCV9rQU9MMA82on-J2xaoJEZDMXr2UfIT1vp0JOCaEEmrm5eeUbbzOswjLSZ6OD4LnWRI&usqp=CAUg",
+      image: "https://stylewithingrace.com/wp-content/uploads/2024/01/New-About-Page-Photo-2024.png",
       website: "https://stylewithingrace.com/",
     }
   ];
