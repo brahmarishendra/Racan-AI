@@ -135,15 +135,15 @@ const AboutUs: React.FC = () => {
     {
       id: 2,
       name: "Ganji Lokesh",
-      role: "Co-founder",
+      role: "product manager",
       image: "https://i.postimg.cc/pXkFjC7K/Whats-App-Image-2025-03-08-at-23-17-43-05d1786f.jpg",
       linkedin: "#",
     },
     {
       id: 3,
-      name: "Vaishnavi Rajesh",
-      role: "Partner & Marketing",
-      image: "https://i.postimg.cc/C1LdPJHg/Whats-App-Image-2025-03-08-at-15-53-37-b38eef7f.jpg",
+      name: "Sai deepak ambati",
+      role: "AI Automation & Workflow",
+      image: "https://i.postimg.cc/25C9649n/Whats-App-Image-2025-09-16-at-22-48-59-3206fc85.jpg",
       linkedin: "#",
     },
     {
