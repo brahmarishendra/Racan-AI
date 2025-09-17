@@ -128,7 +128,7 @@ const AboutUs: React.FC = () => {
     {
       id: 1,
       name: "Kesari Brahmarishendra",
-      role: "UI Developer",
+      role: "Co-founder",
       image: "https://i.postimg.cc/Hxh5hDFw/1740918461489.jpg",
       linkedin: "https://www.linkedin.com/in/kesari-brahmarishendra-8a54b0260/",
     },
