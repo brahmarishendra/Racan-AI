@@ -132,13 +132,6 @@ const AboutUs: React.FC = () => {
       image: "https://i.postimg.cc/Hxh5hDFw/1740918461489.jpg",
       linkedin: "https://www.linkedin.com/in/kesari-brahmarishendra-8a54b0260/",
     },
-    {/*{
-      id: 2,
-      name: "Ganji Lokesh",
-      role: "product manager",
-      image: "https://i.postimg.cc/pXkFjC7K/Whats-App-Image-2025-03-08-at-23-17-43-05d1786f.jpg",
-      linkedin: "https://www.linkedin.com/in/trisa-singha-1a5567343",
-    },*/}
     {
       id: 2,
       name: "Th Trisa Singha",
@@ -383,3 +376,11 @@ const AboutUs: React.FC = () => {
 };
 
 export default AboutUs;
+
+    {/*{
+      id: 2,
+      name: "Ganji Lokesh",
+      role: "product manager",
+      image: "https://i.postimg.cc/pXkFjC7K/Whats-App-Image-2025-03-08-at-23-17-43-05d1786f.jpg",
+      linkedin: "https://www.linkedin.com/in/trisa-singha-1a5567343",
+    },*/}
