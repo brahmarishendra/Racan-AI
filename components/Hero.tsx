@@ -435,7 +435,7 @@ function Hero() {
                 </p>
 
                 <button
-                  onClick={() => window.location.href = 'https://cal.com/racacn-ai/30min'}
+                  onClick={() => window.location.href = 'https://photo-lab-racan.preview.emergentagent.com'}
                   style={{
                     background: '#ff3366',
                     color: 'white',
@@ -458,7 +458,7 @@ function Hero() {
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
-                   Pre-Sales · Book Now →
+                   Try Racan Studio
                 </button>
               </div>
 
