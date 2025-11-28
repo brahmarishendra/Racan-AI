@@ -435,7 +435,7 @@ function Hero() {
                 </p>
 
                 <button
-                  onClick={() => window.location.href = 'https://photo-lab-racan.preview.emergentagent.com'}
+                  onClick={() => window.location.href = 'https://lookbook-psus.onrender.com'}
                   style={{
                     background: '#ff3366',
                     color: 'white',
