@@ -458,7 +458,7 @@ function Hero() {
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
-                   Try Racan Studio
+                   Try Racan-ai LookBook
                 </button>
               </div>
 
