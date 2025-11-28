@@ -506,7 +506,7 @@ function Hero() {
                     playsInline
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   >
-                    <source src="https://packaged-media.redd.it/eocwyp64008f1/pb/m2-res_640p.mp4?m=DASHPlaylist.mpd&v=1&e=1750406400&s=786f2e47ec0a6a250d567c672b5f266cf682a784" type="video/mp4" />
+                    <source src="https://cdn.higgsfield.ai/minimax_hailuo_sample/301216be-1a10-4af6-b4e1-10b0d1c30b40.mp4" type="video/mp4" />
                   </video>
                 </div>
                 
