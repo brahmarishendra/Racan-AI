@@ -506,7 +506,7 @@ function Hero() {
                     playsInline
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   >
-                    <source src="https://cdn.higgsfield.ai/minimax_hailuo_sample/301216be-1a10-4af6-b4e1-10b0d1c30b40.mp4" type="video/mp4" />
+                    <source src="https://cdn.higgsfield.ai/seedance_sample/84df5d61-ac1c-4264-8c21-8b36235b077f.mp4" type="video/mp4" />
                   </video>
                 </div>
                 
