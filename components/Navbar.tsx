@@ -126,19 +126,11 @@ const Navbar = () => {
   };
 
   const handleMobileProductClick = (url: string) => {
-    if (url === 'https://chat-with-racan.vercel.app') {
+    if (url === 'https://lookbook-psus.onrender.com') {
       // For mobile products dropdown, use the same auth logic
       if (user) {
         window.location.href = url;
-      } else {
-        window.location.href = '/login';
-      }
-    } else {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-    setIsMenuOpen(false);
-    setIsMobileProductsOpen(false);
-  };
+      } 
 
   // Desktop hover handlers
   const handleDesktopProductsHover = () => {
