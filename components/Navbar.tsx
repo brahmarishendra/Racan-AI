@@ -153,10 +153,10 @@ const Navbar = () => {
     // Check if user is authenticated
     if (user) {
       // If authenticated, go directly to chat
-      window.location.href = 'https://chat-with-racan.vercel.app';
+      window.location.href = 'https://lookbook-psus.onrender.com/';
     } else {
       // If not authenticated, show auth pages first
-      window.location.href = '/login';
+      window.location.href = '';
     }
   };
 
