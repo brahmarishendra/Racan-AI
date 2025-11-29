@@ -126,7 +126,7 @@ const Navbar = () => {
   };
 
   const handleMobileProductClick = (url: string) => {
-    if (url === 'https://lookbook-psus.onrender.com') {
+    url === 'https://lookbook-psus.onrender.com' }
       // For mobile products dropdown, use the same auth logic
       if (user) {
         window.location.href = url;
