@@ -142,14 +142,8 @@ const Navbar = () => {
   };
 
   const handleTryRacanClick = () => {
-    // Check if user is authenticated
-    if (user) {
       // If authenticated, go directly to chat
       window.location.href = 'https://lookbook-psus.onrender.com/';
-    } else {
-      // If not authenticated, show auth pages first
-      window.location.href = '';
-    }
   };
 
   return (
