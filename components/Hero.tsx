@@ -410,7 +410,7 @@ function Hero() {
                   marginBottom: '5px',
                   fontWeight: '600'
                 }}>
-                  AI-powered assistant + Fashion
+                  Building India’s First Full-Fledged 
                 </div>
                 <div style={{
                   fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
@@ -418,7 +418,7 @@ function Hero() {
                   marginBottom: '20px',
                   fontWeight: '600'
                 }}>
-                  Ecommerce
+                  AI-Commerce Ecosystem for Fashion
                 </div>
               </div>
 
