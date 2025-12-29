@@ -38,7 +38,7 @@ const About: React.FC = () => {
         <div className="w-full md:w-1/2 bg-[#022c22] relative overflow-hidden flex items-center p-6 md:p-8 h-[600px]">
           {/* Large Decorative Circle (As in Image 0) */}
           <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] bg-emerald-600 rounded-full opacity-80 blur-3xl pointer-events-none animate-pulse"></div>
-          <div className="absolute top-1/2 right-[-100px] -translate-y-1/2 w-[400px] h-[400px] bg-emerald-500 rounded-full z-0 opacity-90 hidden md:block opacity-10"></div>
+          <div className="absolute top-1/2 right-[-100px] -translate-y-1/2 w-[400px] h-[400px] bg-emerald-500 rounded-full z-0 opacity-0 hidden md:block opacity-10"></div>
 
           <div className="relative z-10 max-w-xl">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight tracking-tight">
