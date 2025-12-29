@@ -1,73 +1,81 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ArrowUpRight } from 'lucide-react';
 
 const Products: React.FC = () => {
   return (
     <section
       id="products"
-      className="py-16 md:py-24 bg-[#002235] -mt-[30px] text-white relative overflow-hidden"
+      className="py-24 bg-[#031A32] text-white relative overflow-hidden"
     >
-      <div className="container mx-auto px-4 ">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-5 text-center mb-3">
-            <div className="text-xs md:text-sm text-yellow-300 opacity-80">
-              SOON
-            </div>
-            <div className="text-xs md:text-sm text-yellow-300 opacity-80">
-              SPECIAL
-            </div>
-            <div className="text-xs md:text-sm text-yellow-300 opacity-80"></div>
-            <div className="text-xs md:text-sm text-yellow-300 opacity-80">
-              Ecommerce
-            </div>
-            <div className="text-xs md:text-sm text-yellow-300 opacity-80">
-              SOON
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="text-center mb-20 animate-fadeInUp">
+          <span className="text-blue-400 font-bold text-sm uppercase tracking-[0.2em] mb-4 block">Exclusive Drops</span>
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Upcoming Collections</h2>
+          <div className="w-20 h-1.5 bg-blue-500 mx-auto rounded-full"></div>
+        </div>
 
-          <div className="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 rounded-xl overflow-hidden shadow-2xl">
-            <div className="grid grid-cols-5 h-96 md:h-[28rem] relative">
-              <div className="col-span-2 bg-gradient-to-br from-amber-800 to-amber-600 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 opacity-30">
-                  <Sparkles size={200} className="text-amber-300" />
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-[#031A32]  overflow-hidden border flex flex-col md:flex-row min-h-[500px] group">
+            {/* Image Section */}
+            <div className="w-full md:w-[60%] relative overflow-hidden">
+              <img
+                src="https://i.pinimg.com/1200x/80/04/00/800400bd197cfa257cc6d6c83129b490.jpg"
+                alt="Chevelure Collection"
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-transparent"></div>
+
+              {/* Floating Badge */}
+              <div className="absolute top-8 left-8 bg-white/90 px-6 py-2 rounded-full border border-white/50">
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">Premium Drop</span>
+              </div>
+            </div>
+
+            {/* Content Section */}
+            <div className="w-full md:w-[40%] bg-[#031A32] p-12 flex flex-col justify-center text-white relative">
+              {/* Decorative Circle */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+
+              <div className="mb-8">
+                <div className="flex items-center gap-2 text-blue-400 mb-4">
+                  <Sparkles className="w-5 h-5" />
+                  <span className="text-sm font-bold uppercase tracking-widest">Coming Soon</span>
                 </div>
-                <div className="text-center p-4">
-                  <div className="text-xs md:text-sm text-amber-300 mb-2">
-                    SOON
-                  </div>
-                  <div className="text-xs md:text-sm text-amber-300 mb-2">
-                    FOR
-                  </div>
-                  <div className="text-xs md:text-sm text-amber-300">YOUR</div>
+                <h3 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
+                  Chevelure <br />
+                  <span className="text-blue-400">Collection</span>
+                </h3>
+                <p className="text-blue-100/70 text-lg leading-relaxed mb-10">
+                  India's first AI-curated experimental fashion line. Redefining how you interact with premium apparel.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 text-sm font-medium text-blue-200/60">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                  <span>Limited Edition Release</span>
+                </div>
+                <div className="flex items-center gap-4 text-sm font-medium text-blue-200/60">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                  <span>Sustainable Materials</span>
                 </div>
               </div>
 
-              <div className="col-span-3 relative">
-                <img
-                  src="https://i.pinimg.com/736x/18/54/5e/18545e118c7d768c037c88fad8033702.jpg"
-                  alt="Chevelure Collection"
-                  className="w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-amber-900/60 to-transparent flex items-center justify-center">
-                  <h3 className="text-4xl md:text-6xl font-bold text-amber-300 font-serif tracking-widest"></h3>
-                </div>
+              <div className="mt-12">
+                <button
+                  onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
+                  className="group inline-flex items-center gap-3 bg-blue-600 text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-blue-500 transition-all transform hover:-translate-y-1 shadow-xl border-none cursor-pointer"
+                >
+                  Notify Me <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </button>
               </div>
             </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <button
-              onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-              className="inline-block bg-amber-600 text-white px-6 py-3 rounded-full hover:bg-amber-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border-none cursor-pointer"
-            >
-              Try Racan AI
-            </button>
           </div>
         </div>
       </div>
 
-      {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#fffcfc] to-transparent"></div>
+      {/* Background patterns */}
+      <div className="absolute top-0 right-0 w-[40%] h-full bg-blue-900/10 -skew-x-12 translate-x-1/2 pointer-events-none"></div>
     </section>
   );
 };

@@ -1,577 +1,267 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, Play, Users, Star, ArrowRight, Bot, Sparkles, FileCode, Terminal, PenTool, Smartphone, Globe, Workflow } from 'lucide-react';
+import BlurText from './BlurText';
+import ScrambledText from './ScrambledText';
 
 function Hero() {
+  const handleAnimationComplete = () => {
+    console.log('Animation completed!');
+  };
+
+  const handleTryRacanClick = () => {
+    window.location.href = 'https://lookbook-psus.onrender.com/';
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
+  const marqueeLogos = [1, 2, 3, 4, 5, 6, 7, 8];
+
   return (
-    <>
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-        
-        .animation-delay-300 {
-          animation-delay: 0.3s;
-          opacity: 0;
-        }
-        
-        .animation-delay-600 {
-          animation-delay: 0.6s;
-          opacity: 0;
-        }
+    <div className="relative min-h-[105vh] bg-black overflow-hidden pt-24">
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0 opacity-100">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
 
-        .hero-container {
-          background: #f8f9fa;
-          min-height: 75vh;
-          padding: 0 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-top: 80px;
-          margin-bottom: 2  0px;
-        }
-
-        .content-card {
-          background-image: url('');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          border-radius: 24px;
-          padding: 0;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-          overflow: hidden;
-          width: 100%;
-          max-width: 1400px;
-          margin: 0 auto;
-          position: relative;
-        }
-
-        .content-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(2px);
-          z-index: 1;
-        }
-
-        .main-content {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          min-height: 320px;
-          max-width: 100%;
-          margin: 0;
-          padding: 0;
-          gap: 25px;
-          border-radius: 12px;
-          overflow: hidden;
-          position: relative;
-          z-index: 2;
-        }
-
-        .left-content {
-          padding: 50px 60px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(10px);
-        }
-
-        .right-content {
-          background: rgba(248, 249, 250, 0.9);
-          backdrop-filter: blur(8px);
-          position: relative;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-        }
-
-        .fashion-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: 1fr 1fr;
-          height: 100%;
-          gap: 10px;
-          padding: 10px;
-        }
-
-        .fashion-card {
-          border-radius: 12px;
-          overflow: hidden;
-          position: relative;
-          background: white;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .fashion-card img, .fashion-card video {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .fashion-card.large {
-          grid-row: span 2;
-          border-radius: 12px;
-        }
-
-        .ai-overlay {
-          position: absolute;
-          inset: 0px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 16px;
-          font-weight: bold;
-        }
-
-        .stats-section {
-          display: flex;
-          align-items: center;
-          gap: 30px;
-          margin-top: 35px;
-        }
-
-        .stat-item {
-          text-align: left;
-        }
-
-        .stat-number {
-          font-size: 26px;
-          font-weight: 700;
-          color: #333;
-          line-height: 1;
-        }
-
-        .stat-label {
-          font-size: 10px;
-          color: #6c757d;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          margin-top: 4px;
-          max-width: 200px;
-        }
-
-        .floating-elements {
-          position: absolute;
-          top: 12px;
-          right: 12px;
-          display: flex;
-          gap: 4px;
-        }
-
-        .floating-dot {
-          width: 5px;
-          height: 5px;
-          border-radius: 50%;
-          background: #ff3366;
-        }
-
-        .floating-dot:nth-child(2) {
-          background: #973cff;
-        }
-
-        .floating-dot:nth-child(3) {
-          background: #00d4aa;
-        }
-
-        .dream-store-link {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          text-decoration: none;
-          transition: all 0.3s ease;
-        }
-
-        .dream-store-link:hover {
-          transform: translateY(-2px);
-        }
-
-        .dream-store-image {
-          width: clamp(40px, 8vw, 50px);
-          height: clamp(40px, 8vw, 50px);
-          border-radius: 50px;
-          object-fit: cover;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          transition: all 0.3s ease;
-        }
-
-        .dream-store-link:hover .dream-store-image {
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-          transform: scale(1.05);
-        }
-
-        /* Desktop-specific spacing adjustments */
-        @media (min-width: 1024px) {
-          .main-content {
-            gap: 25px;
-            grid-template-columns: 1fr 1fr;
-            min-height: 320px;
-          }
-
-          .hero-container {
-            margin-bottom: 20px;
-            padding: 0 40px;
-          }
-
-          .left-content {
-            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            padding: 50px 60px;
-          }
-
-          .stats-section {
-            gap: 30px;
-            margin-top: 35px;
-          }
-        }
-
-        /* Tablet Styles */
-        @media (max-width: 1024px) and (min-width: 769px) {
-          .hero-container {
-            min-height: 65vh;
-            padding: 0 30px;
-            margin-top: 85px;
-            margin-bottom: 20px;
-          }
-          
-          .content-card {
-            max-width: 95vw;
-            margin: 0 auto;
-          }
-
-          .main-content {
-            min-height: 300px;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-          }
-
-          .left-content {
-            padding: 35px 40px;
-          }
-
-          .stats-section {
-            gap: 20px;
-            margin-top: 25px;
-          }
-          
-          .stat-number {
-            font-size: 22px;
-          }
-          
-          .stat-label {
-            font-size: 9px;
-          }
-
-          .fashion-grid {
-            gap: 8px;
-            padding: 8px;
-          }
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-          .hero-container {
-            min-height: auto;
-            padding: 0 15px;
-            margin-top: 60px;
-            margin-bottom: 20px;
-          }
-          
-          .content-card {
-            margin-top: -80px;
-            max-width: 100vw;
-            margin: 0;
-            border-radius: 16px;
-          }
-          
-          .main-content {
-            grid-template-columns: 1fr;
-            min-height: auto;
-            gap: 0;
-          }
-          
-          .left-content {
-            background-image: url('https://i.pinimg.com/736x/2d/39/a7/2d39a7a4c67c792b75628a66c3d61838.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            padding: 30px 20px;
-            order: 1;
-            text-align: center;
-            align-items: center;
-          }
-          
-          .right-content {
-            order: 2;
-            min-height: 180px;
-          }
-          
-          .fashion-grid {
-            padding: 6px;
-            gap: 6px;
-          }
-          
-          .stats-section {
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-top: 20px;
-          }
-          
-          .stat-item {
-            width: 100%;
-            text-align: center;
-          }
-          
-          .stat-number {
-            font-size: 18px;
-          }
-          
-          .stat-label {
-            font-size: 8px;
-            max-width: 100%;
-          }
-
-          .dream-store-link {
-            justify-content: center;
-          }
-        }
-
-        /* Small Mobile */
-        @media (max-width: 480px) {
-          .hero-container {
-            padding: 0 10px;
-            margin-top: 40%;
-            margin-bottom: 20px;
-          }
-          
-          .left-content {
-            padding: 25px 15px;
-          }
-          
-          .right-content {
-            min-height: 160px;
-          }
-          
-          .fashion-grid {
-            padding: 4px;
-            gap: 4px;
-          }
-
-          .content-card {
-            border-radius: 12px;
-          }
-          
-          .content-card {
-            margin-top: -80px;
-          }
-        }
-      `}</style>
-      
-      <section className="hero-container">
-        <div className="content-card">
-          {/* Main Content */}
-          <div className="main-content">
-            
-            {/* Left Content */}
-            <div className="left-content">
-              <div className="animate-fade-in-up">
-                <h1 style={{
-                  fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)',
-                  fontWeight: '700',
-                  lineHeight: '1.1',
-                  color: '#333',
-                  marginBottom: '18px',
-                  letterSpacing: '-0.02em'
-                }}>
-                  Redefine Your<br />
-                  Style With<br />
-                  <span style={{ color: '#ff3366' }}>Racan AI</span>
-                </h1>
-              </div>
-
-              <div className="animate-fade-in-up animation-delay-300">
-                <div style={{
-                  fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
-                  color: '#333',
-                  marginBottom: '5px',
-                  fontWeight: '600'
-                }}>
-                  Building India’s First Full-Fledged 
-                </div>
-                <div style={{
-                  fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
-                  color: '#333',
-                  marginBottom: '20px',
-                  fontWeight: '600'
-                }}>
-                  AI-Commerce Ecosystem for Fashion
-                </div>
-              </div>
-
-              <div className="animate-fade-in-up animation-delay-600">
-                <p style={{
-                  fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
-                  color: '#6c757d',
-                  lineHeight: '1.5',
-                  marginBottom: '25px',
-                  maxWidth: '350px'
-                }}>
-                  Experience the future of fashion with AI-powered Fashion assistant Ecommerce, 
-                  personalized recommendations that match your unique taste.
-                </p>
-
-                <button
-                  onClick={() => window.location.href = 'https://lookbook-psus.onrender.com'}
-                  style={{
-                    background: '#ff3366',
-                    color: 'white',
-                    padding: 'clamp(10px, 1.8vw, 14px) clamp(20px, 3.5vw, 28px)',
-                    borderRadius: '25px',
-                    textDecoration: 'none',
-                    fontWeight: '600',
-                    fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
-                    display: 'inline-block',
-                    transition: 'all 0.3s ease',
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = '#d70153';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = '#ff3366';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative max-w-[1400px] mx-auto px-6 lg:px-12 h- full flex flex-col justify-between pt-12 lg:pt-16 pb-32"
+      >
+        {/* Added pb-32 to give space for the absolute marquee so content doesn't overlap */}
+        <div className="grid lg:grid-cols-2 gap-12 items-start z-10">
+          {/* Left Column: Refined Typography */}
+          <div className="flex flex-col gap-6 max-w-xl">
+            <BlurText
+              text="Match your unique taste!"
+              delay={150}
+              animateBy="words"
+              direction="top"
+              onAnimationComplete={handleAnimationComplete}
+              className="text-2xl mb-8 text-white font-bold"
+            />
+            <motion.h1
+              variants={itemVariants}
+              className="text-5xl lg:text-[5.5rem] font-bold leading-[1] tracking-tighter text-white uppercase relative"
+            >
+              <ScrambledText
+                duration={1.2}
+                speed={0.5}
+                scrambleChars=".:"
+              >
+                Redefine Your Style
+              </ScrambledText>
+              <br />
+              <span className="flex items-center gap-4">
+                <ScrambledText
+                  duration={1.2}
+                  speed={0.5}
+                  scrambleChars=".:"
                 >
-                   Try Racan-ai LookBook
-                </button>
+                  WITH
+                </ScrambledText>
+                <motion.span
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="w-5 h-5 lg:w-6 lg:h-6 bg-[#D4FF00] rounded-full inline-block mt-3"
+                ></motion.span>
+              </span>
+              <ScrambledText
+                duration={1.2}
+                speed={0.5}
+                scrambleChars=".:"
+              >
+                Racan AI
+              </ScrambledText>
+            </motion.h1>
+
+            <motion.p
+              variants={itemVariants}
+              className="text-base lg:text-lg text-white/70 font-medium leading-relaxed max-w-md"
+            >
+              Building India’s First Full-Fledged
+              AI-Commerce Ecosystem for Fashion
+            </motion.p>
+
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start sm:items-center gap-8 mt-2">
+              <div className="flex items-center gap-4 group cursor-pointer">
+                <div className="text-2xl font-black text-white">5K+</div>
+                <div className="flex flex-col">
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white/20 overflow-hidden bg-gray-200 shadow-sm">
+                        <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="user" className="w-full h-full object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-white/50 mt-1">Active AI Stylists</span>
+                </div>
               </div>
 
-              {/* Stats Section */}
-              <div className="stats-section animate-fade-in-up animation-delay-600">
-                <div className="stat-item">
-                  <div className="stat-number">150K+</div>
-                  <div className="stat-label">
-                  </div>
-                </div>
-                
-                <a 
-                  href="https://dreamxworld.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="dream-store-link"
-                >
-                  <img
-                    src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
-                    alt="Dream Store"
-                    className="dream-store-image"
-                  />
-                  <div style={{ fontSize: 'clamp(12px, 1.3vw, 9px)', color: '#000000' }}>
-                  Partner with DreamX Store
-                  </div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleTryRacanClick}
+                className="bg-[#D4FF00] text-black px-7 py-3.5 rounded-full font-black text-xs flex items-center gap-3 transition-all shadow-xl group border-none cursor-pointer"
+              >
+                Try Now <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              </motion.button>
+            </motion.div>
+
+            {/* Bottom Glass Card - Refined size 
+            <motion.div variants={itemVariants} className="mt-8">
+              <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-[2rem] max-w-xs shadow-xl group transition-all hover:bg-white/20">
+                <h3 className="text-xl font-bold uppercase text-white leading-tight mb-4">Evolution of <br /> the Fastest</h3>
+                <a href="https://dreamxworld.com/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white flex items-center gap-2 no-underline transition-colors">
+                  Discover Tech <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
-            </div>
+            </motion.div>
+            */}
+          </div>
 
-            {/* Right Content - Fashion Images/Video */}
-            <div className="right-content">
-              <div className="floating-elements">
-                <div className="floating-dot"></div>
-                <div className="floating-dot"></div>
-                <div className="floating-dot"></div>
+          {/* Right Column: Centered Widget Stack */}
+          <motion.div variants={itemVariants} className="flex flex-col items-center lg:items-end justify-center gap-10 lg:h-[550px] relative z-10">
+
+            {/* Testimonial Widget - Top position */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-white/10  mr-4 backdrop-blur-xl border border-white/20 p-6 rounded-[2rem] flex items-center gap-5 w-full max-w-[340px] z-20 group cursor-default"
+            >
+              <div className="relative">
+                <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#D4FF00]/30 p-0.5">
+                  <img src="https://i.pravatar.cc/100?img=33" alt="avatar" className="w-full h-full rounded-full object-cover" />
+                </div>
+                <div className="absolute -bottom-1 -right-1 bg-[#D4FF00] rounded-full p-1 shadow-lg">
+                  <Star className="w-3 h-3 text-black fill-current" />
+                </div>
               </div>
-              
-              <div className="fashion-grid">
-                {/* Large Fashion Video */}
-                <div className="fashion-card large">
-                  <video 
-                    autoPlay 
-                    muted 
-                    loop 
-                    playsInline
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  >
-                    <source src="https://cdn.higgsfield.ai/seedance_sample/84df5d61-ac1c-4264-8c21-8b36235b077f.mp4" type="video/mp4" />
-                  </video>
+              <div className="flex flex-col gap-0.5">
+                <h5 className="font-bold text-sm text-white font-outfit uppercase tracking-wider">John Terry</h5>
+                <p className="text-[11px] text-white/50 font-medium">Ultra precision AI!</p>
+                <div className="flex gap-0.5 mt-1 text-[#D4FF00]">
+                  {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3 h-3 fill-current" />)}
                 </div>
-                
-                {/* Top Right Fashion Image */}
-                <div className="fashion-card">
-                  <img 
-                    src="https://i.pinimg.com/736x/d1/a7/90/d1a790aae1206557418eba5e0638223e.jpg" 
-                    alt="Fashion Model 2"
-                  />
+              </div>
+            </motion.div>
+
+            {/* Spec Widget Overlay - Centered below Testimonial */}
+            <motion.div
+              initial={{ x: 30, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="bg-white/10 backdrop-blur-2xl border border-white/20 p-8 rounded-[2.5rem] shadow-2xl w-full max-w-[380px] z-20"
+            >
+              <div className="flex flex-col gap-6">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-4 block">Technical Specs</span>
+                  <div className="flex gap-2">
+                    {['Frameset', 'Brakes'].map((tab) => (
+                      <button key={tab} className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider transition-all border-none cursor-pointer ${tab === 'Brakes' ? 'bg-[#D4FF00] text-black shadow-lg shadow-[#D4FF00]/20' : 'bg-white/10 text-white/60'} hover:scale-105`}>
+                        {tab}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                
-                {/* Bottom Right - AI Element with Overlay */}
-                <div className="fashion-card" style={{ 
-                  background: '#f0f0f0',
-                  position: 'relative'
-                }}>
-                  <img 
-                    src="https://i.pinimg.com/736x/54/a1/e3/54a1e32c53c93895bc44239a351dc2bf.jpg" 
-                    alt="Fashion Model 1"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                  <div className="ai-overlay">
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '20px', marginBottom: '3px' }}></div>
-                      <div style={{ fontSize: '8px', opacity: '0.9' }}></div>
-                    </div>
+
+                <h4 className="text-lg font-bold text-white leading-tight">Elite AI styling engine for luxury fashion enjoyment</h4>
+
+                <div className="grid grid-cols-2 gap-8 border-t border-white/10 pt-6 mt-2">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-black uppercase text-white mb-1">PRECISION</span>
+                    <p className="text-xs text-white/40 leading-tight">V8-Turbo Rendering</p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-black uppercase text-white mb-1">ENGINE</span>
+                    <p className="text-xs text-white/40 leading-tight">Neural Sync 4.0</p>
                   </div>
                 </div>
               </div>
-              
-              {/* Additional floating elements */}
-              <div style={{
-                position: 'absolute',
-                bottom: '12px',
-                left: '12px',
-                background: 'white',
-                padding: '6px 10px',
-                borderRadius: '6px',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                fontSize: 'clamp(7px, 1.3vw, 8px)',
-                color: '#6c757d'
-              }}>
-                <div style={{ fontWeight: '600', color: '#333', marginBottom: '1px' }}>STYLE MATCH</div>
-                <div>98% ACCURACY</div>
-              </div>
-              
-              <div style={{
-                position: 'absolute',
-                top: '45%',
-                right: '12px',
-                background: 'white',
-                padding: '6px 10px',
-                borderRadius: '6px',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                fontSize: 'clamp(7px, 1.3vw, 8px)',
-                color: '#6c757d'
-              }}>
-                <div style={{ fontWeight: '600', color: '#333', marginBottom: '1px' }}>WARDROBE</div>
-                <div>SMART AI</div>
-              </div>
-            </div>
-          </div>
+            </motion.div>
+
+          </motion.div>
         </div>
-      </section>
-    </>
+      </motion.div>
+      {/* Closed the Max-W Container Here */}
+
+      {/* Bottom Logo Cloud - Infinite Marquee - NOW OUTSIDE, FULL WIDTH */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 py-8 z-20"
+        style={{
+          background: 'linear-gradient(to right, #064e3b, #065f46)' // Dark green gradient
+        }}
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ delay: 1, type: "spring", stiffness: 100 }}
+      >
+        <div className="flex w-full overflow-hidden select-none mask-fade">
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="flex flex-nowrap gap-16 md:gap-24 items-center shrink-0 min-w-full px-10"
+          >
+            {[
+              { name: "Racan AI", icon: Bot },
+              { name: "Dream X", icon: Sparkles },
+              { name: "ReactJS", icon: FileCode },
+              { name: "Python", icon: Terminal },
+              { name: "Figma", icon: PenTool },
+              { name: "Flutter", icon: Smartphone },
+              { name: "Rockage", icon: Globe },
+              { name: "Zapier", icon: Workflow },
+              { name: "Racan AI", icon: Bot },
+              { name: "Dream X", icon: Sparkles },
+              { name: "ReactJS", icon: FileCode },
+              { name: "Python", icon: Terminal },
+              { name: "Figma", icon: PenTool },
+              { name: "Flutter", icon: Smartphone },
+              { name: "Rockage", icon: Globe },
+              { name: "Zapier", icon: Workflow },
+            ].map((brand, idx) => (
+              <div key={idx} className="flex-shrink-0 flex items-center gap-3 group cursor-pointer">
+                <brand.icon className="w-6 h-6 text-white/60 group-hover:text-white transition-colors" />
+                <span className="text-lg font-bold text-white/60 group-hover:text-white transition-colors uppercase tracking-wider">{brand.name}</span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.div>
+
+      <style>{`
+        .mask-fade {
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+      `}</style>
+    </div>
   );
 }
 

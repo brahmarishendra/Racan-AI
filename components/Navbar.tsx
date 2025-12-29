@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, User, ChevronDown, Bot, ShoppingBag } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { LogOut, User, ChevronDown, Bot, ShoppingBag, ArrowUpRight } from 'lucide-react';
 import { getCurrentUser, signOut, onAuthStateChange } from '../lib/supabase';
 
 const Navbar = () => {
@@ -10,6 +11,61 @@ const Navbar = () => {
   const [loading, setLoading] = useState(true);
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const [isPlatformOpen, setIsPlatformOpen] = useState(false);
+  const platformTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const [isPartnersOpen, setIsPartnersOpen] = useState(false);
+  const partnersTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handlePlatformEnter = () => {
+    if (platformTimeoutRef.current) {
+      clearTimeout(platformTimeoutRef.current);
+    }
+    setIsPlatformOpen(true);
+  };
+
+  const handlePlatformLeave = () => {
+    platformTimeoutRef.current = setTimeout(() => {
+      setIsPlatformOpen(false);
+    }, 200);
+  };
+
+  const handlePartnersEnter = () => {
+    if (partnersTimeoutRef.current) {
+      clearTimeout(partnersTimeoutRef.current);
+    }
+    setIsPartnersOpen(true);
+  };
+
+  const handlePartnersLeave = () => {
+    partnersTimeoutRef.current = setTimeout(() => {
+      setIsPartnersOpen(false);
+    }, 200);
+  };
+
+  const mobileMenuContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        when: "afterChildren",
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+      },
+    },
+  };
+
+  const mobileMenuItemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeOut" } },
+    exit: { y: 20, opacity: 0, transition: { duration: 0.3 } },
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -115,10 +171,10 @@ const Navbar = () => {
 
   const getUserDisplayName = () => {
     if (!user) return '';
-    return user.user_metadata?.full_name || 
-           user.user_metadata?.name || 
-           user.email?.split('@')[0] || 
-           'User';
+    return user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      user.email?.split('@')[0] ||
+      'User';
   };
 
   const handleMobileProductsToggle = () => {
@@ -126,11 +182,9 @@ const Navbar = () => {
   };
 
   const handleMobileProductClick = (url: string) => {
-    url === 'https://lookbook-psus.onrender.com' }
-      // For mobile products dropdown, use the same auth logic
-      if (user) {
-        window.location.href = url;
-      } 
+    window.location.href = url;
+    setIsMenuOpen(false);
+  };
 
   // Desktop hover handlers
   const handleDesktopProductsHover = () => {
@@ -142,532 +196,332 @@ const Navbar = () => {
   };
 
   const handleTryRacanClick = () => {
-      // If authenticated, go directly to chat
-      window.location.href = 'https://lookbook-psus.onrender.com/';
+    // If authenticated, go directly to chat
+    window.location.href = 'https://lookbook-psus.onrender.com/';
   };
 
   return (
     <>
-      <style jsx>{`
-        /* Custom cursor styles */
-        * {
-          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, auto;
-        }
-
-        a, button, [role="button"] {
-          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF2D6B' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23FF2D6B' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
-        }
-
-        .hamburger-menu {
-          width: 16px;
-          height: 16px;
-          position: relative;
-          cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF2D6B' d='M8 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath fill='%23FF2D6B' d='M2 2l7.5 18.5L12 14l6.5 2.5L2 2z'/%3E%3C/svg%3E") 8 8, pointer;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .hamburger-line {
-          width: 16px;
-          height: 1.5px;
-          background-color: #000;
-          border-radius: 1px;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          transform-origin: center;
-          position: absolute;
-        }
-
-        .hamburger-line:nth-child(1) {
-          top: 3px;
-        }
-
-        .hamburger-line:nth-child(2) {
-          top: 7px;
-        }
-
-        .hamburger-line:nth-child(3) {
-          top: 11px;
-        }
-
-        /* Animated states */
-        .hamburger-menu.open .hamburger-line:nth-child(1) {
-          transform: rotate(45deg) translate(2px, 2px);
-        }
-
-        .hamburger-menu.open .hamburger-line:nth-child(2) {
-          opacity: 0;
-          transform: scale(0);
-        }
-
-        .hamburger-menu.open .hamburger-line:nth-child(3) {
-          transform: rotate(-45deg) translate(2px, -2px);
-        }
-
-        /* Products Dropdown Styles */
-        .products-dropdown-container {
-          position: relative;
-        }
-
-        .products-dropdown {
-          margin-top: 20px;
-          margin-left: 0px;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          background: white;
-          border: 1px solid #e5e7eb;
-          border-radius: 1px;
-          min-width: 300px;
-          opacity: 0;
-          visibility: hidden;
-          transform: translateY(-10px);
-          transition: all 0.2s ease-out;
-          z-index: 50;
-          box-shadow: none;
-        }
-
-        .products-dropdown.open {
-          opacity: 1;
-          visibility: visible;
-          transform: translateY(0);
-        }
-
-        .dropdown-item {
-          display: flex;
-          align-items: center;
-          padding: 12px 16px;
-          text-decoration: none;
-          color: #374151;
-          transition: background-color 0.2s ease;
-          border-bottom: 1px solid #f3f4f6;
-        }
-
-        .dropdown-item:last-child {
-          border-bottom: none;
-        }
-
-        .dropdown-item:hover {
-          background-color: #f9fafb;
-        }
-
-        .dropdown-item-icon {
-          margin-right: 12px;
-          flex-shrink: 0;
-        }
-
-        .dropdown-item-content h3 {
-          font-size: 14px;
-          font-weight: 500;
-          margin: 0 0 2px 0;
-          color: #111827;
-        }
-
-        .dropdown-item-content p {
-          font-size: 12px;
-          margin: 0;
-          color: #6b7280;
-          line-height: 1.4;
-        }
-
-        /* Menu overlay animation - WHITE BACKGROUND with menubar bg */
-        .menu-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-image: url('https://i.pinimg.com/736x/35/b0/95/35b0954232776284469e69abde5817ff.jpg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          z-index: 60;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          opacity: 0;
-          visibility: hidden;
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          transform: scale(0.95);
-        }
-
-        .menu-overlay::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(255, 255, 255, 0.9);
-          z-index: -1;
-        }
-
-        .menu-overlay.open {
-          opacity: 1;
-          visibility: visible;
-          transform: scale(1);
-        }
-
-        /* Smaller menu items without animations */
-        .menu-item {
-          font-size: 1.25rem;
-          font-weight: 500;
-          color: #374151;
-          text-decoration: none;
-          margin: 0.3rem 0;
-          padding: 0.75rem 1.5rem;
-          border-radius: 12px;
-          position: relative;
-          overflow: hidden;
-          background: transparent;
-          border: none;
-          min-width: 150px;
-          text-align: center;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          transition: all 0.3s ease;
-        }
-
-        /* Mobile Products Dropdown Styles */
-        .mobile-products-dropdown {
-          width: 100%;
-          background: rgba(249, 250, 251, 0.95);
-          backdrop-filter: blur(10px);
-          border-radius: 12px;
-          margin: 0.3rem 0;
-          padding: 0;
-          overflow: hidden;
-          max-height: 0;
-          opacity: 0;
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          transform: translateY(-10px);
-        }
-
-        .mobile-products-dropdown.open {
-          max-height: 250px;
-          opacity: 1;
-          transform: translateY(0);
-          padding: 0.75rem;
-        }
-
-        .mobile-dropdown-item {
-          display: flex;
-          align-items: center;
-          padding: 0.75rem;
-          margin: 0.3rem 0;
-          background: rgba(255, 255, 255, 0.8);
-          border-radius: 8px;
-          text-decoration: none;
-          color: #374151;
-          transition: all 0.3s ease;
-          border: 1px solid rgba(229, 231, 235, 0.5);
-          transform: translateX(-20px);
-          opacity: 0;
-        }
-
-        .mobile-products-dropdown.open .mobile-dropdown-item {
-          transform: translateX(0);
-          opacity: 1;
-        }
-
-        .mobile-products-dropdown.open .mobile-dropdown-item:nth-child(1) {
-          transition-delay: 0.1s;
-        }
-
-        .mobile-products-dropdown.open .mobile-dropdown-item:nth-child(2) {
-          transition-delay: 0.2s;
-        }
-
-        .mobile-dropdown-item-icon {
-          margin-right: 10px;
-          flex-shrink: 0;
-        }
-
-        .mobile-dropdown-item-content h3 {
-          font-size: 0.9rem;
-          font-weight: 600;
-          margin: 0 0 3px 0;
-          color: #111827;
-        }
-
-        .mobile-dropdown-item-content p {
-          font-size: 0.8rem;
-          margin: 0;
-          color: #6b7280;
-          line-height: 1.3;
-        }
-
-        .user-section {
-          margin-top: 1.5rem;
-          text-align: center;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          padding: 1.25rem;
-          border-radius: 16px;
-          background: rgba(249, 250, 251, 0.8);
-          backdrop-filter: blur(10px);
-        }
-
-        /* Desktop-style Try Racan button for mobile */
-        .mobile-try-racan-btn {
-          background: #000000;
-          color: white;
-          padding: 0.65rem 1.75rem;
-          border-radius: 50px;
-          text-decoration: none;
-          font-weight: 600;
-          font-size: 1rem;
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          display: inline-block;
-          margin-top: 1.25rem;
-          border: none;
-          position: relative;
-          overflow: hidden;
-          cursor: pointer;
-        }
-
-        /* Responsive font sizes */
-        @media (max-width: 768px) {
-          .menu-item {
-            font-size: 1.125rem;
-            padding: 0.65rem 1.25rem;
-            min-width: 140px;
-          }
-          
-          .mobile-try-racan-btn {
-            font-size: 0.95rem;
-            padding: 0.6rem 1.5rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .menu-item {
-            font-size: 1rem;
-            padding: 0.6rem 1rem;
-            min-width: 130px;
-          }
-        }
-      `}</style>
-
       <header
-        className={`fixed top-0 left-0 right-0 z-[70] bg-white shadow-sm transition-transform duration-300 ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 border-b ${isVisible ? 'translate-y-0' : '-translate-y-full'
+          } ${lastScrollY > 20 ? 'bg-black/90 backdrop-blur-md py-4 border-white/10 shadow-lg' : 'bg-transparent py-4 lg:py-7 border-transparent'}`}
       >
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <img
-            src="https://i.postimg.cc/rsYBTFzm/image-41.png"
-            alt="Racan Logo"
-            className="w-24"
+        <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
+          {/* Logo Section */}
+          <div
+            className="flex items-center cursor-pointer"
             onClick={() => handleNavigation('/')}
-          />
+          >
+            <div className="bg-black p-3 rounded-[1.4rem] flex items-center justify-center mr-4 hover:scale-105 transition-transform shadow-xl border border-white/10">
+              <img
+                src="https://i.postimg.cc/rsYBTFzm/image-41.png"
+                alt="Racan Logo"
+                className="w-16 brightness-0 invert"
+              />
+            </div>
+          </div>
 
-          <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#features"
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
-            >
-              Features
-            </a>
-            
-            {/* Products Dropdown - WITH ARROW for Desktop */}
-            <div 
-              className="products-dropdown-container"
-              onMouseEnter={handleDesktopProductsHover}
-              onMouseLeave={handleDesktopProductsLeave}
+          {/* Desktop Navigation - Centered Pill Design */}
+          {/* Desktop Navigation - Standard Open Layout */}
+          <nav className="hidden lg:flex items-center gap-10">
+            <div
+              className="relative h-full flex items-center group/platform"
+              onMouseEnter={handlePlatformEnter}
+              onMouseLeave={handlePlatformLeave}
             >
               <button
-                className="flex items-center text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+                className={`flex items-center gap-1.5 text-base font-medium transition-colors border-none bg-transparent cursor-pointer relative py-2 ${isPlatformOpen ? 'text-[#D4FF00]' : 'text-white hover:text-[#D4FF00]'}`}
               >
-                Products
-                <ChevronDown 
-                  className={`ml-1 w-4 h-4 transition-transform duration-200 ${
-                    isProductsDropdownOpen ? 'rotate-180' : ''
-                  }`} 
-                />
+                Platform <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isPlatformOpen ? 'rotate-180 text-[#D4FF00]' : ''}`} />
+                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#D4FF00] transform transition-transform duration-300 origin-left ${isPlatformOpen ? 'scale-x-100' : 'scale-x-0 group-hover/platform:scale-x-100'}`}></span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-100 transition-transform duration-300 origin-left"></span>
               </button>
-              
-              <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
-                <button
-                  onClick={handleTryRacanClick}
-                  className="dropdown-item w-full text-left"
-                >
-                  <div className="dropdown-item-icon">
-                    <Bot className="w-5 h-5 text-[#973cff]" />
-                  </div>
-                  <div className="dropdown-item-content">
-                    <h3>Racan AI Chat Bot</h3>
-                    <p>AI-powered fashion assistant for personalized styling</p>
-                  </div>
-                </button>
-                
-                <a
-                  href="https://dreamxworld.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="dropdown-item"
-                >
-                  <div className="dropdown-item-icon">
-                    <img
-                      src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
-                      alt="DreamX"
-                      className="w-5 h-5 rounded-sm object-cover"
-                    />
-                  </div>
-                  <div className="dropdown-item-content">
-                    <h3>DreamX Ecommerce</h3>
-                    <p>Premium fashion marketplace with curated collections</p>
-                  </div>
-                </a>
-              </div>
             </div>
 
-            <button
-              onClick={() => handleNavigation('/about')}
-              className="text-gray-700 hover:text-[#973cff] transition-colors duration-300"
+            <div
+              className="relative h-full flex items-center group/partners"
+              onMouseEnter={handlePartnersEnter}
+              onMouseLeave={handlePartnersLeave}
             >
-              About Us
-            </button>
-            
+              <button
+                className={`flex items-center gap-1.5 text-base font-medium transition-colors border-none bg-transparent cursor-pointer relative py-2 ${isPartnersOpen ? 'text-[#D4FF00]' : 'text-white hover:text-[#D4FF00]'}`}
+              >
+                Partners <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isPartnersOpen ? 'rotate-180 text-[#D4FF00]' : ''}`} />
+                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#D4FF00] transform transition-transform duration-300 origin-left ${isPartnersOpen ? 'scale-x-100' : 'scale-x-0 group-hover/partners:scale-x-100'}`}></span>
+              </button>
+            </div>
+
+            {['Features', 'Products', 'Company'].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="text-base font-medium transition-colors no-underline text-white hover:text-[#D4FF00] relative py-2 group"
+              >
+                {item}
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#D4FF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+              </a>
+            ))}
+          </nav>
+
+          {/* User Section - Right Side */}
+          <div className="hidden lg:flex items-center gap-3">
+            <div className="flex items-center bg-white/10 border border-white/20 rounded-full px-4 py-2">
+              <span className="text-[11px] font-black uppercase tracking-widest text-white">EN</span>
+            </div>
+
             {loading ? (
-              <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+              <div className="w-11 h-11 rounded-full bg-white/20 animate-pulse"></div>
             ) : user ? (
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-[#004AAD] rounded-full flex items-center justify-center">
-                    <User className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="text-sm text-gray-700 max-w-24 truncate">
-                    {getUserDisplayName()}
-                  </span>
+              <div className="flex items-center gap-3 bg-white/10 border border-white/20 rounded-full p-1 leading-none">
+                <div className="w-9 h-9 rounded-full bg-[#D4FF00] flex items-center justify-center text-black shadow-sm">
+                  <User className="w-4 h-4" />
                 </div>
-                <button
-                  onClick={handleSignOut}
-                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors duration-300"
-                  title="Sign out"
-                >
+                <div className="flex flex-col mr-3">
+                  <span className="text-[10px] font-black tracking-widest uppercase text-white/60 mb-0.5">Account</span>
+                  <span className="text-sm font-bold text-white max-w-[80px] truncate">{getUserDisplayName()}</span>
+                </div>
+                <button onClick={handleSignOut} className="w-9 h-9 rounded-full flex items-center justify-center text-red-400 hover:bg-white/10 transition-all border-none bg-transparent cursor-pointer">
                   <LogOut className="w-4 h-4" />
-                  <span className="text-sm">Sign out</span>
                 </button>
               </div>
             ) : (
               <button
-                onClick={handleTryRacanClick}
-                className="bg-black text-white px-6 py-2 rounded-full hover:bg-[#d70153] transition-all duration-300"
+                onClick={() => handleNavigation('/login')}
+                className="group flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white pl-5 pr-1.5 py-1.5 rounded-xl transition-all shadow-lg hover:shadow-blue-500/25 border-none cursor-pointer"
               >
-                Try Racan
+                <span className="font-bold text-sm tracking-wide">Try Racan AI</span>
+                <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <ArrowUpRight className="w-5 h-5 text-blue-600" />
+                </div>
               </button>
             )}
-          </nav>
+          </div>
 
-          {/* Smaller Hamburger Menu Button */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden z-[80] relative p-3 hover:bg-gray-100 rounded-full transition-colors duration-300"
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            className="lg:hidden p-3 rounded-2xl bg-white/10 border border-white/20 hover:bg-[#D4FF00] transition-colors border-none cursor-pointer group hamburger-menu"
           >
-            <div className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`}>
-              <div className="hamburger-line"></div>
-              <div className="hamburger-line"></div>
-              <div className="hamburger-line"></div>
+            <div className={`w-7 h-5 flex flex-col justify-between transition-all duration-300 ${isMenuOpen ? 'rotate-180' : ''}`}>
+              <span className={`w-full h-0.5 rounded-full transition-all bg-white group-hover:bg-black ${isMenuOpen ? '!bg-black' : ''} ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`w-full h-0.5 rounded-full transition-all bg-white group-hover:bg-black ${isMenuOpen ? '!bg-black' : ''} ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`w-full h-0.5 rounded-full transition-all bg-white group-hover:bg-black ${isMenuOpen ? '!bg-black' : ''} ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
             </div>
           </button>
         </div>
-      </header>
 
-      {/* Enhanced Mobile Menu Overlay with Background Image */}
-      <div className={`menu-overlay md:hidden mobile-menu-container ${isMenuOpen ? 'open' : ''}`}>
-        <nav className="flex flex-col items-center">
-          <a
-            href="#features"
-            className="menu-item"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Features
-          </a>
-          
-          {/* Mobile Products Dropdown WITHOUT Arrow */}
-          <div className="w-full flex flex-col items-center">
-            <button
-              onClick={handleMobileProductsToggle}
-              className="menu-item"
+        {/* Platform Mega Menu */}
+        {/* Platform Mega Menu */}
+        <AnimatePresence>
+          {isPlatformOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/10 shadow-2xl overflow-hidden"
+              onMouseEnter={handlePlatformEnter}
+              onMouseLeave={handlePlatformLeave}
             >
-              Products
-            </button>
-            
-            <div className={`mobile-products-dropdown ${isMobileProductsOpen ? 'open' : ''}`}>
-              <button
-                onClick={() => handleMobileProductClick('https://chat-with-racan.vercel.app')}
-                className="mobile-dropdown-item"
-              >
-                <div className="mobile-dropdown-item-icon">
-                  <Bot className="w-5 h-5 text-[#973cff]" />
+              <div className="max-w-[1400px] mx-auto px-6 py-12 grid grid-cols-4 gap-12">
+                {/* Column 1: Core Platform */}
+                <div className="flex flex-col gap-6">
+                  <h3 className="text-white font-bold text-lg tracking-wide flex items-center gap-2">
+                    <span className="w-8 h-[2px] bg-[#D4FF00]"></span> Core Platform
+                  </h3>
+                  <div className="flex flex-col gap-4">
+                    <a href="#" className="group flex items-start gap-3 no-underline">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#D4FF00] group-hover:text-black transition-colors text-white">
+                        <Bot className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <span className="block text-white font-medium group-hover:text-[#D4FF00] transition-colors text-sm">AI Agents</span>
+                        <span className="block text-white/40 text-xs mt-1 leading-relaxed">Autonomous agents that execute complex workflows.</span>
+                      </div>
+                    </a>
+                    <a href="#" className="group flex items-start gap-3 no-underline">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#D4FF00] group-hover:text-black transition-colors text-white">
+                        <ShoppingBag className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <span className="block text-white font-medium group-hover:text-[#D4FF00] transition-colors text-sm">Commerce Engine</span>
+                        <span className="block text-white/40 text-xs mt-1 leading-relaxed">Next-gen headless commerce infrastructure.</span>
+                      </div>
+                    </a>
+                  </div>
                 </div>
-                <div className="mobile-dropdown-item-content">
-                  <h3>Racan AI Chat Bot</h3>
-                  <p>AI-powered fashion assistant for personalized styling</p>
-                </div>
-              </button>
-              
-              <button
-                onClick={() => handleMobileProductClick('https://dreamxworld.com/')}
-                className="mobile-dropdown-item"
-              >
-                <div className="mobile-dropdown-item-icon">
-                  <img
-                    src="https://i.postimg.cc/15mjf5Cn/Instagram-post-1.png"
-                    alt="DreamX"
-                    className="w-5 h-5 rounded-sm object-cover"
-                  />
-                </div>
-                <div className="mobile-dropdown-item-content">
-                  <h3>DreamX Ecommerce</h3>
-                  <p>Premium fashion marketplace with curated collections</p>
-                </div>
-              </button>
-            </div>
-          </div>
 
-          <button
-            onClick={() => handleNavigation('/about')}
-            className="menu-item"
-          >
-            About Us
-          </button>
-
-          {loading ? (
-            <div className="w-12 h-12 bg-gray-200 rounded-full animate-pulse mt-8"></div>
-          ) : user ? (
-            <div className="user-section">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-[#004AAD] rounded-full flex items-center justify-center">
-                  <User className="w-6 h-6 text-white" />
+                {/* Column 2: Solutions */}
+                <div className="flex flex-col gap-6">
+                  <h3 className="text-white font-bold text-lg tracking-wide flex items-center gap-2">
+                    <span className="w-8 h-[2px] bg-[#D4FF00]"></span> Solutions
+                  </h3>
+                  <ul className="flex flex-col gap-3 list-none p-0 m-0">
+                    <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm no-underline flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#D4FF00]"></span> Enterprise Search</a></li>
+                    <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm no-underline flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#D4FF00]"></span> Customer Support</a></li>
+                    <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm no-underline flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#D4FF00]"></span> Data Analytics</a></li>
+                    <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm no-underline flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#D4FF00]"></span> Workflow Automation</a></li>
+                  </ul>
                 </div>
-                <div className="text-center">
-                  <p className="text-lg font-medium text-gray-900">
-                    {getUserDisplayName()}
+
+                {/* Column 3: Resources */}
+                <div className="flex flex-col gap-6">
+                  <h3 className="text-white font-bold text-lg tracking-wide flex items-center gap-2">
+                    <span className="w-8 h-[2px] bg-[#D4FF00]"></span> Developers
+                  </h3>
+                  <ul className="flex flex-col gap-3 list-none p-0 m-0">
+                    <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm no-underline">Documentation</a></li>
+                    <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm no-underline">API Reference</a></li>
+                    <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm no-underline">Community Forum</a></li>
+                    <li><a href="#" className="text-white/60 hover:text-white transition-colors text-sm no-underline">Status Page</a></li>
+                  </ul>
+                </div>
+
+                {/* Column 4: Featured */}
+                <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                  <span className="text-[#D4FF00] text-xs font-black tracking-widest uppercase mb-3 block">New Release</span>
+                  <h4 className="text-white text-xl font-bold mb-2">Racan V2.0 is Live</h4>
+                  <p className="text-white/50 text-xs leading-relaxed mb-4">
+                    Experience the next evolution of AI-driven commerce with improved agentic workflows.
                   </p>
-                  <p className="text-sm text-gray-600">{user.email}</p>
+                  <button
+                    onClick={() => handleNavigation('#about')}
+                    className="w-full py-2 bg-white text-black font-bold text-xs rounded-lg hover:bg-[#D4FF00] transition-colors border-none cursor-pointer"
+                  >
+                    Explore V2.0
+                  </button>
                 </div>
               </div>
-              <button
-                onClick={handleSignOut}
-                className="flex items-center space-x-2 text-red-600 hover:text-red-700 transition-colors duration-300"
-              >
-                <LogOut className="w-5 h-5" />
-                <span>Sign out</span>
-              </button>
-            </div>
-          ) : (
-            <button 
-              onClick={handleTryRacanClick}
-              className="mobile-try-racan-btn"
-            >
-              Try Racan
-            </button>
+            </motion.div>
           )}
-        </nav>
-      </div>
+        </AnimatePresence>
+
+
+        {/* Partners Mega Menu */}
+        {/* Partners Mega Menu */}
+        <AnimatePresence>
+          {isPartnersOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/10 shadow-2xl overflow-hidden"
+              onMouseEnter={handlePartnersEnter}
+              onMouseLeave={handlePartnersLeave}
+            >
+              <div className="max-w-[1400px] mx-auto px-6 py-12 grid grid-cols-4 gap-12">
+                {/* Column 1: Strategic Partners */}
+                <div className="flex flex-col gap-6 col-span-2">
+                  <h3 className="text-white font-bold text-lg tracking-wide flex items-center gap-2">
+                    <span className="w-8 h-[2px] bg-[#D4FF00]"></span> Strategic Partners
+                  </h3>
+                  <div className="grid grid-cols-2 gap-6">
+                    <a href="https://dreamxworld.com/" target="_blank" rel="noopener noreferrer" className="group flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors no-underline border border-white/5 hover:border-white/20">
+                      <div className="w-12 h-12 rounded-xl bg-black border border-white/10 flex items-center justify-center p-2 overflow-hidden shadow-lg group-hover:scale-105 transition-transform">
+                        <img src="https://i.postimg.cc/sx24cHZb/image-89.png" alt="DreamX" className="w-full h-full object-contain" />
+                      </div>
+                      <div>
+                        <span className="text-white font-bold text-base block group-hover:text-[#D4FF00] mb-1 transition-colors">Dream X</span>
+                        <span className="text-white/40 text-xs leading-relaxed block">Pioneering the future of sim racing ecosystem.</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                {/* Spacer columns to fill full width */}
+                <div className="col-span-2"></div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+
+      </header >
+
+
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {
+          isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-white z-[90] lg:hidden mobile-menu-container"
+            >
+              <motion.div
+                variants={mobileMenuContainerVariants}
+                initial="hidden"
+                animate="show"
+                exit="exit"
+                className="p-8 pt-32 flex flex-col gap-6 max-w-lg mx-auto"
+              >
+                <motion.button
+                  variants={mobileMenuItemVariants}
+                  onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
+                  className="text-4xl font-black text-gray-900 border-none bg-transparent text-left p-0 flex items-center justify-between bg-white w-full cursor-pointer group"
+                >
+                  <span className="relative">
+                    Platform
+                    <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#D4FF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  </span>
+                  <ChevronDown className={`w-8 h-8 transition-transform duration-300 ${isMobileProductsOpen ? 'rotate-180' : ''}`} />
+                </motion.button>
+
+                <motion.div variants={mobileMenuItemVariants} className={`overflow-hidden transition-all duration-300 flex flex-col gap-4 pl-6 border-l-4 border-gray-100 ${isMobileProductsOpen ? 'max-h-[500px] mt-2 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <h4 className="text-sm font-black text-gray-400 uppercase tracking-widest mb-2 mt-2">Core Platform</h4>
+                  <button onClick={() => handleNavigation('#ai-agents')} className="text-xl font-bold text-gray-600 border-none bg-transparent text-left p-0 hover:text-black hover:translate-x-2 transition-all flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-black">
+                      <Bot className="w-4 h-4" />
+                    </div>
+                    AI Agents
+                  </button>
+                  <button onClick={() => handleNavigation('#commerce')} className="text-xl font-bold text-gray-600 border-none bg-transparent text-left p-0 hover:text-black hover:translate-x-2 transition-all flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-black">
+                      <ShoppingBag className="w-4 h-4" />
+                    </div>
+                    Commerce Engine
+                  </button>
+
+                  <h4 className="text-sm font-black text-gray-400 uppercase tracking-widest mb-2 mt-4">Our Partners</h4>
+                  <a href="https://dreamxworld.com/" target="_blank" className="text-xl font-bold text-gray-600 border-none bg-transparent text-left p-0 hover:text-black hover:translate-x-2 transition-all flex items-center gap-3 no-underline">
+                    <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-black border border-gray-200 overflow-hidden">
+                      <img src="https://i.postimg.cc/sx24cHZb/image-89.png" alt="DreamX" className="w-full h-full object-contain p-1" />
+                    </div>
+                    Dream X
+                  </a>
+                </motion.div>
+
+                <motion.a variants={mobileMenuItemVariants} href="#features" onClick={(e) => { e.preventDefault(); handleNavigation('#features'); }} className="text-4xl font-black text-gray-900 no-underline relative w-fit group">
+                  Features
+                  <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#D4FF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                </motion.a>
+                <motion.a variants={mobileMenuItemVariants} href="#products" onClick={(e) => { e.preventDefault(); handleNavigation('#products'); }} className="text-4xl font-black text-gray-900 no-underline relative w-fit group">
+                  Products
+                  <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#D4FF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                </motion.a>
+                <motion.a variants={mobileMenuItemVariants} href="about.tsx" onClick={(e) => { e.preventDefault(); handleNavigation('#about'); }} className="text-4xl font-black text-gray-900 no-underline relative w-fit group">
+                  Company
+                  <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#D4FF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                </motion.a>
+
+                <motion.div variants={mobileMenuItemVariants} className="mt-8 pt-8 border-t border-gray-100">
+                  <button
+                    onClick={() => handleNavigation('/login')}
+                    className="w-full flex items-center justify-between bg-blue-500 text-white p-2 rounded-full shadow-xl border-none active:scale-95 transition-transform"
+                  >
+                    <span className="font-bold text-lg ml-6">Try Racan AI</span>
+                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                      <ArrowUpRight className="w-6 h-6 text-blue-600" />
+                    </div>
+                  </button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          )
+        }
+      </AnimatePresence >
     </>
   );
 };

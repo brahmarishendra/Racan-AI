@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Hero from './Hero';
+import ScrollReveal from './ScrollReveal';
 import About from './About';
 import Features from './Features';
 import Products from './Products';
@@ -11,7 +12,7 @@ function App() {
   React.useEffect(() => {
     // Update page title dynamically
     document.title = 'Racan AI - AI-Powered Fashion Assistant & Ecommerce Platform';
-    
+
     // Add FAQ structured data
     const faqStructuredData = {
       "@context": "https://schema.org",
@@ -51,13 +52,13 @@ function App() {
         }
       ]
     };
-    
+
     // Add FAQ structured data to head
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify(faqStructuredData);
     document.head.appendChild(script);
-    
+
     // Cleanup function
     return () => {
       document.head.removeChild(script);
@@ -70,25 +71,29 @@ function App() {
       <header>
         <Navbar />
       </header>
-      
+
       <main>
         <section aria-label="Hero section">
           <Hero />
         </section>
-        
+
+        <ScrollReveal
+          text="The biggest AI fashion platform that learns your style, analyzes your body measurements, and recommends outfits that make you look your absolute best, every single day."
+        />
+
         <section aria-label="About Racan AI">
           <About />
         </section>
-        
+
         <section aria-label="Features and capabilities">
           <Features />
         </section>
-        
+
         <section aria-label="Products and services">
           <Products />
         </section>
       </main>
-      
+
       <footer>
         <Footer />
       </footer>
