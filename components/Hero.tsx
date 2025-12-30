@@ -6,7 +6,7 @@ import ScrambledText from './ScrambledText';
 
 function Hero() {
   const handleAnimationComplete = () => {
-    console.log('Animation completed!');
+    // Animation completed
   };
 
   const handleTryRacanClick = () => {

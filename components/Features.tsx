@@ -194,13 +194,19 @@ const Features: React.FC = () => {
 
             {/* Right Video Column */}
             <div className="w-full md:w-[60%] bg-black relative min-h-[400px]">
-              <iframe
-                title="vimeo-player"
-                src="https://player.vimeo.com/video/1093285476?h=3e899faaff&autoplay=1&loop=1&muted=1&controls=0&background=1"
-                frameBorder="0"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full object-cover scale-[1.1]"
-              />
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              >
+                <source
+                  src="https://images.pexels.com/videos/3120935/free-video-3120935.mp4"
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </motion.div>
         </div>

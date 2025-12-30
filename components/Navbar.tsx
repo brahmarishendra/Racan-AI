@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LogOut, User, ChevronDown, Bot, ShoppingBag, ArrowUpRight } from 'lucide-react';
-import { getCurrentUser, signOut, onAuthStateChange } from '../lib/supabase';
+import { getCurrentUser, signOut, onAuthStateChange } from '../src/lib/supabase';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -300,7 +300,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-3 rounded-2xl bg-white/10 border border-white/20 hover:bg-[#D4FF00] transition-colors border-none cursor-pointer group hamburger-menu"
+            className="lg:hidden w-12 h-12 flex items-center justify-center rounded-full bg-white/10 border border-white/20 hover:bg-[#D4FF00] transition-colors cursor-pointer group hamburger-menu"
           >
             <div className={`w-7 h-5 flex flex-col justify-between transition-all duration-300 ${isMenuOpen ? 'rotate-180' : ''}`}>
               <span className={`w-full h-0.5 rounded-full transition-all bg-white group-hover:bg-black ${isMenuOpen ? '!bg-black' : ''} ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>

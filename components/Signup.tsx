@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
-import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback, resendEmailVerification } from '../lib/supabase';
+import { signUp, signInWithGoogle, isSupabaseConfigured, handleOAuthCallback, resendEmailVerification } from '../src/lib/supabase';
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,7 +11,7 @@ function Signup() {
   const [userEmail, setUserEmail] = useState<string>('');
   const [formData, setFormData] = useState({
     username: '',
-    email: '', 
+    email: '',
     password: '',
   });
 
@@ -19,13 +19,13 @@ function Signup() {
   useEffect(() => {
     // Update page title and meta description
     document.title = 'Sign Up for Racan AI - Create Your AI Fashion Assistant Account';
-    
+
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Create your free Racan AI account to access personalized fashion recommendations, AI-powered styling, and smart wardrobe management. Join thousands of users transforming their style with AI.');
     }
-    
+
     // Add page-specific structured data
     const signupPageStructuredData = {
       "@context": "https://schema.org",
@@ -51,12 +51,12 @@ function Signup() {
         }
       }
     };
-    
+
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify(signupPageStructuredData);
     document.head.appendChild(script);
-    
+
     return () => {
       document.head.removeChild(script);
       // Reset title when leaving page
@@ -70,7 +70,7 @@ function Signup() {
       const urlParams = new URLSearchParams(window.location.search);
       const accessToken = urlParams.get('access_token');
       const refreshToken = urlParams.get('refresh_token');
-      
+
       if (accessToken || refreshToken) {
         try {
           const { user, error } = await handleOAuthCallback();
@@ -120,19 +120,19 @@ function Signup() {
     if (password.length < 6) {
       return { isValid: false, message: 'Password must be at least 6 characters long' };
     }
-    
+
     if (!/[A-Z]/.test(password)) {
       return { isValid: false, message: 'Password must contain at least one uppercase letter' };
     }
-    
+
     if (!/[a-z]/.test(password)) {
       return { isValid: false, message: 'Password must contain at least one lowercase letter' };
     }
-    
+
     if (!/[0-9]/.test(password)) {
       return { isValid: false, message: 'Password must contain at least one number' };
     }
-    
+
     return { isValid: true, message: '' };
   };
 
@@ -140,12 +140,12 @@ function Signup() {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-    
+
     if (!formData.email.trim()) {
       setError('Please enter your email address');
       return;
     }
-    
+
     if (!validateEmail(formData.email.trim())) {
       setError('Please enter a valid email address');
       return;
@@ -155,17 +155,17 @@ function Signup() {
       setError('Please enter a username');
       return;
     }
-    
+
     if (formData.username.trim().length < 2) {
       setError('Username must be at least 2 characters long');
       return;
     }
-    
+
     if (!formData.password.trim()) {
       setError('Please enter a password');
       return;
     }
-    
+
     const passwordValidation = validatePassword(formData.password);
     if (!passwordValidation.isValid) {
       setError(passwordValidation.message);
@@ -173,10 +173,10 @@ function Signup() {
     }
 
     setLoading(true);
-    
+
     try {
       const result = await signUp(formData.email.trim(), formData.password, formData.username.trim());
-      
+
       if (result.error) {
         setError(result.error.message);
       } else if (result.data?.user) {
@@ -208,10 +208,10 @@ function Signup() {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       const { error } = await resendEmailVerification(userEmail);
-      
+
       if (error) {
         setError(error.message);
       } else {
@@ -229,10 +229,10 @@ function Signup() {
     setLoading(true);
     setError(null);
     setSuccess(null);
-    
+
     try {
       const { data, error } = await signInWithGoogle();
-      
+
       if (error) {
         console.error('Google OAuth Error Details:', error);
         setError('Google sign-up failed. Please try email signup instead.');
@@ -259,13 +259,13 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 md:bg-cover md:bg-center md:bg-no-repeat flex items-center justify-center p-4 relative" 
-         style={{ 
-           backgroundImage: window.innerWidth >= 768 ? 'url(https://i.pinimg.com/1200x/b7/87/0e/b7870ee068085d61cb621868b908d596.jpg)' : 'none' 
-         }}>
+    <div className="min-h-screen bg-gray-50 md:bg-cover md:bg-center md:bg-no-repeat flex items-center justify-center p-4 relative"
+      style={{
+        backgroundImage: window.innerWidth >= 768 ? 'url(https://i.pinimg.com/1200x/b7/87/0e/b7870ee068085d61cb621868b908d596.jpg)' : 'none'
+      }}>
       {/* Desktop Background Overlay */}
       <div className="hidden md:block absolute inset-0 bg-black bg-opacity-40 backdrop-blur-[1px]"></div>
-      
+
       {/* Logo in top left */}
       <div className="absolute top-6 left-6 z-20">
         <img
@@ -283,81 +283,81 @@ function Signup() {
           <div className="text-center">
             {/* AI Chip Animation */}
             <div className="relative w-24 h-24 mx-auto mb-6">
-              <svg 
-                width="96" 
-                height="96" 
-                viewBox="0 0 96 96" 
+              <svg
+                width="96"
+                height="96"
+                viewBox="0 0 96 96"
                 className="w-full h-full"
               >
                 {/* Central Chip - Black */}
-                <rect 
-                  x="32" 
-                  y="32" 
-                  width="32" 
-                  height="32" 
-                  fill="none" 
-                  stroke="#000000" 
+                <rect
+                  x="32"
+                  y="32"
+                  width="32"
+                  height="32"
+                  fill="none"
+                  stroke="#000000"
                   strokeWidth="2"
                   className="animate-pulse"
                 />
-                <rect 
-                  x="36" 
-                  y="36" 
-                  width="24" 
-                  height="24" 
-                  fill="#000000" 
+                <rect
+                  x="36"
+                  y="36"
+                  width="24"
+                  height="24"
+                  fill="#000000"
                   className="animate-pulse"
                   style={{ animationDelay: '0.2s' }}
                 />
-                
+
                 {/* Circuit Lines - Gray */}
                 <g className="circuit-lines">
                   <line x1="48" y1="32" x2="48" y2="16" stroke="#6B7280" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.4s' }} />
                   <line x1="40" y1="32" x2="40" y2="20" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
                   <line x1="56" y1="32" x2="56" y2="20" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.8s' }} />
-                  
+
                   {/* Circuit Nodes - Dark Gray */}
                   <circle cx="48" cy="16" r="2" fill="#374151" className="animate-pulse" style={{ animationDelay: '1s' }} />
                   <circle cx="40" cy="20" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.2s' }} />
                   <circle cx="56" cy="20" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.4s' }} />
                 </g>
-                
+
                 {/* Circuit Lines - Right */}
                 <g className="circuit-lines">
                   <line x1="64" y1="48" x2="80" y2="48" stroke="#6B7280" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.5s' }} />
                   <line x1="64" y1="40" x2="76" y2="40" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.7s' }} />
                   <line x1="64" y1="56" x2="76" y2="56" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.9s' }} />
-                  
+
                   {/* Circuit Nodes - Dark Gray */}
                   <circle cx="80" cy="48" r="2" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.1s' }} />
                   <circle cx="76" cy="40" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.3s' }} />
                   <circle cx="76" cy="56" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
                 </g>
-                
+
                 {/* Circuit Lines - Bottom */}
                 <g className="circuit-lines">
                   <line x1="48" y1="64" x2="48" y2="80" stroke="#6B7280" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
                   <line x1="40" y1="64" x2="40" y2="76" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.8s' }} />
                   <line x1="56" y1="64" x2="56" y2="76" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '1s' }} />
-                  
+
                   {/* Circuit Nodes - Dark Gray */}
                   <circle cx="48" cy="80" r="2" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.2s' }} />
                   <circle cx="40" cy="76" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.4s' }} />
                   <circle cx="56" cy="76" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.6s' }} />
                 </g>
-                
+
                 {/* Circuit Lines - Left */}
                 <g className="circuit-lines">
                   <line x1="32" y1="48" x2="16" y2="48" stroke="#6B7280" strokeWidth="2" className="animate-pulse" style={{ animationDelay: '0.7s' }} />
                   <line x1="32" y1="40" x2="20" y2="40" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '0.9s' }} />
                   <line x1="32" y1="56" x2="20" y2="56" stroke="#6B7280" strokeWidth="1.5" className="animate-pulse" style={{ animationDelay: '1.1s' }} />
-                  
+
                   {/* Circuit Nodes - Dark Gray */}
                   <circle cx="16" cy="48" r="2" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.3s' }} />
                   <circle cx="20" cy="40" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
                   <circle cx="20" cy="56" r="1.5" fill="#374151" className="animate-pulse" style={{ animationDelay: '1.7s' }} />
                 </g>
-                
+
                 {/* Data Flow Animation - Light Gray */}
                 <g className="data-flow">
                   <circle r="1" fill="#9CA3AF" className="animate-ping">
@@ -369,7 +369,7 @@ function Signup() {
                 </g>
               </svg>
             </div>
-            
+
             {/* Loading text */}
             <p className="text-white text-lg font-medium">Creating account...</p>
             <div className="mt-2 flex justify-center space-x-1">
@@ -387,7 +387,7 @@ function Signup() {
           <h1 className="text-2xl font-medium text-gray-900 mb-2 tracking-tight">Sign up</h1>
           <p className="text-sm text-gray-600">Create your AI fashion assistant account</p>
         </header>
-        
+
         {/* Error Message */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-sm p-3 flex items-start gap-2 mb-4" role="alert">
@@ -416,7 +416,7 @@ function Signup() {
             </div>
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit} className="space-y-3" noValidate>
           {/* Email Field */}
           <div>
@@ -487,7 +487,7 @@ function Signup() {
 
           {/* Google Sign Up Button */}
           <div className="pt-3">
-            <button 
+            <button
               type="button"
               onClick={handleGoogleSignUp}
               disabled={loading}
@@ -495,10 +495,10 @@ function Signup() {
               aria-label="Sign up with Google"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
               {loading ? 'Loading...' : 'Continue with Google'}
             </button>
@@ -526,7 +526,7 @@ function Signup() {
           <div className="text-center pt-3">
             <p className="text-gray-600 text-sm">
               Already have an account?{' '}
-              <button 
+              <button
                 type="button"
                 onClick={() => {
                   window.history.replaceState(null, '', '/login');

@@ -15,16 +15,15 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
     children,
     className = '',
     duration = 1.2,
-    speed = 0.5,
     scrambleChars = '!@#$%^&*()_+',
 }) => {
     const targetText = text || children || '';
-    const [displayText, setDisplayText] = useState('');
+    const textRef = useRef<HTMLSpanElement>(null);
     const [isAnimating, setIsAnimating] = useState(false);
     const animationRef = useRef<number | null>(null);
 
     const triggerAnimation = useCallback(() => {
-        if (isAnimating) return;
+        if (isAnimating || !textRef.current) return;
 
         let startTimestamp: number | null = null;
         const totalChars = targetText.length;
@@ -43,20 +42,23 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
                         continue;
                     }
 
-                    // Determine if this character should be revealed yet
                     const revealThreshold = i / totalChars;
                     if (progress > revealThreshold) {
                         currentText += targetText[i];
                     } else {
-                        // Random character from scramble pool
                         const randomIndex = Math.floor(Math.random() * scrambleChars.length);
                         currentText += scrambleChars[randomIndex];
                     }
                 }
-                setDisplayText(currentText);
+
+                if (textRef.current) {
+                    textRef.current.textContent = currentText;
+                }
                 animationRef.current = requestAnimationFrame(animate);
             } else {
-                setDisplayText(targetText);
+                if (textRef.current) {
+                    textRef.current.textContent = targetText;
+                }
                 setIsAnimating(false);
             }
         };
@@ -65,18 +67,23 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
     }, [targetText, duration, scrambleChars, isAnimating]);
 
     useEffect(() => {
+        // Initial state
+        if (textRef.current) {
+            textRef.current.textContent = '';
+        }
         triggerAnimation();
         return () => {
             if (animationRef.current) cancelAnimationFrame(animationRef.current);
         };
-    }, []); // Run on mount
+    }, []);
 
     return (
         <span
+            ref={textRef}
             className={`${className} cursor-default`}
             onMouseEnter={triggerAnimation}
         >
-            {displayText}
+            {targetText}
         </span>
     );
 };

@@ -19,15 +19,16 @@ const BlurText: React.FC<BlurTextProps> = ({
     className = '',
 }) => {
     const elements = animateBy === 'words' ? text.split(' ') : text.split('');
-    const [animatedCount, setAnimatedCount] = useState(0);
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true, amount: 0.5 });
 
     useEffect(() => {
-        if (animatedCount === elements.length && onAnimationComplete) {
-            onAnimationComplete();
+        if (isInView && onAnimationComplete) {
+            const totalDelay = (elements.length * delay) + 400; // Total stagger delay + duration
+            const timer = setTimeout(onAnimationComplete, totalDelay);
+            return () => clearTimeout(timer);
         }
-    }, [animatedCount, elements.length, onAnimationComplete]);
+    }, [isInView, elements.length, delay, onAnimationComplete]);
 
     const variants: Variants = {
         hidden: {
@@ -55,7 +56,6 @@ const BlurText: React.FC<BlurTextProps> = ({
                         delay: (index * delay) / 1000,
                         ease: 'easeOut',
                     }}
-                    onAnimationComplete={() => setAnimatedCount((prev) => prev + 1)}
                     className="inline-block"
                     style={{ whiteSpace: 'pre' }}
                 >

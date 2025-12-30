@@ -115,10 +115,10 @@ const Navbar = () => {
 
   const getUserDisplayName = () => {
     if (!user) return '';
-    return user.user_metadata?.full_name || 
-           user.user_metadata?.name || 
-           user.email?.split('@')[0] || 
-           'User';
+    return user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      user.email?.split('@')[0] ||
+      'User';
   };
 
   const handleMobileProductsToggle = () => {
@@ -175,10 +175,10 @@ const Navbar = () => {
         }
 
         .hamburger-line {
-          width: 16px;
-          height: 1.5px;
+          width: 14px;
+          height: 1.px;
           background-color: #000;
-          border-radius: 1px;
+          border-radius: 80px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           transform-origin: center;
           position: absolute;
@@ -471,9 +471,8 @@ const Navbar = () => {
       `}</style>
 
       <header
-        className={`fixed top-0 left-0 right-0 z-[70] bg-white shadow-sm transition-transform duration-300 ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-[70] bg-white shadow-sm transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'
+          }`}
       >
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <img
@@ -490,9 +489,9 @@ const Navbar = () => {
             >
               Features
             </a>
-            
+
             {/* Products Dropdown - WITH ARROW for Desktop */}
-            <div 
+            <div
               className="products-dropdown-container"
               onMouseEnter={() => setIsProductsDropdownOpen(true)}
               onMouseLeave={() => setIsProductsDropdownOpen(false)}
@@ -501,13 +500,12 @@ const Navbar = () => {
                 className="flex items-center gap-1 text-gray-700 hover:text-[#973cff] transition-colors duration-300"
               >
                 Products
-                <ChevronDown 
-                  className={`w-4 h-4 transition-transform duration-200 ${
-                    isProductsDropdownOpen ? 'rotate-180' : ''
-                  }`} 
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${isProductsDropdownOpen ? 'rotate-180' : ''
+                    }`}
                 />
               </button>
-              
+
               <div className={`products-dropdown ${isProductsDropdownOpen ? 'open' : ''}`}>
                 <button
                   onClick={handleTryRacanClick}
@@ -524,7 +522,7 @@ const Navbar = () => {
                   </div>
                   <ArrowUpRight className="w-4 h-4 text-gray-400 dropdown-item-arrow" />
                 </button>
-                
+
                 <a
                   href="https://dreamxworld.com/"
                   target="_blank"
@@ -555,7 +553,7 @@ const Navbar = () => {
             >
               About Us
             </button>
-            
+
             {loading ? (
               <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
             ) : user ? (
@@ -590,7 +588,7 @@ const Navbar = () => {
           {/* Smaller Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden z-[80] relative p-3 hover:bg-gray-100 rounded-full transition-colors duration-300"
+            className="md:hidden z-[80] relative w-11 h-11 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors duration-300"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             <div className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`}>
@@ -612,7 +610,7 @@ const Navbar = () => {
           >
             Features
           </a>
-          
+
           {/* Mobile Products Dropdown WITHOUT Arrow */}
           <div className="w-full flex flex-col items-center">
             <button
@@ -621,7 +619,7 @@ const Navbar = () => {
             >
               Products
             </button>
-            
+
             <div className={`mobile-products-dropdown ${isMobileProductsOpen ? 'open' : ''}`}>
               <button
                 onClick={() => handleMobileProductClick('https://chat-with-racan.vercel.app')}
@@ -635,7 +633,7 @@ const Navbar = () => {
                   <p>AI-powered fashion assistant for personalized styling</p>
                 </div>
               </button>
-              
+
               <button
                 onClick={() => handleMobileProductClick('https://dreamxworld.com/')}
                 className="mobile-dropdown-item"
@@ -686,7 +684,7 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <button 
+            <button
               onClick={handleTryRacanClick}
               className="mobile-try-racan-btn"
             >

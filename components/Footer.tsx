@@ -45,12 +45,13 @@ const ModernLink = ({ href, children }: { href: string, children: React.ReactNod
       href={href}
       className="group flex items-center gap-2 text-white/70 hover:text-white transition-colors no-underline relative w-fit"
     >
-      <span className="w-1.5 h-1.5 rounded-full bg-[#FF3A3A] scale-0 group-hover:scale-100 transition-transform duration-300"></span>
+      <span className="w-1.5 h-1.5 rounded-full bg-[#D4FF00] scale-0 group-hover:scale-100 transition-transform duration-300"></span>
       <span className="font-medium text-base relative overflow-hidden">
         <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">{children}</span>
-        <span className="absolute left-0 top-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0 text-[#FF3A3A] font-bold">{children}</span>
+        <span className="absolute left-0 top-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0 text-[#D4FF00] font-bold">{children}</span>
       </span>
-      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-[#FF3A3A]" />
+      {/* <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100
+       group-hover:translate-x-0 transition-all duration-300 text-[#FF3A3A]" /> */}
     </motion.a>
   );
 };
@@ -188,7 +189,8 @@ const Footer: React.FC = () => {
             {['Home', 'Features', 'Products', 'About Us'].map((item) => (
               <ModernLink
                 key={item}
-                href={item === 'About Us' ? 'https://racan-ai.vercel.app/about' : `#${item.toLowerCase()}`}
+                // using hyperlink to navigate to the AboutUs page
+                href={item === 'About Us' ? '/about' : `#${item.toLowerCase()}`}
               >
                 {item}
               </ModernLink>
@@ -208,14 +210,14 @@ const Footer: React.FC = () => {
         </motion.div>
 
         {/* Contact Column */}
-        <motion.div variants={itemVariants} className="lg:col-span-2">
+        < motion.div variants={itemVariants} className="lg:col-span-2" >
           <h3 className="text-white/40 font-black text-xs uppercase tracking-[0.2em] mb-8">Get in Touch</h3>
           <div className="flex flex-col gap-6">
             <a href="mailto:racan8@zohomail.in" className="flex items-center gap-4 group no-underline">
-              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#FF3A3A] group-hover:text-black hover:scale-110 transition-all duration-300 shadow-lg">
+              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#D4FF00] group-hover:text-black hover:scale-110 transition-all duration-300 shadow-lg">
                 <Mail className="w-5 h-5 text-white/40 group-hover:text-black transition-colors" />
               </div>
-              <span className="text-lg font-bold text-white transition-colors group-hover:text-[#FF3A3A]">racan8@zohomail.in</span>
+              <span className="text-lg font-bold text-white transition-colors group-hover:text-[#D4FF00]">racan8@zohomail.in</span>
             </a>
             <p className="text-white/30 text-sm leading-relaxed font-medium">
               Racan Vadodara, Parul University, Gujarat, India. <br />
@@ -231,7 +233,7 @@ const Footer: React.FC = () => {
             className="bg-white/5 border border-white/10 p-6 rounded-3xl backdrop-blur-sm relative group overflow-hidden transition-colors cursor-default"
           >
             <div className="absolute top-0 right-0 p-4 opacity-20 transform translate-x-1/4 -translate-y-1/4 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500">
-              <Bot className="w-16 h-16 text-[#FF3A3A]" />
+              <Bot className="w-16 h-16 text-[#D4FF00]" />
             </div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center p-2 border border-white/10 shadow-inner">
@@ -274,8 +276,8 @@ const Footer: React.FC = () => {
             </MagneticSocial>
           ))}
         </div>
-      </motion.div>
-    </footer>
+      </motion.div >
+    </footer >
   );
 };
 
