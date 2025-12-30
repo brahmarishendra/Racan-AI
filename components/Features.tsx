@@ -84,6 +84,15 @@ const Features: React.FC = () => {
 
   return (
     <>
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
       <section
         id="features"
         ref={containerRef}
@@ -231,12 +240,12 @@ const Features: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory md:snap-none hide-scrollbar pb-8 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
               {newsItems.map((item, idx) => (
                 <a
                   key={item.id}
                   href={item.link}
-                  className={`group bg-white rounded-3xl border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${idx === currentSlide ? 'ring-2 ring-blue-500 md:ring-0' : ''}`}
+                  className={`group flex-shrink-0 w-[85vw] md:w-auto snap-center bg-white rounded-3xl border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${idx === currentSlide ? 'ring-2 ring-blue-500 md:ring-0' : ''}`}
                 >
                   <div className="aspect-[16/10] overflow-hidden">
                     <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />

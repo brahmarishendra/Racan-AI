@@ -175,8 +175,8 @@ const Navbar = () => {
         }
 
         .hamburger-line {
-          width: 14px;
-          height: 1.px;
+          width: 16px;
+          height: 1.5px;
           background-color: #000;
           border-radius: 80px;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -588,7 +588,7 @@ const Navbar = () => {
           {/* Smaller Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden z-[80] relative w-11 h-11 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors duration-300"
+            className="md:hidden z-[80] relative p-3 hover:bg-gray-100 rounded-[90px] transition-colors duration-300"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             <div className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`}>
