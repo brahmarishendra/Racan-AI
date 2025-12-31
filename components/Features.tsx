@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 
 const Features: React.FC = () => {
@@ -18,6 +18,7 @@ const Features: React.FC = () => {
   const newsItems = [
     {
       id: 1,
+      category: "Hiring",
       title: "🚀 Racan AI x DreamX Is Hiring: Frontend Developer Intern",
       description: "We're on the lookout for passionate Frontend Development Interns to collaborate with us on our cutting-edge DreamX product and the Racan AI.",
       image: "https://i.postimg.cc/MKgw8rCf/Whats-App-Image-2025-06-25-at-22-33-39-2e1c8160.jpg",
@@ -25,6 +26,7 @@ const Features: React.FC = () => {
     },
     {
       id: 2,
+      category: "Fashion",
       title: "A great Our story always starts with modern dresses",
       description: "In the fast-paced world of fashion, it's easy to get lost in the trends. But at VINDOF, we believe in something different.",
       image: "https://vindof.com/cdn/shop/articles/vindof-casualwear-blog.jpg?v=1749550789&width=1000",
@@ -32,6 +34,7 @@ const Features: React.FC = () => {
     },
     {
       id: 3,
+      category: "Tech",
       title: "Smart Wardrobe Integration: The Future is Here",
       description: "Learn how Racan AI seamlessly connects with your existing wardrobe to create endless styling possibilities.",
       image: "https://cdn.shopify.com/s/files/1/0708/3340/6189/files/image_49_1.png?v=1736421252",
@@ -39,8 +42,30 @@ const Features: React.FC = () => {
     }
   ];
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % newsItems.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + newsItems.length) % newsItems.length);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const newsSectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: newsSectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const xTranslate = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, clientWidth } = scrollContainerRef.current;
+      const scrollTo = direction === 'left'
+        ? scrollLeft - clientWidth / 2
+        : scrollLeft + clientWidth / 2;
+
+      scrollContainerRef.current.scrollTo({
+        left: scrollTo,
+        behavior: 'smooth'
+      });
+    }
+  };
+
 
   const features = [
     {
@@ -217,37 +242,85 @@ const Features: React.FC = () => {
 
 
       {/* Light Mode Section for News & Blogs */}
-      <section className="py-24 bg-white overflow-hidden hide-scrollbar">
+      <section ref={newsSectionRef} className="py-24 bg-white overflow-hidden hide-scrollbar">
         <div className="max-w-7xl mx-auto px-4">
           {/* News & Blogs (Light Mode) */}
           <div>
-            <div className="flex items-end justify-between mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
+            >
               <div>
-                <span className="text-blue-600 font-bold text-sm uppercase tracking-[0.2em] mb-4 block">Inside Perspective</span>
-                <h2 className="text-3xl md:text-4xl font-black text-gray-900">Latest from the Runway</h2>
+                <span className="text-black font-black text-xs uppercase tracking-widest mb-2 block">INSIDE PERSPECTIVE</span>
+                <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">Latest from the Runway</h2>
               </div>
-              <div className="flex gap-4">
-                <button onClick={prevSlide} className="p-4 rounded-full border border-gray-200 hover:bg-gray-50 transition-all bg-white"><ChevronLeft className="w-6 h-6" /></button>
-                <button onClick={nextSlide} className="p-4 rounded-full border border-gray-200 hover:bg-gray-50 transition-all bg-white"><ChevronRight className="w-6 h-6" /></button>
-              </div>
-            </div>
-
-            <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory md:snap-none hide-scrollbar pb-8 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
-              {newsItems.map((item, idx) => (
-                <a
-                  key={item.id}
-                  href={item.link}
-                  className={`group flex-shrink-0 w-[85vw] md:w-auto snap-center bg-white rounded-3xl border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${idx === currentSlide ? 'ring-2 ring-blue-500 md:ring-0' : ''}`}
+              <div className="flex items-center gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.location.href = '#'}
+                  className="bg-black text-white px-6 py-2 rounded-md font-bold text-[10px] tracking-widest uppercase hover:bg-gray-900 transition-all shadow-lg"
                 >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  </div>
-                  <div className="p-6">
-                    <h4 className="font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">{item.title}</h4>
-                    <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
-                  </div>
-                </a>
-              ))}
+                  VIEW ALL
+                </motion.button>
+                <div className="flex gap-2">
+                  <motion.button
+                    whileHover={{ scale: 1.1, backgroundColor: "#f3f4f6" }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => scroll('left')}
+                    className="p-3 rounded-md border border-gray-300 transition-all bg-white text-black shadow-sm"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.1, backgroundColor: "#f3f4f6" }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => scroll('right')}
+                    className="p-3 rounded-md border border-gray-300 transition-all bg-white text-black shadow-sm"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+
+            <div
+              ref={scrollContainerRef}
+              className="overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 -mx-4 px-4 md:mx-0 md:px-0"
+            >
+              <motion.div
+                style={{ x: xTranslate }}
+                className="flex gap-8"
+              >
+                {newsItems.map((item, idx) => (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, delay: idx * 0.1 }}
+                    className="group flex-shrink-0 w-[85vw] md:w-[calc(33.333%-1.33rem)] snap-center flex flex-col"
+                  >
+                    <div className="aspect-[4/3] rounded-[1.5rem] overflow-hidden mb-6 shadow-xl">
+                      <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    </div>
+                    <div className="flex flex-col items-start gap-4">
+                      <span className="bg-black text-white px-4 py-1.5 rounded-md font-bold text-[10px] tracking-widest uppercase shadow-md">{item.category}</span>
+                      <h4 className="text-2xl font-black text-gray-900 leading-tight mb-1 group-hover:text-blue-600 transition-colors line-clamp-2">{item.title}</h4>
+                      <p className="text-base text-gray-600 font-medium leading-relaxed line-clamp-2">{item.description}</p>
+                      <motion.button
+                        whileHover={{ x: 5 }}
+                        className="bg-black text-white px-5 py-2 rounded-md font-bold text-[10px] tracking-widest uppercase hover:bg-gray-900 transition-all mt-2 shadow-md flex items-center gap-2"
+                      >
+                        READ MORE <ArrowRight className="w-3 h-3" />
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
           </div>
         </div>
