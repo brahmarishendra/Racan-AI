@@ -58,6 +58,17 @@ const Features: React.FC = () => {
     }
   };
 
+  {/* left to right animation */ }
+  const categoryVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  };
+
+
+
+
+
+
   const features = [
     {
       id: "01",
@@ -293,14 +304,23 @@ const Features: React.FC = () => {
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     </div>
                     <div className="flex flex-col items-start gap-4">
-                      <span className="bg-black text-white px-4 py-1.5 rounded-md font-bold text-[10px] tracking-widest uppercase shadow-md">{item.category}</span>
+                      <motion.span
+                        variants={categoryVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="bg-[#005c3aff] text-white px-4 py-1.5 font-bold text-[10px] tracking-widest uppercase"
+                      >
+                        {item.category}
+                      </motion.span>
                       {/*
                          <h4 className="text-2xl font-black text-gray-900 leading-tight mb-1 group-hover:text-blue-600 transition-colors line-clamp-2">{item.title}</h4> 
                          */}
                       <p className="text-base text-gray-600 font-medium leading-relaxed line-clamp-2">{item.title}</p>
                       <motion.button
                         whileHover={{ x: 5 }}
-                        className="bg-black text-white px-5 py-2 rounded-md font-bold text-[10px] tracking-widest uppercase hover:bg-gray-900 transition-all mt-2 shadow-md flex items-center gap-2"
+                        onClick={() => window.open(item.link, '_blank')}
+                        className="bg-black text-white px-5 py-2 shadow-md font-bold text-[10px] tracking-widest uppercase hover:bg-gray-900 transition-all mt-2  flex items-center gap-2"
                       >
                         READ MORE <ArrowRight className="w-3 h-3" />
                       </motion.button>
