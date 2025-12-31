@@ -84,15 +84,7 @@ const Features: React.FC = () => {
 
   return (
     <>
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
+
       <section
         id="features"
         ref={containerRef}
@@ -225,7 +217,7 @@ const Features: React.FC = () => {
 
 
       {/* Light Mode Section for News & Blogs */}
-      <section className="py-24 bg-white overflow-hidden">
+      <section className="py-24 bg-white overflow-hidden hide-scrollbar">
         <div className="max-w-7xl mx-auto px-4">
           {/* News & Blogs (Light Mode) */}
           <div>

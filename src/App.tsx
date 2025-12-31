@@ -6,6 +6,7 @@ import Signup from '../components/Signup';
 import Login from '../components/Login';
 import StartupAnimation from '../components/StartupAnimation';
 import { isAuthenticated, onAuthStateChange } from './lib/supabase';
+import CookiePopup from '../components/CookiePopup';
 
 // Protected Route component for auth pages (login/signup)
 function AuthRoute({ children }: { children: React.ReactNode }) {
@@ -80,25 +81,26 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route 
-          path="/signup" 
+        <Route
+          path="/signup"
           element={
             <AuthRoute>
               <Signup />
             </AuthRoute>
-          } 
+          }
         />
-        <Route 
-          path="/login" 
+        <Route
+          path="/login"
           element={
             <AuthRoute>
               <Login />
             </AuthRoute>
-          } 
+          }
         />
       </Routes>
+      <CookiePopup />
     </Router>
   );
-} 
+}
 
 export default App;
