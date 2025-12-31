@@ -134,7 +134,7 @@ function Hero() {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleTryRacanClick}
                 style={{ fontFamily: '"Inter", sans-serif' }}
-                className="bg-[#D4FF00] text-black ml-20 px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-full font-black text-[14px] sm:text-xs flex items-center gap-2 sm:gap-3 transition-all shadow-xl group border-none cursor-pointer whitespace-nowrap"
+                className="bg-[#D4FF00] text-black ml-18 px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-full font-black text-[14px] sm:text-xs flex items-center gap-2 sm:gap-3 transition-all shadow-xl group border-none cursor-pointer whitespace-nowrap"
               >
                 Try Now <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </motion.button>
