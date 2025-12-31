@@ -228,7 +228,7 @@ const Features: React.FC = () => {
       </section>
 
       {/* Light Mode Section for News & Blogs */}
-      <section className="py-24 bg-white overflow-hidden hide-scrollbar">
+      <section className="py-24 bg-[#f5f6eaff] overflow-hidden hide-scrollbar">
         <div className="max-w-7xl mx-auto px-4">
           {/* News & Blogs (Light Mode) */}
           <div>
@@ -289,13 +289,15 @@ const Features: React.FC = () => {
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
                     className="group flex-shrink-0 w-[85vw] md:w-[calc(33.333%-1.33rem)] snap-center flex flex-col"
                   >
-                    <div className="aspect-[4/3] rounded-[1.5rem] overflow-hidden mb-6 shadow-xl">
+                    <div className="aspect-[4/3] overflow-hidden mb-6">
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     </div>
                     <div className="flex flex-col items-start gap-4">
                       <span className="bg-black text-white px-4 py-1.5 rounded-md font-bold text-[10px] tracking-widest uppercase shadow-md">{item.category}</span>
-                      <h4 className="text-2xl font-black text-gray-900 leading-tight mb-1 group-hover:text-blue-600 transition-colors line-clamp-2">{item.title}</h4>
-                      <p className="text-base text-gray-600 font-medium leading-relaxed line-clamp-2">{item.description}</p>
+                      {/*
+                         <h4 className="text-2xl font-black text-gray-900 leading-tight mb-1 group-hover:text-blue-600 transition-colors line-clamp-2">{item.title}</h4> 
+                         */}
+                      <p className="text-base text-gray-600 font-medium leading-relaxed line-clamp-2">{item.title}</p>
                       <motion.button
                         whileHover={{ x: 5 }}
                         className="bg-black text-white px-5 py-2 rounded-md font-bold text-[10px] tracking-widest uppercase hover:bg-gray-900 transition-all mt-2 shadow-md flex items-center gap-2"
