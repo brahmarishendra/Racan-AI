@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 
 const Features: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -42,15 +41,8 @@ const Features: React.FC = () => {
     }
   ];
 
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const newsSectionRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: newsSectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const xTranslate = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -236,7 +228,7 @@ const Features: React.FC = () => {
       </section>
 
       {/* Light Mode Section for News & Blogs */}
-      <section ref={newsSectionRef} className="py-24 bg-white overflow-hidden hide-scrollbar">
+      <section className="py-24 bg-white overflow-hidden hide-scrollbar">
         <div className="max-w-7xl mx-auto px-4">
           {/* News & Blogs (Light Mode) */}
           <div>
@@ -286,7 +278,6 @@ const Features: React.FC = () => {
               className="overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 -mx-4 px-4 md:mx-0 md:px-0"
             >
               <motion.div
-                style={{ x: xTranslate }}
                 className="flex gap-8"
               >
                 {newsItems.map((item, idx) => (
