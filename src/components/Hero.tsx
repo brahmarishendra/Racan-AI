@@ -37,7 +37,7 @@ function Hero() {
           align-items: center;
           justify-content: center;
           margin-top: 80px;
-          margin-bottom: 2  0px;
+          margin-bottom: 20px;
         }
 
         .content-card {
@@ -190,7 +190,7 @@ function Hero() {
           align-items: center;
           gap: 12px;
           text-decoration: none;
-          transition: all 0.3s ease;
+          transition: all 0.3s base;
         }
 
         .dream-store-link:hover {
@@ -380,13 +380,10 @@ function Hero() {
           }
         }
       `}</style>
-      
+
       <section className="hero-container">
         <div className="content-card">
-          {/* Main Content */}
           <div className="main-content">
-            
-            {/* Left Content */}
             <div className="left-content">
               <div className="animate-fade-in-up">
                 <h1 style={{
@@ -395,10 +392,15 @@ function Hero() {
                   lineHeight: '1.1',
                   color: '#333',
                   marginBottom: '18px',
-                  letterSpacing: '-0.02em'
+                  letterSpacing: '-0.02em',
+                  fontFamily: '"Inter", sans-serif'
                 }}>
                   Redefine Your<br />
-                  Style With<br />
+                  <span style={{
+                    fontFamily: '"Playfair Display", serif',
+                    fontStyle: 'italic',
+                    fontWeight: '400'
+                  }}>Style</span> With<br />
                   <span style={{ color: '#ff3366' }}>Racan AI</span>
                 </h1>
               </div>
@@ -408,7 +410,8 @@ function Hero() {
                   fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
                   color: '#333',
                   marginBottom: '5px',
-                  fontWeight: '600'
+                  fontWeight: '600',
+                  fontFamily: '"Inter", sans-serif'
                 }}>
                   AI-powered assistant + Fashion
                 </div>
@@ -416,7 +419,8 @@ function Hero() {
                   fontSize: 'clamp(0.9rem, 2.2vw, 1rem)',
                   color: '#333',
                   marginBottom: '20px',
-                  fontWeight: '600'
+                  fontWeight: '600',
+                  fontFamily: '"Inter", sans-serif'
                 }}>
                   Ecommerce
                 </div>
@@ -428,9 +432,10 @@ function Hero() {
                   color: '#6c757d',
                   lineHeight: '1.5',
                   marginBottom: '25px',
-                  maxWidth: '350px'
+                  maxWidth: '350px',
+                  fontFamily: '"Inter", sans-serif'
                 }}>
-                  Experience the future of fashion with AI-powered Fashion assistant Ecommerce, 
+                  Experience the future of fashion with AI-powered Fashion assistant Ecommerce,
                   personalized recommendations that match your unique taste.
                 </p>
 
@@ -447,7 +452,8 @@ function Hero() {
                     display: 'inline-block',
                     transition: 'all 0.3s ease',
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    fontFamily: '"Inter", sans-serif'
                   }}
                   onMouseOver={(e) => {
                     e.currentTarget.style.background = '#d70153';
@@ -462,17 +468,16 @@ function Hero() {
                 </a>
               </div>
 
-              {/* Stats Section */}
               <div className="stats-section animate-fade-in-up animation-delay-600">
                 <div className="stat-item">
-                  <div className="stat-number">150K+</div>
+                  <div className="stat-number" style={{ fontFamily: '"Inter", sans-serif' }}>150K+</div>
                   <div className="stat-label">
                   </div>
                 </div>
-                
-                <a 
-                  href="https://dreamxworld.com/" 
-                  target="_blank" 
+
+                <a
+                  href="https://dreamxworld.com/"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="dream-store-link"
                 >
@@ -481,50 +486,46 @@ function Hero() {
                     alt="Dream Store"
                     className="dream-store-image"
                   />
-                  <div style={{ fontSize: 'clamp(12px, 1.3vw, 9px)', color: '#000000' }}>
-                  Partner with DreamX Store
+                  <div style={{ fontSize: 'clamp(12px, 1.3vw, 9px)', color: '#000000', fontFamily: '"Inter", sans-serif' }}>
+                    Partner with DreamX Store
                   </div>
                 </a>
               </div>
             </div>
 
-            {/* Right Content - Fashion Images/Video */}
             <div className="right-content">
               <div className="floating-elements">
                 <div className="floating-dot"></div>
                 <div className="floating-dot"></div>
                 <div className="floating-dot"></div>
               </div>
-              
+
               <div className="fashion-grid">
-                {/* Large Fashion Video */}
                 <div className="fashion-card large">
-                  <video 
-                    autoPlay 
-                    muted 
-                    loop 
+                  <video
+                    autoPlay
+                    muted
+                    loop
                     playsInline
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   >
                     <source src="https://packaged-media.redd.it/eocwyp64008f1/pb/m2-res_640p.mp4?m=DASHPlaylist.mpd&v=1&e=1750406400&s=786f2e47ec0a6a250d567c672b5f266cf682a784" type="video/mp4" />
                   </video>
                 </div>
-                
-                {/* Top Right Fashion Image */}
+
                 <div className="fashion-card">
-                  <img 
-                    src="https://i.pinimg.com/736x/d1/a7/90/d1a790aae1206557418eba5e0638223e.jpg" 
+                  <img
+                    src="https://i.pinimg.com/736x/d1/a7/90/d1a790aae1206557418eba5e0638223e.jpg"
                     alt="Fashion Model 2"
                   />
                 </div>
-                
-                {/* Bottom Right - AI Element with Overlay */}
-                <div className="fashion-card" style={{ 
+
+                <div className="fashion-card" style={{
                   background: '#f0f0f0',
                   position: 'relative'
                 }}>
-                  <img 
-                    src="https://i.pinimg.com/736x/54/a1/e3/54a1e32c53c93895bc44239a351dc2bf.jpg" 
+                  <img
+                    src="https://i.pinimg.com/736x/54/a1/e3/54a1e32c53c93895bc44239a351dc2bf.jpg"
                     alt="Fashion Model 1"
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
@@ -536,8 +537,7 @@ function Hero() {
                   </div>
                 </div>
               </div>
-              
-              {/* Additional floating elements */}
+
               <div style={{
                 position: 'absolute',
                 bottom: '12px',
@@ -547,12 +547,13 @@ function Hero() {
                 borderRadius: '6px',
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                 fontSize: 'clamp(7px, 1.3vw, 8px)',
-                color: '#6c757d'
+                color: '#6c757d',
+                fontFamily: '"Inter", sans-serif'
               }}>
                 <div style={{ fontWeight: '600', color: '#333', marginBottom: '1px' }}>STYLE MATCH</div>
                 <div>98% ACCURACY</div>
               </div>
-              
+
               <div style={{
                 position: 'absolute',
                 top: '45%',
@@ -562,7 +563,8 @@ function Hero() {
                 borderRadius: '6px',
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                 fontSize: 'clamp(7px, 1.3vw, 8px)',
-                color: '#6c757d'
+                color: '#6c757d',
+                fontFamily: '"Inter", sans-serif'
               }}>
                 <div style={{ fontWeight: '600', color: '#333', marginBottom: '1px' }}>WARDROBE</div>
                 <div>SMART AI</div>

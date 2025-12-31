@@ -72,29 +72,31 @@ function Hero() {
             <motion.h1
               variants={itemVariants}
               className="text-5xl lg:text-[5.5rem] font-bold leading-[1] tracking-tighter text-white uppercase relative"
+              style={{ fontFamily: '"Inter", sans-serif' }}
             >
               <ScrambledText
                 duration={1.2}
                 speed={0.5}
                 scrambleChars=".:"
               >
-                Redefine Your Style
+                Redefine Your
               </ScrambledText>
               <br />
-              <span className="flex items-center gap-4">
-                <ScrambledText
-                  duration={1.2}
-                  speed={0.5}
-                  scrambleChars=".:"
-                >
-                  WITH
-                </ScrambledText>
+              <span style={{
+                fontFamily: '"Playfair Display", serif',
+                fontStyle: 'italic',
+                fontWeight: '400',
+                textTransform: 'none',
+                marginLeft: '0.1em'
+              }}>Style With
                 <motion.span
                   animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
                   transition={{ duration: 3, repeat: Infinity }}
-                  className="w-5 h-5 lg:w-6 lg:h-6 bg-[#D4FF00] rounded-full inline-block mt-3"
+                  className="ml-0.9 w-5 h-5 lg:w-4 lg:h-4 bg-[#D4FF00] rounded-full inline-block mt-3"
                 ></motion.span>
               </span>
+              <br />
+
               <ScrambledText
                 duration={1.2}
                 speed={0.5}
@@ -107,23 +109,23 @@ function Hero() {
             <motion.p
               variants={itemVariants}
               className="text-base lg:text-lg text-white/70 font-medium leading-relaxed max-w-md"
+              style={{ fontFamily: '"Inter", sans-serif' }}
             >
-              Building India’s First Full-Fledged
-              AI-Commerce Ecosystem for Fashion
+              Building India’s First Full-Fledged AI-Commerce Ecosystem for Fashion
             </motion.p>
 
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start sm:items-center gap-8 mt-2">
-              <div className="flex items-center gap-4 group cursor-pointer">
-                <div className="text-2xl font-black text-white">5K+</div>
+            <motion.div variants={itemVariants} className="flex flex-row items-center gap-4 sm:gap-8 mt-6 sm:mt-2">
+              <div className="flex items-center gap-2 sm:gap-4 group cursor-pointer" style={{ fontFamily: '"Inter", sans-serif' }}>
+                <div className="text-xl sm:text-2xl font-black text-white">5K+</div>
                 <div className="flex flex-col">
                   <div className="flex -space-x-2">
                     {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white/20 overflow-hidden bg-gray-200 shadow-sm">
+                      <div key={i} className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 overflow-hidden bg-gray-200 shadow-sm">
                         <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="user" className="w-full h-full object-cover" />
                       </div>
                     ))}
                   </div>
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-white/50 mt-1">Active AI Stylists</span>
+                  <span className="text-[7px] sm:text-[9px] font-bold uppercase tracking-widest text-white/50 mt-1">Active AI Stylists</span>
                 </div>
               </div>
 
@@ -131,9 +133,10 @@ function Hero() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleTryRacanClick}
-                className="bg-[#D4FF00] text-black px-7 py-3.5 rounded-full font-black text-xs flex items-center gap-3 transition-all shadow-xl group border-none cursor-pointer"
+                style={{ fontFamily: '"Inter", sans-serif' }}
+                className="bg-[#D4FF00] text-black ml-20 px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-full font-black text-[14px] sm:text-xs flex items-center gap-2 sm:gap-3 transition-all shadow-xl group border-none cursor-pointer whitespace-nowrap"
               >
-                Try Now <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                Try Now <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </motion.button>
             </motion.div>
 
@@ -209,8 +212,8 @@ function Hero() {
             </motion.div>
 
           </motion.div>
-        </div>
-      </motion.div>
+        </div >
+      </motion.div >
       {/* Closed the Max-W Container Here */}
 
       {/* Bottom Logo Cloud - Infinite Marquee - NOW OUTSIDE, FULL WIDTH */}
@@ -231,19 +234,13 @@ function Hero() {
           >
             {[
               { name: "Racan AI", icon: Bot },
-              { name: "Dream X", icon: Sparkles },
-              { name: "ReactJS", icon: FileCode },
-              { name: "Python", icon: Terminal },
-              { name: "Figma", icon: PenTool },
-              { name: "Flutter", icon: Smartphone },
+              { name: "Dream X Store", icon: Smartphone },
+              { name: "Code", icon: Terminal },
               { name: "Rockage", icon: Globe },
               { name: "Zapier", icon: Workflow },
               { name: "Racan AI", icon: Bot },
-              { name: "Dream X", icon: Sparkles },
-              { name: "ReactJS", icon: FileCode },
-              { name: "Python", icon: Terminal },
-              { name: "Figma", icon: PenTool },
-              { name: "Flutter", icon: Smartphone },
+              { name: "Dream X Store", icon: Sparkles },
+              { name: "Coders", icon: Terminal },
               { name: "Rockage", icon: Globe },
               { name: "Zapier", icon: Workflow },
             ].map((brand, idx) => (
@@ -261,7 +258,7 @@ function Hero() {
           mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
       `}</style>
-    </div>
+    </div >
   );
 }
 
