@@ -19,6 +19,13 @@ const Footer: React.FC = () => {
   );
   const footerOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
+  // Parallax effects for different columns
+  const leftY = useTransform(scrollYProgress, [0, 1], [50, 0]);
+  const centerY = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const rightY = useTransform(scrollYProgress, [0, 1], [150, 0]);
+  const logoRotate = useTransform(scrollYProgress, [0, 1], [-10, 0]);
+  const logoScale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -31,8 +38,13 @@ const Footer: React.FC = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+    }
   };
 
   return (
@@ -53,12 +65,19 @@ const Footer: React.FC = () => {
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20"
         >
           {/* Logo & Info Column */}
-          <motion.div variants={itemVariants} className="md:col-span-4 flex flex-col gap-8">
+          <motion.div
+            style={{ y: leftY }}
+            variants={itemVariants}
+            className="md:col-span-4 flex flex-col gap-8"
+          >
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center p-2 border border-white/20">
+                <motion.div
+                  style={{ rotate: logoRotate, scale: logoScale }}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center p-2 border border-white/20"
+                >
                   <img src="https://i.postimg.cc/rsYBTFzm/image-41.png" alt="logo" className="w-full brightness-0 invert" />
-                </div>
+                </motion.div>
                 <h3 className="text-xl font-bold tracking-tight uppercase">RACAN AI</h3>
               </div>
               <p className="text-white/50 text-xs leading-relaxed max-w-xs font-bold uppercase tracking-[0.2em]">
@@ -97,9 +116,15 @@ const Footer: React.FC = () => {
                     url: "#"
                   }
                 ].map((social, idx) => (
-                  <a key={idx} href={social.url} className="text-white/40 hover:text-[#D4FF00] transition-colors">
+                  <motion.a
+                    key={idx}
+                    href={social.url}
+                    whileHover={{ scale: 1.2, color: "#D4FF00", rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-white/40 transition-colors"
+                  >
                     {typeof social.icon === 'function' ? <social.icon className="w-[18px] h-[18px]" /> : <social.icon size={18} strokeWidth={2} />}
-                  </a>
+                  </motion.a>
                 ))}
               </div>
             </div>
@@ -122,18 +147,23 @@ const Footer: React.FC = () => {
           </motion.div>
 
           {/* Navigation Grid */}
-          <motion.div variants={itemVariants} className="md:col-span-4 grid grid-cols-2 gap-8 border-y md:border-y-0 md:border-x border-white/10 py-12 md:py-0 md:px-12">
+          <motion.div
+            style={{ y: centerY }}
+            variants={itemVariants}
+            className="md:col-span-4 grid grid-cols-2 gap-8 border-y md:border-y-0 md:border-x border-white/10 py-12 md:py-0 md:px-12"
+          >
             <div className="flex flex-col gap-6">
               <h4 className="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] mb-2">Navigation</h4>
               {['Home', 'Features', 'Products', 'About Us'].map((item) => (
-                <a
+                <motion.a
                   key={item}
                   href={item === 'About Us' ? '/about' : `#${item.toLowerCase()}`}
-                  className="text-white/60 hover:text-white text-sm font-bold uppercase tracking-widest no-underline transition-all flex items-center gap-2 group"
+                  whileHover={{ x: 10, color: "#D4FF00" }}
+                  className="text-white/60 text-sm font-bold uppercase tracking-widest no-underline transition-all flex items-center gap-2 group"
                 >
                   {item}
                   <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all text-[#D4FF00]" />
-                </a>
+                </motion.a>
               ))}
             </div>
             <div className="flex flex-col gap-6">
@@ -146,7 +176,11 @@ const Footer: React.FC = () => {
           </motion.div>
 
           {/* CTA Column */}
-          <motion.div variants={itemVariants} className="md:col-span-4 flex flex-col justify-between items-start md:items-end text-left md:text-right">
+          <motion.div
+            style={{ y: rightY }}
+            variants={itemVariants}
+            className="md:col-span-4 flex flex-col justify-between items-start md:items-end text-left md:text-right"
+          >
             <div className="max-w-xs">
               <h2 className="text-3xl lg:text-5xl font-bold leading-tight mb-6 uppercase tracking-tighter">
                 Connect. <br />
@@ -158,8 +192,23 @@ const Footer: React.FC = () => {
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.05, backgroundColor: "#D4FF00", color: "#000" }}
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: "#D4FF00",
+                color: "#000",
+                boxShadow: "0 0 20px rgba(212, 255, 0, 0.4)"
+              }}
               whileTap={{ scale: 0.95 }}
+              animate={{
+                boxShadow: ["0 0 0px rgba(212, 255, 0, 0)", "0 0 15px rgba(212, 255, 0, 0.2)", "0 0 0px rgba(212, 255, 0, 0)"]
+              }}
+              transition={{
+                boxShadow: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
               onClick={() => window.location.href = 'https://lookbook-psus.onrender.com'}
               className="bg-white text-black px-10 py-5 font-black text-xs tracking-[0.2em] uppercase transition-all border-none cursor-pointer shadow-2xl"
             >
