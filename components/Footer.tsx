@@ -11,9 +11,13 @@ const Footer: React.FC = () => {
     offset: ["start end", "end end"]
   });
 
-  // Slide reveal animation: content slides up as footer enters viewport
-  const footerY = useTransform(scrollYProgress, [0, 1], [150, 0]);
-  const footerOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+  // Reveal animation: clip-path expands from top to bottom
+  const clipPath = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["inset(0% 0% 100% 0%)", "inset(0% 0% 0% 0%)"]
+  );
+  const footerOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -37,7 +41,7 @@ const Footer: React.FC = () => {
       className="bg-black text-white pt-24 pb-12 relative overflow-hidden"
     >
       <motion.div
-        style={{ y: footerY, opacity: footerOpacity }}
+        style={{ clipPath, opacity: footerOpacity }}
         className="max-w-[1400px] mx-auto px-6"
       >
         {/* Top Section: Info, Navigation, CTA */}
@@ -58,7 +62,7 @@ const Footer: React.FC = () => {
                 <h3 className="text-xl font-bold tracking-tight uppercase">RACAN AI</h3>
               </div>
               <p className="text-white/50 text-xs leading-relaxed max-w-xs font-bold uppercase tracking-[0.2em]">
-                Racan Vadodara, Parul University, Gujarat, India. <br />
+                Racan Hyderabad, Telangana, India. <br />
                 Building the future of fashion tech.
               </p>
             </div>
@@ -177,6 +181,7 @@ const Footer: React.FC = () => {
 
           <div
             className="overflow-hidden py-4 -mb-8 cursor-pointer relative group"
+            // normal with hover
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -185,14 +190,14 @@ const Footer: React.FC = () => {
               className="text-[12vw] md:text-[18vw] font-black leading-none tracking-tighter text-center whitespace-nowrap select-none transition-all duration-700"
               style={{
                 fontFamily: 'Inter, sans-serif',
-                backgroundImage: `url('https://i.pinimg.com/1200x/18/cf/57/18cf57b75966c1982c82d6dab77d8598.jpg')`,
+                backgroundImage: `url('https://i.pinimg.com/originals/60/ee/2c/60ee2c40db75cc99419e2eced7d3ae91.gif')`,
                 // bg image size need small 
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'top',
+                backgroundPosition: 'center',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
-                color: isHovered ? 'transparent' : 'white',
+                color: isHovered ? 'white' : 'transparent',
               }}
             >
               RACAN AI
