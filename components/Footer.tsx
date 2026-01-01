@@ -236,7 +236,7 @@ const Footer: React.FC = () => {
           >
             <motion.h1
               whileTap={{ scale: 0.98 }}
-              className="text-[12vw] md:text-[18vw] font-black leading-none tracking-tighter text-center whitespace-nowrap select-none transition-all duration-700"
+              className="text-[12vw] md:text-[18vw] font-black   text-center whitespace-nowrap select-none transition-all duration-700"
               style={{
                 fontFamily: 'Inter, sans-serif',
                 backgroundImage: `url('https://i.pinimg.com/originals/60/ee/2c/60ee2c40db75cc99419e2eced7d3ae91.gif')`,
