@@ -105,9 +105,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="relative">
-        <Footer />
-      </footer>
+      <Footer />
 
       <AnimatePresence>
         {showAdPopup && (

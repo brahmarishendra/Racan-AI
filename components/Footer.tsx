@@ -26,6 +26,12 @@ const Footer: React.FC = () => {
   const logoRotate = useTransform(scrollYProgress, [0, 1], [-10, 0]);
   const logoScale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
 
+  const transitionStyle = {
+    clipPath,
+    opacity: footerOpacity,
+    willChange: 'clip-path, opacity'
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -57,7 +63,7 @@ const Footer: React.FC = () => {
       className="bg-black text-white pt-24 pb-12 relative overflow-hidden"
     >
       <motion.div
-        style={{ clipPath, opacity: footerOpacity, willChange: 'clip-path, opacity' }}
+        style={transitionStyle}
         className="max-w-[1400px] mx-auto px-6"
       >
         {/* Top Section: Info, Navigation, CTA */}
@@ -70,7 +76,7 @@ const Footer: React.FC = () => {
         >
           {/* Logo & Info Column */}
           <motion.div
-            style={{ y: leftY }}
+            style={{ y: leftY, willChange: 'transform' }}
             variants={itemVariants}
             className="md:col-span-4 flex flex-col gap-8"
           >
@@ -152,7 +158,7 @@ const Footer: React.FC = () => {
 
           {/* Navigation Grid */}
           <motion.div
-            style={{ y: centerY }}
+            style={{ y: centerY, willChange: 'transform' }}
             variants={itemVariants}
             className="md:col-span-4 grid grid-cols-2 gap-8 border-y md:border-y-0 md:border-x border-white/10 py-12 md:py-0 md:px-12"
           >
@@ -183,7 +189,7 @@ const Footer: React.FC = () => {
 
           {/* CTA Column */}
           <motion.div
-            style={{ y: rightY }}
+            style={{ y: rightY, willChange: 'transform' }}
             variants={itemVariants}
             className="md:col-span-4 flex flex-col justify-between items-start md:items-end text-left md:text-right"
           >

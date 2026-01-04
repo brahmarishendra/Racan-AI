@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LogOut, User, ChevronDown, Bot, ShoppingBag, ArrowUpRight } from 'lucide-react';
@@ -15,6 +16,7 @@ const Navbar = () => {
   const platformTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const [isPartnersOpen, setIsPartnersOpen] = useState(false);
   const partnersTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
 
   const handlePlatformEnter = () => {
     if (platformTimeoutRef.current) {
@@ -154,7 +156,7 @@ const Navbar = () => {
   }, [isMenuOpen]);
 
   const handleNavigation = (path: string) => {
-    window.location.href = path;
+    navigate(path);
     setIsMenuOpen(false);
     setIsMobileProductsOpen(false);
   };
@@ -260,7 +262,13 @@ const Navbar = () => {
             {['Features', 'Products', 'Company'].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase()}`}
+                href={item === 'Company' ? '/about' : `#${item.toLowerCase()}`}
+                onClick={(e) => {
+                  if (item === 'Company') {
+                    e.preventDefault();
+                    handleNavigation('/about');
+                  }
+                }}
                 className="text-base font-medium transition-colors no-underline text-white hover:text-[#D4FF00] relative py-2 group"
               >
                 {item}
@@ -391,7 +399,7 @@ const Navbar = () => {
                     Experience the next evolution of AI-driven commerce with improved agentic workflows.
                   </p>
                   <button
-                    onClick={() => handleNavigation('#about')}
+                    onClick={() => handleNavigation('/about')}
                     className="w-full py-2 bg-white text-black font-bold text-xs rounded-lg hover:bg-[#D4FF00] transition-colors border-none cursor-pointer"
                   >
                     Explore V2.0
@@ -507,8 +515,8 @@ const Navbar = () => {
                   Products
                   <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#D4FF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </motion.a>
-                <motion.a variants={mobileMenuItemVariants} href="about.tsx" onClick={(e) => { e.preventDefault(); handleNavigation('#about'); }} className="text-4xl font-black text-gray-900 no-underline relative w-fit group">
-                  Company
+                <motion.a variants={mobileMenuItemVariants} href="/about" onClick={(e) => { e.preventDefault(); handleNavigation('/about'); }} className="text-4xl font-black text-gray-900 no-underline relative w-fit group">
+                  About Us
                   <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#D4FF00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </motion.a>
 
