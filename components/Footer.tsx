@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
       className="bg-black text-white pt-24 pb-12 relative overflow-hidden"
     >
       <motion.div
-        style={{ clipPath, opacity: footerOpacity }}
+        style={{ clipPath, opacity: footerOpacity, willChange: 'clip-path, opacity' }}
         className="max-w-[1400px] mx-auto px-6"
       >
         {/* Top Section: Info, Navigation, CTA */}
@@ -127,7 +127,7 @@ const Footer: React.FC = () => {
                     whileTap={{ scale: 0.9 }}
                     className="text-white/40 transition-colors"
                   >
-                    {typeof social.icon === 'function' ? <social.icon className="w-[18px] h-[18px]" size={18} strokeWidth={2} /> : <social.icon size={18} strokeWidth={2} />}
+                    <social.icon size={18} strokeWidth={2} />
                   </motion.a>
                 ))}
               </div>

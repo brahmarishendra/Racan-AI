@@ -200,6 +200,12 @@ const Navbar = () => {
     window.location.href = 'https://lookbook-psus.onrender.com/';
   };
 
+  const Arrowanimation = () => {
+    // Arrow Hover Animation
+    const arrow = document.querySelector('.arrow') as HTMLElement;
+
+  }
+
   return (
     <>
       <header
@@ -291,7 +297,7 @@ const Navbar = () => {
               >
                 <span className="font-bold text-sm tracking-wide">Try Racan AI</span>
                 <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <ArrowUpRight className="w-5 h-5 text-blue-600" />
+                  <ArrowUpRight onClick={Arrowanimation} className="w-5 h-5 text-blue-600" />
                 </div>
               </button>
             )}

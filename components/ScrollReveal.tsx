@@ -50,7 +50,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({ text, className }) =
                 >
                     {words.map((word, i) => (
                         <span key={i} className="relative inline-block mr-[0.25em]">
-                            <span className="reveal-word">{word}</span>
+                            <span className="reveal-word" style={{ willChange: 'opacity' }}>{word}</span>
                         </span>
                     ))}
                 </h2>

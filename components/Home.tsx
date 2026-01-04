@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import ScrollReveal from './ScrollReveal';
@@ -6,10 +6,20 @@ import About from './About';
 import Features from './Features';
 import Products from './Products';
 import Footer from './Footer';
+import AdPopup from './Ad-pop';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
+  const [showAdPopup, setShowAdPopup] = useState(false);
+
   // Add structured data for the homepage
-  React.useEffect(() => {
+  useEffect(() => {
+    // Show ad popup after 5 seconds
+    const timer = setTimeout(() => {
+      setShowAdPopup(true);
+    }, 5000);
+
+    // Update page title dynamically
     // Update page title dynamically
     document.title = 'Racan AI - AI-Powered Fashion Assistant & Ecommerce Platform';
 
@@ -62,6 +72,7 @@ function App() {
     // Cleanup function
     return () => {
       document.head.removeChild(script);
+      clearTimeout(timer);
     };
   }, []);
 
@@ -94,9 +105,15 @@ function App() {
         </section>
       </main>
 
-      <footer>
+      <footer className="relative">
         <Footer />
       </footer>
+
+      <AnimatePresence>
+        {showAdPopup && (
+          <AdPopup isOpen={showAdPopup} onClose={() => setShowAdPopup(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

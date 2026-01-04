@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Home from '../components/Home';
 import AboutUs from '../components/AboutUs';
@@ -7,6 +7,8 @@ import Login from '../components/Login';
 import StartupAnimation from '../components/StartupAnimation';
 import { isAuthenticated, onAuthStateChange } from './lib/supabase';
 import CookiePopup from '../components/CookiePopup';
+import AdPopup from '../components/Ad-pop';
+import { AnimatePresence } from 'framer-motion';
 
 // Protected Route component for auth pages (login/signup)
 function AuthRoute({ children }: { children: React.ReactNode }) {
@@ -97,9 +99,25 @@ function App() {
             </AuthRoute>
           }
         />
+
+        <Route
+          path='/Ad-pop'
+          element={
+            <AdPopupRoute />
+          }
+        />
       </Routes>
       <CookiePopup />
     </Router>
+  );
+}
+
+function AdPopupRoute() {
+  const navigate = useNavigate();
+  return (
+    <AnimatePresence>
+      <AdPopup isOpen={true} onClose={() => navigate(-1)} />
+    </AnimatePresence>
   );
 }
 
