@@ -1,11 +1,46 @@
 import React, { useState, useRef } from 'react';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 
 const Features: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [showControls, setShowControls] = useState(false);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const toggleFullscreen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoContainerRef.current) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        videoContainerRef.current.requestFullscreen();
+      }
+    }
+  };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (containerRef.current) {
@@ -219,8 +254,24 @@ const Features: React.FC = () => {
             </div>
 
             {/* Right Video Column */}
-            <div className="w-full md:w-[60%] bg-black relative min-h-[400px]">
+            <div
+              ref={videoContainerRef}
+              className="w-full md:w-[60%] bg-[#001529] relative min-h-[400px] group/video cursor-pointer overflow-hidden"
+              onMouseEnter={() => setShowControls(true)}
+              onMouseLeave={() => setShowControls(false)}
+              onClick={togglePlay}
+            >
+              {/* Blue Grid Overlay */}
+              <div
+                className="absolute inset-0 z-10 pointer-events-none opacity-40"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0, 100, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 100, 255, 0.1) 1px, transparent 1px)`,
+                  backgroundSize: '40px 40px'
+                }}
+              />
+
               <video
+                ref={videoRef}
                 autoPlay
                 muted
                 loop
@@ -228,11 +279,63 @@ const Features: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover"
               >
                 <source
-                  src="https://images.pexels.com/videos/3120935/free-video-3120935.mp4"
+                  src="/videos/racan-look.mov"
+                  type="video/quicktime"
+                />
+                <source
+                  src="/videos/racan-look.mov"
                   type="video/mp4"
                 />
                 Your browser does not support the video tag.
               </video>
+
+              {/* Central Play/Pause Button Overlay */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: showControls || !isPlaying ? 1 : 0,
+                  scale: showControls || !isPlaying ? 1 : 0.8
+                }}
+                className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
+              >
+                <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-black/60 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.5)] transition-transform group-hover/video:scale-105">
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center">
+                    {isPlaying ? (
+                      <Pause className="w-10 h-10 md:w-12 md:h-12 text-white fill-white opacity-90" />
+                    ) : (
+                      <Play className="w-10 h-10 md:w-12 md:h-12 text-white fill-white ml-1 opacity-90" />
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Corner Controls */}
+              <div className="absolute inset-0 z-20 pointer-events-none p-8 flex flex-col justify-end">
+                <div className="flex justify-between items-center">
+                  <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showControls ? 1 : 0 }}
+                    onClick={toggleMute}
+                    className="pointer-events-auto w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110 active:scale-95 shadow-lg overflow-hidden group/btn"
+                  >
+                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                    {isMuted ? <VolumeX className="w-5 h-5 relative z-10" /> : <Volume2 className="w-5 h-5 relative z-10" />}
+                  </motion.button>
+
+                  <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showControls ? 1 : 0 }}
+                    onClick={toggleFullscreen}
+                    className="pointer-events-auto w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110 active:scale-95 shadow-lg overflow-hidden group/btn"
+                  >
+                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                    <Maximize className="w-5 h-5 relative z-10" />
+                  </motion.button>
+                </div>
+              </div>
+
+              {/* Bottom Gradient for depth */}
+              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent z-15 pointer-events-none" />
             </div>
           </motion.div>
         </div>
