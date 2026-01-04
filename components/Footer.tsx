@@ -47,6 +47,10 @@ const Footer: React.FC = () => {
     }
   };
 
+  const Link = () => {
+    window.location.href = 'https://lookbook-psus.onrender.com';
+  };
+
   return (
     <footer
       ref={footerRef}
@@ -123,7 +127,7 @@ const Footer: React.FC = () => {
                     whileTap={{ scale: 0.9 }}
                     className="text-white/40 transition-colors"
                   >
-                    {typeof social.icon === 'function' ? <social.icon className="w-[18px] h-[18px]" /> : <social.icon size={18} strokeWidth={2} />}
+                    {typeof social.icon === 'function' ? <social.icon className="w-[18px] h-[18px]" size={18} strokeWidth={2} /> : <social.icon size={18} strokeWidth={2} />}
                   </motion.a>
                 ))}
               </div>
@@ -170,7 +174,9 @@ const Footer: React.FC = () => {
               <h4 className="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] mb-2">Ecosystem</h4>
               <a href="#" className="text-white/60 hover:text-white text-sm font-bold uppercase tracking-widest no-underline transition-all">Style Blog</a>
               <a href="https://cal.com/racacn-ai/30min" className="text-white/60 hover:text-white text-sm font-bold uppercase tracking-widest no-underline transition-all">Partnerships</a>
-              <a href="#" className="text-white/60 hover:text-white text-sm font-bold uppercase tracking-widest no-underline transition-all">Privacy</a>
+              <a
+                onClick={Link}
+                className=" text-white/60 hover:text-white text-sm font-bold uppercase tracking-widest no-underline transition-all cursor-pointer">Privacy</a>
               <a href="#" className="text-white/60 hover:text-white text-sm font-bold uppercase tracking-widest no-underline transition-all">Terms</a>
             </div>
           </motion.div>
@@ -254,7 +260,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </motion.div>
-    </footer>
+    </footer >
   );
 };
 

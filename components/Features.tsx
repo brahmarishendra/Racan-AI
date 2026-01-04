@@ -8,8 +8,8 @@ const Features: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false); // Changed to false for no autoplay
+  const [isMuted, setIsMuted] = useState(false); // Better to start unmuted if user clicks play
   const [showControls, setShowControls] = useState(false);
 
   const togglePlay = () => {
@@ -230,33 +230,31 @@ const Features: React.FC = () => {
         </div>
       </section>
 
-      {/* Light Mode Section for Demo */}
-      <section className="py-24 bg-[#011F18] overflow-hidden">
+      {/* Featured Experience Section (Vertical Stack) */}
+      <section className="py-24 bg-black overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4">
-          {/* Demo Section (Restyled 40/60 Split) */}
+          {/* Vertical Layout Container */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col md:flex-row rounded-[2rem] overflow-hidden shadow-2xl bg-white"
+            className="flex flex-col items-center"
           >
-            {/* Left Content Column */}
-            <div className="w-full md:w-[40%] bg-[#001529] p-12 flex flex-col justify-center text-white">
-              <h3 className="text-3xl md:text-4xl font-black mb-6">Experience <span className="text-blue-400">Racan AI</span> in Action</h3>
-              <p className="text-lg text-white/70 mb-8 leading-relaxed">Watch how our deep-learning styling engine transforms a simple prompt into a perfectly curated fashion look.</p>
-              <button
-                onClick={() => window.location.href = 'https://chat-with-racan.vercel.app'}
-                className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-500 transition-all transform hover:-translate-y-1 shadow-xl cursor-pointer border-none w-fit"
-              >
-                Try Racan AI Demo
-              </button>
+            {/* Centered Content Column */}
+            <div className="w-full max-w-5xl text-center mb-20 px-4">
+              <h3 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[1.0] mb-10">
+                LookBook is an AI wardrobe
+              </h3>
+              <p className="text-base md:text-lg text-white/50 mb-10 leading-relaxed max-w-3xl mx-auto font-medium">
+                Using LookBook AI, you can create your own AI wardrobe in minutes and where you can shop similar items for your wardrobe. It's free Try now!
+              </p>
             </div>
 
-            {/* Right Video Column */}
+            {/* Video Column - Centered below text */}
             <div
               ref={videoContainerRef}
-              className="w-full md:w-[60%] bg-[#001529] relative min-h-[400px] group/video cursor-pointer overflow-hidden"
+              className="w-full mt-[-4rem] max-w-6xl aspect-[16/9] bg-[#001529] relative rounded-[2rem] overflow-hidden group/video cursor-pointer shadow-[0_40px_100px_rgba(0,0,0,0.5)]"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}
               onClick={togglePlay}
@@ -272,8 +270,7 @@ const Features: React.FC = () => {
 
               <video
                 ref={videoRef}
-                autoPlay
-                muted
+                muted={isMuted}
                 loop
                 playsInline
                 className="absolute inset-0 w-full h-full object-cover"

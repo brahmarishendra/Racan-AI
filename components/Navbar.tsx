@@ -204,7 +204,7 @@ const Navbar = () => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 border-b ${isVisible ? 'translate-y-0' : '-translate-y-full'
-          } ${lastScrollY > 20 ? 'bg-black/90 backdrop-blur-md py-4 border-white/10 shadow-lg' : 'bg-transparent py-4 lg:py-7 border-transparent'}`}
+          } ${lastScrollY > 20 ? 'bg-black/90 backdrop-blur-md py-3 border-white/10 shadow-lg' : 'bg-transparent py-3 lg:py-5 border-transparent'}`}
       >
         <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
           {/* Logo Section */}
@@ -212,18 +212,18 @@ const Navbar = () => {
             className="flex items-center cursor-pointer"
             onClick={() => handleNavigation('/')}
           >
-            <div className="bg-black p-3 rounded-[1.4rem] flex items-center justify-center mr-4 hover:scale-105 transition-transform shadow-xl border border-white/10">
+            <div className="bg-black p-2.5 rounded-[1.2rem] flex items-center justify-center mr-4 hover:scale-105 transition-transform shadow-xl border border-white/10">
               <img
                 src="https://i.postimg.cc/rsYBTFzm/image-41.png"
                 alt="Racan Logo"
-                className="w-16 brightness-0 invert"
+                className="w-12 brightness-0 invert"
               />
             </div>
           </div>
 
           {/* Desktop Navigation - Centered Pill Design */}
           {/* Desktop Navigation - Standard Open Layout */}
-          <nav className="hidden lg:flex items-center gap-10">
+          <nav className="hidden lg:flex items-center gap-8">
             <div
               className="relative h-full flex items-center group/platform"
               onMouseEnter={handlePlatformEnter}
