@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -31,14 +31,51 @@ const Features: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        // Unlock orientation when exiting fullscreen
+        if (screen.orientation && screen.orientation.unlock) {
+          screen.orientation.unlock();
+        }
+      }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
+  }, []);
+
   const toggleFullscreen = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (videoContainerRef.current) {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else {
-        videoContainerRef.current.requestFullscreen();
-      }
+
+    const video = videoRef.current;
+    const container = videoContainerRef.current;
+
+    if (!video || !container) return;
+
+    // Fallback for iOS (iPhone) which doesn't support container fullscreen
+    if (video.webkitEnterFullscreen && !document.fullscreenEnabled) {
+      video.webkitEnterFullscreen();
+      return;
+    }
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      container.requestFullscreen().then(() => {
+        // Lock to landscape on mobile
+        if (screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock('landscape').catch(() => {
+            // Silently fail if not supported (e.g. desktop)
+          });
+        }
+      }).catch(err => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+      });
     }
   };
 
@@ -275,10 +312,6 @@ const Features: React.FC = () => {
                 playsInline
                 className="absolute inset-0 w-full h-full object-cover"
               >
-                <source
-                  src="/videos/racan-look.mov"
-                  type="video/quicktime"
-                />
                 <source
                   src="/videos/racan-look.mov"
                   type="video/mp4"
