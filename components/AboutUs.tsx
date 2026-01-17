@@ -23,8 +23,8 @@ const AboutUs: React.FC = () => {
         "@type": "Organization",
         "name": "Racan AI",
         "employee": [
-          { "@type": "Person", "name": "Kesari Brahmarishendra", "jobTitle": "Co-founder" },
-          { "@type": "Person", "name": "Th Trisa Singha", "jobTitle": "Project Manager" },
+          { "@type": "Person", "name": "Kesari Brahmarishendra", "jobTitle": "UIUX Designer/UI developer" },
+          { "@type": "Person", "name": "Viswasida.M", "jobTitle": "Founder" },
           { "@type": "Person", "name": "Sai Deepak Ambati", "jobTitle": "AI Automation" },
           { "@type": "Person", "name": "Amy Zanatta", "jobTitle": "Fashion Stylist" }
         ]
@@ -46,14 +46,14 @@ const AboutUs: React.FC = () => {
     {
       id: 1,
       name: "Kesari Brahmarishendra",
-      role: "Co-founder",
+      role: "UIUX Designer/UI developer",
       image: "https://i.postimg.cc/Hxh5hDFw/1740918461489.jpg",
     },
     {
       id: 2,
-      name: "Th Trisa Singha",
-      role: "Project Manager",
-      image: "https://i.postimg.cc/3wgq1VBG/Risa.png",
+      name: "Viswasida.M",
+      role: "Founder",
+      image: "https://i.postimg.cc/tJTQ2fJd/Screenshot-2024-08-27-142232.png",
     },
     {
       id: 3,
