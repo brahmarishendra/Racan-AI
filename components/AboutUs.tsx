@@ -53,7 +53,7 @@ const AboutUs: React.FC = () => {
       id: 2,
       name: "Viswasida.M",
       role: "Founder",
-      image: "https://i.postimg.cc/tJTQ2fJd/Screenshot-2024-08-27-142232.png",
+      image: "https://media.licdn.com/dms/image/v2/D4D03AQFPaKg3sRRorg/profile-displayphoto-crop_800_800/B4DZoR0GtlH4AI-/0/1761235464733?e=1770249600&v=beta&t=W5_yLxnqn4e4ukbh_n59dx65nRJiWLDRueCoT71sRX0",
     },
     {
       id: 3,
